@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair);
+  --font-mono: var(--font-jetbrains);
+}
+
+:root {
+  --bg: #F9F7F2; /* Warm Cream */
+  --surface: #FFFFFF;
+  --text: #2C2C2C; /* Soft Charcoal */
+  --text-muted: #6B7280;
+  --accent: #4A90E2; /* Muted Blue */
+  --accent2: #A5B4FC;
+  --border: rgba(44, 44, 44, 0.08);
+  --grid-opacity: 0.04;
+  --font-inter: 'Inter', sans-serif;
+  --font-syne: 'Syne', sans-serif;
+  --font-playfair: 'Playfair Display', serif;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  background-image: 
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-attachment: fixed;
+  font-family: var(--font-sans);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 10px;
+}
+
+@keyframes float { 
+  0% { transform: translate(0, 0) scale(1); } 
+  100% { transform: translate(100px, 50px) scale(1.2); } 
+}
+
+@layer utilities {
+  .blob {
+    position: absolute; 
+    border-radius: 50%; 
+    filter: blur(120px); 
+    opacity: 0.15; 
+    animation: float 20s infinite alternate;
+  }
+}
