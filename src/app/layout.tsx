@@ -11,6 +11,9 @@ const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrai
 export const metadata: Metadata = {
   title: "Shahriar Haque Abir | Digital Architect",
   description: "Portfolio of Shahriar Haque Abir — Application Implementation Consultant.",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({

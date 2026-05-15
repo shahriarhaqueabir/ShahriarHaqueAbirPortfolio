@@ -9,8 +9,8 @@ export default function LabView({ context }: { context: string }) {
       animate={{ opacity: 1, scale: 1 }}
       className="pt-10 pb-20"
     >
-      <div className="font-mono text-sm text-(--accent) uppercase tracking-widest mb-4">— Dynamic Synthesis</div>
-      <h2 className="text-4xl font-syne font-black mb-8 text-(--text)">Custom Report</h2>
+      <div className="font-mono text-sm text-(--accent) uppercase tracking-widest mb-4">— CV Synthesis</div>
+      <h2 className="text-4xl font-syne font-black mb-8 text-(--text)">Custom Insights</h2>
 
       <div className="bg-white border border-(--border) p-10 rounded-sm shadow-xl relative overflow-hidden">
         <div className="absolute top-0 right-0 p-4 font-mono text-[10px] text-(--text-muted) border-l border-b border-(--border)">

@@ -1,5 +1,5 @@
 export const CONFIG = {
-  name: "Shahriar Haque",
+  name: "Shahriar Haque Abir",
   nameHL: "Shahriar",
   taglines: ["Solution Consultant", "SaaS B2B", "Technical Support Engineer"],
   location: "Berlin, Germany",

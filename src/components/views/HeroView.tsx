@@ -1,10 +1,33 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { CONFIG } from "@/lib/data";
 import Image from "next/image";
 
 export default function HeroView({ setView }: { setView: (v: string) => void }) {
+  const [currentPhrase, setCurrentPhrase] = useState(0);
+  const phrases = [
+    { text: "LEVEL 9 WIZARD", highlight: "WIZARD", color: "#5EEAD4" }, // Light Teal
+    { text: "S+ Tier Ninja", highlight: "Ninja", color: "#000000" },   // Black
+    { text: "Found the bug in the matrix", highlight: "matrix", color: "#10B981" }, // Green
+    { text: "Final Boss Energy", highlight: "Boss", color: "#B8860B" },   // Dark Gold
+    { text: "Power Level over 9000", highlight: "9000", color: "#EF4444" }, // Red
+    { text: "Running sudo rm -rf /", highlight: "sudo", color: "#F472B6" }, // Pink (Kept as requested earlier)
+    { text: "10x Consultant", highlight: "10x", color: "#F97316" },    // Orange
+    { text: "Broke the Simulation", highlight: "Broke", color: "#6366F1" }, // Indigo
+    { text: "5D Chess Master", highlight: "Chess", color: "#3B82F6" },   // Blue
+    { text: "10+ Years of innovation", highlight: "innovation", color: "#8B5CF6" }, // Purple
+    { text: "A wonderful Person", highlight: "Person", isRainbow: true }
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentPhrase((prev) => (prev + 1) % phrases.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [phrases.length]);
+
   return (
     <motion.div 
       initial={{ opacity: 0, x: -20 }}
@@ -21,14 +44,22 @@ export default function HeroView({ setView }: { setView: (v: string) => void }) 
               </span>
             ))}
           </div>
-          <h1 className="font-syne font-black leading-[1.05] text-(--text) mb-8 tracking-tighter text-6xl md:text-8xl">
-            {CONFIG.name.split(' ').map((word, i) => 
-              word === CONFIG.nameHL 
-                ? <span key={i} className="font-playfair italic font-normal text-(--accent) lowercase pr-4">{word} </span>
-                : <span key={i}>{word} </span>
-            )}
-            <br />
-            <span className="text-(--text-muted) font-medium font-playfair italic text-3xl lg:text-5xl tracking-normal">Architect of Systems.</span>
+          <h1 className="font-syne font-black leading-[0.95] text-(--text) mb-8 tracking-tighter text-5xl md:text-7xl lg:text-8xl">
+            <span className="block mb-2">
+              {CONFIG.name.split(' ').map((word, i) => 
+                word === CONFIG.nameHL 
+                  ? <span key={i} className="pr-4">{word}</span>
+                  : null
+              )}
+            </span>
+            <span className="block">
+              {CONFIG.name.split(' ').map((word, i) => 
+                word !== CONFIG.nameHL 
+                  ? <span key={i} className="inline-block mr-4">{word}</span>
+                  : null
+              )}
+            </span>
+            <div className="mt-4 text-(--accent) font-bold font-playfair italic text-2xl lg:text-4xl tracking-normal">-Technical Lead</div>
           </h1>
           <p className="text-xl text-(--text-muted) max-w-xl leading-relaxed mb-12 font-inter font-light">{CONFIG.profile}</p>
           <div className="flex gap-6">
@@ -49,9 +80,40 @@ export default function HeroView({ setView }: { setView: (v: string) => void }) 
                 priority
               />
             </div>
-            <div className="absolute -bottom-10 -right-10 bg-white border border-(--border) p-8 rounded-sm shadow-2xl z-20">
-              <div className="font-syne font-black text-5xl text-(--text)">6<span className="text-(--accent)">+</span></div>
-              <div className="text-[10px] font-mono text-(--text-muted) uppercase tracking-[0.2em] mt-2">Years of Innovation</div>
+            <div className="absolute -bottom-10 -right-10 bg-white border border-(--border) p-8 rounded-sm shadow-2xl z-20 min-w-[200px]">
+               <AnimatePresence mode="wait">
+                <motion.div 
+                  key={currentPhrase}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="font-syne font-black text-xl text-(--text) uppercase leading-tight"
+                >
+                  {phrases[currentPhrase].text.split(' ').map((word, i) => (
+                    <span key={i}>
+                      {word.includes(phrases[currentPhrase].highlight) ? (
+                        phrases[currentPhrase].isRainbow ? (
+                          <span className="inline-flex">
+                            {word.split('').map((char, charIdx) => {
+                              const rainbowColors = ["#EF4444", "#F97316", "#10B981", "#3B82F6", "#6366F1", "#8B5CF6"];
+                              return (
+                                <span key={charIdx} style={{ color: rainbowColors[charIdx % rainbowColors.length] }}>
+                                  {char}
+                                </span>
+                              );
+                            })}
+                            <span className="inline-block w-4"></span>
+                          </span>
+                        ) : (
+                          <span style={{ color: phrases[currentPhrase].color }}>{word} </span>
+                        )
+                      ) : (
+                        word + " "
+                      )}
+                    </span>
+                  ))}
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
         </div>

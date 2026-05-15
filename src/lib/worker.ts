@@ -5,14 +5,14 @@ env.allowLocalModels = false;
 
 class PipelineSingleton {
     static task = 'text-generation';
-    static model = 'HuggingFaceTB/SmolLM2-135M-Instruct';
+    static model = 'HuggingFaceTB/SmolLM2-360M-Instruct';
     static instance: TextGenerationPipeline | null = null;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static async getInstance(progress_callback?: any) {
         if (this.instance === null) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            this.instance = await pipeline(this.task as any, this.model, { 
+            this.instance = await pipeline(this.task as any, this.model, {
                 progress_callback,
                 device: 'webgpu' // Will fallback to wasm if webgpu isn't available
             }) as TextGenerationPipeline;
@@ -33,7 +33,7 @@ self.addEventListener('message', async (event: MessageEvent) => {
         });
 
         // Generate response
-        const output = await generator(messages, { 
+        const output = await generator(messages, {
             max_new_tokens: 256,
             temperature: 0.7,
             do_sample: true,

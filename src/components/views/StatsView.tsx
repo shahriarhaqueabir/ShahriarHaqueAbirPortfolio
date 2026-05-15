@@ -36,32 +36,58 @@ export default function StatsView() {
         ))}
       </div>
 
-      <div className="mt-12 bg-white border border-(--border) p-10 flex flex-col md:flex-row gap-12 items-center">
-        <div className="flex-1">
-          <h3 className="font-syne font-black text-2xl text-(--text) mb-4 uppercase tracking-tighter">Service Reliability Metric</h3>
-          <p className="text-(--text-muted) text-sm mb-8 font-inter leading-relaxed">
-            Consistently delivering high-availability support and infrastructure management with a focus on SLA compliance and system stability.
-          </p>
-          <div className="w-full h-2 bg-(--bg) border border-(--border) rounded-full overflow-hidden flex">
-            <motion.div 
-              initial={{ width: 0 }}
-              animate={{ width: "99.9%" }}
-              transition={{ duration: 2, ease: "circOut" }}
-              className="h-full bg-(--accent)"
-            ></motion.div>
-          </div>
-          <div className="flex justify-between mt-4">
-            <span className="text-[9px] font-mono text-(--text-muted) font-bold uppercase tracking-widest">Target Reliability</span>
-            <span className="text-[10px] font-mono text-(--accent) font-bold">99.9% SLO</span>
-          </div>
-        </div>
-        <div className="w-32 h-32 border-4 border-(--accent)/10 flex items-center justify-center rounded-full relative">
-           <div className="text-2xl font-syne font-black text-(--text)">99.9</div>
-           <svg className="absolute inset-0 w-full h-full -rotate-90">
-             <circle cx="64" cy="64" r="60" fill="none" stroke="currentColor" strokeWidth="4" className="text-(--accent)" strokeDasharray="376.8" strokeDashoffset="0.37" />
-           </svg>
+      <div className="mt-20">
+        <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">— Social Architecture</div>
+        <h2 className="text-5xl font-syne font-black mb-12 text-(--text)">Human Impact</h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+           <div className="space-y-8">
+              {[
+                { label: "Empathy & Support", value: 100, desc: "Peer-rated mentorship and guidance" },
+                { label: "Collaboration Velocity", value: 95, desc: "Efficiency in cross-functional syncs" },
+                { label: "Conflict Resolution", value: 100, desc: "Maintaining team harmony and SLOs" }
+              ].map((m, i) => (
+                <div key={i} className="group">
+                   <div className="flex justify-between items-end mb-2">
+                      <span className="text-sm font-bold uppercase tracking-wider text-(--text)">{m.label}</span>
+                      <span className="text-[10px] font-mono text-(--accent)">{m.value}%</span>
+                   </div>
+                   <div className="h-1 bg-(--border) relative overflow-hidden">
+                      <motion.div 
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${m.value}%` }}
+                        viewport={{ once: true }}
+                        className="absolute inset-0 bg-(--accent)"
+                      ></motion.div>
+                   </div>
+                   <p className="text-[9px] text-(--text-muted) uppercase tracking-widest mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      {m.desc}
+                   </p>
+                </div>
+              ))}
+           </div>
+           
+           <div className="bg-white border border-(--border) p-8 flex flex-col justify-center relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4 opacity-5">
+                 <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="text-(--accent)">
+                   <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                 </svg>
+              </div>
+              <h4 className="font-syne font-black text-xl mb-2">"A Wonderful Person"</h4>
+              <p className="text-sm text-(--text-muted) font-inter leading-relaxed italic">
+                "Beyond technical leadership, Shahriar brings a rare level of empathy and warmth to every project. He doesn't just build systems; he builds environments where people thrive."
+              </p>
+              <div className="mt-6 flex items-center gap-3">
+                 <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-(--accent) font-bold text-xs italic">SB</div>
+                 <div>
+                    <div className="text-[10px] font-bold uppercase tracking-widest">Stakeholder Sentiment</div>
+                    <div className="text-[9px] text-(--text-muted)">Verified peer review // 2024</div>
+                 </div>
+              </div>
+           </div>
         </div>
       </div>
+
     </motion.div>
   );
 }
