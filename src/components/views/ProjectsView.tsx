@@ -132,6 +132,7 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
             return (
             <motion.div
               key={i}
+              data-testid={`project-card-${i}`}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
@@ -207,7 +208,7 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
                     </div>
                     <h2 className="text-4xl md:text-6xl font-syne font-black text-(--text) leading-tight">{p.name}</h2>
                   </div>
-                  <button onClick={() => setSelectedProject(null)} className="w-12 h-12 flex items-center justify-center border border-(--border) hover:bg-(--text) hover:text-(--bg) transition-all">
+                  <button aria-label="Close project case study" onClick={() => setSelectedProject(null)} className="w-12 h-12 flex items-center justify-center border border-(--border) hover:bg-(--text) hover:text-(--bg) transition-all">
                     <X className="h-5 w-5" />
                   </button>
                 </div>
