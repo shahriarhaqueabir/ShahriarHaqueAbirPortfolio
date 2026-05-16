@@ -15,12 +15,12 @@ test.describe('Hawkward portfolio E2E', () => {
 
   test('navigates through primary portfolio views', async ({ page }) => {
     const protocols = [
-      { button: /About/i, expected: /A technical operator/ },
+      { button: /About/i, expected: /It's good to catch up/ },
       { button: /Projects/i, expected: /Selected Project Works/ },
       { button: /Experience/i, expected: /Experience/ },
       { button: /Skills/i, expected: /Competencies/ },
-      { button: /Stats/i, expected: /Signal Map/ },
-      { button: /Contact/i, expected: /Contact Signal/ },
+      { button: /Stats/i, expected: /Living metrics/ },
+      { button: /Contact/i, expected: /Establish/ },
     ];
     
     for (const protocol of protocols) {
@@ -31,13 +31,13 @@ test.describe('Hawkward portfolio E2E', () => {
 
   test('opens a project case study', async ({ page }) => {
     await page.getByRole('button', { name: /Projects/i }).first().click();
-    await page.getByText('Network Discovery & Topology Mapping Tool').click();
+    await page.getByTestId('project-card-0').click();
     await expect(page.getByText('Project Case Study')).toBeVisible();
   });
 
   test('routes typed commands without relying on the local model', async ({ page }) => {
     await page.getByPlaceholder(/Execute command|Calibrating/i).fill('show me his contact details');
     await page.keyboard.press('Enter');
-    await expect(page.getByText(/Contact Signal/)).toBeVisible();
+    await expect(page.getByText(/Establish/)).toBeVisible();
   });
 });
