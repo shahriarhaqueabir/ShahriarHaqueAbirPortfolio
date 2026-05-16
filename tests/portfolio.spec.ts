@@ -1,50 +1,43 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Design Laboratory Portfolio E2E', () => {
+test.describe('Hawkward portfolio E2E', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('http://localhost:3000');
+    await page.getByTestId('enter-portfolio').click();
   });
 
-  test('should load the homepage with correct title and elements', async ({ page }) => {
+  test('loads the homepage with current portfolio identity', async ({ page }) => {
     await expect(page).toHaveTitle(/Shahriar Haque Abir/);
-    await expect(page.getByText('NUKA AI')).toBeVisible();
-    await expect(page.getByText('Architect of Systems')).toBeVisible();
+    await expect(page.getByText("Shahriar's Portfolio")).toBeVisible();
+    await expect(page.getByText('AI Enabled Portfolio')).toBeVisible();
+    await expect(page.getByRole('button', { name: /View Projects/i })).toBeVisible();
   });
 
-  test('should navigate to all views through navigation protocols', async ({ page }) => {
-    const protocols = ['ABOUT', 'VISION', 'PROJECTS', 'EXPERIENCE', 'SKILLS', 'STACK'];
+  test('navigates through primary portfolio views', async ({ page }) => {
+    const protocols = [
+      { button: /About/i, expected: /A technical operator/ },
+      { button: /Projects/i, expected: /Selected Project Works/ },
+      { button: /Experience/i, expected: /Experience/ },
+      { button: /Skills/i, expected: /Competencies/ },
+      { button: /Stats/i, expected: /Signal Map/ },
+      { button: /Contact/i, expected: /Contact Signal/ },
+    ];
     
     for (const protocol of protocols) {
-      await page.getByRole('button', { name: protocol }).click();
-      // Verify view-specific heading appears
-      // The heading text usually matches the button text or is similar
-      if (protocol === 'ABOUT') {
-        await expect(page.getByText('The Philosophy')).toBeVisible();
-      } else if (protocol === 'PROJECTS') {
-        await expect(page.getByText('Selected Works')).toBeVisible();
-      } else if (protocol === 'SKILLS') {
-        await expect(page.getByText('Competencies')).toBeVisible();
-      }
+      await page.getByRole('button', { name: protocol.button }).first().click();
+      await expect(page.getByText(protocol.expected).first()).toBeVisible();
     }
   });
 
-  test('should open a project case study', async ({ page }) => {
-    await page.getByRole('button', { name: 'PROJECTS' }).click();
-    // Click the first project card
-    await page.locator('.grid > div').first().click();
+  test('opens a project case study', async ({ page }) => {
+    await page.getByRole('button', { name: /Projects/i }).first().click();
+    await page.getByText('Network Discovery & Topology Mapping Tool').click();
     await expect(page.getByText('Project Case Study')).toBeVisible();
-    await page.getByRole('button').filter({ has: page.locator('svg') }).first().click({ force: true });
   });
 
-  test('should profile visitor in chat', async ({ page }) => {
-    const chatInput = page.getByPlaceholder('Calibrating...');
-    // Wait for the chat to be active (Nuka's greeting is done)
-    await page.waitForTimeout(2000); 
-    await chatInput.fill('My name is John and I am here for hiring.');
-    await chatInput.press('Enter');
-    
-    // Check if Nuka responds or if state changes
-    // This is hard to verify precisely without specific response text, 
-    // but we can check if the message appeared in the chat log if we had a selector
+  test('routes typed commands without relying on the local model', async ({ page }) => {
+    await page.getByPlaceholder(/Execute command|Calibrating/i).fill('show me his contact details');
+    await page.keyboard.press('Enter');
+    await expect(page.getByText(/Contact Signal/)).toBeVisible();
   });
 });

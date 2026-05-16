@@ -2,11 +2,110 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, BrainCircuit, Cable, ChartSpline, FlaskConical, GraduationCap, Network, ServerCog, Sparkles, Workflow, X } from "lucide-react";
+import GuidedNext from "@/components/GuidedNext";
 import { CONFIG } from "@/lib/data";
+import type { ViewKey } from "@/lib/types";
 
-export default function ProjectsView() {
+type Project = (typeof CONFIG.projects)[number];
+
+const projectAccents = ["#38BDF8", "#34D399", "#F59E0B", "#F472B6", "#A78BFA", "#22D3EE", "#FB7185", "#10B981", "#C084FC", "#F97316"];
+
+function getProjectVisual(project: Project) {
+  if (project.name.includes("Network Discovery")) return { Icon: Network, color: "#38BDF8", symbol: "NET" };
+  if (project.name.includes("Knowledge Assistant")) return { Icon: BrainCircuit, color: "#A78BFA", symbol: "RAG" };
+  if (project.name.includes("GTM")) return { Icon: Workflow, color: "#34D399", symbol: "OPS" };
+  if (project.name.includes("Dashboard")) return { Icon: ChartSpline, color: "#F59E0B", symbol: "KPI" };
+  if (project.name.includes("Self-Hosted")) return { Icon: ServerCog, color: "#22D3EE", symbol: "LAB" };
+  if (project.name.includes("Portfolio")) return { Icon: Sparkles, color: "#F472B6", symbol: "AI" };
+  if (project.name.includes("SaaS")) return { Icon: Workflow, color: "#10B981", symbol: "SLA" };
+  if (project.name.includes("Solarization")) return { Icon: FlaskConical, color: "#F97316", symbol: "UV" };
+  if (project.name.includes("Optical Fiber")) return { Icon: Cable, color: "#38BDF8", symbol: "FBR" };
+  if (project.name.includes("Training")) return { Icon: GraduationCap, color: "#C084FC", symbol: "EDU" };
+  return { Icon: Sparkles, color: "#38BDF8", symbol: "SYS" };
+}
+
+function getArchitectureNodes(project: Project) {
+  if (project.name.includes("Network Discovery")) {
+    return ["IP Range", "nmap Scanner", "JSON Topology", "NetworkX Map"];
+  }
+
+  if (project.name.includes("Knowledge Assistant")) {
+    return ["Source Docs", "FastAPI", "Qdrant + SQL", "Grounded Answer"];
+  }
+
+  if (project.name.includes("GTM")) {
+    return ["Lead Source", "n8n Router", "Clay + WeFlow", "Outreach"];
+  }
+
+  if (project.name.includes("Dashboard")) {
+    return ["SQL Data", "Python Pipeline", "Forecast Model", "KPI View"];
+  }
+
+  if (project.name.includes("Self-Hosted")) {
+    return ["Open WebUI", "Docker Compose", "Qdrant + n8n", "Local AI Stack"];
+  }
+
+  return ["Visitor", "Next.js UI", "Worker LLM", "Portfolio Views"];
+}
+
+function ArchitectureDiagram({ project, compact = false }: { project: Project; compact?: boolean }) {
+  const nodes = getArchitectureNodes(project);
+  const visual = getProjectVisual(project);
+
+  return (
+    <div className={`relative overflow-hidden border border-(--border) bg-(--bg)/80 ${compact ? "p-4" : "p-6"}`}>
+      <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: "radial-gradient(#2C2C2C 1px, transparent 1px)", backgroundSize: "10px 10px" }} />
+      <div className="relative z-10 mb-4 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-2 font-mono text-[8px] uppercase tracking-[0.24em]" style={{ color: visual.color }}>
+          <visual.Icon className="h-3.5 w-3.5" />
+          Architecture Design
+        </div>
+        <div className="font-mono text-[8px] text-(--text-muted) uppercase tracking-widest">{compact ? "preview" : "system flow"}</div>
+      </div>
+      <div className={`relative z-10 grid ${compact ? "grid-cols-2 gap-3" : "grid-cols-1 sm:grid-cols-4 gap-3"}`}>
+        {nodes.map((node, index) => (
+          <div key={node} className="relative">
+            <motion.div
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.08, duration: 0.25 }}
+              className="min-h-16 border border-(--border) bg-white px-3 py-3 flex flex-col justify-between symbol-tile"
+              style={{ boxShadow: `inset 0 0 0 1px ${visual.color}18, 0 0 ${compact ? 18 : 30}px ${visual.color}22` }}
+            >
+              <div className="flex items-center justify-between gap-2">
+                <div className="font-mono text-[8px] uppercase tracking-widest" style={{ color: visual.color }}>0{index + 1}</div>
+                <span className="signal-dot" style={{ color: visual.color }} />
+              </div>
+              <div className="font-syne font-black text-[11px] text-(--text) uppercase leading-tight">{node}</div>
+            </motion.div>
+            {index < nodes.length - 1 && (
+              <motion.div
+                className={`hidden sm:block absolute top-1/2 -right-3 h-px w-3 ${compact ? "sm:hidden" : ""}`}
+                style={{ background: `linear-gradient(90deg, ${visual.color}, transparent)`, boxShadow: `0 0 16px ${visual.color}` }}
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ delay: index * 0.12 + 0.2, duration: 0.3 }}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="relative z-10 mt-4 flex flex-wrap gap-2">
+        {project.stack.slice(0, compact ? 3 : 6).map((item) => (
+          <span key={item} className="font-mono text-[8px] px-2 py-1 border border-(--border) bg-white text-(--text-muted) uppercase tracking-widest">
+            {item}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default function ProjectsView({ setView }: { setView: (view: ViewKey) => void }) {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
   const p = selectedProject !== null ? CONFIG.projects[selectedProject] : null;
+  const selectedVisual = p ? getProjectVisual(p) : null;
 
   return (
     <>
@@ -17,40 +116,71 @@ export default function ProjectsView() {
         className="pt-10"
       >
         <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">— Technical Inventory</div>
-        <h2 className="text-5xl font-syne font-black mb-12 text-(--text)">Selected Works</h2>
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+          <h2 className="text-5xl font-syne font-black text-(--text)">Selected Project Works</h2>
+          <div className="font-mono text-[9px] text-(--text-muted) uppercase tracking-widest border-l-2 border-(--accent) pl-5 max-w-xs">
+            Case files, implementation traces, and impact signals.
+          </div>
+        </div>
         
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 pb-20">
-          {CONFIG.projects.map((proj, i) => (
-            <motion.div 
+          {CONFIG.projects.map((proj, i) => {
+            const visual = getProjectVisual(proj);
+            const Icon = visual.Icon;
+            const accent = visual.color || projectAccents[i % projectAccents.length];
+
+            return (
+            <motion.div
               key={i}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
               onClick={() => setSelectedProject(i)}
-              className="bg-white border border-(--border) p-8 flex flex-col h-full cursor-pointer group hover:border-(--text) transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-xl"
+              className="bg-white border border-(--border) p-8 flex flex-col h-full cursor-pointer group transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-xl"
+              style={{ boxShadow: `0 0 0 rgba(0,0,0,0)`, borderColor: "var(--border)" }}
+              whileHover={{ y: -4, boxShadow: `0 0 54px ${accent}24` }}
             >
+              <div className="absolute inset-0 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity" style={{ backgroundImage: "linear-gradient(90deg, #EEF6F8 1px, transparent 1px), linear-gradient(#EEF6F8 1px, transparent 1px)", backgroundSize: "18px 18px" }}></div>
+              <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full blur-3xl opacity-20 group-hover:opacity-35 transition-opacity" style={{ backgroundColor: accent }} />
+              <div className="absolute -left-4 top-8 font-syne font-black text-7xl text-(--text)/5 transition-colors" style={{ color: `${accent}18` }}>
+                {String(i + 1).padStart(2, "0")}
+              </div>
+              <motion.div
+                className="absolute bottom-0 left-0 h-1"
+                style={{ backgroundColor: accent, boxShadow: `0 0 24px ${accent}` }}
+                initial={{ width: 0 }}
+                whileHover={{ width: "100%" }}
+                transition={{ duration: 0.4 }}
+              />
               <div className="flex justify-between items-start mb-6">
-                <h3 className="text-2xl font-black font-syne text-(--text) group-hover:text-(--accent) transition-colors pr-10">{proj.name}</h3>
-                <div className="w-10 h-10 border border-(--border) flex items-center justify-center group-hover:bg-(--text) group-hover:text-(--bg) transition-all absolute right-0 top-0">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                <div className="flex items-start gap-4 pr-10">
+                  <div className="symbol-tile flex h-12 w-12 shrink-0 items-center justify-center border border-(--border) bg-(--bg)" style={{ color: accent, boxShadow: `0 0 28px ${accent}30` }}>
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-2xl font-black font-syne text-(--text) transition-colors" style={{ color: undefined }}>{proj.name}</h3>
+                </div>
+                <div className="w-10 h-10 border border-(--border) flex items-center justify-center transition-all absolute right-0 top-0" style={{ color: accent }}>
+                  <ArrowRight className="h-4 w-4" />
                 </div>
               </div>
               
               <p className="text-(--text-muted) text-sm mb-8 flex-1 leading-relaxed font-inter line-clamp-2">{proj.desc}</p>
+              <div className="mb-8">
+                <ArchitectureDiagram project={proj} compact />
+              </div>
               
               <div className="flex flex-wrap gap-2 mb-8">
                 {proj.stack.slice(0, 3).map((s, sIdx) => (
-                  <span key={sIdx} className="font-mono text-[9px] px-2 py-1 bg-(--bg) border border-(--border) text-(--text-muted) uppercase font-bold tracking-tighter">{s}</span>
+                  <span key={sIdx} className="font-mono text-[9px] px-2 py-1 bg-(--bg) border border-(--border) text-(--text-muted) uppercase font-bold tracking-tighter" style={{ boxShadow: `0 0 16px ${accent}14` }}>{s}</span>
                 ))}
                 {proj.stack.length > 3 && <span className="font-mono text-[9px] px-2 py-1 text-(--text-muted)">+{proj.stack.length - 3} MORE</span>}
               </div>
-
-              <div className="w-full h-1 bg-(--bg) overflow-hidden flex">
-                <div className="h-full bg-(--accent) transition-all duration-700 w-0 group-hover:w-full"></div>
-              </div>
             </motion.div>
-          ))}
+            );
+          })}
         </div>
+
+        <GuidedNext currentView="projects" onNavigate={setView} />
       </motion.div>
 
       <AnimatePresence>
@@ -71,11 +201,14 @@ export default function ProjectsView() {
               <div className="p-10 md:p-20 flex-1">
                 <div className="flex justify-between items-start mb-12">
                   <div className="flex-1">
-                    <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.3em] mb-4">Project Case Study // {p.name.toUpperCase()}</div>
+                    <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.3em] mb-4" style={{ color: selectedVisual?.color }}>
+                      {selectedVisual && <selectedVisual.Icon className="h-4 w-4" />}
+                      Project Case Study // {p.name.toUpperCase()}
+                    </div>
                     <h2 className="text-4xl md:text-6xl font-syne font-black text-(--text) leading-tight">{p.name}</h2>
                   </div>
                   <button onClick={() => setSelectedProject(null)} className="w-12 h-12 flex items-center justify-center border border-(--border) hover:bg-(--text) hover:text-(--bg) transition-all">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    <X className="h-5 w-5" />
                   </button>
                 </div>
                 
@@ -90,6 +223,11 @@ export default function ProjectsView() {
                         <h4 className="font-black font-syne text-xs uppercase tracking-widest mb-4 text-(--text)">The Challenge</h4>
                         <p className="text-(--text-muted) leading-relaxed text-base">{p.context}</p>
                       </div>
+
+                      <div>
+                        <h4 className="font-black font-syne text-xs uppercase tracking-widest mb-4 text-(--text)">Architectural Design Diagram</h4>
+                        <ArchitectureDiagram project={p} />
+                      </div>
                       
                       <div>
                         <h4 className="font-black font-syne text-xs uppercase tracking-widest mb-4 text-(--text)">Solution Architecture</h4>
@@ -99,16 +237,16 @@ export default function ProjectsView() {
                   </div>
 
                   <div className="space-y-10">
-                    <div className="bg-white border border-(--border) p-8">
-                      <h4 className="font-black font-syne text-[10px] uppercase tracking-widest mb-6 text-(--accent)">Technical Stack</h4>
+                    <div className="shine-surface bg-white border border-(--border) p-8">
+                      <h4 className="font-black font-syne text-[10px] uppercase tracking-widest mb-6" style={{ color: selectedVisual?.color }}>Technical Stack</h4>
                       <div className="flex flex-wrap gap-2">
                         {p.stack.map((s, idx) => (
-                          <span key={idx} className="font-mono text-[10px] px-3 py-1.5 bg-(--bg) border border-(--border) text-(--text-muted) uppercase font-bold tracking-tighter">{s}</span>
+                          <span key={idx} className="font-mono text-[10px] px-3 py-1.5 bg-(--bg) border border-(--border) text-(--text-muted) uppercase font-bold tracking-tighter" style={{ boxShadow: `0 0 18px ${selectedVisual?.color}16` }}>{s}</span>
                         ))}
                       </div>
                     </div>
 
-                    <div className="bg-(--text) text-(--bg) p-8">
+                    <div className="shine-surface bg-(--text) text-(--bg) p-8" style={{ boxShadow: selectedVisual ? `0 0 48px ${selectedVisual.color}24` : undefined }}>
                       <h4 className="font-black font-syne text-[10px] uppercase tracking-widest mb-4 opacity-50">Quantitative Impact</h4>
                       <p className="text-lg font-medium leading-relaxed italic">{p.outcome}</p>
                     </div>

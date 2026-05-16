@@ -7,28 +7,77 @@
 }
 
 :root {
-  --bg: #F9F7F2; /* Warm Cream */
-  --surface: #FFFFFF;
-  --text: #2C2C2C; /* Soft Charcoal */
-  --text-muted: #6B7280;
-  --accent: #4A90E2; /* Muted Blue */
-  --accent2: #A5B4FC;
-  --border: rgba(44, 44, 44, 0.08);
-  --grid-opacity: 0.04;
+  --bg: #070B12;
+  --surface: #101826;
+  --surface-2: #152236;
+  --text: #EEF6F8;
+  --text-muted: #94A3B8;
+  --accent: #38BDF8;
+  --accent-rgb: 56, 189, 248;
+  --accent2: #F59E0B;
+  --accent3: #34D399;
+  --border: rgba(238, 246, 248, 0.11);
+  --grid-opacity: 0.08;
   --font-inter: 'Inter', sans-serif;
   --font-syne: 'Syne', sans-serif;
   --font-playfair: 'Playfair Display', serif;
+}
+
+html {
+  color-scheme: dark;
 }
 
 body {
   background-color: var(--bg);
   color: var(--text);
   background-image: 
+    radial-gradient(circle at 18% 12%, rgba(56, 189, 248, 0.14), transparent 32rem),
+    radial-gradient(circle at 88% 78%, rgba(245, 158, 11, 0.09), transparent 28rem),
     linear-gradient(var(--border) 1px, transparent 1px),
     linear-gradient(90deg, var(--border) 1px, transparent 1px);
   background-size: 40px 40px;
   background-attachment: fixed;
   font-family: var(--font-sans);
+}
+
+::selection {
+  background: rgba(var(--accent-rgb), 0.28);
+  color: var(--text);
+}
+
+.bg-white {
+  background-color: var(--surface);
+}
+
+.bg-white\/20 {
+  background-color: color-mix(in srgb, var(--surface) 35%, transparent);
+}
+
+.bg-white\/40,
+.bg-white\/50,
+.bg-white\/60,
+.bg-white\/65,
+.bg-white\/70,
+.bg-white\/75,
+.bg-white\/90 {
+  background-color: color-mix(in srgb, var(--surface) 82%, transparent);
+}
+
+.hover\:bg-white:hover,
+.hover\:bg-gray-50:hover {
+  background-color: var(--surface-2);
+}
+
+.bg-gray-50 {
+  background-color: var(--surface-2);
+}
+
+.placeholder\:text-gray-300::placeholder {
+  color: color-mix(in srgb, var(--text-muted) 72%, transparent);
+}
+
+.text-gray-400 {
+  color: var(--text-muted);
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -54,5 +103,106 @@ body {
     filter: blur(120px); 
     opacity: 0.15; 
     animation: float 20s infinite alternate;
+  }
+
+  .stellar-node {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .stellar-node::before,
+  .stellar-node::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.72), transparent);
+    filter: blur(0.5px);
+  }
+
+  .stellar-node::before {
+    width: 2.3rem;
+    height: 1px;
+  }
+
+  .stellar-node::after {
+    width: 1px;
+    height: 2.3rem;
+  }
+
+  .stellar-core {
+    position: relative;
+    width: 0.28rem;
+    height: 0.28rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    background: radial-gradient(circle at 35% 28%, #ffffff, #ffffff 42%, rgba(var(--accent-rgb), 0.78));
+    box-shadow:
+      0 0 22px rgba(255, 255, 255, 1),
+      0 0 62px rgba(238, 246, 248, 0.96),
+      0 0 118px rgba(var(--accent-rgb), 0.56);
+  }
+
+  .stellar-node-blue::before,
+  .stellar-node-blue::after {
+    background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb), 0.9), transparent);
+  }
+
+  .stellar-core-blue {
+    position: relative;
+    width: 0.34rem;
+    height: 0.34rem;
+    border-radius: 999px;
+    border: 1px solid rgba(186, 230, 253, 1);
+    background: radial-gradient(circle at 35% 28%, #ffffff, #7dd3fc 38%, rgba(var(--accent-rgb), 1) 100%);
+    filter: brightness(1.7);
+    box-shadow:
+      0 0 10px rgba(255, 255, 255, 0.75),
+      0 0 26px rgba(var(--accent-rgb), 0.82),
+      0 0 54px rgba(var(--accent-rgb), 0.42);
+  }
+
+  .signal-dot {
+    display: inline-block;
+    width: 0.34rem;
+    height: 0.34rem;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    background: currentColor;
+    filter: brightness(1.7);
+    box-shadow:
+      0 0 9px currentColor,
+      0 0 24px color-mix(in srgb, currentColor 74%, transparent),
+      0 0 48px color-mix(in srgb, currentColor 34%, transparent);
+  }
+
+  .shine-surface {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shine-surface::after {
+    content: "";
+    position: absolute;
+    inset: -40% auto -40% -65%;
+    width: 42%;
+    transform: rotate(18deg);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+    transition: left 700ms ease;
+    pointer-events: none;
+  }
+
+  .shine-surface:hover::after {
+    left: 118%;
+  }
+
+  .symbol-tile {
+    box-shadow:
+      inset 0 0 0 1px rgba(238, 246, 248, 0.08),
+      0 0 34px rgba(var(--accent-rgb), 0.18);
   }
 }

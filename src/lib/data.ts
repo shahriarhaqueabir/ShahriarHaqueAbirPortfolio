@@ -68,62 +68,205 @@ export const CONFIG = {
       ]
     }
   ],
-  projects: [
-    { 
-      name: "Network Discovery & Topology Tool", 
-      desc: "Python-based scanner to identify live hosts and map device relationships.",
-      context: "Required a reliable method to map and document undocumented network environments to support infrastructure analysis.",
-      implementation: "Developed a Python script using nmap integration to systematically scan designated IP ranges. Processed the results to generate JSON-based topology outputs and plotted relationships using NetworkX.",
-      outcome: "Improved visibility into network structure, allowing for faster troubleshooting and architectural review.",
-      stack: ["Python", "NetworkX", "JSON", "nmap"]
-    },
-    { 
-      name: "AI Knowledge Assistant (RAG API)", 
-      desc: "FastAPI-based RAG system using Qdrant and PostgreSQL for source-grounded answers.",
-      context: "Needed to test and implement Retrieval-Augmented Generation (RAG) for querying internal documentation accurately.",
-      implementation: "Built a FastAPI service connected to a Qdrant vector database and a PostgreSQL backend. Used Docker Compose to package the services into a reproducible deployment.",
-      outcome: "Created a reliable, reproducible API capable of answering queries based strictly on uploaded sources, minimizing hallucination.",
-      stack: ["FastAPI", "Qdrant", "PostgreSQL", "Docker"] 
-    },
-    { 
-      name: "GTM Workflow Automation", 
-      desc: "Automated lead enrichment and personalized outreach using n8n, Clay, and WeFlow.",
-      context: "Manual prospecting, data enrichment, and lead routing processes were causing significant delays and operational overhead.",
-      implementation: "Configured an n8n workflow to orchestrate data between Clay (for enrichment) and WeFlow. Built custom API integrations to ensure seamless data handoffs.",
-      outcome: "Significantly reduced manual data entry and accelerated the prospecting cycle through automated, personalized outreach.",
-      stack: ["n8n", "Clay", "WeFlow", "APIs"] 
-    },
-    { 
-      name: "Operations Dashboard & Forecasting", 
-      desc: "Dashboard to visualize KPIs, track trends, and provide operational overviews.",
-      context: "Management required better visibility into ticket volumes, resolution times, and operational bottlenecks.",
-      implementation: "Built a Python-based reporting script utilizing SQL for data extraction and Matplotlib for data visualization. Added forecasting views based on historical data.",
-      outcome: "Provided clear operational visibility, improving capacity planning and team resource allocation.",
-      stack: ["Python", "Matplotlib", "SQL"] 
-    },
-    { 
-      name: "Self-Hosted AI & Automation Stack", 
-      desc: "Modular Docker-based orchestration for local AI, RAG, and workflow automation.",
-      context: "Need for a secure, private, and reproducible environment to run LLMs, vector databases, and automation tools locally.",
-      implementation: "Engineered a complex multi-container stack using Docker Compose, integrating Open WebUI, Ollama, Qdrant, n8n, and SearXNG. Implemented security hardening with cap_drop and custom healthchecks.",
-      outcome: "Deployed a production-ready local AI ecosystem with persistent memory, automated RAG pipelines, and private search capabilities.",
-      stack: ["Docker Compose", "PostgreSQL", "Valkey", "Qdrant", "n8n"] 
-    },
-    { 
-      name: "Nuka: The Design Laboratory", 
-      desc: "An AI-powered, cinematic portfolio experience with local LLM integration.",
-      context: "Traditional resume websites lack interactivity and fail to demonstrate technical depth in real-time.",
-      implementation: "Built a multi-modal exploration engine using React 19 and Next.js. Integrated a local SmolLM2 model via Web Workers for private, on-device AI synthesis. Designed a custom 'Editorial Cream' design system with Framer Motion.",
-      outcome: "A live demonstration of engineering and design, featuring real-time data visualization and an AI-driven command center.",
-      stack: ["React 19", "Next.js", "Transformers.js", "Tailwind 4", "Framer Motion"] 
-    }
-  ],
+projects: [
+  { 
+    name: "Network Discovery & Topology Mapping Tool", 
+    desc: "Python-based network discovery utility for identifying live hosts and visualizing device relationships.",
+    
+    context: "Infrastructure environments lacked centralized documentation, making troubleshooting and architecture analysis difficult.",
+
+    implementation: "Developed a Python application integrating nmap for subnet scanning and host discovery. Processed scan outputs into structured JSON and used NetworkX to generate relationship and topology visualizations.",
+
+    outcome: "Improved network visibility and reduced manual effort required for infrastructure documentation and troubleshooting.",
+
+    stack: ["Python", "nmap", "NetworkX", "JSON"]
+  },
+
+  { 
+    name: "AI Knowledge Assistant (RAG API)", 
+    desc: "Retrieval-Augmented Generation API for source-grounded question answering using vector search.",
+
+    context: "Needed an environment to evaluate RAG architectures for accurate querying of internal knowledge sources.",
+
+    implementation: "Built a FastAPI backend integrated with Qdrant for vector retrieval and PostgreSQL for metadata storage. Containerized the application using Docker Compose for reproducible deployment and local development.",
+
+    outcome: "Delivered a reproducible API capable of answering questions from indexed sources while reducing unsupported or hallucinated responses.",
+
+    stack: ["FastAPI", "Qdrant", "PostgreSQL", "Docker Compose"]
+  },
+
+  { 
+    name: "GTM Workflow Automation Platform", 
+    desc: "Automated lead enrichment and workflow orchestration for outbound sales processes.",
+
+    context: "Manual prospect research and lead routing created operational bottlenecks and delayed outreach workflows.",
+
+    implementation: "Designed automation pipelines in n8n to orchestrate data movement between enrichment platforms and CRM workflows. Integrated APIs to automate lead enrichment, routing, and personalized actions.",
+
+    outcome: "Reduced manual administrative effort and accelerated lead qualification and outreach processes.",
+
+    stack: ["n8n", "Clay", "WeFlow", "REST APIs"]
+  },
+
+  { 
+    name: "Operations Analytics & Forecasting Dashboard", 
+    desc: "Operational reporting dashboard for KPI tracking and trend analysis.",
+
+    context: "Teams required greater visibility into ticket trends, workload distribution, and operational performance metrics.",
+
+    implementation: "Developed reporting workflows using SQL for data extraction and Python for transformation and visualization. Implemented historical trend analysis and forecasting views using Matplotlib.",
+
+    outcome: "Improved operational reporting and supported resource planning through clearer visibility into performance trends.",
+
+    stack: ["Python", "SQL", "Matplotlib"]
+  },
+
+  { 
+    name: "Self-Hosted AI & Automation Platform", 
+    desc: "Containerized local AI ecosystem for workflow automation, private search, and retrieval systems.",
+
+    context: "Required a secure and reproducible environment for running local language models and automation services without relying on external platforms.",
+
+    implementation: "Built a multi-service Docker Compose deployment integrating Ollama, Open WebUI, Qdrant, n8n, PostgreSQL, Valkey, and SearXNG. Added container health checks and service isolation for operational stability.",
+
+    outcome: "Created a modular local AI environment supporting private inference, retrieval workflows, and automated pipelines.",
+
+    stack: ["Docker Compose", "Ollama", "Qdrant", "PostgreSQL", "n8n", "SearXNG"]
+  },
+
+  { 
+    name: "Hawkward Portfolio", 
+    desc: "AI-enabled interactive portfolio experience demonstrating engineering projects through dynamic content generation.",
+
+    context: "Traditional portfolio websites often fail to communicate technical depth or provide interactive demonstrations of capabilities.",
+
+    implementation: "Built an interactive portfolio using React and Next.js with local AI inference through Transformers.js and Web Workers. Designed a custom design system and implemented motion-based interactions using Framer Motion.",
+
+    outcome: "Created a portfolio experience combining storytelling, technical demonstrations, and AI-assisted exploration.",
+
+    stack: ["React", "Next.js", "Transformers.js", "Tailwind CSS", "Framer Motion"]
+  },
+
+  {
+    name: "B2B SaaS Onboarding & Support Operating Model",
+    desc: "Customer-facing technical operating model for onboarding, configuration support, QA feedback, and production continuity.",
+
+    context: "International SMB clients needed reliable onboarding, clear technical guidance, and fast resolution of configuration, database, and integration issues in live SaaS environments.",
+
+    implementation: "Acted as the primary technical contact across pre-sales, onboarding, training, support, documentation, and SLA-driven issue resolution. Coordinated customer tickets end to end and fed recurring bug patterns into structured manual QA and regression testing.",
+
+    outcome: "Onboarded 7+ international SMB clients in the first 2 years, managed roughly 40 live cases per week, and helped reduce average bug reports by 30% per release.",
+
+    stack: ["B2B SaaS", "Customer Onboarding", "Production Support", "Manual QA", "Technical Documentation"]
+  },
+
+  {
+    name: "Optical Fiber Solarization Research System",
+    desc: "Research and measurement workflow for characterizing solarization in glass optical fiber bundles under high-power UV irradiation.",
+
+    context: "Optical systems exposed to high-power UV light required technical characterization to understand material behavior, degradation patterns, and measurement reliability.",
+
+    implementation: "Designed and executed thesis research across optical fiber handling, splicing, gluing, hardware setup, data collection, analysis, and technical presentation of findings.",
+
+    outcome: "Delivered a complete research body covering experimental planning, optical system handling, data analysis, and technical reporting.",
+
+    stack: ["Optical Fiber", "UV Testing", "Hardware Prototyping", "Data Analysis", "Technical Reporting"]
+  },
+
+  {
+    name: "Optical Fiber QA/QC Assembly Workflow",
+    desc: "Quality assurance and precision assembly workflow for optical fiber cable preparation and inspection.",
+
+    context: "Fiber cable assemblies required repeatable QA/QC practices across polishing, tubing, gluing, connectors, and core/cladding handling.",
+
+    implementation: "Managed quality assurance and control tasks for optical fiber cable assembly, including precision tubing, gluing, polishing, and connector preparation.",
+
+    outcome: "Supported consistent optical fiber assembly quality through disciplined process execution and inspection.",
+
+    stack: ["QA/QC", "Optical Fiber", "Cable Assembly", "Precision Gluing", "Process Control"]
+  },
+
+  {
+    name: "Engineering Training Coordination Program",
+    desc: "Technical training operations program for coordinating curriculum, scheduling, onboarding, and development tracking.",
+
+    context: "Large engineering training groups needed structured onboarding, curriculum coordination, and clear tracking of training effectiveness.",
+
+    implementation: "Coordinated technical training programs for 60+ engineers across 6 training groups, covering curriculum development, scheduling, onboarding processes, and effectiveness tracking.",
+
+    outcome: "Improved training organization and supported professional development through repeatable coordination and reporting practices.",
+
+    stack: ["Training Operations", "Curriculum Planning", "Engineer Onboarding", "Scheduling", "Reporting"]
+  }
+],
   skills: [
-    { group: "Core Competencies", items: ["Linux System Administration", "Cross-functional Team Leadership", "Cloud Administration", "B2B SaaS Operations", "Technical Support Engineering"] },
-    { group: "Customer / Consulting", items: ["Technical Discovery", "Solution Consultation", "Customer Onboarding", "PoC Coordination", "SLA Management", "Requirement Engineering"] },
-    { group: "Technical / Systems", items: ["API Integration", "Workflow Automation", "Network Operations", "Optical Fiber Tech", "Manual QA / Regression", "Incident Triage"] },
-    { group: "Languages", items: ["English (Native/Bilingual)", "German (Professional Working)", "Bengali (Native)"] },
-    { group: "Certifications", items: ["Networking Foundations", "Cisco Scaling Networks", "Linux System Engineer", "Goethe-Zertifikat B1"] }
+  {
+    group: "Core Competencies",
+    items: [
+      "Linux Administration",
+      "Cloud Infrastructure",
+      "Technical Support Engineering",
+      "B2B SaaS Operations",
+      "Cross-functional Collaboration",
+      "Process Optimization"
+    ]
+  },
+
+  {
+    group: "Solutions & Customer Engineering",
+    items: [
+      "Technical Discovery",
+      "Solution Consulting",
+      "Customer Onboarding",
+      "Proof of Concept (PoC)",
+      "Requirement Gathering",
+      "Stakeholder Management",
+      "SLA Management"
+    ]
+  },
+
+  {
+    group: "Systems & Automation",
+    items: [
+      "API Integration",
+      "Workflow Automation",
+      "Network Operations",
+      "Incident Management",
+      "Manual QA & Regression Testing",
+      "Infrastructure Troubleshooting"
+    ]
+  },
+
+  {
+    group: "Tools & Technologies",
+    items: [
+      "Python",
+      "PydanticAI",
+      "LangGraph",
+      "Docker",
+      "PostgreSQL",
+      "Qdrant",
+      "Open WebUI",
+      "Open Telemetry",
+      "n8n",
+      "FastAPI",
+      "Git",
+      "Linux"
+    ]
+  }
+],
+  languages: [
+    "English (Native/Bilingual)",
+    "German (Fluent)",
+    "Bengali (Native)",
+    "Hindi (Conversational)"
+  ],
+  certifications: [
+    "Cisco Scaling Networks",
+    "Networking Foundations",
+    "Linux System Engineer",
+    "Cyber Security Foundation",
+    "Goethe-Zertifikat B1"
   ],
   education: [
     { degree: "Master of Science - MSc, Information and Communication Engineering", school: "Technische Hochschule Mittelhessen, Germany", period: "2016 – 2020" },

@@ -1,0 +1,112 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { ExternalLink, Link, Mail, MapPin, ShieldCheck } from "lucide-react";
+import GuidedNext from "@/components/GuidedNext";
+import { CONFIG } from "@/lib/data";
+import type { ViewKey } from "@/lib/types";
+
+const contactIcons: Record<string, typeof Mail> = {
+  Email: Mail,
+  LinkedIn: Link,
+  GitHub: Link,
+  Location: MapPin,
+};
+
+export default function ContactView({ setView }: { setView: (view: ViewKey) => void }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -20 }}
+      className="pt-10 pb-20 max-w-5xl"
+    >
+      <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">— Transmission Channel</div>
+      <h2 className="text-5xl md:text-7xl font-syne font-black mb-10 text-(--text) leading-[0.9]">
+        Establish <span className="italic font-playfair font-normal text-(--text-muted) lowercase tracking-normal">Link.</span>
+      </h2>
+
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-px bg-(--border) border border-(--border)">
+        <section className="bg-(--bg) p-10 md:p-12 flex flex-col justify-between min-h-[420px] relative overflow-hidden">
+          <div className="absolute right-8 top-24 h-40 w-40">
+            {[0, 1, 2].map((ring) => (
+              <motion.span
+                key={ring}
+                className="absolute inset-0 rounded-full border border-(--accent)/25"
+                animate={{ scale: [0.4, 1.1], opacity: [0.7, 0] }}
+                transition={{ duration: 3, delay: ring * 0.7, repeat: Infinity, ease: "easeOut" }}
+              />
+            ))}
+            <span className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-(--accent)"></span>
+          </div>
+          <div>
+            <div className="font-mono text-[10px] text-(--accent) uppercase tracking-widest mb-6">Identity Packet</div>
+            <h3 className="text-4xl font-syne font-black text-(--text) leading-none mb-6">{CONFIG.name}</h3>
+            <div className="flex flex-wrap gap-2 mb-8">
+              {CONFIG.taglines.map((tagline) => (
+                <span key={tagline} className="border border-(--accent)/30 text-(--accent) bg-(--accent)/5 px-3 py-1.5 rounded-sm text-[9px] font-bold uppercase tracking-widest">
+                  {tagline}
+                </span>
+              ))}
+            </div>
+            <p className="text-sm text-(--text-muted) leading-relaxed max-w-md">
+              Open to technical consulting, implementation, support engineering, and systems-focused collaboration.
+            </p>
+          </div>
+
+          <div className="mt-12 border-t border-(--border) pt-8">
+            <div className="flex items-start gap-4">
+              <div className="w-10 h-10 border border-(--border) bg-white flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-4 h-4 text-(--accent)" />
+              </div>
+              <div>
+                <div className="font-mono text-[9px] text-(--accent) uppercase tracking-widest mb-2">Work Authorization</div>
+                <div className="text-sm font-bold text-(--text)">{CONFIG.workAuth}</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-white p-6 md:p-8 relative overflow-hidden">
+          <div className="absolute inset-y-0 left-0 w-1 bg-(--accent)"></div>
+          <div className="grid grid-cols-1 gap-px bg-(--border) border border-(--border)">
+            {CONFIG.contact.map((item, index) => {
+              const Icon = contactIcons[item.label] || ExternalLink;
+              const content = (
+                <div className="bg-white hover:bg-(--bg) p-6 md:p-8 transition-colors group flex items-center justify-between gap-6">
+                  <div className="flex items-start gap-5 min-w-0">
+                    <div className="w-11 h-11 border border-(--border) bg-(--bg) flex items-center justify-center shrink-0 group-hover:border-(--accent) transition-colors">
+                      <Icon className="w-4 h-4 text-(--accent)" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="font-mono text-[9px] text-(--text-muted) uppercase tracking-[0.2em] mb-2">
+                        {String(index + 1).padStart(2, "0")} / {item.label}
+                      </div>
+                      <div className="text-sm font-syne font-black leading-snug text-(--text) [overflow-wrap:anywhere] xl:text-base">{item.value}</div>
+                    </div>
+                  </div>
+                  {item.href && <ExternalLink className="w-4 h-4 text-(--text-muted) group-hover:text-(--accent) transition-colors shrink-0" />}
+                </div>
+              );
+
+              return item.href ? (
+                <a key={item.label} href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} rel={item.href.startsWith("http") ? "noreferrer" : undefined}>
+                  {content}
+                </a>
+              ) : (
+                <div key={item.label}>{content}</div>
+              );
+            })}
+          </div>
+
+          <div className="mt-8 font-mono text-[9px] text-(--text-muted) uppercase tracking-widest flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <span>Protocol: Direct contact preferred</span>
+            <span>Status: Available for qualified conversations</span>
+          </div>
+        </section>
+      </div>
+
+      <GuidedNext currentView="contact" onNavigate={setView} />
+    </motion.div>
+  );
+}
