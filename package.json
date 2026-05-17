@@ -9,7 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@huggingface/transformers": "^4.2.0",
+    "@mlc-ai/web-llm": "^0.2.83",
     "chart.js": "^4.5.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",
@@ -20,6 +20,11 @@
     "react-chartjs-2": "^5.3.1",
     "react-dom": "19.2.4",
     "tailwind-merge": "^3.6.0"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "8.5.10"
+    }
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",

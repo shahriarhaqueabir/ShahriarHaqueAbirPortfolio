@@ -1,8 +1,8 @@
 # Hawkward Website
 
-Hawkward is Shahriar Haque Abir's AI-enabled portfolio: a cinematic, privacy-first portfolio experience built with Next.js, React, Tailwind CSS, Framer Motion, Chart.js, and Transformers.js.
+Hawkward is Shahriar Haque Abir's AI-enabled portfolio: a cinematic, privacy-first portfolio experience built with Next.js, React, Tailwind CSS, Framer Motion, Chart.js, and WebLLM.
 
-The site combines a multi-view portfolio explorer with an on-device AI assistant. The assistant runs in the browser through Transformers.js, so portfolio exploration does not require an external LLM API key.
+The site combines a multi-view portfolio explorer with an on-device AI tour guide. The guide runs Llama 3.2 1B in the browser through WebLLM, so portfolio exploration does not require an external LLM API key.
 
 ## Stack
 
@@ -11,7 +11,7 @@ The site combines a multi-view portfolio explorer with an on-device AI assistant
 - Tailwind CSS 4
 - Framer Motion
 - Chart.js
-- Transformers.js
+- WebLLM with Llama 3.2 1B
 
 ## Development
 

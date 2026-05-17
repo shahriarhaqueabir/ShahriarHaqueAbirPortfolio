@@ -128,6 +128,8 @@ type CommandResult = {
 
 const fillerWords = new Set(["a", "an", "and", "are", "for", "i", "in", "me", "of", "on", "show", "the", "to", "you", "your"]);
 const followUpCommands = new Set(["more", "show more", "tell me more", "continue", "go deeper", "expand", "details", "more details"]);
+const navigationVerbs = ["go to", "open", "navigate", "take me to", "show me", "show", "load", "switch to", "jump to"];
+const questionStarters = ["how", "what", "why", "who", "where", "when", "can", "could", "would", "does", "do", "is", "are", "explain", "compare", "relate", "tell me about"];
 
 function tokenize(text: string) {
   return text
@@ -190,6 +192,23 @@ function detectView(input: string): { view: ViewKey | null; score: number } {
   return { view: bestView, score: bestScore };
 }
 
+function isQuestionLike(input: string) {
+  const text = input.toLowerCase().trim();
+  return text.endsWith("?") || questionStarters.some((starter) => text === starter || text.startsWith(`${starter} `));
+}
+
+function isExplicitNavigationCommand(input: string, view: ViewKey | null, score: number) {
+  const text = input.toLowerCase().trim();
+  if (!view || score < 2) return false;
+  if (followUpCommands.has(text)) return true;
+
+  const hasNavigationVerb = navigationVerbs.some((verb) => text === verb || text.startsWith(`${verb} `));
+  if (!hasNavigationVerb) return false;
+
+  if (isQuestionLike(text) && !text.startsWith("show me") && !text.startsWith("take me to")) return false;
+  return true;
+}
+
 export function useCommandRouter() {
   const [conversationState, setConversationState] = useState<ConversationState>({
     currentView: "hero",
@@ -224,7 +243,7 @@ export function useCommandRouter() {
     }
 
     const { view, score } = detectView(lowerInput);
-    if (view && score >= 2) {
+    if (isExplicitNavigationCommand(lowerInput, view, score) && view) {
       setActiveView(view);
       return { navigated: true, view, score };
     }

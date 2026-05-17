@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 type BootScreenProps = {
   progress: number;
   isReady: boolean;
+  localAiPaused?: boolean;
   onEnter: () => void;
 };
 
@@ -13,12 +14,12 @@ const lines = [
   { id: "system", label: "DESIGN STATUS", status: "OK" },
   { id: "record", label: "CORE OPTIMIZATION", status: "OK" },
   { id: "synthesis", label: "BACKEND PROTOCOLS", status: "OK" },
-  { id: "ai", label: "AI ENGINE (SmolLM2-360M)", status: null },
+  { id: "ai", label: "AI GUIDE (LLAMA 3.2 1B)", status: null },
 ];
 
 const FINAL_REVEAL_STEP = lines.length * 2;
 
-export default function BootScreen({ progress, isReady, onEnter }: BootScreenProps) {
+export default function BootScreen({ progress, isReady, localAiPaused = false, onEnter }: BootScreenProps) {
   const hasEnteredRef = useRef(false);
   const [revealStep, setRevealStep] = useState(0);
   const [aiDisplayProgress, setAiDisplayProgress] = useState(0);
@@ -117,7 +118,7 @@ export default function BootScreen({ progress, isReady, onEnter }: BootScreenPro
                     transition={{ duration: 0.25, ease: "easeOut" }}
                     className={line.status === "OK" || aiDisplayProgress === 100 ? "text-(--accent)" : "text-(--text-muted)"}
                   >
-                    {line.status ?? `${aiDisplayProgress}%`}
+                    {line.status ?? (localAiPaused ? "PAUSED" : `${aiDisplayProgress}%`)}
                   </motion.span>
                 </div>
               );
@@ -137,7 +138,7 @@ export default function BootScreen({ progress, isReady, onEnter }: BootScreenPro
 
           <div className="px-5 py-4 border-t border-(--border) flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <span className="text-[9px] tracking-[0.18em]">
-              AI {isReady ? "ONLINE" : "CALIBRATING"} / BROWSING AVAILABLE
+              AI {localAiPaused ? "PAUSED" : isReady ? "ONLINE" : "CALIBRATING"} / BROWSING AVAILABLE
             </span>
             <button
               type="button"

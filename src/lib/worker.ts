@@ -1,50 +1,54 @@
-import { pipeline, env, TextGenerationPipeline } from '@huggingface/transformers';
+import { CreateMLCEngine, type ChatCompletionMessageParam, type InitProgressReport, type MLCEngine } from "@mlc-ai/web-llm";
 
-// Skip local model check since we are running in a browser
-env.allowLocalModels = false;
+const MODEL_ID = "Llama-3.2-1B-Instruct-q4f16_1-MLC";
 
-class PipelineSingleton {
-    static task = 'text-generation';
-    static model = 'HuggingFaceTB/SmolLM2-360M-Instruct';
-    static instance: TextGenerationPipeline | null = null;
+class LlamaEngineSingleton {
+  static instance: MLCEngine | null = null;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    static async getInstance(progress_callback?: any) {
-        if (this.instance === null) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            this.instance = await pipeline(this.task as any, this.model, {
-                progress_callback,
-                device: 'webgpu' // Will fallback to wasm if webgpu isn't available
-            }) as TextGenerationPipeline;
-        }
-        return this.instance;
+  static async getInstance() {
+    if (this.instance === null) {
+      this.instance = await CreateMLCEngine(MODEL_ID, {
+        initProgressCallback: (report: InitProgressReport) => {
+          self.postMessage({
+            status: "progress",
+            data: {
+              progress: Math.round((report.progress ?? 0) * 100),
+              text: report.text,
+              model: MODEL_ID,
+            },
+          });
+        },
+      });
     }
+
+    return this.instance;
+  }
 }
 
-// Listen for messages from the main thread
-self.addEventListener('message', async (event: MessageEvent) => {
-    const { messages } = event.data;
+self.addEventListener("message", async (event: MessageEvent<{ messages: ChatCompletionMessageParam[]; warmup?: boolean }>) => {
+  const { messages, warmup } = event.data;
 
-    try {
-        // Load the model
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const generator = await PipelineSingleton.getInstance((x: any) => {
-            self.postMessage({ status: 'progress', data: x });
-        });
+  try {
+    const engine = await LlamaEngineSingleton.getInstance();
 
-        // Generate response
-        const output = await generator(messages, {
-            max_new_tokens: 256,
-            temperature: 0.7,
-            do_sample: true,
-        });
-
-        self.postMessage({
-            status: 'complete',
-            output: output
-        });
-    } catch (err: unknown) {
-        const error = err as Error;
-        self.postMessage({ status: 'error', error: error.message });
+    if (warmup) {
+      self.postMessage({ status: "ready", model: MODEL_ID });
+      return;
     }
+
+    const output = await engine.chat.completions.create({
+      messages,
+      temperature: 0.35,
+      max_tokens: 420,
+    });
+
+    self.postMessage({
+      status: "complete",
+      text: output.choices[0]?.message?.content ?? "",
+      model: MODEL_ID,
+    });
+  } catch (err: unknown) {
+    const error = err as Error;
+    self.postMessage({ status: "error", error: error.message, model: MODEL_ID });
+  }
 });

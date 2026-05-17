@@ -45,6 +45,7 @@ function TypewriterText({ text }: { text: string }) {
 type PortfolioSidebarProps = {
   messages: Message[];
   isReady: boolean;
+  localAiPaused: boolean;
   progress: number;
   activeView: ViewKey;
   showReadyToast: boolean;
@@ -56,6 +57,7 @@ type PortfolioSidebarProps = {
 export default function PortfolioSidebar({
   messages,
   isReady,
+  localAiPaused,
   progress,
   activeView,
   showReadyToast,
@@ -93,14 +95,14 @@ export default function PortfolioSidebar({
           </motion.div>
           <div className="min-w-0">
             <h2 className="text-sm font-syne font-black uppercase tracking-widest text-(--text) flex items-center gap-2 truncate">
-              Shahriar&apos;s Portfolio <Cpu className={`w-3 h-3 shrink-0 ${isReady ? "text-green-500" : "text-orange-500"}`} />
+              Shahriar&apos;s Portfolio <Cpu className={`w-3 h-3 shrink-0 ${isReady && !localAiPaused ? "text-green-500" : "text-orange-500"}`} />
             </h2>
             <p className="text-[9px] font-mono text-(--accent) uppercase tracking-tighter">AI Enabled Portfolio</p>
           </div>
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          <span className="text-[8px] font-mono text-(--text-muted) uppercase">{isReady ? "Online" : "Calibrating"}</span>
-          <div className={`w-2 h-2 rounded-full ${isReady ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse" : "bg-orange-500 animate-bounce"}`} />
+          <span className="text-[8px] font-mono text-(--text-muted) uppercase">{localAiPaused ? "Paused" : isReady ? "Online" : "Calibrating"}</span>
+          <div className={`w-2 h-2 rounded-full ${isReady && !localAiPaused ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse" : "bg-orange-500 animate-bounce"}`} />
         </div>
       </div>
 
@@ -115,7 +117,7 @@ export default function PortfolioSidebar({
             <CheckCircle2 className="w-5 h-5 text-green-600" />
             <div>
               <div className="text-[10px] font-bold text-green-800 uppercase tracking-wider">System Operational</div>
-              <div className="text-[9px] text-green-700">360M model loaded. Ready for synthesis.</div>
+              <div className="text-[9px] text-green-700">Llama 3.2 1B loaded. Ready for guided synthesis.</div>
             </div>
           </motion.div>
         )}
@@ -188,7 +190,7 @@ export default function PortfolioSidebar({
             value={input}
             onChange={(event) => setInput(event.target.value)}
             onKeyDown={(event) => event.key === "Enter" && handleSubmit()}
-            placeholder={isReady ? "Execute command..." : `Calibrating... ${Math.round(progress)}%`}
+            placeholder={localAiPaused ? "Navigation command..." : isReady ? "Execute command..." : `Calibrating... ${Math.round(progress)}%`}
             className="w-full bg-white border border-(--border) rounded-sm p-4 pl-10 pr-12 text-xs font-mono focus:outline-none focus:border-(--accent) transition-all text-(--text) placeholder:text-gray-300"
           />
           <Terminal className="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
@@ -203,8 +205,8 @@ export default function PortfolioSidebar({
         </div>
         <div className="mt-4 flex justify-between items-center text-[8px] font-mono text-gray-400 uppercase tracking-widest">
           <span className="flex items-center gap-1">
-            <span className={`w-1 h-1 rounded-full ${isReady ? "bg-green-500" : "bg-orange-500"}`} />
-            {isReady ? "SYSTEM ONLINE" : "AI CALIBRATING"}
+            <span className={`w-1 h-1 rounded-full ${isReady && !localAiPaused ? "bg-green-500" : "bg-orange-500"}`} />
+            {localAiPaused ? "AI PAUSED" : isReady ? "SYSTEM ONLINE" : "AI CALIBRATING"}
           </span>
           <span>OS_VER: 2.0.4-STABLE</span>
         </div>

@@ -31,7 +31,7 @@ const stackCategories = [
   },
   {
     name: "AI Systems & Intelligence",
-    items: ["RAG", "Local LLMs", "Agent Workflows", "Ollama", "Open WebUI", "Transformers.js", "Prompt Engineering", "Multi-Agent Systems", "Context Management", "Tool Calling", "LLM Evaluation", "AI Orchestration", "Hugging Face"],
+    items: ["RAG", "Local LLMs", "Agent Workflows", "Ollama", "Open WebUI", "WebLLM", "Llama 3.2", "Prompt Engineering", "Multi-Agent Systems", "Context Management", "Tool Calling", "LLM Evaluation", "AI Orchestration", "Hugging Face"],
     color: "#F97316",
   },
   {

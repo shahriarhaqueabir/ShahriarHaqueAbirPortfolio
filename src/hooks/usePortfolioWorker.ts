@@ -5,11 +5,18 @@ import { CONFIG } from "@/lib/data";
 import { CAREER_STATES, VIEW_GOALS } from "@/lib/experience-model";
 import type { Message, ViewKey } from "@/lib/types";
 
+const LOCAL_MODEL_LABEL = "Llama 3.2 1B";
+const MAX_CHAT_MESSAGES = 10;
+
 let sharedWorker: Worker | null = null;
 let initialLoadDone = false;
 let initialLoadRequested = false;
 let onboardingQueued = false;
 let initialLoadProgress = 0;
+
+type NavigatorWithMemory = Navigator & {
+  deviceMemory?: number;
+};
 
 type VisitorProfile = {
   name?: string;
@@ -27,6 +34,11 @@ type RouterMemory = {
   visitorType: string | null;
 };
 
+type ChatMessage = {
+  role: "system" | "user" | "assistant";
+  content: string;
+};
+
 function getPortfolioWorker() {
   if (!sharedWorker) {
     sharedWorker = new Worker(new URL("../lib/worker.ts", import.meta.url), {
@@ -37,23 +49,16 @@ function getPortfolioWorker() {
   return sharedWorker;
 }
 
-function parseGeneratedText(output: unknown): string {
-  if (!Array.isArray(output)) return "";
+function shouldPauseLocalAiOnThisDevice() {
+  if (typeof window === "undefined" || typeof navigator === "undefined") return false;
 
-  const first = output[0] as { generated_text?: unknown } | undefined;
-  const rawOutput = first?.generated_text;
+  const navigatorWithMemory = navigator as NavigatorWithMemory;
+  const userAgent = navigator.userAgent || "";
+  const isMobileUserAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(userAgent);
+  const isTouchSmallScreen = window.matchMedia("(pointer: coarse)").matches && window.matchMedia("(max-width: 767px)").matches;
+  const hasTightMemory = typeof navigatorWithMemory.deviceMemory === "number" && navigatorWithMemory.deviceMemory <= 4;
 
-  if (Array.isArray(rawOutput)) {
-    const last = rawOutput[rawOutput.length - 1] as { content?: unknown } | undefined;
-    return typeof last?.content === "string" ? last.content : "";
-  }
-
-  if (typeof rawOutput === "string") {
-    const parts = rawOutput.split(/assistant\n|assistant:/i);
-    return parts[parts.length - 1].trim();
-  }
-
-  return "";
+  return isMobileUserAgent || isTouchSmallScreen || hasTightMemory;
 }
 
 function formatVisitorProfile(visitorProfile: VisitorProfile) {
@@ -76,14 +81,23 @@ function formatRouterMemory(routerMemory?: RouterMemory) {
   ].join("\n");
 }
 
-function formatProjectSummary() {
-  return CONFIG.projects
-    .map((project) => `- ${project.name} -> ${project.stack.slice(0, 3).join(", ")}`)
-    .join("\n");
-}
+function formatDetailedProjects(projectIndexes: number[]) {
+  return projectIndexes
+    .map((index) => {
+      const project = CONFIG.projects[index];
+      if (!project) return "";
 
-function formatSkillSummary() {
-  return CONFIG.skills.map((skill) => `- ${skill.group}: ${skill.items.slice(0, 6).join(", ")}`).join("\n");
+      return [
+        `PROJECT: ${project.name}`,
+        `- Summary: ${project.desc}`,
+        `- Context: ${project.context}`,
+        `- Implementation: ${project.implementation}`,
+        `- Outcome: ${project.outcome}`,
+        `- Stack: ${project.stack.join(", ")}`,
+      ].join("\n");
+    })
+    .filter(Boolean)
+    .join("\n\n");
 }
 
 function formatCareerModel() {
@@ -94,6 +108,69 @@ function formatViewGoals() {
   return Object.entries(VIEW_GOALS)
     .map(([view, goal]) => `- ${view}: ${goal.coreQuestion}`)
     .join("\n");
+}
+
+function getRelevantProjectIndexes(input: string) {
+  const lowerInput = input.toLowerCase();
+  const scored = CONFIG.projects
+    .map((project, index) => {
+      const haystack = [project.name, project.desc, project.context, project.implementation, project.outcome, project.stack.join(" ")].join(" ").toLowerCase();
+      const score = lowerInput
+        .split(/[^a-z0-9]+/)
+        .filter((token) => token.length > 2)
+        .reduce((total, token) => total + (haystack.includes(token) ? 1 : 0), 0);
+      return { index, score };
+    })
+    .sort((a, b) => b.score - a.score);
+
+  const matches = scored.filter((item) => item.score > 0).slice(0, 3).map((item) => item.index);
+  return matches.length ? matches : [1, 4, 5];
+}
+
+function getInteractionMode(input: string) {
+  const lowerInput = input.toLowerCase();
+  if (/tour|guide|walk me through|where should i start|show me around/.test(lowerInput)) return "guided_tour";
+  if (/compare|relate|relationship|map|connect|versus| vs |fit|match/.test(lowerInput)) return "cross_view_reasoning";
+  if (/summary|brief|pitch|synthesis|cv|resume|hire|hiring|recruiter|assessment/.test(lowerInput)) return "synthesis";
+  if (/contact|email|linkedin|github|reach/.test(lowerInput)) return "contact";
+  return "answer";
+}
+
+function buildContextPack(userText: string, activeView: ViewKey, visitorProfile: VisitorProfile, routerMemory?: RouterMemory) {
+  const relevantProjectIndexes = getRelevantProjectIndexes(userText);
+  const mode = getInteractionMode(userText);
+
+  return `INTERACTION MODE: ${mode}
+ACTIVE VIEW: ${activeView}
+VISITOR PROFILE:
+${formatVisitorProfile(visitorProfile)}
+ROUTER MEMORY:
+${formatRouterMemory(routerMemory)}
+
+PORTFOLIO IDENTITY:
+- Name: ${CONFIG.name}
+- Role signals: ${CONFIG.taglines.join(", ")}
+- Location: ${CONFIG.location}
+- Work authorization: ${CONFIG.workAuth}
+- Bio: ${CONFIG.profile}
+
+CAREER LAYERS:
+${formatCareerModel()}
+
+EXPERIENCE:
+${CONFIG.experience.map((e) => `- ${e.role} at ${e.company} (${e.period}): ${e.points.join(" ")}`).join("\n")}
+
+SKILLS:
+${CONFIG.skills.map((skill) => `- ${skill.group}: ${skill.items.join(", ")}`).join("\n")}
+
+RELEVANT PROJECT FILES:
+${formatDetailedProjects(relevantProjectIndexes)}
+
+VIEW MAP:
+${formatViewGoals()}
+
+CONTACT:
+${CONFIG.contact.map((c) => `- ${c.label}: ${c.value}`).join("\n")}`;
 }
 
 function getTypewriterDelay(text: string) {
@@ -142,67 +219,27 @@ function inferVisitorProfile(userText: string, currentProfile: VisitorProfile): 
   return nextProfile;
 }
 
-function buildSystemPrompt(activeView: ViewKey, visitorProfile: VisitorProfile, routerMemory?: RouterMemory) {
-  return `You are the AI assistant for Hawkward, Shahriar's AI-enabled portfolio.
-Your job is to understand each visitor, guide them intelligently, and answer from the portfolio dataset with precision.
+function buildSystemPrompt(userText: string, activeView: ViewKey, visitorProfile: VisitorProfile, routerMemory?: RouterMemory) {
+  return `You are Hawkward's local AI tour guide and portfolio knowledge source, running fully inside the visitor's browser on ${LOCAL_MODEL_LABEL}.
 
-CURRENT STATE:
-- Active View: ${activeView.toUpperCase()}
-- Visitor Intent:
-${formatVisitorProfile(visitorProfile)}
-- Router Memory:
-${formatRouterMemory(routerMemory)}
+Your job is NOT to behave like a static menu. Your job is to reason across Shahriar's experience, projects, skills, and contact data, then guide the visitor with useful next steps.
 
-KNOWLEDGE BASE:
-- Identity: Shahriar is a ${CONFIG.taglines.join(", ")} based in ${CONFIG.location}.
-- Bio: ${CONFIG.profile}
-- Experience: ${CONFIG.experience.map((e) => `${e.role} at ${e.company} (${e.period})`).join("; ")}
-- Projects:
-${formatProjectSummary()}
-- Skills:
-${formatSkillSummary()}
-- Career Layers:
-${formatCareerModel()}
-- View Questions:
-${formatViewGoals()}
-- Contact: ${CONFIG.contact.map((c) => `${c.label}: ${c.value}`).join(", ")}
+LOCAL TOOL CONTEXT:
+${buildContextPack(userText, activeView, visitorProfile, routerMemory)}
 
-PRIORITIES:
-1. Understand the user's intent.
-2. Stay accurate to the portfolio dataset.
-3. Synthesize useful insights from the dataset.
-4. Guide them to the most relevant portfolio view.
-5. Maintain the portfolio's style without letting style reduce clarity.
+HOW TO RESPOND:
+- Answer the user's actual question first.
+- Use the portfolio facts above as your only source of truth.
+- Connect evidence across sections when useful, especially skills -> experience -> projects.
+- Recommend one or two relevant views, but do not pretend you personally navigated unless the UI already did.
+- If the user asks for a tour, create a short path with 3 stops and why each matters.
+- If the user asks for hiring/fit/CV synthesis, write a compact structured brief.
+- If the request is risky, destructive, or unrelated to the portfolio, politely redirect to what this assistant can do.
+- If the data is missing, say you do not have enough information in the current portfolio dataset.
 
-ONBOARDING FLOW:
-For a first interaction or broad "where should I start?" request:
-1. Welcome briefly.
-2. Infer the likely visitor type: Recruiter, Hiring Manager, Engineer, Designer, or Curious Visitor.
-3. Suggest three relevant starting paths.
-- Recruiter: Experience, Skills, CV Synthesis.
-- Hiring Manager: Experience, Projects, Support/Consulting fit.
-- Engineer: Projects, Stack, AI Architecture.
-- Designer: Vision, Interactive Portfolio System, Hawkward Portfolio.
-- Curious Visitor: About, Projects, Stats.
-
-CAPABILITIES:
-1. Navigation: Recommend specific views: Hero, About, Projects, Experience, Skills, Stack, Vision, Stats, Contact.
-2. Synthesis: If a user asks for a summary, pitch, fit assessment, hiring brief, or custom CV synthesis:
-   - Start with: "Synthesizing custom CV insights... INITIATING_SYNTHESIS"
-   - Follow with a structured, professional report tailored to their profile.
-3. Clarification: If the request is ambiguous, ask one short clarifying question or provide two useful paths.
-
-TRUST RULES:
-Never invent jobs, technologies, metrics, education, achievements, dates, or certifications.
-If information is unavailable, say: "I do not have enough information in the current portfolio dataset."
-Then suggest the closest relevant section or the Contact view.
-
-TONE:
-Editorial, technical, and lightly cinematic.
-Use subtle system-inspired language sparingly.
-Natural conversation and usefulness take priority over stylistic language.
-Do not force cinematic or system language into every answer.
-Be concise, specific, and visitor-aware.`;
+STYLE:
+Clear, grounded, helpful. Light technical style is okay, but usefulness beats theatrics.
+Keep answers under 180 words unless the user asks for a deep report.`;
 }
 
 type UsePortfolioWorkerOptions = {
@@ -210,13 +247,16 @@ type UsePortfolioWorkerOptions = {
 };
 
 export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
+  const [localAiPaused] = useState(shouldPauseLocalAiOnThisDevice);
   const [messages, setMessages] = useState<Message[]>(() =>
-    initialLoadDone
+    localAiPaused
+      ? [{ id: "mobile-ai-paused", text: "Local Llama guide is paused on this device to keep the mobile experience stable. Navigation commands still work.", sender: "sys" }]
+      : initialLoadDone
       ? []
-      : [{ id: "1", text: "Initializing Local AI Assistant (SmolLM2-360M)... This may take a moment to load the weights on first visit.", sender: "sys" }],
+      : [{ id: "1", text: `Initializing Local AI Tour Guide (${LOCAL_MODEL_LABEL})... This may take a moment to cache the model on first visit.`, sender: "sys" }],
   );
-  const [isReady, setIsReady] = useState(initialLoadDone);
-  const [progress, setProgress] = useState(initialLoadDone ? 100 : 0);
+  const [isReady, setIsReady] = useState(initialLoadDone || localAiPaused);
+  const [progress, setProgress] = useState(initialLoadDone || localAiPaused ? 100 : 0);
   const [showReadyToast, setShowReadyToast] = useState(false);
   const [visitorProfile, setVisitorProfile] = useState<VisitorProfile>({});
 
@@ -228,6 +268,8 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
   }, [onSynthesis]);
 
   useEffect(() => {
+    if (localAiPaused) return;
+
     const worker = getPortfolioWorker();
 
     const queueTimeout = (callback: () => void, delay: number) => {
@@ -239,8 +281,8 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
       if (onboardingQueued) return;
       onboardingQueued = true;
       const welcomeText = "Welcome to Shahriar's Portfolio.";
-      const assistantText = "I am your AI assistant. I can help you analyze Shahriar's technical trajectory, navigate specific modules, or synthesize custom CV insights based on your requirements.";
-      const objectiveText = "Before we initialize the full tour: What is your primary objective today? (e.g., 'I am looking to hire', 'Just exploring', 'Seeking collaboration')";
+      const assistantText = "I am the local AI tour guide. Ask me to compare skills to experience, explain project evidence, build a recruiter path, or synthesize Shahriar's fit for a role.";
+      const objectiveText = "What would make this visit useful: hiring signal, technical depth, AI projects, support experience, or a quick guided tour?";
 
       queueTimeout(() => {
         setMessages((prev) => [...prev, { id: "onboard-1", text: welcomeText, sender: "ai", isReadyGreen: true }]);
@@ -278,13 +320,14 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
             setMessages((prev) => {
               const newMsgs = [...prev];
               if (newMsgs[0]) {
-                newMsgs[0].text = `Downloading model weights... ${initialLoadProgress.toFixed(0)}%`;
+                newMsgs[0].text = `Caching ${LOCAL_MODEL_LABEL} in browser... ${initialLoadProgress.toFixed(0)}%`;
               }
               return newMsgs;
             });
           }
           break;
         }
+        case "ready":
         case "complete": {
           if (!initialLoadDone) {
             initialLoadDone = true;
@@ -297,12 +340,14 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
             queueOnboarding();
           }
 
+          if (event.data.status === "ready") break;
+
           setMessages((prev) => {
             const newMsgs = [...prev];
             const lastMsg = newMsgs[newMsgs.length - 1];
 
             if (lastMsg && lastMsg.sender === "ai" && lastMsg.isTyping) {
-              const cleanText = parseGeneratedText(event.data.output);
+              const cleanText = typeof event.data.text === "string" ? event.data.text.trim() : "";
 
               if (cleanText.includes("INITIATING_SYNTHESIS")) {
                 const context = cleanText.replace("INITIATING_SYNTHESIS", "");
@@ -330,7 +375,8 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
     if (!initialLoadRequested) {
       initialLoadRequested = true;
       worker.postMessage({
-        messages: [{ role: "user", content: "hello" }],
+        messages: [{ role: "user", content: "warm up" }],
+        warmup: true,
       });
     }
 
@@ -339,7 +385,7 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
       timeoutsRef.current.forEach((timeout) => clearTimeout(timeout));
       timeoutsRef.current = [];
     };
-  }, []);
+  }, [localAiPaused]);
 
   const addNavigationMessage = (userText: string, view: ViewKey) => {
     const viewGoal = VIEW_GOALS[view];
@@ -356,7 +402,33 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
   };
 
   const sendMessage = (userText: string, activeView: ViewKey, routerMemory?: RouterMemory) => {
-    if (!userText.trim() || !isReady) return;
+    if (!userText.trim()) return;
+
+    if (!isReady) {
+      setMessages((prev) => [
+        ...prev,
+        { id: Date.now().toString(), text: userText, sender: "user" },
+        {
+          id: (Date.now() + 1).toString(),
+          text: `${LOCAL_MODEL_LABEL} is still caching locally. You can keep browsing now; the AI guide will come online once the browser model is ready.`,
+          sender: "sys",
+        },
+      ]);
+      return;
+    }
+
+    if (localAiPaused) {
+      setMessages((prev) => [
+        ...prev,
+        { id: Date.now().toString(), text: userText, sender: "user" },
+        {
+          id: (Date.now() + 1).toString(),
+          text: "The local Llama guide is paused on this device because browser models can reload mobile tabs under memory pressure. Use navigation commands here, or open the site on desktop for the full local AI tour.",
+          sender: "sys",
+        },
+      ]);
+      return;
+    }
 
     const nextVisitorProfile = inferVisitorProfile(userText, visitorProfile);
     if (routerMemory?.visitorType && !nextVisitorProfile.role) {
@@ -373,19 +445,21 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
 
     const chatHistory = newMsgs
       .filter((message) => message.sender !== "sys" && !message.isTyping)
+      .slice(-MAX_CHAT_MESSAGES)
       .map((message) => ({
         role: message.sender === "user" ? "user" : "assistant",
         content: message.text,
-      }));
+      })) satisfies ChatMessage[];
 
     sharedWorker?.postMessage({
-      messages: [{ role: "system", content: buildSystemPrompt(activeView, nextVisitorProfile, routerMemory) }, ...chatHistory],
+      messages: [{ role: "system", content: buildSystemPrompt(userText, activeView, nextVisitorProfile, routerMemory) }, ...chatHistory],
     });
   };
 
   return {
     messages,
     isReady,
+    localAiPaused,
     progress,
     showReadyToast,
     addNavigationMessage,

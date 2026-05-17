@@ -140,11 +140,11 @@ projects: [
 
     context: "Traditional portfolio websites often fail to communicate technical depth or provide interactive demonstrations of capabilities.",
 
-    implementation: "Built an interactive portfolio using React and Next.js with local AI inference through Transformers.js and Web Workers. Designed a custom design system and implemented motion-based interactions using Framer Motion.",
+    implementation: "Built an interactive portfolio using React and Next.js with local AI inference through WebLLM, Llama 3.2 1B, and Web Workers. Designed a custom design system and implemented motion-based interactions using Framer Motion.",
 
     outcome: "Created a portfolio experience combining storytelling, technical demonstrations, and AI-assisted exploration.",
 
-    stack: ["React", "Next.js", "Transformers.js", "Tailwind CSS", "Framer Motion"]
+    stack: ["React", "Next.js", "WebLLM", "Llama 3.2 1B", "Tailwind CSS", "Framer Motion"]
   },
 
   {

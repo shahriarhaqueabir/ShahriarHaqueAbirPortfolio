@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
+import { MessageCircle, X } from "lucide-react";
 
 type MobileCommandSheetProps = {
   open: boolean;
@@ -16,17 +16,30 @@ export default function MobileCommandSheet({ open, onOpenChange, children }: Mob
       <button
         type="button"
         onClick={() => onOpenChange(!open)}
-        className="fixed bottom-6 right-6 z-50 md:hidden w-12 h-12 bg-(--text) text-(--bg) rounded-sm font-mono text-[10px] uppercase tracking-widest flex items-center justify-center shadow-xl"
-        aria-label={open ? "Close command panel" : "Open command panel"}
+        className="fixed bottom-6 right-5 z-50 md:hidden flex h-14 items-center gap-2 rounded-full border border-(--accent)/45 bg-(--accent) px-4 text-(--bg) shadow-[0_18px_48px_rgba(var(--accent-rgb),0.36)] transition-transform active:scale-95"
+        aria-label={open ? "Close chat panel" : "Open chat panel"}
       >
-        {open ? <X className="w-4 h-4" /> : "CMD"}
+        {open ? (
+          <>
+            <X className="h-5 w-5" />
+            <span className="font-syne text-xs font-black uppercase tracking-widest">Close</span>
+          </>
+        ) : (
+          <>
+            <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-(--bg)/15">
+              <MessageCircle className="h-5 w-5" />
+              <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full border border-(--accent) bg-green-400" />
+            </span>
+            <span className="font-syne text-xs font-black uppercase tracking-widest">Chat</span>
+          </>
+        )}
       </button>
       <AnimatePresence>
         {open && (
           <>
             <motion.button
               type="button"
-              aria-label="Close command panel overlay"
+              aria-label="Close chat panel overlay"
               className="fixed inset-0 z-40 md:hidden bg-(--text)/20 backdrop-blur-[2px]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
