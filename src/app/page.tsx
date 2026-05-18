@@ -55,7 +55,7 @@ export default function Home() {
 
   return (
     <main suppressHydrationWarning className="flex h-screen w-full relative z-10 font-inter text-(--text) bg-(--bg) overflow-hidden">
-      <AnimatePresence>{isBooting && <BootScreen progress={worker.progress} isReady={worker.isReady} localAiPaused={worker.localAiPaused} onEnter={enterPortfolio} />}</AnimatePresence>
+      <AnimatePresence>{isBooting && <BootScreen progress={worker.progress} isReady={worker.isReady} localAiEnabled={worker.localAiEnabled} localAiFallback={worker.localAiFallback} localAiPaused={worker.localAiPaused} onEnter={enterPortfolio} />}</AnimatePresence>
       <div className="fixed inset-0 pointer-events-none opacity-[0.18]" style={{ backgroundImage: "radial-gradient(rgba(238,246,248,0.42) 1px, transparent 1px)", backgroundSize: "30px 30px" }} />
       <motion.aside
         animate={{ width: desktopSidebarCollapsed ? 76 : 380 }}
@@ -83,7 +83,10 @@ export default function Home() {
             >
               H
             </button>
-            <div className={`h-2 w-2 rounded-full ${worker.isReady && !worker.localAiPaused ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" : "bg-orange-500"}`} title={worker.localAiPaused ? "Guide paused" : worker.isReady ? "Guide ready" : "Guide loading"} />
+            <div
+              className={`h-2 w-2 rounded-full ${worker.isReady && !worker.localAiPaused ? (worker.localAiFallback ? "bg-(--accent)" : "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]") : worker.localAiEnabled ? "bg-orange-500" : "bg-(--text-muted)"}`}
+              title={worker.localAiPaused ? "Guide paused" : worker.localAiFallback ? "Guide fallback" : !worker.localAiEnabled ? "Guide opt-in" : worker.isReady ? "Guide ready" : "Guide loading"}
+            />
             <div className="my-2 h-px w-full bg-(--border)" />
             <nav className="flex flex-1 flex-col items-center gap-2" aria-label="Collapsed portfolio navigation">
               {desktopRailItems.map((item) => (

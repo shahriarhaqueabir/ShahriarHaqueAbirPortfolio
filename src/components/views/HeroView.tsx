@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Download, Sparkles } from "lucide-react";
+import { ArrowRight, Download, Globe2, Sparkles, TrendingDown, Users } from "lucide-react";
 import { CONFIG } from "@/lib/data";
 import Image from "next/image";
 import type { ViewKey } from "@/lib/types";
@@ -25,6 +25,12 @@ export default function HeroView({ setView }: { setView: (v: ViewKey) => void })
     return () => clearInterval(interval);
   }, [phrases.length]);
 
+  const recruiterSignals = [
+    { label: "International B2B clients onboarded", value: "10", icon: Globe2 },
+    { label: "Production tickets resolved weekly", value: "40", icon: Users },
+    { label: "Recurring bug reports reduced per release", value: "30%", icon: TrendingDown },
+  ];
+
   return (
     <motion.div 
       initial={{ opacity: 0, x: -20 }}
@@ -33,16 +39,15 @@ export default function HeroView({ setView }: { setView: (v: ViewKey) => void })
       className="min-h-full flex items-start md:items-center relative overflow-hidden"
     >
       <div className="absolute right-0 top-8 hidden h-[72vh] w-px bg-[linear-gradient(to_bottom,transparent,var(--accent),transparent)] opacity-60 xl:block" />
-      <div className="flex flex-col xl:flex-row gap-10 2xl:gap-14 items-center w-full">
-        <div className="w-full xl:flex-[1.05] relative z-10">
-          <div className="-mx-5 mb-6 flex gap-2 overflow-x-auto px-5 pb-1 md:mx-0 md:mb-8 md:inline-flex md:flex-wrap md:overflow-visible md:px-0 md:pb-0">
-            {CONFIG.taglines.map((t, i) => (
-              <span key={i} className="shine-surface shrink-0 whitespace-nowrap border border-(--accent)/35 text-(--accent) bg-(--accent)/10 px-4 py-2 rounded-sm text-[9px] font-bold uppercase tracking-widest shadow-[0_0_30px_rgba(var(--accent-rgb),0.18)] md:px-5 md:text-[10px]">
-                {t}
-              </span>
-            ))}
+      <div className="flex w-full flex-col items-center gap-10 xl:flex-row xl:gap-14 2xl:gap-16">
+        <div className="relative z-10 w-full xl:flex-[1.05]">
+          <div className="mb-5 max-w-3xl border-l-2 border-(--accent) pl-5">
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-(--accent)">Lead Technical Solution Consultant</p>
+            <p className="mt-3 text-sm leading-6 text-(--text-muted) md:text-base">
+              B2B SaaS implementation, product sales support, Tier-3 operations, and AI workflow engineering.
+            </p>
           </div>
-          <h1 className="font-syne font-black leading-[0.95] text-(--text) mb-6 md:mb-8 tracking-tighter text-[4rem] md:text-7xl xl:text-[6.9rem] 2xl:text-[7.4rem] max-w-[760px]">
+          <h1 className="mb-6 max-w-[760px] font-syne text-[3.4rem] font-black leading-[0.96] tracking-normal text-(--text) md:mb-7 md:text-7xl xl:text-[6.3rem] 2xl:text-[7rem]">
             <span className="block mb-2">
               {CONFIG.name.split(' ').map((word, i) => 
                 word === CONFIG.nameHL 
@@ -54,16 +59,25 @@ export default function HeroView({ setView }: { setView: (v: ViewKey) => void })
               {CONFIG.name.split(' ').map((word, i) => 
                 word !== CONFIG.nameHL 
                   ? <span key={i} className="inline-block mr-4">{word}</span>
-                  : null
+                : null
               )}
             </span>
-            <div className="mt-4 text-(--accent) font-bold font-playfair italic text-2xl lg:text-4xl tracking-normal">Lead Technical Solution Consultant</div>
           </h1>
-          <p className="mb-8 max-w-[650px] text-lg leading-relaxed text-(--text-muted) md:hidden">
-            Lead technical solution consultant across B2B SaaS, Tier-3 support, project delivery, IT networks, and AI automation.
+          <p className="mb-8 max-w-[720px] text-lg leading-8 text-(--text) md:text-xl md:leading-9">
+            Shahriar helps technical products move from ambiguous customer need to stable adoption through discovery, PoCs, onboarding, production troubleshooting, release validation, and automation.
           </p>
-          <p className="hidden text-lg xl:text-xl text-(--text-muted) max-w-[650px] leading-relaxed mb-12 font-inter md:block">{CONFIG.profile}</p>
-          <div className="flex flex-col gap-3 md:flex-row md:gap-6">
+          <div className="mb-10 grid max-w-3xl grid-cols-1 gap-px border border-(--border) bg-(--border) sm:grid-cols-3">
+            {recruiterSignals.map((signal) => (
+              <div key={signal.label} className="bg-(--bg) p-5">
+                <div className="mb-4 flex items-center justify-between gap-4 text-(--accent)">
+                  <signal.icon className="h-4 w-4" />
+                  <span className="font-syne text-3xl font-black leading-none text-(--text)">{signal.value}</span>
+                </div>
+                <p className="text-[11px] font-bold uppercase leading-5 tracking-[0.12em] text-(--text-muted)">{signal.label}</p>
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-col gap-3 md:flex-row md:gap-4">
             <button onClick={() => setView('projects')} className="shine-surface order-2 inline-flex items-center justify-center gap-3 border border-(--accent) px-8 py-4 text-(--accent) rounded-sm text-xs font-bold uppercase tracking-widest transition-all hover:bg-(--accent) hover:text-(--bg) md:order-1 md:border-0 md:bg-(--accent) md:text-(--bg) md:px-10 md:py-5 md:text-sm md:hover:bg-(--text) md:shadow-[0_18px_58px_rgba(var(--accent-rgb),0.44)]">
               View Case Studies
               <ArrowRight className="h-4 w-4" />

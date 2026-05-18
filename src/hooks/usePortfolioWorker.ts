@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { CONFIG } from "@/lib/data";
 import { CAREER_STATES, VIEW_GOALS } from "@/lib/experience-model";
 import type { Message, ViewKey } from "@/lib/types";
@@ -49,8 +49,8 @@ function getPortfolioWorker() {
   return sharedWorker;
 }
 
-function shouldPauseLocalAiOnThisDevice() {
-  if (typeof window === "undefined" || typeof navigator === "undefined") return false;
+function getLocalAiFallbackReason() {
+  if (typeof window === "undefined" || typeof navigator === "undefined") return null;
 
   const navigatorWithMemory = navigator as NavigatorWithMemory;
   const userAgent = navigator.userAgent || "";
@@ -58,7 +58,12 @@ function shouldPauseLocalAiOnThisDevice() {
   const isTouchSmallScreen = window.matchMedia("(pointer: coarse)").matches && window.matchMedia("(max-width: 767px)").matches;
   const hasTightMemory = typeof navigatorWithMemory.deviceMemory === "number" && navigatorWithMemory.deviceMemory <= 4;
 
-  return isMobileUserAgent || isTouchSmallScreen || hasTightMemory;
+  if (!window.isSecureContext) return "WebGPU requires a secure browser context.";
+  if (!("gpu" in navigator)) return "this browser does not expose WebGPU.";
+  if (isMobileUserAgent || isTouchSmallScreen) return "this mobile browser may not support stable local model inference.";
+  if (hasTightMemory) return "this device has limited memory for browser model inference.";
+
+  return null;
 }
 
 function formatVisitorProfile(visitorProfile: VisitorProfile) {
@@ -250,21 +255,53 @@ Clear, grounded, helpful. Light technical style is okay, but usefulness beats th
 Keep answers under 180 words unless the user asks for a deep report.`;
 }
 
+function buildFallbackAnswer(userText: string, activeView: ViewKey) {
+  const lowerInput = userText.toLowerCase();
+
+  if (/contact|email|linkedin|github|reach/.test(lowerInput)) {
+    const links = CONFIG.contact
+      .filter((item) => ["Email", "LinkedIn", "GitHub"].includes(item.label))
+      .map((item) => `${item.label}: ${item.value}`)
+      .join(" | ");
+
+    return `Fallback guide active. ${links}. Open Contact for all links and location details.`;
+  }
+
+  if (/project|case stud|rag|ai|automation|gtm|network|portfolio/.test(lowerInput)) {
+    const projects = CONFIG.projects.slice(0, 4).map((project) => project.name).join(", ");
+    return `Fallback guide active. Strong project evidence starts with: ${projects}. Open Projects for context, implementation, outcome, and stack details.`;
+  }
+
+  if (/experience|work|job|career|support|consult/.test(lowerInput)) {
+    const current = CONFIG.experience[0];
+    return `Fallback guide active. Core experience: ${current.role} at ${current.company} (${current.period}), covering discovery, RFI/RFP support, PoCs, onboarding, Tier-3 production support, release validation, and product/engineering coordination.`;
+  }
+
+  if (/skill|stack|technical|tools/.test(lowerInput)) {
+    return `Fallback guide active. Main skill groups: ${CONFIG.skills.map((skill) => skill.group).join("; ")}. Open Skills for the detailed tool and capability map.`;
+  }
+
+  if (/tour|guide|start|where/.test(lowerInput)) {
+    return "Fallback guide active. Fast recruiter path: start with Experience for career signal, open Projects for evidence, then use Contact or Download CV when ready.";
+  }
+
+  return `Fallback guide active. I can still route you through the portfolio without loading the Llama model. Current view: ${formatViewName(activeView)}. Try asking about experience, projects, skills, contact, or a quick recruiter path.`;
+}
+
 type UsePortfolioWorkerOptions = {
   onSynthesis: (context: string) => void;
 };
 
 export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
-  const [localAiPaused] = useState(shouldPauseLocalAiOnThisDevice);
+  const [localAiFallbackReason] = useState(getLocalAiFallbackReason);
+  const [localAiFallback, setLocalAiFallback] = useState(false);
+  const [localAiPaused] = useState(false);
+  const [localAiEnabled, setLocalAiEnabled] = useState(false);
   const [messages, setMessages] = useState<Message[]>(() =>
-    localAiPaused
-      ? [{ id: "mobile-ai-paused", text: "The local AI guide is paused on this device to keep the mobile experience stable. You can still use the portfolio navigation.", sender: "sys" }]
-      : initialLoadDone
-      ? []
-      : [{ id: "1", text: `Initializing Local AI Tour Guide (${LOCAL_MODEL_LABEL})... This may take a moment to cache the model on first visit.`, sender: "sys" }],
+    [{ id: "ai-opt-in", text: `Local AI guide is off by default. Enable it when you want portfolio Q&A; ${LOCAL_MODEL_LABEL} downloads and caches only when WebGPU is available and after you opt in.`, sender: "sys" }],
   );
-  const [isReady, setIsReady] = useState(initialLoadDone || localAiPaused);
-  const [progress, setProgress] = useState(initialLoadDone || localAiPaused ? 100 : 0);
+  const [isReady, setIsReady] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [showReadyToast, setShowReadyToast] = useState(false);
   const [visitorProfile, setVisitorProfile] = useState<VisitorProfile>({});
 
@@ -275,8 +312,42 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
     onSynthesisRef.current = onSynthesis;
   }, [onSynthesis]);
 
+  const enableLocalAi = useCallback(() => {
+    setLocalAiEnabled(true);
+
+    if (localAiFallbackReason) {
+      setLocalAiFallback(true);
+      setIsReady(true);
+      setProgress(100);
+      setMessages((prev) => [
+        ...prev.filter((message) => message.id !== "ai-opt-in" && message.id !== "1"),
+        {
+          id: Date.now().toString(),
+          text: `WebGPU model mode is unavailable here: ${localAiFallbackReason} Using a lightweight portfolio fallback instead; no Llama model will be downloaded or cached.`,
+          sender: "sys",
+        },
+      ]);
+      return;
+    }
+
+    if (initialLoadDone) {
+      setProgress(100);
+      setIsReady(true);
+    }
+    setMessages((prev) => {
+      const withoutOptIn = prev.filter((message) => message.id !== "ai-opt-in");
+      if (initialLoadDone) return withoutOptIn;
+      if (withoutOptIn.some((message) => message.id === "1")) return withoutOptIn;
+
+      return [
+        ...withoutOptIn,
+        { id: "1", text: `Initializing Local AI Tour Guide (${LOCAL_MODEL_LABEL})... This may take a moment to cache the model on first use.`, sender: "sys" },
+      ];
+    });
+  }, [localAiFallbackReason]);
+
   useEffect(() => {
-    if (localAiPaused) return;
+    if (localAiFallback || !localAiEnabled) return;
 
     const worker = getPortfolioWorker();
 
@@ -373,14 +444,26 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
           break;
         }
         case "error":
-          setMessages((prev) => [...prev, { id: Date.now().toString(), text: "Error: " + event.data.error, sender: "sys" }]);
+          setLocalAiFallback(true);
+          setIsReady(true);
+          setProgress(100);
+          setMessages((prev) => [
+            ...prev.filter((message) => message.id !== "1"),
+            {
+              id: Date.now().toString(),
+              text: `WebGPU model mode could not start (${event.data.error}). Using the lightweight portfolio fallback instead.`,
+              sender: "sys",
+            },
+          ]);
           break;
       }
     };
 
     worker.addEventListener("message", onMessageReceived);
 
-    if (!initialLoadRequested) {
+    if (initialLoadDone) {
+      queueOnboarding();
+    } else if (!initialLoadRequested) {
       initialLoadRequested = true;
       worker.postMessage({
         messages: [{ role: "user", content: "warm up" }],
@@ -393,7 +476,7 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
       timeoutsRef.current.forEach((timeout) => clearTimeout(timeout));
       timeoutsRef.current = [];
     };
-  }, [localAiPaused]);
+  }, [localAiFallback, localAiEnabled]);
 
   const addNavigationMessage = (userText: string, view: ViewKey) => {
     const viewGoal = VIEW_GOALS[view];
@@ -412,6 +495,32 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
   const sendMessage = (userText: string, activeView: ViewKey, routerMemory?: RouterMemory) => {
     if (!userText.trim()) return;
 
+    if (localAiFallback) {
+      setMessages((prev) => [
+        ...prev,
+        { id: Date.now().toString(), text: userText, sender: "user" },
+        {
+          id: (Date.now() + 1).toString(),
+          text: buildFallbackAnswer(userText, activeView),
+          sender: "ai",
+        },
+      ]);
+      return;
+    }
+
+    if (!localAiEnabled) {
+      setMessages((prev) => [
+        ...prev,
+        { id: Date.now().toString(), text: userText, sender: "user" },
+        {
+          id: (Date.now() + 1).toString(),
+          text: "The local AI guide is opt-in. Use Enable AI guide first if you want browser-only portfolio Q&A.",
+          sender: "sys",
+        },
+      ]);
+      return;
+    }
+
     if (!isReady) {
       setMessages((prev) => [
         ...prev,
@@ -419,19 +528,6 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
         {
           id: (Date.now() + 1).toString(),
           text: "The local AI guide is still loading in this browser. You can keep browsing; it will be ready shortly.",
-          sender: "sys",
-        },
-      ]);
-      return;
-    }
-
-    if (localAiPaused) {
-      setMessages((prev) => [
-        ...prev,
-        { id: Date.now().toString(), text: userText, sender: "user" },
-        {
-          id: (Date.now() + 1).toString(),
-          text: "The local AI guide is paused on this device because browser models can reload mobile tabs under memory pressure. Use the portfolio navigation here, or open the site on desktop for the full local AI guide.",
           sender: "sys",
         },
       ]);
@@ -467,9 +563,12 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
   return {
     messages,
     isReady,
+    localAiEnabled,
+    localAiFallback,
     localAiPaused,
     progress,
     showReadyToast,
+    enableLocalAi,
     addNavigationMessage,
     addSystemMessage,
     sendMessage,
