@@ -52,6 +52,14 @@ function getArchitectureNodes(project: Project) {
     return ["SQL Data", "Python Pipeline", "Forecast Model", "KPI View"];
   }
 
+  if (project.name.includes("Quality Control")) {
+    return ["Fiber Assembly", "Tubing + Gluing", "Polishing", "Inspection"];
+  }
+
+  if (project.name.includes("Solarization")) {
+    return ["UV Irradiation", "Fiber Handling", "Measurement", "Research Report"];
+  }
+
   if (project.name.includes("Self-Hosted")) {
     return ["Open WebUI", "Docker Compose", "Qdrant + n8n", "Local AI Stack"];
   }
@@ -69,8 +77,15 @@ function getArchitectureNodes(project: Project) {
 
 function getDiagramLabel(project: Project) {
   if (project.name.includes("Pathfinder") || project.name.includes("L&T")) return "Operating Model";
-  if (project.name.includes("Optical Fiber")) return "Research Workflow";
+  if (project.name.includes("Quality Control")) return "Assembly Workflow";
+  if (project.name.includes("Solarization")) return "Research Workflow";
   return "System Flow";
+}
+
+function getStackLabel(project: Project) {
+  if (project.name.includes("Pathfinder") || project.name.includes("L&T")) return "Methods & Responsibilities";
+  if (project.name.includes("Optical Fiber")) return "Methods & Processes";
+  return "Technical Stack";
 }
 
 function ArchitectureDiagram({ project, compact = false }: { project: Project; compact?: boolean }) {
@@ -288,7 +303,7 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
 
                   <div className="space-y-10">
                     <div className="shine-surface bg-white border border-(--border) p-8">
-                      <h4 className="font-black font-syne text-[10px] uppercase tracking-widest mb-6" style={{ color: selectedVisual?.color }}>Technical Stack</h4>
+                      <h4 className="font-black font-syne text-[10px] uppercase tracking-widest mb-6" style={{ color: selectedVisual?.color }}>{getStackLabel(p)}</h4>
                       <div className="flex flex-wrap gap-2">
                         {p.stack.map((s, idx) => (
                           <span key={idx} className="font-mono text-[10px] px-3 py-1.5 bg-(--bg) border border-(--border) text-(--text-muted) uppercase font-bold tracking-tighter" style={{ boxShadow: `0 0 18px ${selectedVisual?.color}16` }}>{s}</span>

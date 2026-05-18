@@ -97,13 +97,13 @@ export const CONFIG = {
 projects: [
   {
     name: "Pathfinder International SDR & GTM Operating Model",
-    desc: "Led and pioneered the complete international SDR and GTM operating model for Pathfinder at tripunkt GmbH, building international sales presence where none existed before.",
+    desc: "Led international SDR, GTM, product sales support, onboarding, and technical follow-through for Pathfinder at tripunkt GmbH.",
 
-    context: "Pathfinder had no established international market presence before this work began. The business needed a complete operating model for international SDR, GTM execution, product sales support, discovery, onboarding, and technical follow-through across APAC, EMEA, and North America.",
+    context: "Pathfinder needed stronger international sales and support motion across APAC, EMEA, and North America. The work required SDR execution, GTM support, product sales support, discovery, onboarding, and technical follow-through.",
 
     implementation: "Led the operating model from prospecting and international SDR motion through technical discovery, RFI/RFP support, PoCs, product sales support, onboarding, training, SLA-driven Tier-3 support, documentation, and post-release validation. Connected customer signals back into product and engineering feedback loops.",
 
-    outcome: "Pioneered Pathfinder's international sales operation, onboarded 10 international B2B clients, supported around 40 production tickets per week, and helped reduce recurring bug reports by 30% per release.",
+    outcome: "Supported Pathfinder's international sales and customer lifecycle motion, onboarded 10 international B2B clients, supported around 40 production tickets per week, and helped reduce recurring bug reports by 30% per release.",
 
     stack: ["Pathfinder", "International GTM", "SDR", "B2B SaaS", "Solution Consulting", "Product Sales", "RFI/RFP", "PoC", "Tier-3 Support", "Release Validation"]
   },
@@ -196,7 +196,7 @@ projects: [
 
     outcome: "Supported consistent optical fiber assembly quality through disciplined process execution and inspection.",
 
-    stack: ["Quality Control", "Optical Fiber", "Cable Assembly", "Precision Gluing", "Process Control"]
+    stack: ["Optical Fiber QA/QC", "Cable Assembly", "Polishing", "Precision Tubing", "Fiber Gluing", "Core & Cladding", "Connector Prep"]
   },
 
   {
@@ -209,7 +209,7 @@ projects: [
 
     outcome: "Delivered a complete research body covering experimental planning, optical system handling, data analysis, and technical reporting.",
 
-    stack: ["Optical Fiber", "UV Testing", "Hardware Prototyping", "Data Analysis", "Technical Reporting"]
+    stack: ["Specialized Fiber Optic Cables", "High-Power UV Irradiation", "Solarization Characterization", "Optical Fiber Splicing", "Optical Fiber Gluing", "Measurement Workflow", "Technical Reporting"]
   },
 
   { 
