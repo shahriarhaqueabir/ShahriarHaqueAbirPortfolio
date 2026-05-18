@@ -20,6 +20,7 @@ node_modules/
 .DS_Store
 *.pem
 *.pdf
+!public/shahriar-haque-abir-cv.pdf
 *.heapsnapshot
 *.log
 ChatGPT Image*.png

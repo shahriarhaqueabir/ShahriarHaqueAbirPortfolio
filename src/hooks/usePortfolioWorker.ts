@@ -110,6 +110,11 @@ function formatViewGoals() {
     .join("\n");
 }
 
+function formatViewName(view: ViewKey) {
+  if (view === "hero") return "Home";
+  return view.charAt(0).toUpperCase() + view.slice(1);
+}
+
 function getRelevantProjectIndexes(input: string) {
   const lowerInput = input.toLowerCase();
   const scored = CONFIG.projects
@@ -152,7 +157,7 @@ PORTFOLIO IDENTITY:
 - Role signals: ${CONFIG.taglines.join(", ")}
 - Location: ${CONFIG.location}
 - Work authorization: ${CONFIG.workAuth}
-- Bio: ${CONFIG.profile}
+- Author bio written in Shahriar's first-person voice: ${CONFIG.profile}
 
 CAREER LAYERS:
 ${formatCareerModel()}
@@ -212,7 +217,7 @@ function inferVisitorProfile(userText: string, currentProfile: VisitorProfile): 
   const interests = new Set(nextProfile.interests || []);
   if (lowerInput.includes("ai") || lowerInput.includes("rag") || lowerInput.includes("llm")) interests.add("AI systems");
   if (lowerInput.includes("support") || lowerInput.includes("customer")) interests.add("Customer engineering");
-  if (lowerInput.includes("automation") || lowerInput.includes("workflow")) interests.add("Workflow automation");
+  if (lowerInput.includes("automation") || lowerInput.includes("workflow")) interests.add("AI automation");
   if (lowerInput.includes("stack") || lowerInput.includes("architecture")) interests.add("Technical architecture");
   if (interests.size > 0) nextProfile.interests = Array.from(interests);
 
@@ -221,6 +226,8 @@ function inferVisitorProfile(userText: string, currentProfile: VisitorProfile): 
 
 function buildSystemPrompt(userText: string, activeView: ViewKey, visitorProfile: VisitorProfile, routerMemory?: RouterMemory) {
   return `You are Hawkward's local AI tour guide and portfolio knowledge source, running fully inside the visitor's browser on ${LOCAL_MODEL_LABEL}.
+
+You are not Shahriar Haque Abir. Use "I" only when referring to yourself as the local AI guide. Refer to Shahriar as "Shahriar", "he", or "his". If using the author bio, remember it is portfolio copy written in Shahriar's voice, not your identity.
 
 Your job is NOT to behave like a static menu. Your job is to reason across Shahriar's experience, projects, skills, and contact data, then guide the visitor with useful next steps.
 
@@ -231,6 +238,7 @@ HOW TO RESPOND:
 - Answer the user's actual question first.
 - Use the portfolio facts above as your only source of truth.
 - Connect evidence across sections when useful, especially skills -> experience -> projects.
+- Describe Shahriar's case studies and experience in neutral professional past tense.
 - Recommend one or two relevant views, but do not pretend you personally navigated unless the UI already did.
 - If the user asks for a tour, create a short path with 3 stops and why each matters.
 - If the user asks for hiring/fit/CV synthesis, write a compact structured brief.
@@ -250,7 +258,7 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
   const [localAiPaused] = useState(shouldPauseLocalAiOnThisDevice);
   const [messages, setMessages] = useState<Message[]>(() =>
     localAiPaused
-      ? [{ id: "mobile-ai-paused", text: "Local Llama guide is paused on this device to keep the mobile experience stable. Navigation commands still work.", sender: "sys" }]
+      ? [{ id: "mobile-ai-paused", text: "The local AI guide is paused on this device to keep the mobile experience stable. You can still use the portfolio navigation.", sender: "sys" }]
       : initialLoadDone
       ? []
       : [{ id: "1", text: `Initializing Local AI Tour Guide (${LOCAL_MODEL_LABEL})... This may take a moment to cache the model on first visit.`, sender: "sys" }],
@@ -393,7 +401,7 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
     setMessages((prev) => [
       ...prev,
       { id: Date.now().toString(), text: userText, sender: "user" },
-      { id: (Date.now() + 1).toString(), text: `Portfolio Assistant: Navigating to ${view.toUpperCase()} — ${viewGoal.coreQuestion}`, sender: "sys" },
+      { id: (Date.now() + 1).toString(), text: `Opened ${formatViewName(view)} - ${viewGoal.coreQuestion}`, sender: "sys" },
     ]);
   };
 
@@ -410,7 +418,7 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
         { id: Date.now().toString(), text: userText, sender: "user" },
         {
           id: (Date.now() + 1).toString(),
-          text: `${LOCAL_MODEL_LABEL} is still caching locally. You can keep browsing now; the AI guide will come online once the browser model is ready.`,
+          text: "The local AI guide is still loading in this browser. You can keep browsing; it will be ready shortly.",
           sender: "sys",
         },
       ]);
@@ -423,7 +431,7 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
         { id: Date.now().toString(), text: userText, sender: "user" },
         {
           id: (Date.now() + 1).toString(),
-          text: "The local Llama guide is paused on this device because browser models can reload mobile tabs under memory pressure. Use navigation commands here, or open the site on desktop for the full local AI tour.",
+          text: "The local AI guide is paused on this device because browser models can reload mobile tabs under memory pressure. Use the portfolio navigation here, or open the site on desktop for the full local AI guide.",
           sender: "sys",
         },
       ]);

@@ -1,25 +1,26 @@
 "use client";
 
 import HeroView from "@/components/views/HeroView";
+import BlogView from "@/components/views/BlogView";
 import AboutView from "@/components/views/AboutView";
 import ProjectsView from "@/components/views/ProjectsView";
 import ExperienceView from "@/components/views/ExperienceView";
 import SkillsView from "@/components/views/SkillsView";
 import StatsView from "@/components/views/StatsView";
-import LabView from "@/components/views/LabView";
 import ContactView from "@/components/views/ContactView";
 import type { ViewKey } from "@/lib/types";
 
 type PortfolioViewRendererProps = {
   activeView: ViewKey;
-  dynamicContext: string;
   setView: (view: ViewKey) => void;
 };
 
-export default function PortfolioViewRenderer({ activeView, dynamicContext, setView }: PortfolioViewRendererProps) {
+export default function PortfolioViewRenderer({ activeView, setView }: PortfolioViewRendererProps) {
   switch (activeView) {
     case "hero":
       return <HeroView key="hero" setView={setView} />;
+    case "blog":
+      return <BlogView key="blog" setView={setView} />;
     case "about":
       return <AboutView key="about" setView={setView} />;
     case "projects":
@@ -34,8 +35,6 @@ export default function PortfolioViewRenderer({ activeView, dynamicContext, setV
       return <AboutView key="about-vision" setView={setView} />;
     case "stats":
       return <StatsView key="stats" setView={setView} />;
-    case "lab":
-      return <LabView key="lab" context={dynamicContext} setView={setView} />;
     case "contact":
       return <ContactView key="contact" setView={setView} />;
     default:

@@ -8,6 +8,7 @@ export type Message = {
 
 export type ViewKey =
   | "hero"
+  | "blog"
   | "about"
   | "projects"
   | "experience"
@@ -15,5 +16,4 @@ export type ViewKey =
   | "stack"
   | "vision"
   | "stats"
-  | "lab"
   | "contact";

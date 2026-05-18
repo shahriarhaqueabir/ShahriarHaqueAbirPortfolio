@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { BarChart3, Briefcase, ChevronRight, Layers, Mail, PanelLeftClose, PanelLeftOpen, User, Zap } from "lucide-react";
+import { BarChart3, Briefcase, ChevronRight, Home as HomeIcon, Layers, Mail, Newspaper, PanelLeftClose, PanelLeftOpen, User, Zap } from "lucide-react";
 import BootScreen from "@/components/BootScreen";
 import MobileCommandSheet from "@/components/MobileCommandSheet";
 import PortfolioSidebar from "@/components/PortfolioSidebar";
@@ -13,6 +13,8 @@ import { usePortfolioWorker } from "@/hooks/usePortfolioWorker";
 import type { ViewKey } from "@/lib/types";
 
 const desktopRailItems: Array<{ name: string; icon: typeof User; view: ViewKey }> = [
+  { name: "Home", icon: HomeIcon, view: "hero" },
+  { name: "Blog", icon: Newspaper, view: "blog" },
   { name: "About", icon: User, view: "about" },
   { name: "Projects", icon: Briefcase, view: "projects" },
   { name: "Experience", icon: Layers, view: "experience" },
@@ -22,22 +24,19 @@ const desktopRailItems: Array<{ name: string; icon: typeof User; view: ViewKey }
 ];
 
 export default function Home() {
-  const [dynamicContext, setDynamicContext] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [desktopSidebarCollapsed, setDesktopSidebarCollapsed] = useState(false);
+  const contentScrollRef = useRef<HTMLElement>(null);
   const { isBooting, enterPortfolio } = useBootGate();
   const { activeView, conversationState, setActiveView, handleCommand } = useCommandRouter();
   const worker = usePortfolioWorker({
-    onSynthesis: (context) => {
-      setDynamicContext(context);
-      setActiveView("lab");
-    },
+    onSynthesis: () => {},
   });
 
   const navigate = (view: ViewKey, name?: string) => {
     setActiveView(view);
     setSidebarOpen(false);
-    worker.addSystemMessage(`CMD: LOAD_${(name || view).toUpperCase()}`);
+    worker.addSystemMessage(`Opened ${name || view}`);
   };
 
   const send = (input: string) => {
@@ -49,6 +48,10 @@ export default function Home() {
     }
     setSidebarOpen(false);
   };
+
+  useEffect(() => {
+    contentScrollRef.current?.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [activeView]);
 
   return (
     <main suppressHydrationWarning className="flex h-screen w-full relative z-10 font-inter text-(--text) bg-(--bg) overflow-hidden">
@@ -80,7 +83,7 @@ export default function Home() {
             >
               H
             </button>
-            <div className={`h-2 w-2 rounded-full ${worker.isReady && !worker.localAiPaused ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" : "bg-orange-500"}`} title={worker.localAiPaused ? "AI paused" : worker.isReady ? "AI online" : "AI calibrating"} />
+            <div className={`h-2 w-2 rounded-full ${worker.isReady && !worker.localAiPaused ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" : "bg-orange-500"}`} title={worker.localAiPaused ? "Guide paused" : worker.isReady ? "Guide ready" : "Guide loading"} />
             <div className="my-2 h-px w-full bg-(--border)" />
             <nav className="flex flex-1 flex-col items-center gap-2" aria-label="Collapsed portfolio navigation">
               {desktopRailItems.map((item) => (
@@ -114,10 +117,14 @@ export default function Home() {
           <PortfolioSidebar {...worker} activeView={activeView} onNavigate={navigate} onSend={send} />
         )}
       </motion.aside>
-      <section className="flex-1 h-full overflow-y-auto overflow-x-hidden px-5 py-6 md:px-12 md:py-16 xl:px-16 relative custom-scrollbar scroll-smooth">
+      <section
+        ref={contentScrollRef}
+        data-testid="content-scroll"
+        className="flex-1 h-full overflow-y-auto overflow-x-hidden px-5 py-6 md:px-12 md:py-16 xl:px-16 relative custom-scrollbar scroll-smooth"
+      >
         <div className="content-stage w-full max-w-[1360px] mx-auto">
           <AnimatePresence mode="wait">
-            <PortfolioViewRenderer activeView={activeView} dynamicContext={dynamicContext} setView={setActiveView} />
+            <PortfolioViewRenderer activeView={activeView} setView={setActiveView} />
           </AnimatePresence>
         </div>
       </section>

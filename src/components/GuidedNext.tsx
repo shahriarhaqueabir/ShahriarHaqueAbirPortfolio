@@ -10,7 +10,6 @@ type GuidedNextProps = {
 };
 
 function formatViewLabel(view: ViewKey) {
-  if (view === "lab") return "AI Lab";
   return view.charAt(0).toUpperCase() + view.slice(1);
 }
 

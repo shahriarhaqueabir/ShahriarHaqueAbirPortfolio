@@ -6,14 +6,14 @@ import { CONFIG } from "@/lib/data";
 import type { ViewKey } from "@/lib/types";
 
 const lifeMilestones = [
-  { label: "1991", detail: "Origin point", marker: "BIRTH" },
-  { label: "2009", detail: "Electrical & Electronics Engineering begins", marker: "BSc" },
-  { label: "2014", detail: "First network engineering role", marker: "NETWORK" },
-  { label: "2015", detail: "Training coordination for engineering cohorts", marker: "L&T" },
+  { label: "2009", detail: "Electrical & Electronics Engineering foundation", marker: "BSc" },
+  { label: "2013", detail: "Network operations and infrastructure support", marker: "NETWORK" },
+  { label: "2015", detail: "Project management and training coordination at L&T", marker: "L&T" },
   { label: "2016", detail: "MSc path in Germany", marker: "GERMANY" },
-  { label: "2017", detail: "Optical fiber QA and research work", marker: "RESEARCH" },
-  { label: "2020", detail: "Solutions consulting and B2B SaaS support", marker: "CONSULTING" },
-  { label: "Now", detail: "Technical lead profile and AI-enabled portfolio", marker: "PRESENT" },
+  { label: "2017", detail: "Optical fiber research and quality control work", marker: "FIBER" },
+  { label: "2020", detail: "B2B SaaS product sales, solution consulting, and Tier-3 support", marker: "SAAS" },
+  { label: "2024+", detail: "AI automation, RAG, GTM, SDR workflows, and agentic full stack builds", marker: "AI OPS" },
+  { label: "Now", detail: "Lead technical solution consultant profile", marker: "PRESENT" },
 ];
 
 export default function ExperienceView({ setView }: { setView: (view: ViewKey) => void }) {
@@ -30,9 +30,9 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
       <div className="bg-white border border-(--border) p-8 mb-20 relative overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-1 bg-(--accent)"></div>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
-          <h4 className="font-syne font-bold text-[10px] text-(--text-muted) uppercase tracking-widest">Life Milestone Line</h4>
+          <h4 className="font-syne font-bold text-[10px] text-(--text-muted) uppercase tracking-widest">Professional Influence Map</h4>
           <div className="hidden sm:flex gap-2 font-mono text-[8px] uppercase tracking-widest text-(--text-muted)">
-            <span className="border border-(--border) px-2 py-1">birth 1991</span>
+            <span className="border border-(--border) px-2 py-1">2009</span>
             <span className="border border-(--border) px-2 py-1">now</span>
           </div>
         </div>
@@ -116,7 +116,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
 
         <div className="mt-8 border-l-2 border-(--accent) pl-5 max-w-2xl">
           <p className="text-sm text-(--text-muted) leading-relaxed font-inter">
-            A straight chronological map gives the professional record a human frame: early formation, engineering education, first infrastructure work, training coordination, relocation into Germany&apos;s technical ecosystem, research depth, consulting ownership, and the current AI-enabled portfolio phase.
+            The timeline shows the influences that shaped the profile: engineering fundamentals, optical fibers, IT networks, L&T project management, B2B SaaS product sales, Tier-3 support, and the current move into AI automation and workflow engineering.
           </p>
         </div>
       </div>

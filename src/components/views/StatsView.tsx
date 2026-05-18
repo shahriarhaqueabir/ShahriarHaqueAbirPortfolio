@@ -10,26 +10,27 @@ const ORBIT_RADIUS = 41;
 const ORBIT_DURATION_SECONDS = 108;
 
 const rawOrbitNodes = [
-  { id: "experience", label: "Experience", value: "10+ years", angle: -90, color: "#EF4444" },
-  { id: "projects", label: "Projects", value: "28+ builds", angle: -30, color: "#38BDF8" },
-  { id: "impact", label: "Impact", value: "Global", angle: 30, color: "#F59E0B" },
-  { id: "learning", label: "Learning", value: "Everyday", angle: 90, color: "#34D399" },
-  { id: "growth", label: "Growth", value: "Continuous", angle: 150, color: "#F472B6" },
-  { id: "skills", label: "Skills", value: "42+ signals", angle: 210, color: "#92400E" },
+  { id: "calm", label: "Calm Under Pressure", angle: -90, color: "#A78BFA" },
+  { id: "story", label: "Story Teller", angle: -30, color: "#F59E0B" },
+  { id: "person", label: "A Wonderful Person", angle: 30, color: "#F472B6" },
+  { id: "solution", label: "Solution Driven", angle: 90, color: "#34D399" },
+  { id: "problem", label: "Problem Solver", angle: 150, color: "#38BDF8" },
+  { id: "bridge", label: "Technical Translator", angle: 210, color: "#EF4444" },
 ];
 
 const metrics = [
-  { value: "28+", label: "Projects Completed", glyph: "box", spark: "M3 18 L10 14 L16 16 L21 8" },
-  { value: "12K+", label: "Hours Building", glyph: "code", spark: "M3 16 L8 13 L13 15 L20 7" },
-  { value: "15+", label: "Contexts Impacted", glyph: "globe", spark: "M3 18 L8 10 L13 15 L19 11" },
-  { value: "42+", label: "Skills Acquired", glyph: "book", spark: "M3 17 L8 16 L12 12 L16 14 L20 6" },
-  { value: "128+", label: "Experiments Run", glyph: "lab", spark: "M3 18 L8 12 L12 15 L16 9 L21 5" },
+  { value: "15+", label: "Years Professional Experience", glyph: "code", spark: "M3 16 L8 13 L13 15 L20 7" },
+  { value: "10", label: "International Clients Onboarded", glyph: "globe", spark: "M3 18 L8 10 L13 15 L19 11" },
+  { value: "40/wk", label: "Production Tickets", glyph: "box", spark: "M3 18 L10 14 L16 16 L21 8" },
+  { value: "30%", label: "Recurring Bug Reduction", glyph: "lab", spark: "M3 18 L8 12 L12 15 L16 9 L21 5" },
+  { value: "60+", label: "Engineers Coordinated at L&T", glyph: "book", spark: "M3 17 L8 16 L12 12 L16 14 L20 6" },
+  { value: "500+", label: "Network Clients Supported", glyph: "globe", spark: "M3 18 L8 10 L13 15 L19 11" },
 ];
 
 const futurePaths = [
-  "local AI portfolio intelligence",
-  "support operations tooling",
-  "privacy-first knowledge systems",
+  "AI automation and workflow engineering",
+  "cybersecurity-aware systems thinking",
+  "GTM, SDR, and agentic full stack development",
 ];
 
 const nextPaths: Array<{ view: ViewKey; label: string; question: string }> = [
@@ -132,17 +133,17 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
 
       <section className="relative z-10 mx-auto grid max-w-[1280px] grid-cols-1 gap-10 lg:grid-cols-[0.78fr_1.46fr_0.9fr] lg:items-start">
         <aside className="pt-24 lg:pt-32">
-          <div className="mb-7 font-mono text-[10px] uppercase tracking-[0.34em] text-(--text-muted)">Career Observatory</div>
+          <div className="mb-7 font-mono text-[10px] uppercase tracking-[0.34em] text-(--text-muted)">Human Qualities</div>
           <h2 className="max-w-[290px] font-syne text-6xl font-medium leading-[0.92] tracking-normal text-(--text) md:text-7xl">
-            Living metrics.
+            Life&apos;s sky.
             <br />
-            Real impact.
+            Human signals.
           </h2>
           <p className="mt-12 max-w-[280px] font-mono text-[11px] font-bold leading-8 text-(--text)">
-            An interactive view of my journey through data, projects, skills and growth over time.
+            Calm when stakes rise. Clear when systems get tangled. Kind enough to keep people with the work.
           </p>
           <p className="mt-12 max-w-[190px] font-mono text-[10px] uppercase leading-5 tracking-[0.28em] text-(--text-muted)">
-            Move around. Explore. Discover.
+            Follow the constellation.
           </p>
         </aside>
 
@@ -268,7 +269,6 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
                     />
                     <span className="pointer-events-none absolute left-1/2 top-[calc(100%+18px)] block min-w-32 -translate-x-1/2 text-center">
                       <span className="block font-mono text-[10px] font-bold uppercase tracking-[0.32em] text-(--text)">{node.label}</span>
-                      <span className="mt-2 block text-sm font-semibold text-(--text)">{node.value}</span>
                     </span>
                   </motion.span>
                 </button>
@@ -280,7 +280,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
         <aside className="relative pt-8 lg:pt-20">
           <div className="mb-32 hidden text-right font-mono text-[8px] font-bold uppercase tracking-[0.32em] text-(--text-muted) lg:block">
             <div>Last Updated</div>
-            <div className="mt-4 text-(--text)">May 15, 2026&nbsp;&nbsp;20:45 PM</div>
+            <div className="mt-4 text-(--text)">May 15, 2026&nbsp;&nbsp;20:45</div>
           </div>
 
           <div className="mb-8">
@@ -310,14 +310,14 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
       <section className="relative z-10 mx-auto mt-10 grid max-w-[1280px] grid-cols-1 gap-8 border-t border-(--border) pt-8 lg:grid-cols-[300px_1fr]">
         <div className="overflow-hidden border border-(--border) bg-[#101826]/86">
           <div className="p-8">
-            <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--text-muted)">Potential Index</div>
+            <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--text-muted)">Working Style</div>
             <div className="mt-7 flex items-end gap-2">
-              <div className="font-syne text-6xl font-black leading-none text-(--text)">9.4</div>
-              <div className="pb-2 text-xs text-(--text-muted)">/10</div>
+              <div className="font-syne text-5xl font-black leading-none text-(--text)">Lead</div>
+              <div className="pb-2 text-xs text-(--text-muted)">technical solution consultant</div>
             </div>
             <div className="my-7 h-px w-11 bg-(--text)" />
             <p className="max-w-[220px] text-sm leading-relaxed text-(--text-muted)">
-              High potential trajectory based on growth patterns, experiments, and impact.
+              The technical profile matters, but the work is remembered through steadiness, clarity, follow-through, and care for the customer&apos;s actual situation.
             </p>
             <div className="mt-8 font-mono text-[9px] uppercase tracking-[0.2em] text-(--accent)">
               {futurePaths[futureIndex]}
@@ -328,14 +328,14 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
             onClick={() => setFutureIndex((current) => (current + 1) % futurePaths.length)}
             className="flex w-full items-center justify-between bg-(--text) px-8 py-6 font-mono text-[10px] uppercase tracking-[0.22em] text-[#070B12]"
           >
-            Explore future paths
+            Explore current interests
             <ArrowRight className="h-4 w-4" />
           </button>
         </div>
 
         <div className="pt-10">
           <p className="max-w-xl text-base leading-relaxed text-(--text-muted) md:text-lg">
-            Metrics, proof points, impact signals, scale, and measurable evidence.
+            Numbers show the scale. The work depends on staying useful, steady, and clear when the problem is live.
           </p>
           <div className="mt-8 grid grid-cols-1 gap-3 md:grid-cols-2">
             {nextPaths.map((path) => (

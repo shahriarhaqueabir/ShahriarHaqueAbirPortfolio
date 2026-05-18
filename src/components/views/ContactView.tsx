@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ExternalLink, Link, Mail, MapPin, ShieldCheck } from "lucide-react";
+import { Download, ExternalLink, Link, Mail, MapPin, ShieldCheck } from "lucide-react";
 import GuidedNext from "@/components/GuidedNext";
 import { CONFIG } from "@/lib/data";
 import type { ViewKey } from "@/lib/types";
@@ -10,6 +10,7 @@ const contactIcons: Record<string, typeof Mail> = {
   Email: Mail,
   LinkedIn: Link,
   GitHub: Link,
+  CV: Download,
   Location: MapPin,
 };
 
@@ -21,37 +22,26 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
       exit={{ opacity: 0, x: -20 }}
       className="pt-10 pb-20 max-w-5xl"
     >
-      <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">— Transmission Channel</div>
+      <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">— Contact</div>
       <h2 className="text-5xl md:text-7xl font-syne font-black mb-10 text-(--text) leading-[0.9]">
-        Establish <span className="italic font-playfair font-normal text-(--text-muted) lowercase tracking-normal">Link.</span>
+        Let&apos;s <span className="italic font-playfair font-normal text-(--text-muted) lowercase tracking-normal">talk.</span>
       </h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-px bg-(--border) border border-(--border)">
         <section className="bg-(--bg) p-10 md:p-12 flex flex-col justify-between min-h-[420px] relative overflow-hidden">
-          <div className="absolute right-8 top-24 h-40 w-40">
-            {[0, 1, 2].map((ring) => (
-              <motion.span
-                key={ring}
-                className="absolute inset-0 rounded-full border border-(--accent)/25"
-                animate={{ scale: [0.4, 1.1], opacity: [0.7, 0] }}
-                transition={{ duration: 3, delay: ring * 0.7, repeat: Infinity, ease: "easeOut" }}
-              />
-            ))}
-            <span className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-(--accent)"></span>
-          </div>
           <div>
-            <div className="font-mono text-[10px] text-(--accent) uppercase tracking-widest mb-6">Identity Packet</div>
+            <div className="font-mono text-[10px] text-(--accent) uppercase tracking-widest mb-6">Conversation Fit</div>
             <h3 className="text-4xl font-syne font-black text-(--text) leading-none mb-6">{CONFIG.name}</h3>
-            <div className="flex flex-wrap gap-2 mb-8">
-              {CONFIG.taglines.map((tagline) => (
+            <p className="text-sm text-(--text-muted) leading-relaxed max-w-md">
+              Best reached for technical solution consulting, customer-facing SaaS work, GTM support, and AI automation conversations where product, customer, and engineering context need to come together.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-2">
+              {["Solution Consulting", "GTM Execution", "Customer Success"].map((tagline) => (
                 <span key={tagline} className="border border-(--accent)/30 text-(--accent) bg-(--accent)/5 px-3 py-1.5 rounded-sm text-[9px] font-bold uppercase tracking-widest">
                   {tagline}
                 </span>
               ))}
             </div>
-            <p className="text-sm text-(--text-muted) leading-relaxed max-w-md">
-              Open to technical consulting, implementation, support engineering, and systems-focused collaboration.
-            </p>
           </div>
 
           <div className="mt-12 border-t border-(--border) pt-8">
@@ -90,7 +80,7 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
               );
 
               return item.href ? (
-                <a key={item.label} href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} rel={item.href.startsWith("http") ? "noreferrer" : undefined}>
+                <a key={item.label} href={item.href} download={item.label === "CV" ? true : undefined} target={item.href.startsWith("http") ? "_blank" : undefined} rel={item.href.startsWith("http") ? "noreferrer" : undefined}>
                   {content}
                 </a>
               ) : (
@@ -100,8 +90,8 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
           </div>
 
           <div className="mt-8 font-mono text-[9px] text-(--text-muted) uppercase tracking-widest flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <span>Protocol: Direct contact preferred</span>
-            <span>Status: Available for qualified conversations</span>
+            <span>Direct contact preferred</span>
+            <span>Available for relevant technical, consulting, and support-focused conversations</span>
           </div>
         </section>
       </div>

@@ -1,0 +1,79 @@
+The Modular Framework
+Subject: Application for {JD_POSITION_TITLE} – Shahriar Haque Abir
+
+Dear {JD_HIRING_MANAGER_OR_TEAM},
+
+[MODULE 1: THE HOOK - JD ALIGNMENT]
+I am applying for the {JD_POSITION_TITLE} at {JD_COMPANY_NAME}. Your focus on {JD_CORE_CHALLENGE_OR_PRODUCT} requires structured problem-solving and rigorous technical execution, which aligns directly with my background managing {CV_ENVIRONMENT_TYPE}. I bring over 10 years of cross-functional experience, supported by my M.Sc. in Information and Communication Engineering.
+
+[MODULE 2: THE SCALE - PROVEN CAPACITY]
+In my recent tenure at tripunkt GmbH, I owned the technical lifecycle for {CV_METRIC_1}. I sustained system reliability in high-volume environments, routinely managing {CV_METRIC_2} and ensuring strict SLA adherence. My capacity to triage and resolve incidents ensures service continuity under pressure.
+
+[MODULE 3: THE EXECUTION - MAPPING JD TO CV SKILLS]
+To support {JD_COMPANY_NAME}'s objectives, I bring direct expertise in:
+
+{JD_PRIORITY_SKILL_1}: {CV_EVIDENCE_1}.
+
+{JD_PRIORITY_SKILL_2}: {CV_EVIDENCE_2}.
+
+{JD_PRIORITY_SKILL_3}: {CV_EVIDENCE_3}.
+
+[MODULE 4: THE IMPACT - PROCESS & STAKEHOLDER MANAGEMENT]
+Beyond technical execution, my approach is methodical and focused on scalable solutions. I actively bridge the gap between client needs and engineering sprints. By {CV_IMPACT_ACTION}, I ensure that technical delivery aligns with stakeholder expectations and operational efficiency goals.
+
+[MODULE 5: ADMINISTRATIVE CLOSING]
+
+Location: Berlin, Germany.
+
+Work Authorization: Permanent resident (Niederlassungserlaubnis).
+
+Languages: English (C2), German (B2).
+
+Availability: {CURRENT_AVAILABILITY_STATUS}.
+
+I look forward to discussing how my operational framework aligns with your current technical roadmap.
+
+Kind regards,
+
+Shahriar Haque Abir
+
+LinkedIn: linkedin.com/in/shahriarhaqueabir/
+
+Phone: +49 176 34630716
+
+The Verified Data Bank (Strictly CV-Backed)
+To ensure you do not trigger an auto-fail (C = -1) during ATS parsing or HR screening, strictly use the following pre-approved strings to populate the {CV_EVIDENCE_X} and {CV_IMPACT_ACTION} modules above.
+
+For {CV_ENVIRONMENT_TYPE}:
+
+Option A (SaaS): "the complete B2B customer lifecycle across SaaS deployments."
+
+Option B (Infra): "IT Infrastructure and enterprise-level technical operations."
+
+Option C (General B2B): "large-scale B2B platforms and complex account ecosystems."
+
+For {CV_METRIC_1} & {CV_METRIC_2}:
+
+Metric 1: "10 international B2B enterprise accounts" OR "500+ SME and enterprise-level clients."
+
+Metric 2: "approximately 40 production tickets per week" OR "rapid incident response protocols."
+
+For {CV_EVIDENCE_X} (Match to JD Priority Skills):
+
+If JD requires API/Integration: "Diagnosing root causes via log analysis, debugging, and API troubleshooting."
+
+If JD requires Cloud/OS: "Maintaining system integrity within Cloud and Linux infrastructures."
+
+If JD requires Pre-Sales/Onboarding: "Managing the full customer journey from technical discovery and RFI/RFP to onboarding."
+
+If JD requires AI/Automation: "Leveraging LLM infrastructure to build AI-integrated log parsing and troubleshooting tools."
+
+If JD requires Networking (Legacy): "Ensuring standardized LAN/WAN setups and structured connectivity troubleshooting."
+
+For {CV_IMPACT_ACTION}:
+
+Agile/Project Focus: "facilitating Scrum ceremonies and Kanban workflows to coordinate cross-functional teams"
+
+Customer Success Focus: "translating complex technical delivery into actionable narratives for enterprise partners"
+
+Training/Enablement Focus: "establishing repeatable knowledge transfer processes to reduce dependency on ad-hoc training"

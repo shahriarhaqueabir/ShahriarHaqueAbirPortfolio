@@ -16,13 +16,12 @@ export default function MobileCommandSheet({ open, onOpenChange, children }: Mob
       <button
         type="button"
         onClick={() => onOpenChange(!open)}
-        className="fixed bottom-6 right-5 z-50 md:hidden flex h-14 items-center gap-2 rounded-full border border-(--accent)/45 bg-(--accent) px-4 text-(--bg) shadow-[0_18px_48px_rgba(var(--accent-rgb),0.36)] transition-transform active:scale-95"
+        className="fixed bottom-6 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-(--accent)/45 bg-(--accent) text-(--bg) shadow-[0_18px_48px_rgba(var(--accent-rgb),0.36)] transition-transform active:scale-95 md:hidden"
         aria-label={open ? "Close chat panel" : "Open chat panel"}
       >
         {open ? (
           <>
             <X className="h-5 w-5" />
-            <span className="font-syne text-xs font-black uppercase tracking-widest">Close</span>
           </>
         ) : (
           <>
@@ -30,7 +29,6 @@ export default function MobileCommandSheet({ open, onOpenChange, children }: Mob
               <MessageCircle className="h-5 w-5" />
               <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full border border-(--accent) bg-green-400" />
             </span>
-            <span className="font-syne text-xs font-black uppercase tracking-widest">Chat</span>
           </>
         )}
       </button>

@@ -23,6 +23,11 @@ const viewMap: Partial<Record<ViewKey, ViewIntent>> = {
     description: VIEW_GOALS.hero.intentDescription,
     weight: 2,
   },
+  blog: {
+    keywords: ["blog", "notes", "writing", "posts", "updates", "thoughts", "articles", "journal"],
+    description: VIEW_GOALS.blog.intentDescription,
+    weight: 2,
+  },
   about: {
     keywords: ["about", "bio", "who", "profile", "story", "approach", "thinking", "philosophy", "background"],
     description: VIEW_GOALS.about.intentDescription,
@@ -108,11 +113,6 @@ const viewMap: Partial<Record<ViewKey, ViewIntent>> = {
     description: VIEW_GOALS.stats.intentDescription,
     weight: 2,
   },
-  lab: {
-    keywords: ["lab", "synthesis", "analysis", "brief", "fit analysis", "custom cv", "profile analysis", "assessment"],
-    description: VIEW_GOALS.lab.intentDescription,
-    weight: 2,
-  },
   contact: {
     keywords: ["contact", "email", "linkedin", "reach", "github", "connect", "message", "hire", "availability", "talk"],
     description: VIEW_GOALS.contact.intentDescription,
@@ -169,7 +169,7 @@ function detectInterests(input: string) {
   const interests: string[] = [];
 
   if (input.includes("ai") || input.includes("rag") || input.includes("llm")) interests.push("AI systems");
-  if (input.includes("automation") || input.includes("workflow") || input.includes("pipeline")) interests.push("Automation");
+  if (input.includes("automation") || input.includes("workflow") || input.includes("pipeline")) interests.push("AI automation");
   if (input.includes("architecture") || input.includes("systems") || input.includes("infrastructure")) interests.push("Architecture");
   if (input.includes("support") || input.includes("customer") || input.includes("saas")) interests.push("Customer engineering");
   if (input.includes("hire") || input.includes("role") || input.includes("fit")) interests.push("Hiring fit");

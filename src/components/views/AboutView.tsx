@@ -9,22 +9,28 @@ import type { ViewKey } from "@/lib/types";
 
 const storyBeats = [
   {
-    label: "Then",
-    title: "Started at the infrastructure layer.",
-    text: "Worked close to physical and operational systems: network infrastructure, optical fiber environments, QA systems, and on-call technical support. The environments were tangible. Systems either held together or failed, and failure was visible.",
-    context: "Infrastructure grounding: physical constraints, deterministic environments, operational discipline, and root-cause thinking.",
+    label: "Foundation",
+    title: "Built from engineering fundamentals.",
+    text: "The foundation starts with Electrical and Electronic Engineering, Information and Communication Engineering, optical fibers, and IT networks. That mix shaped how I think about systems: signals, constraints, infrastructure, reliability, and the practical details that decide whether something works.",
+    context: "Engineering grounding: electrical/electronic systems, information and communication engineering, optical fibers, LAN/WAN operations, documentation, and root-cause thinking.",
   },
   {
-    label: "Transition",
-    title: "Moved into systems-facing consulting.",
-    text: "Relocating to Germany shifted the work toward people as much as technology. The role expanded into onboarding, integrations, troubleshooting, and translating complex systems into workflows teams could actually use.",
-    context: "Systems consulting: converting technical complexity into usable workflows, support clarity, and repeatable processes.",
+    label: "Delivery",
+    title: "Added project management and technical coordination.",
+    text: "At Larsen & Toubro, the work added project management, training coordination, documentation, scheduling, and stakeholder follow-through. It made the technical foundation operational: not just understanding systems, but coordinating people and delivery around them.",
+    context: "L&T influence: project management, technical training coordination, curriculum planning, handoffs, reporting, and operational discipline.",
+  },
+  {
+    label: "Consulting",
+    title: "Moved into B2B SaaS solution consultation.",
+    text: "In Germany, the work expanded into B2B SME and enterprise product sales, software solution consultation, Tier-3 technical support, discovery, RFI/RFP support, PoCs, onboarding, production troubleshooting, and release validation.",
+    context: "SaaS consulting: product sales support, technical discovery, customer onboarding, API/database troubleshooting, SLA-driven Tier-3 support, release validation, and engineering coordination.",
   },
   {
     label: "Now",
-    title: "Designing systems that reduce friction.",
-    text: "Current work focuses on automation, AI-enabled workflows, and developer tooling. The objective remains consistent: make systems easier to understand, easier to operate, and easier to trust over time.",
-    context: "AI and workflow systems: retrieval, orchestration, local models, and systems designed around reliability.",
+    title: "Engineering AI automation and workflows.",
+    text: "Current interests extend that operating experience into AI automation, workflow engineering, cybersecurity, GTM, SDR systems, and agentic full stack software development. The goal is practical: turn repeated technical work into systems that scale.",
+    context: "AI automation layer: RAG, local LLMs, FastAPI, Qdrant, Docker, n8n, GTM workflows, agentic software development, and cybersecurity-aware systems thinking.",
   },
 ];
 
@@ -33,7 +39,7 @@ const principles = [
   "systems should reduce cognitive load",
   "small improvements should compound reliability",
   "support signals should shape product design",
-  "automation should preserve transparency",
+  "AI automation should preserve transparency",
 ];
 
 export default function AboutView({ setView }: { setView: (view: ViewKey) => void }) {
@@ -70,7 +76,7 @@ export default function AboutView({ setView }: { setView: (view: ViewKey) => voi
             It&apos;s good to catch up.
           </h2>
           <p className="mt-8 max-w-2xl font-playfair text-2xl italic leading-relaxed text-(--text)">
-            Hi. I&apos;m Shahriar. Born and raised in Bangladesh. I moved half way across the world to Germany and have been living in Berlin for the last 10 years. I like solving problems, and experimenting with different tech stacks. Let&apos;s catch up and chat about systems, AI, or whatever&apos;s on your mind.
+            Hi. I&apos;m Shahriar. I was born and raised in Bangladesh, moved halfway across the world to Germany, and I&apos;m currently living in Berlin. I specialize in helping technical products reach and retain customers through technical discovery, sales development, GTM strategy, in-depth support, and customer success-focused execution.
           </p>
           <div className="mt-10 grid max-w-2xl grid-cols-1 gap-px border border-(--border) bg-(--border) sm:grid-cols-2">
             <div className="bg-(--bg) p-6">
@@ -85,7 +91,7 @@ export default function AboutView({ setView }: { setView: (view: ViewKey) => voi
                 <Sparkles className="h-3.5 w-3.5" />
                 Philosophy
               </div>
-              <div className="font-syne text-2xl font-black text-(--text)"> build systems people trust</div>
+              <div className="font-syne text-2xl font-black text-(--text)">make systems reliable, explainable, and usable</div>
             </div>
           </div>
         </div>
@@ -151,8 +157,8 @@ export default function AboutView({ setView }: { setView: (view: ViewKey) => voi
 
       <section className="grid grid-cols-1 gap-px border border-(--border) bg-(--border) lg:grid-cols-[0.85fr_1.15fr]">
         <div className="bg-(--bg) p-8 md:p-12">
-          <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-(--accent)">What I care about now</div>
-          <h3 className="mt-5 font-syne text-4xl font-black leading-none text-(--text)">Useful reliability, with a human voice.</h3>
+          <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-(--accent)">What I care about in the work</div>
+          <h3 className="mt-5 font-syne text-4xl font-black leading-none text-(--text)">Reliable systems, clear handoffs, and fewer repeated failures.</h3>
         </div>
         <div className="grid grid-cols-1 gap-px bg-(--border) sm:grid-cols-2">
           {principles.map((principle, index) => (
@@ -175,9 +181,9 @@ export default function AboutView({ setView }: { setView: (view: ViewKey) => voi
 
       <section className="py-20">
         <div className="max-w-3xl border-l-2 border-(--accent) pl-8">
-          <div className="mb-5 font-mono text-[10px] uppercase tracking-[0.24em] text-(--accent)">Underneath the systems language</div>
+          <div className="mb-5 font-mono text-[10px] uppercase tracking-[0.24em] text-(--accent)">The working style</div>
           <p className="font-playfair text-3xl italic leading-snug text-(--text) md:text-5xl">
-            The short version? I like being the person who can sit with the messy thing, ask the useful question, and help everyone breathe again.
+            I like being the person who can enter a messy technical situation, find the signal, explain the tradeoffs, and help the next step become clear.
           </p>
         </div>
       </section>
