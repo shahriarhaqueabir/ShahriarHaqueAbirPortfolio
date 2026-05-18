@@ -1,6 +1,29 @@
 # Best New Site Story - Proposed Copy Change Map
 
-This document maps the current site copy to a recommended rewrite based on the `CVdetails/` review. It is not an implementation patch. It is a review artifact for approving direction before changing the app.
+This document began as a proposed copy change map based on the `CVdetails/` review. Most core recommendations have now been implemented in the app and this file is retained as the story rationale and audit trail.
+
+## Implementation Status - May 2026
+
+Implemented direction:
+
+- Central identity now frames Shahriar Haque Abir as a lead technical solution consultant.
+- Hero badges were changed from novelty labels to professional signals such as IT networks, electrical/electronics engineering, system administration, APAC/EMEA/NAM expertise, AI automation, and technical solution consulting.
+- About, experience, projects, skills, stats, contact, sidebar, and blog copy were revised to reduce fake-system language and repeated claims.
+- Lab page was removed.
+- Blog page was added with owner-authored posts only.
+- Public CV download was added as a PDF.
+- Mobile behavior was tuned while preserving the desktop/browser experience.
+- Page navigation now resets the main content scroll to the top.
+- Case studies and experience copy use neutral professional past tense.
+- Sidebar copy now uses portfolio-guide language instead of fake OS/command wording.
+
+Current documentation to treat as canonical:
+
+- `README.md` for project setup, checks, deployment, and current site shape.
+- `DesignLanguage.md` for current visual/copy direction.
+- `src/lib/data.ts` for most visitor-facing portfolio content.
+
+Historical recommendations below may include old "Current" snippets that no longer match the codebase.
 
 ## Source Evidence Used
 

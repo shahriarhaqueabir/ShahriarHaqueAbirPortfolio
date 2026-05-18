@@ -1,512 +1,121 @@
-The design language should feel like:
+# Design Language
 
-calm + intelligent + premium + exploratory
+The site should feel calm, intelligent, premium, exploratory, and human. The current direction is an interactive portfolio, not a fake operating system or command center.
 
-Think less “resume website” and more:
+## Core Mood
 
-operating system
-design laboratory
-AI command center
-interactive documentary
-architect's sketchbook becoming real in front of the visitor
+- Professional without becoming a plain resume.
+- Technical without pretending to be a terminal.
+- Personal without over-explaining the metaphor.
+- Motion-rich, but never noisy.
+- Built around Shahriar's central identity: lead technical solution consultant.
 
-A cream background with subtle motion works well because it gives room for visual storytelling without looking like a startup dashboard.
+## Visual Principles
 
-Global Design Style
-Visual Style
-
-Base
-
-Warm cream/off-white background
-Soft charcoal typography
-muted gray-blue accents
-occasional glass layers
-hand-drawn grid texture beneath content
+- Warm cream/off-white surfaces for most views.
+- Soft charcoal typography with restrained accent colors.
+- Dark immersive treatment only where the content benefits from it, such as the Stats orbit.
+- Glass, borders, and grid textures should support hierarchy, not become the story.
+- Cards should stay functional and compact.
 
 Avoid:
 
-neon cyberpunk
-heavy gradients
-loud parallax
-generic startup SaaS cards
+- Fake OS language.
+- Artificial protocol labels.
+- Arbitrary scoring systems.
+- Decorative explanations of the design.
+- Lab pages or experimental sections that are not grounded in real work.
+- Repeated claims that simply reword the same consulting story.
 
-Mood references:
+## Copy Principles
 
-Apple keynote motion
-architecture portfolios
-editorial magazines
-Figma prototype aesthetics
-modern museum exhibits
-Site-wide Animation Language
+The portfolio should sound like a capable person explaining useful evidence.
 
-Use consistent motion rules.
+- Hero and badges: title-like proof signals, max three words when possible.
+- About: first-person personal narrative.
+- Case studies and experience: neutral professional past tense.
+- Sidebar and guide: practical portfolio assistant language.
+- Stats: proof points and working style, not self-rating.
+- Contact: direct, warm, and useful.
 
-Micro interactions
+Preferred wording direction:
 
-Elements should:
+- "Lead Technical Solution Consultant"
+- "AI automation"
+- "Technical discovery"
+- "Customer adoption"
+- "Tier-3 support"
+- "GTM / SDR operating model"
+- "Project coordination"
+- "Working style"
 
-fade
-slide
-scale slightly
-reveal progressively
+Avoid wording direction:
+
+- "System online"
+- "OS version"
+- "Navigation protocol"
+- "Transmission channel"
+- "Potential index"
+- "Verification pass"
+- "AI enabled portfolio" as a primary identity
+
+## Motion Principles
+
+Motion should feel like the interface is quietly responding.
+
+Use:
+
+- Fade.
+- Slide.
+- Soft scale.
+- Progressive reveal.
+- Small hover lift.
+- Smooth route transitions.
 
 Avoid:
 
-spinning
-bouncing
-large movements
+- Bouncing status dots.
+- Loud spinning UI.
+- Large movements that compete with reading.
+- Repeating animations that imply urgency.
 
-Motion should feel:
+## Page Notes
 
-"the interface is thinking."
+### Home
 
-Examples:
+The first view should establish Shahriar as a lead technical solution consultant. CTAs should guide visitors toward case studies, CV download, or contact.
 
-Mouse hover:
+### Blog
 
-card slightly rises
-shadow softens
-small data lines animate
+Posts are owner-authored updates. The section should not imply public user submissions or a CMS unless one exists.
 
-Click:
+### About
 
-expands from cursor point
+The page should connect Bangladesh, Germany, engineering foundations, L&T coordination, B2B SaaS consulting, Tier-3 support, and AI automation interests without repeating the same professional summary from the hero.
 
-Section enter:
+### Projects
 
-opacity 0→100
-translateY 20→0
-stagger children
-About
+Projects should read as selected work and case studies. The two main showcase projects are:
 
-Goal:
+- Pathfinder International SDR & GTM Operating Model.
+- L&T Technical Training & Project Coordination Program.
 
-Create emotional connection quickly.
+Other work can support the broader profile as case studies.
 
-Instead of:
+### Skills
 
-photo + paragraph
+The skills page should be a capability map. It should reduce duplication and group evidence around:
 
-Build:
+- Engineering & systems foundation.
+- Project delivery & L&T coordination.
+- B2B SaaS solution consulting.
+- Tier-3 technical support.
+- AI automation & workflow engineering.
 
-Split-screen visual biography.
+### Stats
 
-Left:
+Stats should use evidence-backed metrics and a human working-style orbit. The orbit labels can be expressive, but explanatory footnotes should be minimal.
 
-story text
+### Contact
 
-Right:
-
-living visual ecosystem
-
-Animation ideas:
-
-Particle constellation
-
-Tiny nodes connect:
-
-Designer
-Builder
-Consultant
-AI
-Systems
-Strategy
-
-Hovering a node:
-
-network reorganizes.
-
-Like:
-
-your identity map evolves.
-
-Infinite sketch canvas
-
-Background slowly draws:
-
-arrows
-notes
-diagrams
-architecture ideas
-
-Like someone brainstorming live.
-
-Scroll animation
-
-As user scrolls:
-
-different parts of the identity map become highlighted.
-
-Not by page jumps.
-
-More like:
-
-discovering layers.
-
-Vision
-
-This page can become your philosophy engine.
-
-Not static text.
-
-Three pillars:
-
-Simplicity
-Human-Centric
-Data-driven
-
-Represent them visually.
-
-Simplicity
-
-Animation:
-
-complex mesh untangles into elegant lines
-
-Visual metaphor:
-
-chaos → clarity
-
-Human-Centric
-
-Organic particles behave like groups of people.
-
-Cursor movement influences them.
-
-The page reacts to the visitor.
-
-Data Driven
-
-Live flowing graphs in background.
-
-Not dashboards.
-
-Subtle:
-
-lines moving continuously like stock market traces.
-
-Scroll effect:
-
-Vision cards rotate in 3D slightly as if they are physical exhibits.
-
-Projects
-
-This should become the strongest section.
-
-Not cards.
-
-Interactive case studies.
-
-Structure:
-
-Problem
-Thinking
-Process
-Iterations
-Result
-
-Project cards:
-
-Appear as experimental objects.
-
-Hover:
-
-small preview animation starts.
-
-Examples:
-
-AI project:
-
-show nodes connecting.
-
-Design project:
-
-show sketches becoming UI.
-
-Data project:
-
-graphs build themselves.
-
-Open animation:
-
-Card expands from thumbnail into full-screen modal.
-
-Like:
-
-Netflix preview opening.
-
-Inside modal:
-
-Use timeline storytelling:
-
-challenge
-↓
-
-attempts
-
-↓
-
-mistakes
-
-↓
-
-breakthrough
-
-↓
-
-outcome
-
-Include subtle animation while scrolling.
-
-Example:
-
-wireframes assemble themselves.
-
-Experience
-
-Avoid vertical timelines.
-
-Too expected.
-
-Instead:
-
-career trajectory map.
-
-Horizontal journey:
-
-past ← present → future
-
-Use a path or transit line.
-
-Stations:
-
-roles/projects/major shifts
-
-Hover station:
-
-opens memories:
-
-projects
-lessons
-skills acquired
-
-Background:
-
-Animated line graph.
-
-Slowly evolving over years:
-
-confidence
-skills
-scope
-responsibility
-
-Not literal labels.
-
-More abstract.
-
-Like growth visualization.
-
-Skills
-
-Radar charts alone are overused.
-
-Make it interactive.
-
-Imagine:
-
-capability galaxy.
-
-Clusters:
-
-Technical
-
-Creative
-
-Business
-
-AI
-
-Strategy
-
-Communication
-
-Hovering:
-
-nodes expand.
-
-Nearby related skills illuminate.
-
-Example:
-
-Hover:
-
-React
-
-reveals:
-
-NextJS
-TypeScript
-Framer Motion
-UI systems
-
-Connections animate.
-
-Feels like a neural network.
-
-Animation:
-
-soft magnetic movement.
-
-Stack
-
-Do not create a grid of logos.
-
-Everyone does that.
-
-Instead:
-
-Technology inventory wall.
-
-Visual inspiration:
-
-Tony Stark holographic workspace.
-
-Categories:
-
-Frontend
-Backend
-AI
-Design
-Cloud
-Automation
-Data
-
-Each tool becomes a capsule.
-
-Hover:
-
-reveals:
-
-years used
-project count
-confidence
-favorite use case
-
-Animation:
-
-tool capsules rearrange themselves according to category filters.
-
-Stats
-
-This section can feel like mission control.
-
-Not boring counters.
-
-Metrics ideas:
-
-Projects completed
-Applications sent
-AI experiments
-Languages
-Interviews
-GitHub commits
-Hours designed
-Hours coding
-
-Animation:
-
-numbers roll like mechanical counters.
-
-Very subtle.
-
-Add:
-
-uptime-style SLO visual:
-
-Learning consistency:
-99.2%
-
-Creative output:
-95%
-
-Experiment frequency:
-100%
-
-Represent as system-health widgets.
-
-Additional Pages Worth Adding
-Playground
-
-A place where visitors experiment.
-
-Prompt:
-
-Ask me anything
-Generate a page about:
-AI
-Design
-Career
-Projects
-
-AI creates custom experiences.
-
-Thought Process
-
-Show how you think.
-
-Animated whiteboard.
-
-Reveal:
-
-messy ideas → refined systems
-
-Employers rarely see this.
-
-Very memorable.
-
-Lab
-
-Experiments and unfinished ideas.
-
-Floating cards in a spatial environment.
-
-Hover:
-
-prototype activates.
-
-Shows curiosity.
-
-Journey Map
-
-Visualize your entire life progression:
-
-countries
-jobs
-skills
-projects
-education
-interests
-
-as a growing world map.
-
-Motion Stack Recommendation
-
-For implementation:
-
-Framer Motion → page transitions
-GSAP → scroll choreography
-Lenis → smooth scrolling
-Three.js / React Three Fiber → particles and environments
-Motion One → lightweight transitions
-Lottie → controlled illustrations
-
-Motion principle:
-
-Small movements everywhere.
-
-Big movements only for story moments.
-
-The visitor should feel:
-
-"this page is alive and responding to me" rather than "animations are happening."
+Contact should be direct. It should make the next step obvious and include the downloadable CV.
