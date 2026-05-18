@@ -11,12 +11,12 @@
   --surface: #101826;
   --surface-2: #152236;
   --text: #EEF6F8;
-  --text-muted: #94A3B8;
+  --text-muted: #B8C5D8;
   --accent: #38BDF8;
   --accent-rgb: 56, 189, 248;
   --accent2: #F59E0B;
   --accent3: #34D399;
-  --border: rgba(238, 246, 248, 0.11);
+  --border: rgba(238, 246, 248, 0.16);
   --grid-opacity: 0.08;
   --font-inter: 'Inter', sans-serif;
   --font-syne: 'Syne', sans-serif;

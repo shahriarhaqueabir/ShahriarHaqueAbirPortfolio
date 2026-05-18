@@ -6,6 +6,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 type BootScreenProps = {
   progress: number;
   isReady: boolean;
+  localAiEnabled?: boolean;
+  localAiFallback?: boolean;
   localAiPaused?: boolean;
   onEnter: () => void;
 };
@@ -19,11 +21,11 @@ const lines = [
 
 const FINAL_REVEAL_STEP = lines.length * 2;
 
-export default function BootScreen({ progress, isReady, localAiPaused = false, onEnter }: BootScreenProps) {
+export default function BootScreen({ progress, isReady, localAiEnabled = false, localAiFallback = false, localAiPaused = false, onEnter }: BootScreenProps) {
   const hasEnteredRef = useRef(false);
   const [revealStep, setRevealStep] = useState(0);
   const [aiDisplayProgress, setAiDisplayProgress] = useState(0);
-  const targetProgress = isReady ? 100 : Math.max(0, Math.min(100, Math.round(progress)));
+  const targetProgress = isReady ? 100 : localAiEnabled ? Math.max(0, Math.min(100, Math.round(progress))) : 0;
   const handleEnter = useCallback(() => {
     if (hasEnteredRef.current) return;
     hasEnteredRef.current = true;
@@ -42,7 +44,7 @@ export default function BootScreen({ progress, isReady, localAiPaused = false, o
   }, [revealStep]);
 
   useEffect(() => {
-    if (revealStep < FINAL_REVEAL_STEP || aiDisplayProgress >= targetProgress) return;
+    if (!localAiEnabled || revealStep < FINAL_REVEAL_STEP || aiDisplayProgress >= targetProgress) return;
 
     const timeout = window.setTimeout(
       () => setAiDisplayProgress((currentProgress) => Math.min(currentProgress + 1, targetProgress)),
@@ -50,7 +52,7 @@ export default function BootScreen({ progress, isReady, localAiPaused = false, o
     );
 
     return () => window.clearTimeout(timeout);
-  }, [aiDisplayProgress, isReady, revealStep, targetProgress]);
+  }, [aiDisplayProgress, isReady, localAiEnabled, revealStep, targetProgress]);
 
   useEffect(() => {
     if (!isReady || revealStep < FINAL_REVEAL_STEP || aiDisplayProgress < 100) return;
@@ -118,7 +120,7 @@ export default function BootScreen({ progress, isReady, localAiPaused = false, o
                     transition={{ duration: 0.25, ease: "easeOut" }}
                     className={line.status === "OK" || aiDisplayProgress === 100 ? "text-(--accent)" : "text-(--text-muted)"}
                   >
-                    {line.status ?? (localAiPaused ? "PAUSED" : `${aiDisplayProgress}%`)}
+                    {line.status ?? (localAiPaused ? "PAUSED" : localAiFallback ? "FALLBACK" : localAiEnabled ? `${aiDisplayProgress}%` : "OPT-IN")}
                   </motion.span>
                 </div>
               );
@@ -129,7 +131,7 @@ export default function BootScreen({ progress, isReady, localAiPaused = false, o
                 <motion.div
                   className="absolute inset-y-0 left-0 bg-(--accent)"
                   initial={{ width: 0 }}
-                  animate={{ width: `${aiDisplayProgress}%` }}
+                  animate={{ width: `${localAiEnabled ? aiDisplayProgress : 100}%` }}
                   transition={{ duration: 0.25, ease: "easeOut" }}
                 />
               </div>
@@ -138,7 +140,7 @@ export default function BootScreen({ progress, isReady, localAiPaused = false, o
 
           <div className="px-5 py-4 border-t border-(--border) flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <span className="text-[9px] tracking-[0.18em]">
-              AI {localAiPaused ? "PAUSED" : isReady ? "ONLINE" : "CALIBRATING"} / BROWSING AVAILABLE
+              AI {localAiPaused ? "PAUSED" : localAiFallback ? "FALLBACK" : !localAiEnabled ? "OPT-IN" : isReady ? "ONLINE" : "CALIBRATING"} / BROWSING AVAILABLE
             </span>
             <button
               type="button"

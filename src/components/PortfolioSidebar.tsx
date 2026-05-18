@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { BarChart3, Briefcase, CheckCircle2, Cpu, Home, Layers, Mail, MessageSquare, Newspaper, Send, User, Zap } from "lucide-react";
+import { BarChart3, Briefcase, CheckCircle2, Cpu, Home, Layers, Mail, MessageSquare, Newspaper, Power, Send, User, Zap } from "lucide-react";
 import type { Message, ViewKey } from "@/lib/types";
 
 const navItems: Array<{ name: string; icon: typeof User; view: ViewKey }> = [
@@ -47,11 +47,14 @@ function TypewriterText({ text }: { text: string }) {
 type PortfolioSidebarProps = {
   messages: Message[];
   isReady: boolean;
+  localAiEnabled: boolean;
+  localAiFallback: boolean;
   localAiPaused: boolean;
   progress: number;
   activeView: ViewKey;
   showReadyToast: boolean;
   variant?: "desktop" | "mobile";
+  enableLocalAi: () => void;
   onNavigate: (view: ViewKey, name?: string) => void;
   onSend: (input: string) => void;
 };
@@ -59,11 +62,14 @@ type PortfolioSidebarProps = {
 export default function PortfolioSidebar({
   messages,
   isReady,
+  localAiEnabled,
+  localAiFallback,
   localAiPaused,
   progress,
   activeView,
   showReadyToast,
   variant = "desktop",
+  enableLocalAi,
   onNavigate,
   onSend,
 }: PortfolioSidebarProps) {
@@ -97,14 +103,14 @@ export default function PortfolioSidebar({
           </motion.div>
           <div className="min-w-0">
             <h2 className="text-sm font-syne font-black uppercase tracking-widest text-(--text) flex items-center gap-2 truncate">
-              Shahriar Haque Abir <Cpu className={`w-3 h-3 shrink-0 ${isReady && !localAiPaused ? "text-green-500" : "text-orange-500"}`} />
+              Shahriar Haque Abir <Cpu className={`w-3 h-3 shrink-0 ${isReady && !localAiPaused ? (localAiFallback ? "text-(--accent)" : "text-green-500") : localAiEnabled ? "text-orange-500" : "text-(--text-muted)"}`} />
             </h2>
             <p className="text-[9px] font-mono text-(--accent) uppercase tracking-tighter">Lead Technical Solution Consultant</p>
           </div>
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          <span className="text-[8px] font-mono text-(--text-muted) uppercase">{localAiPaused ? "Paused" : isReady ? "Ready" : "Loading"}</span>
-          <div className={`w-2 h-2 rounded-full ${isReady && !localAiPaused ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" : "bg-orange-500"}`} />
+          <span className="text-[8px] font-mono text-(--text-muted) uppercase">{localAiPaused ? "Paused" : localAiFallback ? "Fallback" : !localAiEnabled ? "Opt-in" : isReady ? "Ready" : "Loading"}</span>
+          <div className={`w-2 h-2 rounded-full ${isReady && !localAiPaused ? (localAiFallback ? "bg-(--accent)" : "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]") : localAiEnabled ? "bg-orange-500" : "bg-(--text-muted)"}`} />
         </div>
       </div>
 
@@ -163,6 +169,17 @@ export default function PortfolioSidebar({
           ))}
         </AnimatePresence>
 
+        {!localAiPaused && !localAiEnabled && (
+          <button
+            type="button"
+            onClick={enableLocalAi}
+            className="flex items-center justify-center gap-2 border border-(--border) bg-(--text) px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-(--bg) transition-colors hover:bg-(--accent)"
+          >
+            <Power className="h-3.5 w-3.5" />
+            Enable AI guide
+          </button>
+        )}
+
         <div className={`${isMobile ? "mt-2 pt-4" : "mt-8 pt-8"} border-t border-(--border)`}>
           <div className="text-[9px] font-mono text-(--text-muted) uppercase tracking-[0.2em] mb-5 px-1">Explore Portfolio</div>
           <div className={isMobile ? "grid grid-cols-2 gap-2" : "flex flex-wrap gap-2"}>
@@ -192,7 +209,7 @@ export default function PortfolioSidebar({
             value={input}
             onChange={(event) => setInput(event.target.value)}
             onKeyDown={(event) => event.key === "Enter" && handleSubmit()}
-            placeholder={localAiPaused ? "Search the portfolio..." : isReady ? "Ask about Shahriar..." : `Loading guide... ${Math.round(progress)}%`}
+            placeholder={localAiPaused ? "Search the portfolio..." : localAiFallback ? "Ask the fallback guide..." : !localAiEnabled ? "Enable AI guide to ask questions" : isReady ? "Ask about Shahriar..." : `Loading guide... ${Math.round(progress)}%`}
             className="w-full bg-white border border-(--border) rounded-sm p-4 pl-10 pr-12 text-xs font-mono focus:outline-none focus:border-(--accent) transition-all text-(--text) placeholder:text-gray-300"
           />
           <MessageSquare className="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
@@ -207,8 +224,8 @@ export default function PortfolioSidebar({
         </div>
         <div className="mt-4 flex justify-between items-center text-[8px] font-mono text-gray-400 uppercase tracking-widest">
           <span className="flex items-center gap-1">
-            <span className={`w-1 h-1 rounded-full ${isReady && !localAiPaused ? "bg-green-500" : "bg-orange-500"}`} />
-            {localAiPaused ? "GUIDE PAUSED" : isReady ? "GUIDE READY" : "GUIDE LOADING"}
+            <span className={`w-1 h-1 rounded-full ${isReady && !localAiPaused ? (localAiFallback ? "bg-(--accent)" : "bg-green-500") : localAiEnabled ? "bg-orange-500" : "bg-gray-400"}`} />
+            {localAiPaused ? "GUIDE PAUSED" : localAiFallback ? "GUIDE FALLBACK" : !localAiEnabled ? "GUIDE OPT-IN" : isReady ? "GUIDE READY" : "GUIDE LOADING"}
           </span>
           <span>PORTFOLIO Q&A</span>
         </div>
