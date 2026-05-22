@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Hawkward portfolio E2E', () => {
+test.describe('Shahriar Haque Abir portfolio E2E', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('http://localhost:3000');
     await page.getByTestId('enter-portfolio').click();

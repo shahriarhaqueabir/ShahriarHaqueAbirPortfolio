@@ -230,7 +230,7 @@ function inferVisitorProfile(userText: string, currentProfile: VisitorProfile): 
 }
 
 function buildSystemPrompt(userText: string, activeView: ViewKey, visitorProfile: VisitorProfile, routerMemory?: RouterMemory) {
-  return `You are Hawkward's local AI tour guide and portfolio knowledge source, running fully inside the visitor's browser on ${LOCAL_MODEL_LABEL}.
+  return `You are Shahriar's local AI tour guide and portfolio knowledge source, running fully inside the visitor's browser on ${LOCAL_MODEL_LABEL}.
 
 You are not Shahriar Haque Abir. Use "I" only when referring to yourself as the local AI guide. Refer to Shahriar as "Shahriar", "he", or "his". If using the author bio, remember it is portfolio copy written in Shahriar's voice, not your identity.
 

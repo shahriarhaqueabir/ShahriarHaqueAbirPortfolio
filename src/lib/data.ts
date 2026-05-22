@@ -213,7 +213,7 @@ projects: [
   },
 
   { 
-    name: "Hawkward Portfolio", 
+    name: "Shahriar Haque Abir Portfolio", 
     desc: "AI-enabled interactive portfolio experience demonstrating engineering projects through dynamic content generation.",
 
     context: "Traditional portfolio websites often fail to communicate technical depth or provide interactive demonstrations of capabilities.",

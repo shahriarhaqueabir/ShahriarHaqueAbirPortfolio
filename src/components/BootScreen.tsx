@@ -80,14 +80,14 @@ export default function BootScreen({ progress, isReady, localAiEnabled = false, 
               Portfolio System
             </div>
             <h1 className="text-2xl md:text-4xl font-syne font-black uppercase tracking-[0.08em] text-(--text)">
-              Hawkward Portfolio
+              Shahriar Haque Abir Portfolio
             </h1>
           </div>
         </div>
 
         <div className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.12em] text-(--text-muted) border border-(--border) bg-(--surface)/82">
           <div className="px-5 py-4 border-b border-(--border) text-(--text)">
-            HAWKWARD PORTFOLIO — INITIALISING
+            SHAHRIAR HAQUE ABIR PORTFOLIO — INITIALISING
           </div>
 
           <div className="p-5 space-y-4">

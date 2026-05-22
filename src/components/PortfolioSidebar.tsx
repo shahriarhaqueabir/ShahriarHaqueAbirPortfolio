@@ -99,7 +99,7 @@ export default function PortfolioSidebar({
             className="w-10 h-10 rounded-sm bg-(--text) flex items-center justify-center rotate-3 hover:rotate-0 transition-transform cursor-pointer overflow-hidden border border-(--border) relative shrink-0"
             onClick={() => onNavigate("hero", "Home")}
           >
-            <Image src="/logo.jpg" alt="Hawkward logo" fill className="object-cover" />
+            <Image src="/logo.jpg" alt="Shahriar Haque Abir logo" fill className="object-cover" />
           </motion.div>
           <div className="min-w-0">
             <h2 className="text-sm font-syne font-black uppercase tracking-widest text-(--text) flex items-center gap-2 truncate">

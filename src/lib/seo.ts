@@ -1,4 +1,4 @@
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://hawkward-website.vercel.app";
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://shahriarhaqueabir.vercel.app";
 
 export const siteTitle = "Shahriar Haque Abir | Lead Technical Solution Consultant";
 

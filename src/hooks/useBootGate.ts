@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const BOOT_STORAGE_KEY = "hawkward_booted";
+const BOOT_STORAGE_KEY = "shahriar_portfolio_booted";
 
 function hasBooted() {
   if (typeof window === "undefined") return false;
