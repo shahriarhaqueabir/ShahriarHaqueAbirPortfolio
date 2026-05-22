@@ -92,7 +92,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
               className="bg-(--bg) p-7 min-h-56"
             >
               <div className="mb-8 flex items-center justify-between gap-4">
-                <div className="flex h-12 w-12 items-center justify-center border border-(--border) bg-white text-(--accent)">
+                <div className="flex h-12 w-12 items-center justify-center border border-(--border) bg-(--surface) text-(--accent)">
                   <competency.Icon className="h-5 w-5" />
                 </div>
                 <CheckCircle2 className="h-4 w-4 text-(--accent)" />
@@ -123,7 +123,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.35 }}
               transition={{ delay: index * 0.04, duration: 0.25 }}
-              className="bg-white p-7 md:p-9"
+              className="bg-(--surface) p-7 md:p-9"
             >
               <div className="mb-6 flex items-center gap-3">
                 <Wrench className="h-4 w-4 text-(--accent)" />
@@ -165,7 +165,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
           </div>
           <div className="flex flex-wrap gap-2">
             {CONFIG.languages.map((item) => (
-              <span key={item} className="px-3 py-2 bg-white border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted)">
+              <span key={item} className="px-3 py-2 bg-(--surface) border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted)">
                 {item}
               </span>
             ))}
@@ -179,7 +179,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
           </div>
           <div className="flex flex-wrap gap-2">
             {CONFIG.certifications.map((item) => (
-              <span key={item} className="px-3 py-2 bg-white border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted)">
+              <span key={item} className="px-3 py-2 bg-(--surface) border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted)">
                 {item}
               </span>
             ))}

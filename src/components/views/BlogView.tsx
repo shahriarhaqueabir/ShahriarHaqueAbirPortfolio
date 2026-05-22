@@ -22,7 +22,7 @@ export default function BlogView({ setView }: { setView: (view: ViewKey) => void
             Owner-authored updates on technical products, customer adoption, GTM context, support patterns, and AI automation.
           </p>
         </div>
-        <div className="flex items-start gap-3 border border-(--border) bg-white p-5 max-w-sm">
+        <div className="flex items-start gap-3 border border-(--border) bg-(--surface) p-5 max-w-sm">
           <LockKeyhole className="mt-0.5 h-4 w-4 shrink-0 text-(--accent)" />
           <p className="text-xs leading-relaxed text-(--text-muted)">
             Read-only for visitors. Updates are made directly by Shahriar through the site content.
@@ -39,7 +39,7 @@ export default function BlogView({ setView }: { setView: (view: ViewKey) => void
               <span>{post.date}</span>
             </div>
             <div className="flex items-start gap-5">
-              <div className="hidden h-11 w-11 shrink-0 items-center justify-center border border-(--border) bg-white text-(--accent) sm:flex">
+              <div className="hidden h-11 w-11 shrink-0 items-center justify-center border border-(--border) bg-(--surface) text-(--accent) sm:flex">
                 <PenLine className="h-4 w-4" />
               </div>
               <div>

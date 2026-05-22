@@ -267,7 +267,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
                       animate={{ scale: isActive ? [1, 1.55, 1] : [1, 1.18, 1] }}
                       transition={{ duration: isActive ? 2.2 : 3.2, repeat: Infinity, ease: "easeInOut" }}
                     />
-                    <span className="pointer-events-none absolute left-1/2 top-[calc(100%+18px)] block min-w-32 -translate-x-1/2 text-center">
+                    <span className="pointer-events-none absolute left-1/2 top-[calc(100%+18px)] hidden sm:block min-w-32 -translate-x-1/2 text-center">
                       <span className="block font-mono text-[10px] font-bold uppercase tracking-[0.32em] text-(--text)">{node.label}</span>
                     </span>
                   </motion.span>
@@ -275,6 +275,15 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
               );
             })}
           </motion.div>
+        </div>
+
+        {/* Mobile-only: centred active node label — replaces clipping per-star labels */}
+        <div className="mt-6 flex flex-col items-center gap-1 sm:hidden">
+          <div className="font-mono text-[8px] uppercase tracking-[0.28em] text-(--text-muted)">tap a star</div>
+          <div className="font-mono text-[11px] font-bold uppercase tracking-[0.28em] text-(--text)">
+            {activeNode.label}
+          </div>
+          <div className="mt-1 h-px w-8 bg-(--accent)" />
         </div>
 
         <aside className="relative pt-8 lg:pt-20">

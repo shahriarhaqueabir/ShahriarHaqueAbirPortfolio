@@ -34,7 +34,7 @@ export default function GuidedNext({ currentView, onNavigate }: GuidedNextProps)
               key={view}
               type="button"
               onClick={() => onNavigate(view)}
-              className="group flex min-h-24 flex-col justify-between border border-(--border) bg-(--bg)/70 p-4 text-left transition-colors hover:border-(--accent) hover:bg-white"
+              className="group flex min-h-24 flex-col justify-between border border-(--border) bg-(--bg)/70 p-4 text-left transition-colors hover:border-(--accent) hover:bg-(--surface-2)"
             >
               <div className="flex items-center justify-between gap-4">
                 <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-(--accent)">{formatViewLabel(view)}</span>

@@ -108,7 +108,7 @@ export default function HeroView({ setView }: { setView: (v: ViewKey) => void })
             </div>
             <motion.div
               className="shine-surface absolute z-20 hidden w-fit bg-(--text) text-(--bg) border border-(--text) px-5 py-4 shadow-xl md:block"
-              style={{ left: "-2rem", top: "-34rem", bottom: "auto" }}
+              style={{ left: "-2rem", top: "3rem", bottom: "auto" }}
               animate={{ y: [0, 12, 0], rotate: [-2, 2, -2] }}
               transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
             >

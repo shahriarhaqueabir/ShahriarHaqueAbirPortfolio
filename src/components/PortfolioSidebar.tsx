@@ -145,7 +145,7 @@ export default function PortfolioSidebar({
                     ? "bg-transparent text-(--text-muted) border-l-2 border-(--border) self-start font-mono text-[9px] uppercase tracking-widest pl-3 py-1 shadow-none"
                     : msg.isReadyGreen
                       ? "bg-green-500 text-white border-green-400 self-start font-bold"
-                      : "bg-white text-(--text) border border-(--border) self-start"
+                      : "bg-(--surface) text-(--text) border border-(--border) self-start"
               }`}
             >
               <div className="flex items-start gap-3">
@@ -170,14 +170,23 @@ export default function PortfolioSidebar({
         </AnimatePresence>
 
         {!localAiPaused && !localAiEnabled && (
-          <button
-            type="button"
-            onClick={enableLocalAi}
-            className="flex items-center justify-center gap-2 border border-(--border) bg-(--text) px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-(--bg) transition-colors hover:bg-(--accent)"
-          >
-            <Power className="h-3.5 w-3.5" />
-            Enable AI guide
-          </button>
+          <div className="flex flex-col gap-2">
+            <button
+              type="button"
+              onClick={enableLocalAi}
+              className="flex items-center justify-center gap-2 border border-(--border) bg-(--text) px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-(--bg) transition-colors hover:bg-(--accent)"
+            >
+              <Power className="h-3.5 w-3.5" />
+              Enable AI guide
+            </button>
+            <div className="text-[8px] font-mono text-center uppercase tracking-wider text-(--text-muted)">
+              {typeof window !== "undefined" && typeof navigator !== "undefined" && "gpu" in navigator ? (
+                <span className="text-green-500">✔ WebGPU Acceleration Supported (Local Model Mode)</span>
+              ) : (
+                <span>⚠ WebGPU Not Supported (Lightweight Fallback Mode)</span>
+              )}
+            </div>
+          </div>
         )}
 
         <div className={`${isMobile ? "mt-2 pt-4" : "mt-8 pt-8"} border-t border-(--border)`}>
@@ -190,7 +199,7 @@ export default function PortfolioSidebar({
                 className={`flex items-center gap-2 px-4 py-2 rounded-sm text-[10px] font-bold uppercase tracking-widest border transition-all duration-300 ${
                   activeView === item.view
                     ? "bg-(--accent) text-white border-(--accent) shadow-[0_0_10px_rgba(var(--accent-rgb),0.3)]"
-                    : "bg-transparent text-(--text-muted) border-(--border) hover:border-(--text) hover:text-(--text) hover:bg-gray-50"
+                    : "bg-transparent text-(--text-muted) border-(--border) hover:border-(--text) hover:text-(--text) hover:bg-(--surface-2)"
                 }`}
               >
                 <item.icon className="w-3 h-3" />
@@ -202,7 +211,7 @@ export default function PortfolioSidebar({
         <div ref={messagesEndRef} />
       </div>
 
-      <div className={`${isMobile ? "p-5" : "p-8"} border-t border-(--border) bg-white/20 backdrop-blur-md`}>
+      <div className={`${isMobile ? "p-5" : "p-8"} border-t border-(--border) bg-(--surface)/35 backdrop-blur-md`}>
         <div className="relative">
           <input
             type="text"
@@ -210,9 +219,9 @@ export default function PortfolioSidebar({
             onChange={(event) => setInput(event.target.value)}
             onKeyDown={(event) => event.key === "Enter" && handleSubmit()}
             placeholder={localAiPaused ? "Search the portfolio..." : localAiFallback ? "Ask the fallback guide..." : !localAiEnabled ? "Enable AI guide to ask questions" : isReady ? "Ask about Shahriar..." : `Loading guide... ${Math.round(progress)}%`}
-            className="w-full bg-white border border-(--border) rounded-sm p-4 pl-10 pr-12 text-xs font-mono focus:outline-none focus:border-(--accent) transition-all text-(--text) placeholder:text-gray-300"
+            className="w-full bg-(--surface) border border-(--border) rounded-sm p-4 pl-10 pr-12 text-xs font-mono focus:outline-none focus:border-(--accent) transition-all text-(--text) placeholder:text-(--text-muted)"
           />
-          <MessageSquare className="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
+          <MessageSquare className="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-(--text-muted)" />
           <button
             onClick={handleSubmit}
             disabled={!input.trim()}
@@ -222,7 +231,7 @@ export default function PortfolioSidebar({
             <Send className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
           </button>
         </div>
-        <div className="mt-4 flex justify-between items-center text-[8px] font-mono text-gray-400 uppercase tracking-widest">
+        <div className="mt-4 flex justify-between items-center text-[8px] font-mono text-(--text-muted) uppercase tracking-widest">
           <span className="flex items-center gap-1">
             <span className={`w-1 h-1 rounded-full ${isReady && !localAiPaused ? (localAiFallback ? "bg-(--accent)" : "bg-green-500") : localAiEnabled ? "bg-orange-500" : "bg-gray-400"}`} />
             {localAiPaused ? "GUIDE PAUSED" : localAiFallback ? "GUIDE FALLBACK" : !localAiEnabled ? "GUIDE OPT-IN" : isReady ? "GUIDE READY" : "GUIDE LOADING"}

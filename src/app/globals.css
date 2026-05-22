@@ -45,40 +45,7 @@ body {
   color: var(--text);
 }
 
-.bg-white {
-  background-color: var(--surface);
-}
 
-.bg-white\/20 {
-  background-color: color-mix(in srgb, var(--surface) 35%, transparent);
-}
-
-.bg-white\/40,
-.bg-white\/50,
-.bg-white\/60,
-.bg-white\/65,
-.bg-white\/70,
-.bg-white\/75,
-.bg-white\/90 {
-  background-color: color-mix(in srgb, var(--surface) 82%, transparent);
-}
-
-.hover\:bg-white:hover,
-.hover\:bg-gray-50:hover {
-  background-color: var(--surface-2);
-}
-
-.bg-gray-50 {
-  background-color: var(--surface-2);
-}
-
-.placeholder\:text-gray-300::placeholder {
-  color: color-mix(in srgb, var(--text-muted) 72%, transparent);
-}
-
-.text-gray-400 {
-  color: var(--text-muted);
-}
 
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;
@@ -206,3 +173,208 @@ body {
       0 0 34px rgba(var(--accent-rgb), 0.18);
   }
 }
+
+@media print {
+  /* Reset background and text color to printer-friendly formats */
+  html,
+  body {
+    background-color: #ffffff !important;
+    background-image: none !important;
+    color: #111827 !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    height: auto !important;
+    overflow: visible !important;
+    font-size: 10pt !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Force multi-page overflow and remove scroll/height limits on layout parents */
+  main,
+  section[data-testid="content-scroll"],
+  .content-stage,
+  .flex-1,
+  div.flex.h-screen {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    overflow-y: visible !important;
+    overflow-x: visible !important;
+    display: block !important;
+    position: static !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+  }
+
+  /* Hide interactive, navigational, conversational, or guide elements */
+  aside,
+  nav,
+  button,
+  form,
+  input,
+  textarea,
+  iframe,
+  a[download],
+  .no-print,
+  [role="navigation"],
+  [aria-label*="navigation"],
+  .guided-next-container,
+  section.mt-14.border-t, /* GuidedNext container */
+  .fixed,
+  button[aria-label*="sidebar"],
+  .absolute.-inset-5,
+  .absolute.-inset-10,
+  .blur-2xl,
+  .blur-3xl,
+  .blob,
+  [class*="blur"],
+  div.fixed.inset-0.pointer-events-none,
+  .absolute.right-0.top-8.hidden.h-\[72vh\],
+  .absolute.left-3.top-0,
+  .absolute.left-0.right-0.top-8,
+  .signal-dot,
+  .stellar-node,
+  .stellar-core,
+  .stellar-core-blue,
+  .stellar-node-blue,
+  .absolute.-left-9.top-10,
+  .absolute.z-20.hidden.w-fit,
+  .absolute.bottom-4.right-4 {
+    display: none !important;
+  }
+
+  /* Clean up headers and text */
+  h1, h2, h3, h4, h5, h6, strong {
+    color: #111827 !important;
+  }
+  p, span, li, ul, div, time, a {
+    color: #374151 !important;
+  }
+
+  /* Reset all background surfaces to white or clear borders */
+  div, section, article {
+    background-color: transparent !important;
+    background-image: none !important;
+    border-color: #e5e7eb !important;
+    box-shadow: none !important;
+  }
+
+  /* Keep custom borders for visual styling but clear glowing ones */
+  .border, .border-t, .border-b, .border-l, .border-r, .border-x, .border-y {
+    border-color: #d1d5db !important;
+  }
+
+  /* Adjust links for readability */
+  a {
+    color: #2563eb !important;
+    text-decoration: underline !important;
+  }
+
+  /* Page break rules to prevent awkward page splits */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  img, picture, svg, tr, li, p,
+  div.bg-\(--bg\).p-10, /* experience list items */
+  .project-card,
+  article {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Convert grids into printable formats */
+  .grid {
+    display: grid !important;
+    gap: 1.5rem !important;
+  }
+
+  /* Reflow career trajectory milestones from 8-column wide screen to 2-column or list view */
+  .xl\:grid-cols-8 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  /* Adjust spacing */
+  .md\:pl-14 {
+    padding-left: 0 !important;
+  }
+  .p-20, .p-16, .p-12, .p-10 {
+    padding: 1.5rem !important;
+  }
+  .p-8, .p-6 {
+    padding: 1.25rem !important;
+  }
+  .pt-10 {
+    padding-top: 1rem !important;
+  }
+  .pb-24, .pb-20 {
+    padding-bottom: 2rem !important;
+  }
+  .mb-20, .mb-12, .mb-16 {
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* Specific fix: ensure profile image wrapper container handles printing gracefully */
+  .relative.w-full.h-\[360px\],
+  .relative.w-full.h-\[520px\],
+  .relative.w-full.h-\[580px\] {
+    height: 300px !important;
+    width: 250px !important;
+    margin: 1.5rem 0 !important;
+    border-radius: 4px !important;
+    border: 1px solid #d1d5db !important;
+    page-break-inside: avoid !important;
+    position: relative !important;
+  }
+
+  /* Ensure Next.js image displays inside its parent in print */
+  .relative.w-full.h-\[360px\] img,
+  .relative.w-full.h-\[520px\] img,
+  .relative.w-full.h-\[580px\] img {
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  /* Make sure the text sizes are print-friendly */
+  h1 {
+    font-size: 26pt !important;
+    line-height: 1.2 !important;
+    margin-bottom: 10pt !important;
+  }
+  h2 {
+    font-size: 18pt !important;
+    line-height: 1.2 !important;
+    margin-top: 16pt !important;
+    margin-bottom: 8pt !important;
+  }
+  h3 {
+    font-size: 13pt !important;
+    line-height: 1.2 !important;
+    margin-top: 12pt !important;
+    margin-bottom: 6pt !important;
+  }
+  p, li, span, div {
+    font-size: 10pt !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Disable transitions and animations for print performance */
+  *,
+  *::before,
+  *::after {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
+

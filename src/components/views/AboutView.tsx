@@ -68,7 +68,7 @@ export default function AboutView({ setView }: { setView: (view: ViewKey) => voi
 
       <section className="relative grid min-h-[78vh] grid-cols-1 items-center gap-12 py-12 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="relative z-10">
-          <div className="mb-7 inline-flex items-center gap-3 border border-(--border) bg-white/70 px-4 py-3 font-mono text-[9px] uppercase tracking-[0.22em] text-(--accent)">
+          <div className="mb-7 inline-flex items-center gap-3 border border-(--border) bg-(--surface)/82 px-4 py-3 font-mono text-[9px] uppercase tracking-[0.22em] text-(--accent)">
             <MessageCircle className="h-3.5 w-3.5" />
             Biography / Point of View
           </div>
@@ -97,7 +97,7 @@ export default function AboutView({ setView }: { setView: (view: ViewKey) => voi
         </div>
 
         <motion.aside style={{ y: portraitY }} className="relative z-10">
-          <div className="relative overflow-hidden border border-(--border) bg-white shadow-2xl">
+          <div className="relative overflow-hidden border border-(--border) bg-(--surface) shadow-2xl">
             <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: "radial-gradient(rgba(238,246,248,0.65) 1px, transparent 1px)", backgroundSize: "18px 18px" }} />
             <div className="relative p-8 md:p-10">
               <div className="mb-10 flex items-center justify-between gap-6 border-b border-(--border) pb-6">
@@ -143,8 +143,8 @@ export default function AboutView({ setView }: { setView: (view: ViewKey) => voi
               <div className="max-w-3xl">
                 <h3 className="font-syne text-3xl font-black leading-tight text-(--text) md:text-5xl">{beat.title}</h3>
                 <p className="mt-6 text-lg leading-9 text-(--text-muted)">{beat.text}</p>
-                <div className="mt-8 border border-(--border) bg-white p-5">
-                  <div className="bg-white p-5">
+                <div className="mt-8 border border-(--border) bg-(--surface) p-5">
+                  <div className="bg-(--surface) p-5">
                     <div className="mb-3 font-mono text-[9px] uppercase tracking-[0.22em] text-(--accent)">System Context</div>
                     <p className="text-sm leading-relaxed text-(--text-muted)">{beat.context}</p>
                   </div>
@@ -168,7 +168,7 @@ export default function AboutView({ setView }: { setView: (view: ViewKey) => voi
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.55 }}
               transition={{ delay: index * 0.06, duration: 0.35 }}
-              className="min-h-40 bg-white p-7"
+              className="min-h-40 bg-(--surface) p-7"
             >
               <div className="mb-8 font-mono text-[9px] uppercase tracking-[0.24em] text-(--text-muted)">
                 principle {String(index + 1).padStart(2, "0")}

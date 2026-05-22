@@ -66,7 +66,7 @@ export default function BootScreen({ progress, isReady, localAiEnabled = false, 
       initial={{ opacity: 1 }}
       exit={{ opacity: 0, scale: 1.02 }}
       transition={{ duration: 0.45, ease: "easeInOut" }}
-      className="pointer-events-none fixed inset-0 z-[100] bg-(--bg) flex items-center justify-center overflow-hidden"
+      className="pointer-events-none fixed inset-0 z-100 bg-(--bg) flex items-center justify-center overflow-hidden"
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.03]"
@@ -85,7 +85,7 @@ export default function BootScreen({ progress, isReady, localAiEnabled = false, 
           </div>
         </div>
 
-        <div className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.12em] text-(--text-muted) border border-(--border) bg-white/50">
+        <div className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.12em] text-(--text-muted) border border-(--border) bg-(--surface)/82">
           <div className="px-5 py-4 border-b border-(--border) text-(--text)">
             HAWKWARD PORTFOLIO — INITIALISING
           </div>

@@ -14,6 +14,13 @@ const contactIcons: Record<string, typeof Mail> = {
   Location: MapPin,
 };
 
+const getContactIcon = (label: string): typeof Mail => {
+  if (Object.prototype.hasOwnProperty.call(contactIcons, label)) {
+    return contactIcons[label];
+  }
+  return ExternalLink;
+};
+
 export default function ContactView({ setView }: { setView: (view: ViewKey) => void }) {
   return (
     <motion.div
@@ -46,7 +53,7 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
 
           <div className="mt-12 border-t border-(--border) pt-8">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 border border-(--border) bg-white flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 border border-(--border) bg-(--surface) flex items-center justify-center shrink-0">
                 <ShieldCheck className="w-4 h-4 text-(--accent)" />
               </div>
               <div>
@@ -57,13 +64,13 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
           </div>
         </section>
 
-        <section className="bg-white p-6 md:p-8 relative overflow-hidden">
+        <section className="bg-(--surface) p-6 md:p-8 relative overflow-hidden">
           <div className="absolute inset-y-0 left-0 w-1 bg-(--accent)"></div>
           <div className="grid grid-cols-1 gap-px bg-(--border) border border-(--border)">
             {CONFIG.contact.map((item, index) => {
-              const Icon = contactIcons[item.label] || ExternalLink;
+              const Icon = getContactIcon(item.label);
               const content = (
-                <div className="bg-white hover:bg-(--bg) p-6 md:p-8 transition-colors group flex items-center justify-between gap-6">
+                <div className="bg-(--surface) hover:bg-(--bg) p-6 md:p-8 transition-colors group flex items-center justify-between gap-6">
                   <div className="flex items-start gap-5 min-w-0">
                     <div className="w-11 h-11 border border-(--border) bg-(--bg) flex items-center justify-center shrink-0 group-hover:border-(--accent) transition-colors">
                       <Icon className="w-4 h-4 text-(--accent)" />
@@ -72,7 +79,7 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
                       <div className="font-mono text-[9px] text-(--text-muted) uppercase tracking-[0.2em] mb-2">
                         {String(index + 1).padStart(2, "0")} / {item.label}
                       </div>
-                      <div className="text-sm font-syne font-black leading-snug text-(--text) [overflow-wrap:anywhere] xl:text-base">{item.value}</div>
+                      <div className="text-sm font-syne font-black leading-snug text-(--text) wrap-anywhere xl:text-base">{item.value}</div>
                     </div>
                   </div>
                   {item.href && <ExternalLink className="w-4 h-4 text-(--text-muted) group-hover:text-(--accent) transition-colors shrink-0" />}
@@ -80,7 +87,7 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
               );
 
               return item.href ? (
-                <a key={item.label} href={item.href} download={item.label === "CV" ? true : undefined} target={item.href.startsWith("http") ? "_blank" : undefined} rel={item.href.startsWith("http") ? "noreferrer" : undefined}>
+                <a key={item.label} href={item.href} download={item.label === "CV" ? "Shahriar_Haque_Abir_CV.pdf" : undefined} target={item.href.startsWith("http") ? "_blank" : undefined} rel={item.href.startsWith("http") ? "noreferrer" : undefined}>
                   {content}
                 </a>
               ) : (

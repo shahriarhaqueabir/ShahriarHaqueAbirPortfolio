@@ -131,7 +131,7 @@ export default function Home() {
           </AnimatePresence>
         </div>
       </section>
-      <MobileCommandSheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
+      <MobileCommandSheet open={sidebarOpen} onOpenChange={setSidebarOpen} activeView={activeView}>
         <PortfolioSidebar {...worker} activeView={activeView} variant="mobile" onNavigate={navigate} onSend={send} />
       </MobileCommandSheet>
     </main>

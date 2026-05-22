@@ -27,7 +27,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
       <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">— Career Trajectory</div>
       <h2 className="text-5xl font-syne font-black mb-12 text-(--text)">Experience</h2>
       
-      <div className="bg-white border border-(--border) p-8 mb-20 relative overflow-hidden">
+      <div className="bg-(--surface) border border-(--border) p-8 mb-20 relative overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-1 bg-(--accent)"></div>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
           <h4 className="font-syne font-bold text-[10px] text-(--text-muted) uppercase tracking-widest">Professional Influence Map</h4>
@@ -129,7 +129,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="bg-(--bg) p-10 group hover:bg-white transition-colors relative"
+            className="bg-(--bg) p-10 group hover:bg-(--surface-2) transition-colors relative"
           >
             <div className="absolute -left-9 top-10 hidden h-4 w-4 items-center justify-center rounded-full text-(--accent) md:flex">
               <motion.span

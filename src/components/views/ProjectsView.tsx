@@ -110,7 +110,7 @@ function ArchitectureDiagram({ project, compact = false }: { project: Project; c
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.08, duration: 0.25 }}
-              className="min-h-16 border border-(--border) bg-white px-3 py-3 flex flex-col justify-between symbol-tile"
+              className="min-h-16 border border-(--border) bg-(--surface) px-3 py-3 flex flex-col justify-between symbol-tile"
               style={{ boxShadow: `inset 0 0 0 1px ${visual.color}18, 0 0 ${compact ? 18 : 30}px ${visual.color}22` }}
             >
               <div className="flex items-center justify-between gap-2">
@@ -133,7 +133,7 @@ function ArchitectureDiagram({ project, compact = false }: { project: Project; c
       </div>
       <div className="relative z-10 mt-4 flex flex-wrap gap-2">
         {project.stack.slice(0, compact ? 3 : 6).map((item) => (
-          <span key={item} className="font-mono text-[8px] px-2 py-1 border border-(--border) bg-white text-(--text-muted) uppercase tracking-widest">
+          <span key={item} className="font-mono text-[8px] px-2 py-1 border border-(--border) bg-(--surface) text-(--text-muted) uppercase tracking-widest">
             {item}
           </span>
         ))}
@@ -169,7 +169,7 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: i * 0.05 }}
         onClick={() => setSelectedProject(i)}
-        className="bg-white border border-(--border) p-8 flex flex-col h-full cursor-pointer group transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-xl"
+        className="bg-(--surface) border border-(--border) p-8 flex flex-col h-full cursor-pointer group transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-xl"
         style={{ boxShadow: `0 0 0 rgba(0,0,0,0)`, borderColor: "var(--border)" }}
         whileHover={{ y: -4, boxShadow: `0 0 54px ${accent}24` }}
       >
@@ -302,7 +302,7 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
                   </div>
 
                   <div className="space-y-10">
-                    <div className="shine-surface bg-white border border-(--border) p-8">
+                    <div className="shine-surface bg-(--surface) border border-(--border) p-8">
                       <h4 className="font-black font-syne text-[10px] uppercase tracking-widest mb-6" style={{ color: selectedVisual?.color }}>{getStackLabel(p)}</h4>
                       <div className="flex flex-wrap gap-2">
                         {p.stack.map((s, idx) => (
@@ -318,7 +318,7 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
                   </div>
                 </div>
               </div>
-              <div className="p-10 border-t border-(--border) bg-white/50 flex justify-between items-center">
+              <div className="p-10 border-t border-(--border) bg-(--surface)/82 flex justify-between items-center">
                  <div className="font-mono text-[9px] text-(--text-muted) uppercase tracking-widest">Evidence Type: {getEvidenceLabel(p, selectedProject)}</div>
                  <div className="font-mono text-[9px] text-(--text-muted) uppercase tracking-widest">Owner: Shahriar Haque Abir</div>
               </div>
