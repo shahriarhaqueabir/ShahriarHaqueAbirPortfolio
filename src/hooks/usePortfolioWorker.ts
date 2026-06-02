@@ -14,10 +14,6 @@ let initialLoadRequested = false;
 let onboardingQueued = false;
 let initialLoadProgress = 0;
 
-type NavigatorWithMemory = Navigator & {
-  deviceMemory?: number;
-};
-
 type VisitorProfile = {
   name?: string;
   role?: string;
@@ -52,16 +48,13 @@ function getPortfolioWorker() {
 function getLocalAiFallbackReason() {
   if (typeof window === "undefined" || typeof navigator === "undefined") return null;
 
-  const navigatorWithMemory = navigator as NavigatorWithMemory;
   const userAgent = navigator.userAgent || "";
   const isMobileUserAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(userAgent);
   const isTouchSmallScreen = window.matchMedia("(pointer: coarse)").matches && window.matchMedia("(max-width: 767px)").matches;
-  const hasTightMemory = typeof navigatorWithMemory.deviceMemory === "number" && navigatorWithMemory.deviceMemory <= 4;
 
   if (!window.isSecureContext) return "WebGPU requires a secure browser context.";
   if (!("gpu" in navigator)) return "this browser does not expose WebGPU.";
   if (isMobileUserAgent || isTouchSmallScreen) return "this mobile browser may not support stable local model inference.";
-  if (hasTightMemory) return "this device has limited memory for browser model inference.";
 
   return null;
 }
