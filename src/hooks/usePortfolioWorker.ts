@@ -289,10 +289,10 @@ function buildFallbackAnswer(userText: string, activeView: ViewKey) {
 }
 
 type UsePortfolioWorkerOptions = {
-  onSynthesis: (context: string) => void;
+  onSynthesis?: (context: string) => void;
 };
 
-export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
+export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = {}) {
   const [localAiFallbackReason] = useState(getLocalAiFallbackReason);
   const [localAiFallback, setLocalAiFallback] = useState(false);
   const [localAiPaused] = useState(false);
@@ -430,7 +430,7 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions) {
 
               if (cleanText.includes("INITIATING_SYNTHESIS")) {
                 const context = cleanText.replace("INITIATING_SYNTHESIS", "");
-                onSynthesisRef.current(context);
+                if (onSynthesisRef.current) onSynthesisRef.current(context);
                 lastMsg.text = context;
               } else {
                 lastMsg.text = cleanText;

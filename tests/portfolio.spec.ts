@@ -8,7 +8,7 @@ test.describe('Shahriar Haque Abir portfolio E2E', () => {
 
   test('loads the homepage with current portfolio identity', async ({ page }) => {
     await expect(page).toHaveTitle(/Shahriar Haque Abir/);
-    await expect(page.getByText("Shahriar Haque Abir")).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Shahriar Haque Abir Portfolio/i })).toBeVisible();
     await expect(page.getByRole('complementary').getByText('Lead Technical Solution')).toBeVisible();
     await expect(page.getByRole('button', { name: /View Case Studies/i })).toBeVisible();
     await expect(page.getByRole('link', { name: /Download CV/i })).toHaveAttribute('href', '/shahriar-haque-abir-cv.pdf');
@@ -55,7 +55,7 @@ test.describe('Shahriar Haque Abir portfolio E2E', () => {
   });
 
   test('routes typed commands without relying on the local model', async ({ page }) => {
-    await page.getByPlaceholder(/Ask about Shahriar|Loading guide|Search the portfolio/i).fill('show me his contact details');
+    await page.getByPlaceholder(/Ask about Shahriar|Enable AI guide|Search the portfolio/i).fill('show me his contact details');
     await page.keyboard.press('Enter');
     await expect(page.getByText(/Let's talk/)).toBeVisible();
   });

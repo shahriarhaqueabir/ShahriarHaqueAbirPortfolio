@@ -180,11 +180,11 @@ export default function PortfolioSidebar({
               Enable AI guide
             </button>
             <div className="text-[8px] font-mono text-center uppercase tracking-wider text-(--text-muted)">
-              {typeof window !== "undefined" && typeof navigator !== "undefined" && "gpu" in navigator ? (
-                <span className="text-green-500">✔ WebGPU Acceleration Supported (Local Model Mode)</span>
-              ) : (
-                <span>⚠ WebGPU Not Supported (Lightweight Fallback Mode)</span>
-              )}
+              <span suppressHydrationWarning>
+                {typeof window !== "undefined" && typeof navigator !== "undefined" && "gpu" in navigator
+                  ? "✔ WebGPU Acceleration Supported (Local Model Mode)"
+                  : "⚠ WebGPU Not Supported (Lightweight Fallback Mode)"}
+              </span>
             </div>
           </div>
         )}

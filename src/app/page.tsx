@@ -29,9 +29,7 @@ export default function Home() {
   const contentScrollRef = useRef<HTMLElement>(null);
   const { isBooting, enterPortfolio } = useBootGate();
   const { activeView, conversationState, setActiveView, handleCommand } = useCommandRouter();
-  const worker = usePortfolioWorker({
-    onSynthesis: () => {},
-  });
+  const worker = usePortfolioWorker();
 
   const navigate = (view: ViewKey, name?: string) => {
     setActiveView(view);
@@ -54,7 +52,7 @@ export default function Home() {
   }, [activeView]);
 
   return (
-    <main suppressHydrationWarning className="flex h-screen w-full relative z-10 font-inter text-(--text) bg-(--bg) overflow-hidden">
+    <main className="flex h-screen w-full relative z-10 font-inter text-(--text) bg-(--bg) overflow-hidden">
       <AnimatePresence>{isBooting && <BootScreen progress={worker.progress} isReady={worker.isReady} localAiEnabled={worker.localAiEnabled} localAiFallback={worker.localAiFallback} localAiPaused={worker.localAiPaused} onEnter={enterPortfolio} />}</AnimatePresence>
       <div className="fixed inset-0 pointer-events-none opacity-[0.18]" style={{ backgroundImage: "radial-gradient(rgba(238,246,248,0.42) 1px, transparent 1px)", backgroundSize: "30px 30px" }} />
       <motion.aside
