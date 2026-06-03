@@ -52,7 +52,7 @@ export default function Home() {
   }, [activeView]);
 
   return (
-    <main className="flex h-screen w-full relative z-10 font-inter text-(--text) bg-(--bg) overflow-hidden">
+    <main suppressHydrationWarning className="flex h-screen w-full relative z-10 font-inter text-(--text) bg-(--bg) overflow-hidden">
       <AnimatePresence>
         {isBooting && (
           <BootScreen
