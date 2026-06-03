@@ -116,32 +116,59 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
       </div>
 
       <div className="relative space-y-px bg-(--border) border border-(--border) pl-0 md:pl-14">
-        <div className="absolute left-7 top-0 bottom-0 hidden md:block w-px bg-(--accent)/40"></div>
+        <div className="absolute left-7 top-0 bottom-0 hidden md:block w-px bg-(--accent)/40" />
         {CONFIG.experience.map((e, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="bg-(--bg) p-10 group hover:bg-(--surface-2) transition-colors relative"
+            className={`bg-(--bg) p-10 group transition-all duration-300 relative overflow-hidden ${
+              i === 0
+                ? "border-l-4 border-l-(--accent) hover:bg-(--surface)"
+                : "border-l-4 border-l-transparent hover:border-l-(--accent)/50 hover:bg-(--surface)"
+            }`}
           >
+            {i === 0 && (
+              <div className="absolute inset-0 bg-(--accent)/3 pointer-events-none" />
+            )}
             <div className="absolute -left-9 top-10 hidden h-4 w-4 items-center justify-center rounded-full text-(--accent) md:flex">
-              <motion.span className="signal-dot" animate={{ scale: [1, 1.8, 1], opacity: [1, 0.35, 1] }} transition={{ duration: 2.4, delay: i * 0.2, repeat: Infinity, ease: "easeInOut" }} />
+              <motion.span
+                className="signal-dot"
+                animate={{ scale: [1, 1.8, 1], opacity: [1, 0.35, 1] }}
+                transition={{ duration: 2.4, delay: i * 0.2, repeat: Infinity, ease: "easeInOut" }}
+              />
             </div>
             <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-6">
               <div className="flex-1">
+                {i === 0 && (
+                  <div className="font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent) mb-3 flex items-center gap-2">
+                    <span className="signal-dot text-(--accent)" />
+                    Most Recent Role
+                  </div>
+                )}
                 <div className="text-(--accent) font-mono text-[10px] tracking-[0.2em] uppercase mb-2">{e.company}</div>
-                <h3 className="text-3xl font-black font-syne text-(--text) mb-6 group-hover:text-(--accent) transition-colors">{e.role}</h3>
+                <h3 className={`text-3xl font-black font-syne mb-6 transition-colors duration-200 ${
+                  i === 0
+                    ? "text-(--text) group-hover:text-(--accent)"
+                    : "text-(--text) group-hover:text-(--accent)"
+                }`}>
+                  {e.role}
+                </h3>
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
                   {e.points.map((p, pIdx) => (
                     <li key={pIdx} className="flex items-start gap-4 text-sm text-(--text-muted) leading-relaxed">
-                      <span className="w-1.5 h-1.5 rounded-full bg-(--accent)/30 mt-1.5 shrink-0"></span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-(--accent)/40 mt-1.5 shrink-0" />
                       <span>{p}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="font-mono text-[10px] font-bold text-(--text) bg-(--bg) border border-(--border) px-4 py-2 uppercase tracking-widest group-hover:bg-(--accent) group-hover:text-white group-hover:border-(--accent) transition-all">
+              <div className={`font-mono text-[10px] font-bold border px-4 py-2 uppercase tracking-widest transition-all shrink-0 ${
+                i === 0
+                  ? "text-(--bg) bg-(--accent) border-(--accent) group-hover:bg-(--text) group-hover:border-(--text)"
+                  : "text-(--text) bg-(--bg) border-(--border) group-hover:bg-(--accent) group-hover:text-white group-hover:border-(--accent)"
+              }`}>
                 {e.period}
               </div>
             </div>

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { BarChart3, Briefcase, ChevronRight, Home as HomeIcon, Layers, Mail, Newspaper, PanelLeftClose, PanelLeftOpen, User, Zap } from "lucide-react";
+import { BarChart3, Briefcase, ChevronRight, Home as HomeIcon, Layers, Mail, PanelLeftClose, PanelLeftOpen, User, Zap } from "lucide-react";
 import BootScreen from "@/components/BootScreen";
 import MobileCommandSheet from "@/components/MobileCommandSheet";
 import PortfolioSidebar from "@/components/PortfolioSidebar";
@@ -14,7 +14,6 @@ import type { ViewKey } from "@/lib/types";
 
 const desktopRailItems: Array<{ name: string; icon: typeof User; view: ViewKey }> = [
   { name: "Home", icon: HomeIcon, view: "hero" },
-  { name: "Blog", icon: Newspaper, view: "blog" },
   { name: "About", icon: User, view: "about" },
   { name: "Projects", icon: Briefcase, view: "projects" },
   { name: "Experience", icon: Layers, view: "experience" },
@@ -45,6 +44,18 @@ export default function Home() {
       worker.sendMessage(input, activeView, conversationState);
     }
     setSidebarOpen(false);
+  };
+
+  const handleHeroAiQuery = (input: string) => {
+    // Auto-enable AI if not yet enabled, then send the query
+    if (!worker.localAiEnabled) {
+      worker.enableLocalAi();
+    }
+    // Small delay to let the sidebar open before sending
+    setTimeout(() => {
+      worker.sendMessage(input, "hero", conversationState);
+    }, 200);
+    setSidebarOpen(true);
   };
 
   useEffect(() => {
@@ -134,7 +145,7 @@ export default function Home() {
       >
         <div className="content-stage w-full max-w-[1360px] mx-auto">
           <AnimatePresence mode="wait">
-            <PortfolioViewRenderer activeView={activeView} setView={setActiveView} />
+            <PortfolioViewRenderer activeView={activeView} setView={setActiveView} onAiQuery={handleHeroAiQuery} />
           </AnimatePresence>
         </div>
       </section>

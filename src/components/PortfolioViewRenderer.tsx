@@ -13,12 +13,13 @@ import type { ViewKey } from "@/lib/types";
 type PortfolioViewRendererProps = {
   activeView: ViewKey;
   setView: (view: ViewKey) => void;
+  onAiQuery?: (input: string) => void;
 };
 
-export default function PortfolioViewRenderer({ activeView, setView }: PortfolioViewRendererProps) {
+export default function PortfolioViewRenderer({ activeView, setView, onAiQuery }: PortfolioViewRendererProps) {
   switch (activeView) {
     case "hero":
-      return <HeroView key="hero" setView={setView} />;
+      return <HeroView key="hero" setView={setView} onAiQuery={onAiQuery} />;
     case "blog":
       return <BlogView key="blog" setView={setView} />;
     case "about":

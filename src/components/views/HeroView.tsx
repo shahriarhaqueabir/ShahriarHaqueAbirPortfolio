@@ -2,22 +2,31 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Download, Globe2, Sparkles, TrendingDown, Users } from "lucide-react";
+import { ArrowRight, Download, Send, Sparkles } from "lucide-react";
 import { CONFIG } from "@/lib/data";
 import Image from "next/image";
 import type { ViewKey } from "@/lib/types";
 
-export default function HeroView({ setView }: { setView: (v: ViewKey) => void }) {
+export default function HeroView({
+  setView,
+  onAiQuery,
+}: {
+  setView: (v: ViewKey) => void;
+  onAiQuery?: (input: string) => void;
+}) {
   const [currentPhrase, setCurrentPhrase] = useState(0);
-  const phrases: Array<{ text: string; highlight: string; color: string; solidColor?: boolean; isRainbow?: boolean }> = [
-    { text: "IT Networks Engineer", highlight: "Networks", color: "#38BDF8" },
-    { text: "Electrical & Electronics Engineer", highlight: "Electronics", color: "#F59E0B" },
-    { text: "System Administrator", highlight: "System", color: "#A78BFA" },
-    { text: "Information & Communication Engineer", highlight: "Communication", color: "#10B981" },
-    { text: "APAC/EMEA/NAM Expertise", highlight: "Expertise", color: "#6366F1" },
-    { text: "AI Automation Engineer", highlight: "AI", color: "#F472B6" },
-    { text: "Technical Solution Consultant", highlight: "Solution", color: "#5EEAD4" },
+  const [aiInput, setAiInput] = useState("");
+
+  const phrases: Array<{ text: string; highlight: string; color: string }> = [
+    { text: "B2B SaaS Implementation", highlight: "SaaS", color: "#38BDF8" },
+    { text: "Technical Discovery & PoCs", highlight: "Discovery", color: "#F59E0B" },
+    { text: "Tier-3 Production Support", highlight: "Production", color: "#A78BFA" },
+    { text: "GTM & SDR Execution", highlight: "GTM", color: "#10B981" },
+    { text: "AI Automation Engineering", highlight: "AI", color: "#F472B6" },
+    { text: "APAC · EMEA · NAM Markets", highlight: "EMEA", color: "#5EEAD4" },
+    { text: "Customer Lifecycle Ownership", highlight: "Lifecycle", color: "#6366F1" },
   ];
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentPhrase((prev) => (prev + 1) % phrases.length);
@@ -25,21 +34,35 @@ export default function HeroView({ setView }: { setView: (v: ViewKey) => void })
     return () => clearInterval(interval);
   }, [phrases.length]);
 
-  const recruiterSignals = [
-    { label: "International B2B clients onboarded", value: "10", icon: Globe2 },
-    { label: "Production tickets resolved weekly", value: "40", icon: Users },
-    { label: "Recurring bug reports reduced per release", value: "30%", icon: TrendingDown },
-  ];
+  const handleAiSubmit = () => {
+    const q = aiInput.trim();
+    if (!q || !onAiQuery) return;
+    setAiInput("");
+    onAiQuery(q);
+  };
 
   return (
-    <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="min-h-full flex items-start md:items-center relative overflow-hidden">
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 20 }}
+      className="min-h-full flex items-start md:items-center relative overflow-hidden"
+    >
       <div className="absolute right-0 top-8 hidden h-[72vh] w-px bg-[linear-gradient(to_bottom,transparent,var(--accent),transparent)] opacity-60 xl:block" />
       <div className="flex w-full flex-col items-center gap-10 xl:flex-row xl:gap-14 2xl:gap-16">
+        {/* ── Left column ──────────────────────────────── */}
         <div className="relative z-10 w-full xl:flex-[1.05]">
+          {/* Role badge */}
           <div className="mb-5 max-w-3xl border-l-2 border-(--accent) pl-5">
-            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-(--accent)">Lead Technical Solution Consultant</p>
-            <p className="mt-3 text-sm leading-6 text-(--text-muted) md:text-base">B2B SaaS implementation, product sales support, Tier-3 operations, and AI workflow engineering.</p>
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-(--accent)">
+              {CONFIG.tagline}
+            </p>
+            <p className="mt-2 text-xs font-mono text-(--text-muted) tracking-widest">
+              {CONFIG.taglineContext}
+            </p>
           </div>
+
+          {/* Name */}
           <h1 className="mb-6 max-w-[760px] font-syne text-[3.4rem] font-black leading-[0.96] tracking-normal text-(--text) md:mb-7 md:text-7xl xl:text-[6.3rem] 2xl:text-[7rem]">
             <span className="block mb-2">
               {CONFIG.name.split(" ").map((word, i) =>
@@ -60,20 +83,31 @@ export default function HeroView({ setView }: { setView: (v: ViewKey) => void })
               )}
             </span>
           </h1>
-          <p className="mb-8 max-w-[720px] text-lg leading-8 text-(--text) md:text-xl md:leading-9">
-            Shahriar helps technical products move from ambiguous customer need to stable adoption through discovery, PoCs, onboarding, production troubleshooting, release validation, and automation.
+
+          {/* Hero quote — the best line in the portfolio */}
+          <p className="mb-8 max-w-[680px] font-playfair text-xl italic leading-9 text-(--text) md:text-2xl md:leading-10">
+            I like being the person who can enter a messy technical situation, find the signal,
+            explain the tradeoffs, and help the next step become clear —
+            <span className="not-italic font-inter font-normal text-base md:text-lg text-(--text-muted) ml-1">
+              then build the automation that makes it not happen again.
+            </span>
           </p>
+
+          {/* Impact stat cards */}
           <div className="mb-10 grid max-w-3xl grid-cols-1 gap-px border border-(--border) bg-(--border) sm:grid-cols-3">
-            {recruiterSignals.map((signal) => (
-              <div key={signal.label} className="bg-(--bg) p-5">
-                <div className="mb-4 flex items-center justify-between gap-4 text-(--accent)">
-                  <signal.icon className="h-4 w-4" />
-                  <span className="font-syne text-3xl font-black leading-none text-(--text)">{signal.value}</span>
+            {CONFIG.heroStats.map((stat) => (
+              <div key={stat.label} className="bg-(--bg) p-5">
+                <div className="mb-3 font-syne text-3xl font-black leading-none text-(--text)">
+                  {stat.value}
                 </div>
-                <p className="text-[11px] font-bold uppercase leading-5 tracking-[0.12em] text-(--text-muted)">{signal.label}</p>
+                <p className="text-[11px] font-bold uppercase leading-5 tracking-[0.12em] text-(--text-muted)">
+                  {stat.label}
+                </p>
               </div>
             ))}
           </div>
+
+          {/* CTA buttons */}
           <div className="flex flex-col gap-3 md:flex-row md:gap-4">
             <button
               onClick={() => setView("projects")}
@@ -98,12 +132,45 @@ export default function HeroView({ setView }: { setView: (v: ViewKey) => void })
               Connect With Me
             </button>
           </div>
+
+          {/* Inline AI prompt */}
+          {onAiQuery && (
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="mt-8 max-w-xl"
+            >
+              <div className="relative">
+                <input
+                  type="text"
+                  value={aiInput}
+                  onChange={(e) => setAiInput(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleAiSubmit()}
+                  placeholder="Ask me anything about Shahriar..."
+                  className="w-full bg-(--surface) border border-(--border) rounded-sm pl-4 pr-12 py-3.5 text-sm font-mono text-(--text) placeholder:text-(--text-muted) focus:outline-none focus:border-(--accent) transition-colors"
+                />
+                <button
+                  onClick={handleAiSubmit}
+                  disabled={!aiInput.trim()}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-(--text-muted) hover:text-(--accent) disabled:opacity-30 transition-colors p-1"
+                  aria-label="Ask AI guide"
+                >
+                  <Send className="h-4 w-4" />
+                </button>
+              </div>
+              <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.18em] text-(--text-muted)">
+                Powered by Llama 3.2 · Runs locally in your browser · No data sent
+              </p>
+            </motion.div>
+          )}
         </div>
 
+        {/* ── Right column — profile image ──────────────── */}
         <div className="w-full max-w-[560px] xl:flex-[0.88] relative group z-10">
           <div className="relative">
-            <div className="absolute -inset-5 bg-(--accent) opacity-14 rounded-sm blur-2xl group-hover:opacity-28 transition-opacity"></div>
-            <div className="absolute -inset-10 bg-[#F59E0B] opacity-10 rounded-full blur-3xl"></div>
+            <div className="absolute -inset-5 bg-(--accent) opacity-14 rounded-sm blur-2xl group-hover:opacity-28 transition-opacity" />
+            <div className="absolute -inset-10 bg-[#F59E0B] opacity-10 rounded-full blur-3xl" />
             <div className="relative w-full h-[360px] md:h-[520px] 2xl:h-[580px] z-10 border border-(--border) grayscale-[0.25] hover:grayscale-0 transition-all duration-700 shadow-2xl overflow-hidden rounded-sm glass-panel">
               <div className="scanline-overlay absolute inset-0 z-20 pointer-events-none" />
               <Image
@@ -114,6 +181,8 @@ export default function HeroView({ setView }: { setView: (v: ViewKey) => void })
                 priority
               />
             </div>
+
+            {/* Floating status badge */}
             <motion.div
               className="shine-surface absolute z-20 hidden w-fit bg-(--text) text-(--bg) border border-(--text) px-5 py-4 shadow-xl md:block"
               style={{ left: "-1.5rem", bottom: "35rem", top: "auto" }}
@@ -123,6 +192,8 @@ export default function HeroView({ setView }: { setView: (v: ViewKey) => void })
               <div className="font-mono text-[8px] uppercase tracking-[0.3em] opacity-60">status</div>
               <div className="whitespace-nowrap font-syne font-black text-sm uppercase">human in the loop</div>
             </motion.div>
+
+            {/* Rotating competency badge */}
             <div
               className="absolute bottom-4 right-4 border border-(--border) p-4 md:bottom-6 md:right-6 md:p-6 rounded-sm shadow-2xl z-20 min-w-[180px] md:min-w-[200px] max-w-[calc(100%-2rem)] md:max-w-[calc(100%-3rem)] backdrop-blur"
               style={{ backgroundColor: "#000000" }}
@@ -134,26 +205,11 @@ export default function HeroView({ setView }: { setView: (v: ViewKey) => void })
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   className="font-syne font-black text-base uppercase leading-tight md:text-xl"
-                  style={{ color: phrases[currentPhrase].solidColor ? phrases[currentPhrase].color : "#EEF6F8" }}
                 >
                   {phrases[currentPhrase].text.split(" ").map((word, i) => (
                     <span key={i}>
-                      {!phrases[currentPhrase].solidColor && word.includes(phrases[currentPhrase].highlight) ? (
-                        phrases[currentPhrase].isRainbow ? (
-                          <span className="inline-flex">
-                            {word.split("").map((char, charIdx) => {
-                              const rainbowColors = ["#EF4444", "#F97316", "#10B981", "#3B82F6", "#6366F1", "#8B5CF6"];
-                              return (
-                                <span key={charIdx} style={{ color: rainbowColors[charIdx % rainbowColors.length] }}>
-                                  {char}
-                                </span>
-                              );
-                            })}
-                            <span className="inline-block w-4"></span>
-                          </span>
-                        ) : (
-                          <span style={{ color: phrases[currentPhrase].color }}>{word} </span>
-                        )
+                      {word.includes(phrases[currentPhrase].highlight) ? (
+                        <span style={{ color: phrases[currentPhrase].color }}>{word} </span>
                       ) : (
                         word + " "
                       )}

@@ -112,6 +112,17 @@ export default function AboutView({ setView }: { setView: (view: ViewKey) => voi
         </motion.aside>
       </section>
 
+      {/* Working style quote — moved to top of narrative arc */}
+      <section className="relative py-14 border-y border-(--border)">
+        <div className="max-w-3xl border-l-4 border-(--accent) pl-8">
+          <div className="mb-4 font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent)">Working Style</div>
+          <p className="font-playfair text-3xl italic leading-snug text-(--text) md:text-5xl">
+            I like being the person who can enter a messy technical situation, find the signal,
+            explain the tradeoffs, and help the next step become clear.
+          </p>
+        </div>
+      </section>
+
       <section className="relative mt-10 border-y border-(--border) py-20">
         <div className="absolute left-4 top-20 bottom-20 hidden w-px bg-(--border) md:block">
           <motion.div className="h-full origin-top bg-(--accent)" style={{ scaleY: lineScale }} />
@@ -126,8 +137,11 @@ export default function AboutView({ setView }: { setView: (view: ViewKey) => voi
               transition={{ duration: 0.55, ease: "easeOut" }}
               className="grid grid-cols-1 gap-8 lg:grid-cols-[220px_1fr]"
             >
-              <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--accent)">
-                {String(index + 1).padStart(2, "0")} / {beat.label}
+              <div>
+                <div className="font-mono text-[9px] uppercase tracking-[0.28em] text-(--text-muted) mb-1">
+                  {String(index + 1).padStart(2, "0")}
+                </div>
+                <div className="font-syne font-black text-2xl text-(--accent) uppercase">{beat.label}</div>
               </div>
               <div className="max-w-3xl">
                 <h3 className="font-syne text-3xl font-black leading-tight text-(--text) md:text-5xl">{beat.title}</h3>
@@ -163,15 +177,6 @@ export default function AboutView({ setView }: { setView: (view: ViewKey) => voi
               <div className="font-syne text-2xl font-black uppercase leading-tight text-(--text)">{principle}</div>
             </motion.div>
           ))}
-        </div>
-      </section>
-
-      <section className="py-20">
-        <div className="max-w-3xl border-l-2 border-(--accent) pl-8">
-          <div className="mb-5 font-mono text-[10px] uppercase tracking-[0.24em] text-(--accent)">The working style</div>
-          <p className="font-playfair text-3xl italic leading-snug text-(--text) md:text-5xl">
-            I like being the person who can enter a messy technical situation, find the signal, explain the tradeoffs, and help the next step become clear.
-          </p>
         </div>
       </section>
 

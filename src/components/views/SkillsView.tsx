@@ -1,41 +1,50 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BrainCircuit, CheckCircle2, GraduationCap, Languages, Network, Route, ShieldCheck, Workflow, Wrench, Zap } from "lucide-react";
+import { GraduationCap, Languages, ShieldCheck, Wrench } from "lucide-react";
 import GuidedNext from "@/components/GuidedNext";
 import { CONFIG } from "@/lib/data";
 import type { ViewKey } from "@/lib/types";
 
-const coreCompetencies = [
+const primaryCompetencies = [
   {
+    number: "01",
     title: "Technical Solution Consulting",
-    text: "Discovery, stakeholder translation, PoCs, onboarding, and customer-facing technical decisions.",
-    Icon: Route,
+    text: "Discovery, stakeholder translation, PoCs, onboarding, and customer-facing technical decisions across SME and enterprise accounts.",
+    accent: "#38BDF8",
   },
   {
-    title: "International SDR & GTM",
-    text: "Sales development and market-entry execution for technical products that need explanation and trust.",
-    Icon: Zap,
-  },
-  {
+    number: "02",
     title: "B2B SaaS Implementation",
-    text: "Configuration, training, adoption support, release feedback, and customer lifecycle follow-through.",
-    Icon: Workflow,
+    text: "Configuration, training, adoption support, release feedback, and customer lifecycle follow-through for technical products.",
+    accent: "#34D399",
   },
   {
+    number: "03",
     title: "Tier-3 Technical Support",
-    text: "Production troubleshooting across APIs, databases, integrations, environments, and recurring defects.",
-    Icon: ShieldCheck,
+    text: "Production troubleshooting across APIs, databases, integrations, application logs, and recurring defect patterns.",
+    accent: "#A78BFA",
   },
+];
+
+const expandingCompetencies = [
   {
-    title: "IT Networks & Systems",
-    text: "LAN/WAN operations, Linux, system administration, documentation, and root-cause diagnostics.",
-    Icon: Network,
-  },
-  {
+    number: "04",
     title: "AI Automation Workflows",
-    text: "RAG, local LLMs, workflow orchestration, support automation, and practical AI-enabled tooling.",
-    Icon: BrainCircuit,
+    text: "RAG, local LLMs, workflow orchestration with n8n, support automation, and practical AI-enabled tooling.",
+    accent: "#F472B6",
+  },
+  {
+    number: "05",
+    title: "International GTM & SDR",
+    text: "Sales development and market-entry execution for technical products across NAM, APAC, and DACH regions.",
+    accent: "#F59E0B",
+  },
+  {
+    number: "06",
+    title: "IT Networks & Systems",
+    text: "LAN/WAN operations, Linux system administration, network discovery, documentation, and root-cause diagnostics.",
+    accent: "#22D3EE",
   },
 ];
 
@@ -58,58 +67,135 @@ const toolGroups = [
   },
 ];
 
+function CompetencyCard({
+  number,
+  title,
+  text,
+  accent,
+  index,
+}: {
+  number: string;
+  title: string;
+  text: string;
+  accent: string;
+  index: number;
+}) {
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.06, duration: 0.3 }}
+      className="relative bg-(--bg) border border-(--border) p-7 min-h-56 flex flex-col justify-between group overflow-hidden hover:border-opacity-80 transition-all duration-300"
+      style={{ borderColor: `${accent}22` }}
+      whileHover={{ boxShadow: `0 0 40px ${accent}18` }}
+    >
+      {/* Background glow */}
+      <div
+        className="absolute -right-8 -top-8 h-32 w-32 rounded-full blur-2xl opacity-0 group-hover:opacity-30 transition-opacity duration-500"
+        style={{ backgroundColor: accent }}
+      />
+      {/* Large number */}
+      <div
+        className="absolute right-5 bottom-5 font-syne font-black text-8xl leading-none select-none"
+        style={{ color: `${accent}12` }}
+      >
+        {number}
+      </div>
+      <div>
+        {/* Prominent number + accent bar */}
+        <div className="flex items-center gap-4 mb-6">
+          <div
+            className="font-syne font-black text-4xl leading-none"
+            style={{ color: accent }}
+          >
+            {number}
+          </div>
+          <div className="h-px flex-1 bg-(--border)" style={{ background: `linear-gradient(to right, ${accent}60, transparent)` }} />
+        </div>
+        <h3 className="font-syne text-xl font-black leading-tight text-(--text) mb-4 group-hover:text-(--text) transition-colors">
+          {title}
+        </h3>
+        <p className="text-sm leading-relaxed text-(--text-muted)">{text}</p>
+      </div>
+    </motion.article>
+  );
+}
+
 export default function SkillsView({ setView }: { setView: (view: ViewKey) => void }) {
   return (
-    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="pt-10 pb-20 max-w-6xl">
-      <div className="font-mono text-xs text-(--accent) uppercase tracking-[0.2em] mb-4">- Skills</div>
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -20 }}
+      className="pt-10 pb-20 max-w-6xl"
+    >
+      <div className="font-mono text-xs text-(--accent) uppercase tracking-[0.2em] mb-4">— Skills</div>
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
         <div>
-          <h2 className="text-5xl md:text-7xl font-syne font-black text-(--text) leading-none">Capability Map</h2>
+          <h2 className="text-5xl md:text-7xl font-syne font-black text-(--text) leading-none">
+            Capability Map
+          </h2>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-(--text-muted)">
-            A practical view of what I can do, where I apply it, and the tools I use to turn product, customer, and engineering context into usable outcomes.
+            A practical view of what I can do, where I apply it, and the tools I use to turn product,
+            customer, and engineering context into usable outcomes.
           </p>
         </div>
         <div className="border-l-2 border-(--accent) pl-5 max-w-sm">
-          <div className="font-mono text-xs uppercase tracking-[0.18em] text-(--text-muted) mb-2">Primary Operating Context</div>
-          <div className="font-syne font-black text-2xl uppercase text-(--text)">Technical products with customer-facing complexity</div>
+          <div className="font-mono text-xs uppercase tracking-[0.18em] text-(--text-muted) mb-2">
+            Primary Operating Context
+          </div>
+          <div className="font-syne font-black text-xl uppercase text-(--text)">
+            Technical products with customer-facing complexity
+          </div>
         </div>
       </div>
 
-      <section className="mb-16">
-        <div className="mb-5 font-mono text-[10px] uppercase tracking-[0.28em] text-(--accent)">Core Competencies</div>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-px border border-(--border) bg-(--border)">
-          {coreCompetencies.map((competency, index) => (
-            <motion.article
-              key={competency.title}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05, duration: 0.25 }}
-              className="bg-(--bg) p-7 min-h-56"
-            >
-              <div className="mb-8 flex items-center justify-between gap-4">
-                <div className="flex h-12 w-12 items-center justify-center border border-(--border) bg-(--surface) text-(--accent)">
-                  <competency.Icon className="h-5 w-5" />
-                </div>
-                <CheckCircle2 className="h-4 w-4 text-(--accent)" />
-              </div>
-              <h3 className="font-syne text-2xl font-black leading-tight text-(--text)">{competency.title}</h3>
-              <p className="mt-5 text-sm leading-relaxed text-(--text-muted)">{competency.text}</p>
-            </motion.article>
+      {/* Primary competencies */}
+      <section className="mb-4">
+        <div className="mb-5 flex items-center gap-4">
+          <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--accent)">
+            Primary Competencies
+          </div>
+          <div className="h-px flex-1 bg-(--border)" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-(--border) border border-(--border)">
+          {primaryCompetencies.map((c, i) => (
+            <CompetencyCard key={c.number} {...c} index={i} />
           ))}
         </div>
       </section>
 
+      {/* Expanding competencies */}
+      <section className="mb-16">
+        <div className="mb-5 flex items-center gap-4">
+          <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--text-muted)">
+            Expanding
+          </div>
+          <div className="h-px flex-1 bg-(--border)" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-(--border) border border-(--border)">
+          {expandingCompetencies.map((c, i) => (
+            <CompetencyCard key={c.number} {...c} index={i + 3} />
+          ))}
+        </div>
+      </section>
+
+      {/* Tools section */}
       <section className="mb-16">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8">
           <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--accent)">Tools I Use</div>
-            <h3 className="mt-4 font-syne text-4xl font-black text-(--text)">Grouped by working context</h3>
+            <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--accent)">
+              Tools I Use
+            </div>
+            <h3 className="mt-4 font-syne text-4xl font-black text-(--text)">
+              Grouped by working context
+            </h3>
           </div>
           <p className="max-w-md text-sm leading-relaxed text-(--text-muted)">
-            This is not an exhaustive inventory. It is the practical stack behind consulting, support, automation, systems, and implementation work.
+            Not an exhaustive inventory — the practical stack behind consulting, support, automation,
+            systems, and implementation work.
           </p>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-px border border-(--border) bg-(--border)">
           {toolGroups.map((group, index) => (
             <motion.article
@@ -126,7 +212,10 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
               </div>
               <div className="flex flex-wrap gap-2">
                 {group.items.map((item) => (
-                  <span key={item} className="px-3 py-2 bg-(--bg) border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted)">
+                  <span
+                    key={item}
+                    className="px-3 py-2 bg-(--bg) border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted)"
+                  >
                     {item}
                   </span>
                 ))}
@@ -136,6 +225,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
         </div>
       </section>
 
+      {/* Education / Languages / Certifications */}
       <section className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_1fr] gap-px border border-(--border) bg-(--border)">
         <article className="bg-(--bg) p-7">
           <div className="mb-5 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.24em] text-(--accent)">
@@ -160,7 +250,10 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
           </div>
           <div className="flex flex-wrap gap-2">
             {CONFIG.languages.map((item) => (
-              <span key={item} className="px-3 py-2 bg-(--surface) border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted)">
+              <span
+                key={item}
+                className="px-3 py-2 bg-(--surface) border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted)"
+              >
                 {item}
               </span>
             ))}
@@ -174,7 +267,10 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
           </div>
           <div className="flex flex-wrap gap-2">
             {CONFIG.certifications.map((item) => (
-              <span key={item} className="px-3 py-2 bg-(--surface) border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted)">
+              <span
+                key={item}
+                className="px-3 py-2 bg-(--surface) border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted)"
+              >
                 {item}
               </span>
             ))}

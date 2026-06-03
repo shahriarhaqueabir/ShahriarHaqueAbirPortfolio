@@ -3,12 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { BarChart3, Briefcase, CheckCircle2, Cpu, Home, Layers, Mail, MessageSquare, Newspaper, Power, Send, User, Zap } from "lucide-react";
+import { BarChart3, Briefcase, CheckCircle2, Cpu, Home, Layers, Mail, MessageSquare, Power, Send, User, Zap } from "lucide-react";
 import type { Message, ViewKey } from "@/lib/types";
 
 const navItems: Array<{ name: string; icon: typeof User; view: ViewKey }> = [
   { name: "Home", icon: Home, view: "hero" },
-  { name: "Blog", icon: Newspaper, view: "blog" },
   { name: "About", icon: User, view: "about" },
   { name: "Projects", icon: Briefcase, view: "projects" },
   { name: "Experience", icon: Layers, view: "experience" },
@@ -179,20 +178,29 @@ export default function PortfolioSidebar({
         </AnimatePresence>
 
         {!localAiPaused && !localAiEnabled && (
-          <div className="flex flex-col gap-2">
-            <button
-              type="button"
-              onClick={enableLocalAi}
-              className="flex items-center justify-center gap-2 border border-(--border) bg-(--text) px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-(--bg) transition-colors hover:bg-(--accent)"
-            >
-              <Power className="h-3.5 w-3.5" />
-              Enable AI guide
-            </button>
+          <div className="flex flex-col gap-3 mx-1">
+            <div className="relative">
+              {/* Pulsing ring */}
+              <div className="absolute inset-[-3px] rounded-sm border border-(--accent) opacity-40 animate-ping" />
+              <button
+                type="button"
+                onClick={enableLocalAi}
+                className="relative w-full flex flex-col items-center gap-2 border border-(--accent) bg-(--surface) px-4 py-4 text-(--text) transition-all hover:bg-(--accent) hover:text-(--bg) group"
+              >
+                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest">
+                  <Power className="h-3.5 w-3.5" />
+                  Enable AI Portfolio Guide
+                </div>
+                <div className="text-[9px] font-mono text-(--text-muted) group-hover:text-(--bg)/80 transition-colors">
+                  Ask questions · Get a recruiter path · Explore projects
+                </div>
+              </button>
+            </div>
             <div className="text-[8px] font-mono text-center uppercase tracking-wider text-(--text-muted)">
               <span suppressHydrationWarning>
                 {typeof window !== "undefined" && typeof navigator !== "undefined" && "gpu" in navigator
-                  ? "✔ WebGPU Acceleration Supported (Local Model Mode)"
-                  : "⚠ WebGPU Not Supported (Lightweight Fallback Mode)"}
+                  ? "✔ WebGPU · Llama 3.2 1B · Runs locally · No data sent"
+                  : "⚠ Lightweight fallback mode · No model download"}
               </span>
             </div>
           </div>
