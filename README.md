@@ -4,16 +4,18 @@ Hawkward is Shahriar Haque Abir's interactive portfolio for lead technical solut
 
 The site is built as a multi-view portfolio experience with an optional local AI guide. The guide runs in the visitor's browser through WebLLM and does not require an external LLM API key.
 
-## Current Site Shape
+## Visual & Architectural Shape
 
-- Home: lead identity, hero badges, case-study entry points, and downloadable CV.
-- Blog: owner-authored posts only, managed through local portfolio data.
-- About: personal and professional narrative from engineering foundations to AI workflow interests.
-- Projects: selected work and case studies, led by Pathfinder international SDR/GTM and L&T project coordination.
-- Experience: chronological professional record and career influence map.
-- Skills: capability map organized around engineering foundations, project delivery, solution consulting, Tier-3 support, and AI automation.
-- Stats: proof points, professional metrics, and working-style orbit.
-- Contact: direct contact links and CV download.
+- **Aesthetic:** "Highly technical and futuristic" using deep backgrounds (`#030509`), subtle static noise, and a glassmorphism effect (`.glass-panel`) for the main content areas.
+- **AI HUD Sidebar:** A local AI guide running via WebLLM on Llama 3.2 1B. It uses a utilitarian terminal window aesthetic (`.hud-container`) with corner brackets and monospace typography.
+- **Home:** Lead identity, hero badges, case-study entry points, and downloadable CV.
+- **Blog:** Owner-authored posts only, managed through local portfolio data.
+- **About:** Personal and professional narrative from engineering foundations to AI workflow interests.
+- **Projects:** Selected work and case studies, led by Pathfinder international SDR/GTM and L&T project coordination.
+- **Experience:** Chronological professional record and career influence map.
+- **Skills:** Capability map organized around engineering foundations, project delivery, solution consulting, Tier-3 support, and AI automation.
+- **Stats:** Proof points, professional metrics, and working-style orbit.
+- **Contact:** Direct contact links and CV download.
 
 ## Stack
 

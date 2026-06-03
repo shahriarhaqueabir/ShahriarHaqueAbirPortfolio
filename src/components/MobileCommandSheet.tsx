@@ -2,20 +2,7 @@
 
 import { ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  MessageCircle,
-  X,
-  Home,
-  Newspaper,
-  User,
-  Briefcase,
-  Layers,
-  Zap,
-  BarChart3,
-  Mail,
-  Database,
-  Eye,
-} from "lucide-react";
+import { MessageCircle, X, Home, Newspaper, User, Briefcase, Layers, Zap, BarChart3, Mail, Database, Eye } from "lucide-react";
 import type { ViewKey } from "@/lib/types";
 
 type MobileCommandSheetProps = {

@@ -103,14 +103,21 @@ export default function PortfolioSidebar({
           </motion.div>
           <div className="min-w-0">
             <h2 className="text-sm font-syne font-black uppercase tracking-widest text-(--text) flex items-center gap-2 truncate">
-              Shahriar Haque Abir <Cpu className={`w-3 h-3 shrink-0 ${isReady && !localAiPaused ? (localAiFallback ? "text-(--accent)" : "text-green-500") : localAiEnabled ? "text-orange-500" : "text-(--text-muted)"}`} />
+              Shahriar Haque Abir{" "}
+              <Cpu
+                className={`w-3 h-3 shrink-0 ${isReady && !localAiPaused ? (localAiFallback ? "text-(--accent)" : "text-green-500") : localAiEnabled ? "text-orange-500" : "text-(--text-muted)"}`}
+              />
             </h2>
             <p className="text-[9px] font-mono text-(--accent) uppercase tracking-tighter">Lead Technical Solution Consultant</p>
           </div>
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          <span className="text-[8px] font-mono text-(--text-muted) uppercase">{localAiPaused ? "Paused" : localAiFallback ? "Fallback" : !localAiEnabled ? "Opt-in" : isReady ? "Ready" : "Loading"}</span>
-          <div className={`w-2 h-2 rounded-full ${isReady && !localAiPaused ? (localAiFallback ? "bg-(--accent)" : "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]") : localAiEnabled ? "bg-orange-500" : "bg-(--text-muted)"}`} />
+          <span className="text-[8px] font-mono text-(--text-muted) uppercase">
+            [{localAiPaused ? "Paused" : localAiFallback ? "Fallback" : !localAiEnabled ? "Opt-in" : isReady ? "Ready" : "Loading"}]
+          </span>
+          <div
+            className={`w-2 h-2 rounded-full ${isReady && !localAiPaused ? (localAiFallback ? "bg-(--accent)" : "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]") : localAiEnabled ? "bg-orange-500" : "bg-(--text-muted)"}`}
+          />
         </div>
       </div>
 
@@ -145,7 +152,7 @@ export default function PortfolioSidebar({
                     ? "bg-transparent text-(--text-muted) border-l-2 border-(--border) self-start font-mono text-[9px] uppercase tracking-widest pl-3 py-1 shadow-none"
                     : msg.isReadyGreen
                       ? "bg-green-500 text-white border-green-400 self-start font-bold"
-                      : "bg-(--surface) text-(--text) border border-(--border) self-start"
+                      : "bg-(--surface) text-(--text) border border-(--border) self-start font-mono text-[11px]"
               }`}
             >
               <div className="flex items-start gap-3">
@@ -158,8 +165,10 @@ export default function PortfolioSidebar({
                       <span className="w-1 h-1 bg-(--accent) rounded-full animation-delay-100" />
                       <span className="w-1 h-1 bg-(--accent) rounded-full animation-delay-200" />
                     </span>
+                  ) : msg.sender === "ai" ? (
+                    <TypewriterText key={`${msg.id}-${msg.text}`} text={msg.text} />
                   ) : (
-                    msg.sender === "ai" ? <TypewriterText key={`${msg.id}-${msg.text}`} text={msg.text} /> : msg.text
+                    msg.text
                   )}
                 </span>
               </div>
@@ -218,7 +227,17 @@ export default function PortfolioSidebar({
             value={input}
             onChange={(event) => setInput(event.target.value)}
             onKeyDown={(event) => event.key === "Enter" && handleSubmit()}
-            placeholder={localAiPaused ? "Search the portfolio..." : localAiFallback ? "Ask the fallback guide..." : !localAiEnabled ? "Enable AI guide to ask questions" : isReady ? "Ask about Shahriar..." : `Loading guide... ${Math.round(progress)}%`}
+            placeholder={
+              localAiPaused
+                ? "Search the portfolio..."
+                : localAiFallback
+                  ? "Ask the fallback guide..."
+                  : !localAiEnabled
+                    ? "Enable AI guide to ask questions"
+                    : isReady
+                      ? "Ask about Shahriar..."
+                      : `Loading guide... ${Math.round(progress)}%`
+            }
             className="w-full bg-(--surface) border border-(--border) rounded-sm p-4 pl-10 pr-12 text-xs font-mono focus:outline-none focus:border-(--accent) transition-all text-(--text) placeholder:text-(--text-muted)"
           />
           <MessageSquare className="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-(--text-muted)" />
@@ -234,7 +253,7 @@ export default function PortfolioSidebar({
         <div className="mt-4 flex justify-between items-center text-[8px] font-mono text-(--text-muted) uppercase tracking-widest">
           <span className="flex items-center gap-1">
             <span className={`w-1 h-1 rounded-full ${isReady && !localAiPaused ? (localAiFallback ? "bg-(--accent)" : "bg-green-500") : localAiEnabled ? "bg-orange-500" : "bg-gray-400"}`} />
-            {localAiPaused ? "GUIDE PAUSED" : localAiFallback ? "GUIDE FALLBACK" : !localAiEnabled ? "GUIDE OPT-IN" : isReady ? "GUIDE READY" : "GUIDE LOADING"}
+            {localAiPaused ? "[GUIDE PAUSED]" : localAiFallback ? "[GUIDE FALLBACK]" : !localAiEnabled ? "[GUIDE OPT-IN]" : isReady ? "[GUIDE READY]" : "[GUIDE LOADING]"}
           </span>
           <span>PORTFOLIO Q&A</span>
         </div>

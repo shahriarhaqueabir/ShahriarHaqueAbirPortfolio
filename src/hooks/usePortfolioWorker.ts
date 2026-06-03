@@ -126,7 +126,10 @@ function getRelevantProjectIndexes(input: string) {
     })
     .sort((a, b) => b.score - a.score);
 
-  const matches = scored.filter((item) => item.score > 0).slice(0, 3).map((item) => item.index);
+  const matches = scored
+    .filter((item) => item.score > 0)
+    .slice(0, 3)
+    .map((item) => item.index);
   return matches.length ? matches : [1, 4, 5];
 }
 
@@ -261,7 +264,10 @@ function buildFallbackAnswer(userText: string, activeView: ViewKey) {
   }
 
   if (/project|case stud|rag|ai|automation|gtm|network|portfolio/.test(lowerInput)) {
-    const projects = CONFIG.projects.slice(0, 4).map((project) => project.name).join(", ");
+    const projects = CONFIG.projects
+      .slice(0, 4)
+      .map((project) => project.name)
+      .join(", ");
     return `Fallback guide active. Strong project evidence starts with: ${projects}. Open Projects for context, implementation, outcome, and stack details.`;
   }
 
@@ -290,9 +296,13 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = 
   const [localAiFallback, setLocalAiFallback] = useState(false);
   const [localAiPaused] = useState(false);
   const [localAiEnabled, setLocalAiEnabled] = useState(false);
-  const [messages, setMessages] = useState<Message[]>(() =>
-    [{ id: "ai-opt-in", text: `Local AI guide is off by default. Enable it when you want portfolio Q&A; ${LOCAL_MODEL_LABEL} downloads and caches only when WebGPU is available and after you opt in.`, sender: "sys" }],
-  );
+  const [messages, setMessages] = useState<Message[]>(() => [
+    {
+      id: "ai-opt-in",
+      text: `Local AI guide is off by default. Enable it when you want portfolio Q&A; ${LOCAL_MODEL_LABEL} downloads and caches only when WebGPU is available and after you opt in.`,
+      sender: "sys",
+    },
+  ]);
   const [isReady, setIsReady] = useState(false);
   const [progress, setProgress] = useState(0);
   const [showReadyToast, setShowReadyToast] = useState(false);
@@ -332,10 +342,7 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = 
       if (initialLoadDone) return withoutOptIn;
       if (withoutOptIn.some((message) => message.id === "1")) return withoutOptIn;
 
-      return [
-        ...withoutOptIn,
-        { id: "1", text: `Initializing Local AI Tour Guide (${LOCAL_MODEL_LABEL})... This may take a moment to cache the model on first use.`, sender: "sys" },
-      ];
+      return [...withoutOptIn, { id: "1", text: `Initializing Local AI Tour Guide (${LOCAL_MODEL_LABEL})... This may take a moment to cache the model on first use.`, sender: "sys" }];
     });
   }, [localAiFallbackReason]);
 

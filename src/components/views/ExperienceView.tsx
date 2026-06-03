@@ -18,15 +18,10 @@ const lifeMilestones = [
 
 export default function ExperienceView({ setView }: { setView: (view: ViewKey) => void }) {
   return (
-    <motion.div 
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      className="pt-10 max-w-5xl"
-    >
+    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="pt-10 max-w-5xl">
       <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">— Career Trajectory</div>
       <h2 className="text-5xl font-syne font-black mb-12 text-(--text)">Experience</h2>
-      
+
       <div className="bg-(--surface) border border-(--border) p-8 mb-20 relative overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-1 bg-(--accent)"></div>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
@@ -37,7 +32,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
           </div>
         </div>
 
-          <div className="relative overflow-hidden xl:overflow-visible">
+        <div className="relative overflow-hidden xl:overflow-visible">
           <div className="absolute left-3 top-0 bottom-0 w-px bg-(--border) xl:left-0 xl:right-0 xl:top-8 xl:bottom-auto xl:h-px xl:w-full"></div>
           <motion.div
             className="absolute left-3 top-0 bottom-0 w-px origin-top bg-[linear-gradient(to_bottom,var(--accent),transparent)] xl:hidden"
@@ -95,9 +90,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
                     className="border bg-(--bg) px-4 py-4 min-h-[132px]"
                     initial={{ borderColor: "var(--border)", boxShadow: "0 0 0 rgba(56, 189, 248, 0)" }}
                     animate={{
-                      borderColor: isNow
-                        ? ["var(--border)", "rgba(56, 189, 248, 0.95)", "rgba(56, 189, 248, 1)"]
-                        : ["var(--border)", "rgba(56, 189, 248, 0.65)", "var(--border)"],
+                      borderColor: isNow ? ["var(--border)", "rgba(56, 189, 248, 0.95)", "rgba(56, 189, 248, 1)"] : ["var(--border)", "rgba(56, 189, 248, 0.65)", "var(--border)"],
                       boxShadow: isNow
                         ? ["0 0 0 rgba(56, 189, 248, 0)", "0 0 24px rgba(56, 189, 248, 0.12)", "0 0 34px rgba(56, 189, 248, 0.18)"]
                         : ["0 0 0 rgba(56, 189, 248, 0)", "0 0 18px rgba(56, 189, 248, 0.1)", "0 0 0 rgba(56, 189, 248, 0)"],
@@ -116,7 +109,8 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
 
         <div className="mt-8 border-l-2 border-(--accent) pl-5 max-w-2xl">
           <p className="text-sm text-(--text-muted) leading-relaxed font-inter">
-            The timeline shows the influences that shaped the profile: engineering fundamentals, optical fibers, IT networks, L&T project management, B2B SaaS product sales, Tier-3 support, and the current move into AI automation and workflow engineering.
+            The timeline shows the influences that shaped the profile: engineering fundamentals, optical fibers, IT networks, L&T project management, B2B SaaS product sales, Tier-3 support, and the
+            current move into AI automation and workflow engineering.
           </p>
         </div>
       </div>
@@ -124,7 +118,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
       <div className="relative space-y-px bg-(--border) border border-(--border) pl-0 md:pl-14">
         <div className="absolute left-7 top-0 bottom-0 hidden md:block w-px bg-(--accent)/40"></div>
         {CONFIG.experience.map((e, i) => (
-          <motion.div 
+          <motion.div
             key={i}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -132,11 +126,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
             className="bg-(--bg) p-10 group hover:bg-(--surface-2) transition-colors relative"
           >
             <div className="absolute -left-9 top-10 hidden h-4 w-4 items-center justify-center rounded-full text-(--accent) md:flex">
-              <motion.span
-                className="signal-dot"
-                animate={{ scale: [1, 1.8, 1], opacity: [1, 0.35, 1] }}
-                transition={{ duration: 2.4, delay: i * 0.2, repeat: Infinity, ease: "easeInOut" }}
-              />
+              <motion.span className="signal-dot" animate={{ scale: [1, 1.8, 1], opacity: [1, 0.35, 1] }} transition={{ duration: 2.4, delay: i * 0.2, repeat: Infinity, ease: "easeInOut" }} />
             </div>
             <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-6">
               <div className="flex-1">

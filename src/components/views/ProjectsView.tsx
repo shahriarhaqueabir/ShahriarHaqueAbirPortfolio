@@ -114,7 +114,9 @@ function ArchitectureDiagram({ project, compact = false }: { project: Project; c
               style={{ boxShadow: `inset 0 0 0 1px ${visual.color}18, 0 0 ${compact ? 18 : 30}px ${visual.color}22` }}
             >
               <div className="flex items-center justify-between gap-2">
-                <div className="font-mono text-[8px] uppercase tracking-widest" style={{ color: visual.color }}>0{index + 1}</div>
+                <div className="font-mono text-[8px] uppercase tracking-widest" style={{ color: visual.color }}>
+                  0{index + 1}
+                </div>
                 <span className="signal-dot" style={{ color: visual.color }} />
               </div>
               <div className="font-syne font-black text-[11px] text-(--text) uppercase leading-tight">{node}</div>
@@ -169,11 +171,14 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: i * 0.05 }}
         onClick={() => setSelectedProject(i)}
-        className="bg-(--surface) border border-(--border) p-8 flex flex-col h-full cursor-pointer group transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-xl"
-        style={{ boxShadow: `0 0 0 rgba(0,0,0,0)`, borderColor: "var(--border)" }}
+        className="glass-panel p-8 flex flex-col h-full cursor-pointer group transition-all duration-500 relative overflow-hidden hover:shadow-xl"
+        style={{ borderColor: "var(--border)" }}
         whileHover={{ y: -4, boxShadow: `0 0 54px ${accent}24` }}
       >
-        <div className="absolute inset-0 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity" style={{ backgroundImage: "linear-gradient(90deg, #EEF6F8 1px, transparent 1px), linear-gradient(#EEF6F8 1px, transparent 1px)", backgroundSize: "18px 18px" }}></div>
+        <div
+          className="absolute inset-0 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity"
+          style={{ backgroundImage: "linear-gradient(90deg, #EEF6F8 1px, transparent 1px), linear-gradient(#EEF6F8 1px, transparent 1px)", backgroundSize: "18px 18px" }}
+        ></div>
         <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full blur-3xl opacity-20 group-hover:opacity-35 transition-opacity" style={{ backgroundColor: accent }} />
         <div className="absolute -left-4 top-8 font-syne font-black text-7xl text-(--text)/5 transition-colors" style={{ color: `${accent}18` }}>
           {String(i + 1).padStart(2, "0")}
@@ -185,7 +190,9 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
           whileHover={{ width: "100%" }}
           transition={{ duration: 0.4 }}
         />
-        <div className="mb-4 font-mono text-[8px] uppercase tracking-[0.28em]" style={{ color: accent }}>{evidenceLabel}</div>
+        <div className="mb-4 font-mono text-[8px] uppercase tracking-[0.28em]" style={{ color: accent }}>
+          {evidenceLabel}
+        </div>
         <div className="flex justify-between items-start mb-6">
           <div className="flex items-start gap-4 pr-10">
             <div className="symbol-tile flex h-12 w-12 shrink-0 items-center justify-center border border-(--border) bg-(--bg)" style={{ color: accent, boxShadow: `0 0 28px ${accent}30` }}>
@@ -205,7 +212,13 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
 
         <div className="flex flex-wrap gap-2 mb-8">
           {proj.stack.slice(0, 3).map((s, sIdx) => (
-            <span key={sIdx} className="font-mono text-[9px] px-2 py-1 bg-(--bg) border border-(--border) text-(--text-muted) uppercase font-bold tracking-tighter" style={{ boxShadow: `0 0 16px ${accent}14` }}>{s}</span>
+            <span
+              key={sIdx}
+              className="font-mono text-[9px] px-2 py-1 bg-(--bg) border border-(--border) text-(--text-muted) uppercase font-bold tracking-tighter"
+              style={{ boxShadow: `0 0 16px ${accent}14` }}
+            >
+              {s}
+            </span>
           ))}
           {proj.stack.length > 3 && <span className="font-mono text-[9px] px-2 py-1 text-(--text-muted)">+{proj.stack.length - 3} MORE</span>}
         </div>
@@ -215,32 +228,21 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
 
   return (
     <>
-      <motion.div 
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: 20 }}
-        className="pt-10"
-      >
+      <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="pt-10">
         <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">— Showcase Projects & Case Studies</div>
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
           <h2 className="text-5xl font-syne font-black text-(--text)">Selected Work</h2>
-          <div className="font-mono text-[9px] text-(--text-muted) uppercase tracking-widest border-l-2 border-(--accent) pl-5 max-w-xs">
-            Two lead projects first. Supporting case studies after.
-          </div>
+          <div className="font-mono text-[9px] text-(--text-muted) uppercase tracking-widest border-l-2 border-(--accent) pl-5 max-w-xs">Two lead projects first. Supporting case studies after.</div>
         </div>
 
         <section className="mb-14">
           <div className="mb-5 font-mono text-[10px] uppercase tracking-[0.28em] text-(--accent)">Showcase Projects</div>
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-            {showcaseProjects.map((proj, i) => renderProjectCard(proj, i))}
-          </div>
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">{showcaseProjects.map((proj, i) => renderProjectCard(proj, i))}</div>
         </section>
 
         <section className="pb-20">
           <div className="mb-5 font-mono text-[10px] uppercase tracking-[0.28em] text-(--text-muted)">Supporting Case Studies</div>
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-            {caseStudyProjects.map((proj, i) => renderProjectCard(proj, i + showcaseProjects.length))}
-          </div>
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">{caseStudyProjects.map((proj, i) => renderProjectCard(proj, i + showcaseProjects.length))}</div>
         </section>
 
         <GuidedNext currentView="projects" onNavigate={setView} />
@@ -248,18 +250,13 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
 
       <AnimatePresence>
         {selectedProject !== null && p && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-12"
-          >
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-12">
             <div className="absolute inset-0 bg-(--text)/40 backdrop-blur-sm" onClick={() => setSelectedProject(null)}></div>
-            <motion.div 
+            <motion.div
               initial={{ x: 100, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: 100, opacity: 0 }}
-              className="relative bg-(--bg) border border-(--border) w-full max-w-4xl h-full max-h-[85vh] overflow-y-auto shadow-2xl no-scrollbar flex flex-col"
+              className="relative glass-panel w-full max-w-4xl h-full max-h-[85vh] overflow-y-auto shadow-2xl no-scrollbar flex flex-col"
             >
               <div className="p-10 md:p-20 flex-1">
                 <div className="flex justify-between items-start mb-12">
@@ -272,17 +269,19 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
                     </div>
                     <h2 className="text-4xl md:text-6xl font-syne font-black text-(--text) leading-tight">{p.name}</h2>
                   </div>
-                  <button aria-label="Close project case study" onClick={() => setSelectedProject(null)} className="w-12 h-12 flex items-center justify-center border border-(--border) hover:bg-(--text) hover:text-(--bg) transition-all">
+                  <button
+                    aria-label="Close project case study"
+                    onClick={() => setSelectedProject(null)}
+                    className="w-12 h-12 flex items-center justify-center border border-(--border) hover:bg-(--text) hover:text-(--bg) transition-all"
+                  >
                     <X className="h-5 w-5" />
                   </button>
                 </div>
-                
+
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
                   <div className="lg:col-span-2 space-y-12">
-                    <p className="text-2xl text-(--text) leading-relaxed font-playfair italic border-l-4 border-(--accent) pl-10 py-2">
-                      {p.desc}
-                    </p>
-                    
+                    <p className="text-2xl text-(--text) leading-relaxed font-playfair italic border-l-4 border-(--accent) pl-10 py-2">{p.desc}</p>
+
                     <div className="space-y-8">
                       <div>
                         <h4 className="font-black font-syne text-xs uppercase tracking-widest mb-4 text-(--text)">The Challenge</h4>
@@ -293,7 +292,7 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
                         <h4 className="font-black font-syne text-xs uppercase tracking-widest mb-4 text-(--text)">{getDiagramLabel(p)}</h4>
                         <ArchitectureDiagram project={p} />
                       </div>
-                      
+
                       <div>
                         <h4 className="font-black font-syne text-xs uppercase tracking-widest mb-4 text-(--text)">Implementation</h4>
                         <p className="text-(--text-muted) leading-relaxed text-base">{p.implementation}</p>
@@ -303,10 +302,18 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
 
                   <div className="space-y-10">
                     <div className="shine-surface bg-(--surface) border border-(--border) p-8">
-                      <h4 className="font-black font-syne text-[10px] uppercase tracking-widest mb-6" style={{ color: selectedVisual?.color }}>{getStackLabel(p)}</h4>
+                      <h4 className="font-black font-syne text-[10px] uppercase tracking-widest mb-6" style={{ color: selectedVisual?.color }}>
+                        {getStackLabel(p)}
+                      </h4>
                       <div className="flex flex-wrap gap-2">
                         {p.stack.map((s, idx) => (
-                          <span key={idx} className="font-mono text-[10px] px-3 py-1.5 bg-(--bg) border border-(--border) text-(--text-muted) uppercase font-bold tracking-tighter" style={{ boxShadow: `0 0 18px ${selectedVisual?.color}16` }}>{s}</span>
+                          <span
+                            key={idx}
+                            className="font-mono text-[10px] px-3 py-1.5 bg-(--bg) border border-(--border) text-(--text-muted) uppercase font-bold tracking-tighter"
+                            style={{ boxShadow: `0 0 18px ${selectedVisual?.color}16` }}
+                          >
+                            {s}
+                          </span>
                         ))}
                       </div>
                     </div>
@@ -319,8 +326,8 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
                 </div>
               </div>
               <div className="p-10 border-t border-(--border) bg-(--surface)/82 flex justify-between items-center">
-                 <div className="font-mono text-[9px] text-(--text-muted) uppercase tracking-widest">Evidence Type: {getEvidenceLabel(p, selectedProject)}</div>
-                 <div className="font-mono text-[9px] text-(--text-muted) uppercase tracking-widest">Owner: Shahriar Haque Abir</div>
+                <div className="font-mono text-[9px] text-(--text-muted) uppercase tracking-widest">Evidence Type: {getEvidenceLabel(p, selectedProject)}</div>
+                <div className="font-mono text-[9px] text-(--text-muted) uppercase tracking-widest">Owner: Shahriar Haque Abir</div>
               </div>
             </motion.div>
           </motion.div>

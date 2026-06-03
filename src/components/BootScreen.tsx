@@ -35,10 +35,7 @@ export default function BootScreen({ progress, isReady, localAiEnabled = false, 
   useEffect(() => {
     if (revealStep >= FINAL_REVEAL_STEP) return;
 
-    const timeout = window.setTimeout(
-      () => setRevealStep((currentStep) => Math.min(currentStep + 1, FINAL_REVEAL_STEP)),
-      revealStep === 0 ? 350 : revealStep % 2 === 1 ? 420 : 280,
-    );
+    const timeout = window.setTimeout(() => setRevealStep((currentStep) => Math.min(currentStep + 1, FINAL_REVEAL_STEP)), revealStep === 0 ? 350 : revealStep % 2 === 1 ? 420 : 280);
 
     return () => window.clearTimeout(timeout);
   }, [revealStep]);
@@ -46,10 +43,7 @@ export default function BootScreen({ progress, isReady, localAiEnabled = false, 
   useEffect(() => {
     if (!localAiEnabled || revealStep < FINAL_REVEAL_STEP || aiDisplayProgress >= targetProgress) return;
 
-    const timeout = window.setTimeout(
-      () => setAiDisplayProgress((currentProgress) => Math.min(currentProgress + 1, targetProgress)),
-      isReady ? 18 : 45,
-    );
+    const timeout = window.setTimeout(() => setAiDisplayProgress((currentProgress) => Math.min(currentProgress + 1, targetProgress)), isReady ? 18 : 45);
 
     return () => window.clearTimeout(timeout);
   }, [aiDisplayProgress, isReady, localAiEnabled, revealStep, targetProgress]);
@@ -68,27 +62,18 @@ export default function BootScreen({ progress, isReady, localAiEnabled = false, 
       transition={{ duration: 0.45, ease: "easeInOut" }}
       className="pointer-events-none fixed inset-0 z-100 bg-(--bg) flex items-center justify-center overflow-hidden"
     >
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.03]"
-        style={{ backgroundImage: "radial-gradient(#000 1px, transparent 1px)", backgroundSize: "30px 30px" }}
-      />
+      <div className="pointer-events-none absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(#000 1px, transparent 1px)", backgroundSize: "30px 30px" }} />
 
       <div className="pointer-events-auto relative w-full max-w-xl px-6 py-10">
         <div className="mb-12">
           <div>
-            <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.28em] mb-3">
-              Portfolio System
-            </div>
-            <h1 className="text-2xl md:text-4xl font-syne font-black uppercase tracking-[0.08em] text-(--text)">
-              Shahriar Haque Abir Portfolio
-            </h1>
+            <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.28em] mb-3">Portfolio System</div>
+            <h1 className="text-2xl md:text-4xl font-syne font-black uppercase tracking-[0.08em] text-(--text)">Shahriar Haque Abir Portfolio</h1>
           </div>
         </div>
 
         <div className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.12em] text-(--text-muted) border border-(--border) bg-(--surface)/82">
-          <div className="px-5 py-4 border-b border-(--border) text-(--text)">
-            SHAHRIAR HAQUE ABIR PORTFOLIO — INITIALISING
-          </div>
+          <div className="px-5 py-4 border-b border-(--border) text-(--text)">SHAHRIAR HAQUE ABIR PORTFOLIO — INITIALISING</div>
 
           <div className="p-5 space-y-4">
             {lines.map((line, index) => {
@@ -99,11 +84,7 @@ export default function BootScreen({ progress, isReady, localAiEnabled = false, 
 
               return (
                 <div key={line.id} className="grid min-h-4 grid-cols-[auto_1fr_auto] items-center gap-3">
-                  <motion.span
-                    initial={{ opacity: 0, x: -8 }}
-                    animate={labelVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -8 }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
-                  >
+                  <motion.span initial={{ opacity: 0, x: -8 }} animate={labelVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -8 }} transition={{ duration: 0.25, ease: "easeOut" }}>
                     {String(index + 1).padStart(2, "0")} /
                   </motion.span>
                   <motion.span

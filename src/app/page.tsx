@@ -53,12 +53,23 @@ export default function Home() {
 
   return (
     <main className="flex h-screen w-full relative z-10 font-inter text-(--text) bg-(--bg) overflow-hidden">
-      <AnimatePresence>{isBooting && <BootScreen progress={worker.progress} isReady={worker.isReady} localAiEnabled={worker.localAiEnabled} localAiFallback={worker.localAiFallback} localAiPaused={worker.localAiPaused} onEnter={enterPortfolio} />}</AnimatePresence>
+      <AnimatePresence>
+        {isBooting && (
+          <BootScreen
+            progress={worker.progress}
+            isReady={worker.isReady}
+            localAiEnabled={worker.localAiEnabled}
+            localAiFallback={worker.localAiFallback}
+            localAiPaused={worker.localAiPaused}
+            onEnter={enterPortfolio}
+          />
+        )}
+      </AnimatePresence>
       <div className="fixed inset-0 pointer-events-none opacity-[0.18]" style={{ backgroundImage: "radial-gradient(rgba(238,246,248,0.42) 1px, transparent 1px)", backgroundSize: "30px 30px" }} />
       <motion.aside
         animate={{ width: desktopSidebarCollapsed ? 76 : 380 }}
         transition={{ type: "spring", stiffness: 260, damping: 32 }}
-        className="hidden md:flex h-full min-w-[76px] bg-(--surface)/80 border-r border-(--border) flex-col relative z-20 backdrop-blur-3xl"
+        className="hidden md:flex h-full min-w-[76px] flex-col relative z-20 backdrop-blur-3xl hud-container"
       >
         <button
           type="button"
@@ -93,9 +104,7 @@ export default function Home() {
                   type="button"
                   onClick={() => navigate(item.view, item.name)}
                   className={`flex h-10 w-10 items-center justify-center rounded-sm border transition-colors ${
-                    activeView === item.view
-                      ? "border-(--accent) bg-(--accent) text-(--bg)"
-                      : "border-transparent text-(--text-muted) hover:border-(--border) hover:text-(--text)"
+                    activeView === item.view ? "border-(--accent) bg-(--accent) text-(--bg)" : "border-transparent text-(--text-muted) hover:border-(--border) hover:text-(--text)"
                   }`}
                   aria-label={item.name}
                   title={item.name}

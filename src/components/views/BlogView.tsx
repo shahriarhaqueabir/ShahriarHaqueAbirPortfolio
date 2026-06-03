@@ -8,12 +8,7 @@ import type { ViewKey } from "@/lib/types";
 
 export default function BlogView({ setView }: { setView: (view: ViewKey) => void }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      className="pt-10 pb-20 max-w-5xl"
-    >
+    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="pt-10 pb-20 max-w-5xl">
       <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">— Blog</div>
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
         <div>
@@ -24,9 +19,7 @@ export default function BlogView({ setView }: { setView: (view: ViewKey) => void
         </div>
         <div className="flex items-start gap-3 border border-(--border) bg-(--surface) p-5 max-w-sm">
           <LockKeyhole className="mt-0.5 h-4 w-4 shrink-0 text-(--accent)" />
-          <p className="text-xs leading-relaxed text-(--text-muted)">
-            Read-only for visitors. Updates are made directly by Shahriar through the site content.
-          </p>
+          <p className="text-xs leading-relaxed text-(--text-muted)">Read-only for visitors. Updates are made directly by Shahriar through the site content.</p>
         </div>
       </div>
 

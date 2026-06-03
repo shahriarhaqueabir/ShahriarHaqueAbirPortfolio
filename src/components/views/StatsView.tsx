@@ -27,11 +27,7 @@ const metrics = [
   { value: "500+", label: "Network Clients Supported", glyph: "globe", spark: "M3 18 L8 10 L13 15 L19 11" },
 ];
 
-const futurePaths = [
-  "AI automation and workflow engineering",
-  "cybersecurity-aware systems thinking",
-  "GTM, SDR, and agentic full stack development",
-];
+const futurePaths = ["AI automation and workflow engineering", "cybersecurity-aware systems thinking", "GTM, SDR, and agentic full stack development"];
 
 const nextPaths: Array<{ view: ViewKey; label: string; question: string }> = [
   { view: "experience", label: "Experience", question: "Can he operate in real environments?" },
@@ -125,8 +121,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.42]"
         style={{
-          backgroundImage:
-            "radial-gradient(rgba(238,246,248,0.14) 1px, transparent 1px), radial-gradient(circle at 48% 42%, rgba(56,189,248,0.12), transparent 24rem)",
+          backgroundImage: "radial-gradient(rgba(238,246,248,0.14) 1px, transparent 1px), radial-gradient(circle at 48% 42%, rgba(56,189,248,0.12), transparent 24rem)",
           backgroundSize: "31px 31px, 100% 100%",
         }}
       />
@@ -142,17 +137,11 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
           <p className="mt-12 max-w-[280px] font-mono text-[11px] font-bold leading-8 text-(--text)">
             Calm when stakes rise. Clear when systems get tangled. Kind enough to keep people with the work.
           </p>
-          <p className="mt-12 max-w-[190px] font-mono text-[10px] uppercase leading-5 tracking-[0.28em] text-(--text-muted)">
-            Follow the constellation.
-          </p>
+          <p className="mt-12 max-w-[190px] font-mono text-[10px] uppercase leading-5 tracking-[0.28em] text-(--text-muted)">Follow the constellation.</p>
         </aside>
 
         <div className="relative mx-auto aspect-square w-full max-w-[620px]">
-          <svg
-            className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
-            viewBox="0 0 100 100"
-            aria-hidden="true"
-          >
+          <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 100 100" aria-hidden="true">
             <circle cx="50" cy="50" r={ORBIT_RADIUS} fill="none" stroke="rgba(238,246,248,0.07)" strokeWidth="0.1" />
             <motion.circle
               cx="50"
@@ -198,11 +187,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
             />
           </motion.div>
 
-          <motion.div
-            className="absolute inset-0"
-            animate={{ rotate: -360 }}
-            transition={{ duration: ORBIT_DURATION_SECONDS, repeat: Infinity, ease: "linear" }}
-          >
+          <motion.div className="absolute inset-0" animate={{ rotate: -360 }} transition={{ duration: ORBIT_DURATION_SECONDS, repeat: Infinity, ease: "linear" }}>
             <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 100 100" aria-hidden="true">
               <g stroke="rgba(238,246,248,0.2)" strokeWidth="0.16" strokeLinecap="round" strokeDasharray="0.8 1.5">
                 <line x1={orbitNodes[5].x} y1={orbitNodes[5].y} x2="50" y2="50" />
@@ -245,11 +230,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
                   className="absolute z-10 h-14 w-14 -translate-x-1/2 -translate-y-1/2 rounded-full text-left outline-none"
                   style={{ left: `${node.x}%`, top: `${node.y}%` }}
                 >
-                  <motion.span
-                    className="absolute inset-0 block"
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: ORBIT_DURATION_SECONDS, repeat: Infinity, ease: "linear" }}
-                  >
+                  <motion.span className="absolute inset-0 block" animate={{ rotate: 360 }} transition={{ duration: ORBIT_DURATION_SECONDS, repeat: Infinity, ease: "linear" }}>
                     <span className="pointer-events-none absolute left-1/2 top-1/2 h-px w-5 -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.38),transparent)] blur-[0.5px]" />
                     <span className="pointer-events-none absolute left-1/2 top-1/2 h-5 w-px -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(180deg,transparent,rgba(255,255,255,0.38),transparent)] blur-[0.5px]" />
                     <span className="pointer-events-none absolute left-1/2 top-1/2 h-px w-4 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.28),transparent)] blur-[0.5px]" />
@@ -280,9 +261,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
         {/* Mobile-only: centred active node label — replaces clipping per-star labels */}
         <div className="mt-6 flex flex-col items-center gap-1 sm:hidden">
           <div className="font-mono text-[8px] uppercase tracking-[0.28em] text-(--text-muted)">tap a star</div>
-          <div className="font-mono text-[11px] font-bold uppercase tracking-[0.28em] text-(--text)">
-            {activeNode.label}
-          </div>
+          <div className="font-mono text-[11px] font-bold uppercase tracking-[0.28em] text-(--text)">{activeNode.label}</div>
           <div className="mt-1 h-px w-8 bg-(--accent)" />
         </div>
 
@@ -328,9 +307,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
             <p className="max-w-[220px] text-sm leading-relaxed text-(--text-muted)">
               The technical profile matters, but the work is remembered through steadiness, clarity, follow-through, and care for the customer&apos;s actual situation.
             </p>
-            <div className="mt-8 font-mono text-[9px] uppercase tracking-[0.2em] text-(--accent)">
-              {futurePaths[futureIndex]}
-            </div>
+            <div className="mt-8 font-mono text-[9px] uppercase tracking-[0.2em] text-(--accent)">{futurePaths[futureIndex]}</div>
           </div>
           <button
             type="button"
@@ -343,9 +320,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
         </div>
 
         <div className="pt-10">
-          <p className="max-w-xl text-base leading-relaxed text-(--text-muted) md:text-lg">
-            Numbers show the scale. The work depends on staying useful, steady, and clear when the problem is live.
-          </p>
+          <p className="max-w-xl text-base leading-relaxed text-(--text-muted) md:text-lg">Numbers show the scale. The work depends on staying useful, steady, and clear when the problem is live.</p>
           <div className="mt-8 grid grid-cols-1 gap-3 md:grid-cols-2">
             {nextPaths.map((path) => (
               <button

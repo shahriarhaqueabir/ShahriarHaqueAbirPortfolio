@@ -24,7 +24,8 @@ const storyBeats = [
     label: "Consulting",
     title: "Moved into B2B SaaS solution consultation.",
     text: "In Germany, the work expanded into B2B SME and enterprise product sales, software solution consultation, Tier-3 technical support, discovery, RFI/RFP support, PoCs, onboarding, production troubleshooting, and release validation.",
-    context: "SaaS consulting: product sales support, technical discovery, customer onboarding, API/database troubleshooting, SLA-driven Tier-3 support, release validation, and engineering coordination.",
+    context:
+      "SaaS consulting: product sales support, technical discovery, customer onboarding, API/database troubleshooting, SLA-driven Tier-3 support, release validation, and engineering coordination.",
   },
   {
     label: "Now",
@@ -50,21 +51,12 @@ export default function AboutView({ setView }: { setView: (view: ViewKey) => voi
   const glowOpacity = useTransform(scrollYProgress, [0, 0.35, 0.8], [0.16, 0.32, 0.12]);
 
   return (
-    <motion.div
-      ref={containerRef}
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      className="relative max-w-6xl pb-24"
-    >
+    <motion.div ref={containerRef} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="relative max-w-6xl pb-24">
       <motion.div
         className="pointer-events-none fixed right-12 top-20 hidden h-[60vh] w-px origin-top bg-[linear-gradient(to_bottom,var(--accent),var(--accent2),transparent)] lg:block"
         style={{ scaleY: lineScale }}
       />
-      <motion.div
-        className="pointer-events-none absolute left-[18%] top-24 h-[520px] w-[520px] rounded-full bg-(--accent)/10 blur-3xl"
-        style={{ opacity: glowOpacity }}
-      />
+      <motion.div className="pointer-events-none absolute left-[18%] top-24 h-[520px] w-[520px] rounded-full bg-(--accent)/10 blur-3xl" style={{ opacity: glowOpacity }} />
 
       <section className="relative grid min-h-[78vh] grid-cols-1 items-center gap-12 py-12 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="relative z-10">
@@ -72,11 +64,10 @@ export default function AboutView({ setView }: { setView: (view: ViewKey) => voi
             <MessageCircle className="h-3.5 w-3.5" />
             Biography / Point of View
           </div>
-          <h2 className="max-w-3xl font-syne text-5xl font-black leading-[0.9] text-(--text) md:text-7xl">
-            It&apos;s good to catch up.
-          </h2>
+          <h2 className="max-w-3xl font-syne text-5xl font-black leading-[0.9] text-(--text) md:text-7xl">It&apos;s good to catch up.</h2>
           <p className="mt-8 max-w-2xl font-playfair text-2xl italic leading-relaxed text-(--text)">
-            Hi. I&apos;m Shahriar. I was born and raised in Bangladesh, moved halfway across the world to Germany, and I&apos;m currently living in Berlin. I specialize in helping technical products reach and retain customers through technical discovery, sales development, GTM strategy, in-depth support, and customer success-focused execution.
+            Hi. I&apos;m Shahriar. I was born and raised in Bangladesh, moved halfway across the world to Germany, and I&apos;m currently living in Berlin. I specialize in helping technical products
+            reach and retain customers through technical discovery, sales development, GTM strategy, in-depth support, and customer success-focused execution.
           </p>
           <div className="mt-10 grid max-w-2xl grid-cols-1 gap-px border border-(--border) bg-(--border) sm:grid-cols-2">
             <div className="bg-(--bg) p-6">
@@ -108,9 +99,7 @@ export default function AboutView({ setView }: { setView: (view: ViewKey) => voi
                   <Coffee className="h-5 w-5" />
                 </div>
               </div>
-              <p className="text-base leading-8 text-(--text-muted)">
-                {CONFIG.profile}
-              </p>
+              <p className="text-base leading-8 text-(--text-muted)">{CONFIG.profile}</p>
               <div className="mt-10 flex flex-wrap gap-2">
                 {CONFIG.taglines.map((tagline) => (
                   <span key={tagline} className="border border-(--accent)/30 bg-(--accent)/10 px-3 py-2 font-mono text-[9px] font-bold uppercase tracking-widest text-(--accent)">
@@ -170,9 +159,7 @@ export default function AboutView({ setView }: { setView: (view: ViewKey) => voi
               transition={{ delay: index * 0.06, duration: 0.35 }}
               className="min-h-40 bg-(--surface) p-7"
             >
-              <div className="mb-8 font-mono text-[9px] uppercase tracking-[0.24em] text-(--text-muted)">
-                principle {String(index + 1).padStart(2, "0")}
-              </div>
+              <div className="mb-8 font-mono text-[9px] uppercase tracking-[0.24em] text-(--text-muted)">principle {String(index + 1).padStart(2, "0")}</div>
               <div className="font-syne text-2xl font-black uppercase leading-tight text-(--text)">{principle}</div>
             </motion.div>
           ))}

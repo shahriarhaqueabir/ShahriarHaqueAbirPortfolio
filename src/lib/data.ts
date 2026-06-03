@@ -8,18 +8,18 @@ export const CONFIG = {
     "Information & Communication Engineer",
     "APAC/EMEA/NAM Expertise",
     "AI Automation Engineer",
-    "Technical Solution Consultant"
+    "Technical Solution Consultant",
   ],
   location: "Berlin, Germany",
   workAuth: "Niederlassungserlaubnis (Permanent Resident)",
-  profile: `I work as a lead technical solution consultant across B2B SaaS implementation, product sales, Tier-3 support, and AI automation. My foundation spans electrical and electronic engineering, information and communication engineering, optical fibers, IT networks, and software solution consultation. I help teams move from technical ambiguity to stable customer adoption through discovery, RFI/RFP support, PoCs, onboarding, production troubleshooting, release validation, and workflow engineering.`,
+  profile: `I am a technical operations and implementation professional with an established track record of complete customer lifecycle ownership across global markets (NAM, APAC, DACH). Multilingual and adept at translating intricate technical requirements into scalable solutions, I leverage expertise in pre-sales discovery, sales development, and go-to-market strategies to build bridges between SME/enterprise customers and engineering teams. Capable of performing full-stack diagnostics, API and database troubleshooting, and regression QA, I lead cross-functional teams through the complete customer lifecycle—from initial onboarding and PoCs to continued SLA-driven support and technical retention.`,
   profileImage: "/profile.jpg",
   contact: [
     { label: "Email", value: "shahriar_abby@hotmail.com", href: "mailto:shahriar_abby@hotmail.com" },
     { label: "LinkedIn", value: "linkedin.com/in/shahriarhaqueabir", href: "https://www.linkedin.com/in/shahriarhaqueabir" },
     { label: "GitHub", value: "github.com/shahriarhaqueabir", href: "https://github.com/shahriarhaqueabir" },
     { label: "CV", value: "Download CV (PDF)", href: "/shahriar-haque-abir-cv.pdf" },
-    { label: "Location", value: "Berlin, Germany", href: null }
+    { label: "Location", value: "Berlin, Germany", href: null },
   ],
   blog: [
     {
@@ -27,29 +27,28 @@ export const CONFIG = {
       date: "May 2026",
       category: "Working Notes",
       excerpt: "Notes on technical discovery, GTM context, support patterns, and the kind of operating model that helps technical products become adoptable.",
-      body: "Technical products rarely fail because only one thing went wrong. The useful work is often in the middle: clarifying the customer problem, understanding the product constraint, noticing the sales friction, and turning repeated support patterns into decisions a team can act on."
+      body: "Technical products rarely fail because only one thing went wrong. The useful work is often in the middle: clarifying the customer problem, understanding the product constraint, noticing the sales friction, and turning repeated support patterns into decisions a team can act on.",
     },
     {
       title: "Why support signals matter",
       date: "May 2026",
       category: "Customer Systems",
       excerpt: "A short reflection on why recurring tickets, onboarding friction, and release feedback should shape the product conversation.",
-      body: "Support is not only a reactive function. When handled carefully, it becomes one of the clearest sources of product intelligence. Recurring questions, unclear handoffs, failed assumptions, and repeated configuration issues all point to places where the product or process can become easier to adopt."
-    }
+      body: "Support is not only a reactive function. When handled carefully, it becomes one of the clearest sources of product intelligence. Recurring questions, unclear handoffs, failed assumptions, and repeated configuration issues all point to places where the product or process can become easier to adopt.",
+    },
   ],
   experience: [
     {
       company: "tripunkt GmbH",
-      role: "Software Solutions Consultant",
+      role: "Senior Solutions Consultant",
       period: "Nov 2020 – March 2026",
       points: [
-        "Acted as the primary technical contact across discovery, RFI/RFP support, PoCs, onboarding, training, production support, product sales support, and post-release operations.",
-        "Onboarded 10 international B2B clients, supporting stable adoption and service continuity across customer environments.",
-        "Resolved around 40 production tickets per week across configuration, API, database, integration, and environment-level issues.",
-        "Partnered with product and engineering teams to reproduce defects, validate fixes, and improve release readiness.",
-        "Reduced recurring bug reports by 30% per release through structured regression testing, release validation, and root cause feedback loops.",
-        "Led and coordinated work across a team of 5, translating customer needs into clear technical execution."
-      ]
+        "Designed and executed the international Go-To-Market (GTM) and Sales Development (SDR) pipelines for the Pathfinder software suite across the NAM, APAC, and DACH regions.",
+        "Led international sales and support from initial pre-sales scoping, PoC, and onboarding, to API and database integrations, ensuring long-term ROI and technical retention.",
+        "Authored technical integration schematics, data-flow diagrams, and RFI/RFP documentation to support enterprise pre-sales, managing the full lifecycle for 10 premier international accounts.",
+        "Served as the primary technical bridge between client engineering teams and internal product development, communicating system architecture and integration strategies to CTOs and stakeholders.",
+        "Conducted Tier-3 full-stack root-cause diagnostics, API troubleshooting, relational database troubleshooting, and application log analysis to convert critical runtime issues into prioritized product roadmap items.",
+      ],
     },
     {
       company: "Technische Hochschule Mittelhessen",
@@ -59,17 +58,14 @@ export const CONFIG = {
         "Characterized solarization in glass optical fiber bundles under high-power UV irradiation.",
         "Performed technical research on light and optical fiber technologies including splicing and gluing.",
         "Executed hardware design, development, and data analysis for optical systems.",
-        "Managed project planning and technical reporting/presentation of research findings."
-      ]
+        "Managed project planning and technical reporting/presentation of research findings.",
+      ],
     },
     {
       company: "TransMIT GmbH",
       role: "Optical Fiber Quality Control",
       period: "April 2017 – Nov 2017",
-      points: [
-        "Managed quality assurance and control for optical fiber cable assembly and polishing.",
-        "Executed precision tubing and gluing of fiber cores, cladding, and connectors."
-      ]
+      points: ["Managed quality assurance and control for optical fiber cable assembly and polishing.", "Executed precision tubing and gluing of fiber cores, cladding, and connectors."],
     },
     {
       company: "Larsen & Toubro",
@@ -79,8 +75,8 @@ export const CONFIG = {
         "Coordinated technical training and project delivery support for 60+ engineers across multiple training groups.",
         "Managed curriculum planning, scheduling, documentation, reporting, and training effectiveness tracking.",
         "Supported onboarding, stakeholder follow-up, and operational handoffs across technical teams.",
-        "Built project management discipline around planning, coordination, execution visibility, and repeatable delivery."
-      ]
+        "Built project management discipline around planning, coordination, execution visibility, and repeatable delivery.",
+      ],
     },
     {
       company: "Earth Telecommunication Pvt. Ltd.",
@@ -90,221 +86,188 @@ export const CONFIG = {
         "Provided on-call technical support and network operations coverage for 500+ SME, corporate, and residential clients.",
         "Installed and maintained LAN/WAN network infrastructure and connectivity solutions.",
         "Configured network equipment including switches, routers, and access points.",
-        "Created technical documentation for network setups and operational procedures."
-      ]
-    }
+        "Created technical documentation for network setups and operational procedures.",
+      ],
+    },
   ],
-projects: [
-  {
-    name: "Pathfinder International SDR & GTM Operating Model",
-    desc: "Led international SDR, GTM, product sales support, onboarding, and technical follow-through for Pathfinder at tripunkt GmbH.",
+  projects: [
+    {
+      name: "Pathfinder International SDR & GTM Operating Model",
+      desc: "Led international SDR, GTM, product sales support, onboarding, and technical follow-through for Pathfinder at tripunkt GmbH.",
 
-    context: "Pathfinder needed stronger international sales and support motion across APAC, EMEA, and North America. The work required SDR execution, GTM support, product sales support, discovery, onboarding, and technical follow-through.",
+      context:
+        "Pathfinder needed stronger international sales and support motion across APAC, EMEA, and North America. The work required SDR execution, GTM support, product sales support, discovery, onboarding, and technical follow-through.",
 
-    implementation: "Led the operating model from prospecting and international SDR motion through technical discovery, RFI/RFP support, PoCs, product sales support, onboarding, training, SLA-driven Tier-3 support, documentation, and post-release validation. Connected customer signals back into product and engineering feedback loops.",
+      implementation:
+        "Led the operating model from prospecting and international SDR motion through technical discovery, RFI/RFP support, PoCs, product sales support, onboarding, training, SLA-driven Tier-3 support, documentation, and post-release validation. Connected customer signals back into product and engineering feedback loops.",
 
-    outcome: "Supported Pathfinder's international sales and customer lifecycle motion, onboarded 10 international B2B clients, supported around 40 production tickets per week, and helped reduce recurring bug reports by 30% per release.",
+      outcome:
+        "Supported Pathfinder's international sales and customer lifecycle motion, onboarded 10 international B2B clients, supported around 40 production tickets per week, and helped reduce recurring bug reports by 30% per release.",
 
-    stack: ["Pathfinder", "International GTM", "SDR", "B2B SaaS", "Solution Consulting", "Product Sales", "RFI/RFP", "PoC", "Tier-3 Support", "Release Validation"]
-  },
+      stack: ["Pathfinder", "International GTM", "SDR", "B2B SaaS", "Solution Consulting", "Product Sales", "RFI/RFP", "PoC", "Tier-3 Support", "Release Validation"],
+    },
 
-  {
-    name: "L&T Technical Training & Project Coordination Program",
-    desc: "Led project coordination and technical training operations for curriculum planning, scheduling, onboarding, documentation, and delivery tracking across 60+ engineers.",
+    {
+      name: "L&T Technical Training & Project Coordination Program",
+      desc: "Led project coordination and technical training operations for curriculum planning, scheduling, onboarding, documentation, and delivery tracking across 60+ engineers.",
 
-    context: "Large engineering training groups needed structured onboarding, curriculum coordination, project visibility, and clear tracking of training effectiveness.",
+      context: "Large engineering training groups needed structured onboarding, curriculum coordination, project visibility, and clear tracking of training effectiveness.",
 
-    implementation: "Coordinated technical training programs for 60+ engineers across multiple groups, covering curriculum planning, scheduling, documentation, onboarding processes, delivery coordination, and reporting.",
+      implementation:
+        "Coordinated technical training programs for 60+ engineers across multiple groups, covering curriculum planning, scheduling, documentation, onboarding processes, delivery coordination, and reporting.",
 
-    outcome: "Improved training organization and supported repeatable project delivery through clearer coordination, documentation, and stakeholder follow-up.",
+      outcome: "Improved training organization and supported repeatable project delivery through clearer coordination, documentation, and stakeholder follow-up.",
 
-    stack: ["Project Management", "Training Operations", "Curriculum Planning", "Engineer Onboarding", "Scheduling", "Reporting"]
-  },
+      stack: ["Project Management", "Training Operations", "Curriculum Planning", "Engineer Onboarding", "Scheduling", "Reporting"],
+    },
 
-  { 
-    name: "AI Knowledge Assistant (RAG API)", 
-    desc: "Retrieval-Augmented Generation API for source-grounded question answering using vector search.",
+    {
+      name: "AI Knowledge Assistant (RAG API)",
+      desc: "Retrieval-Augmented Generation API for source-grounded question answering using vector search.",
 
-    context: "Needed an environment to evaluate RAG architectures for accurate querying of internal knowledge sources.",
+      context: "Needed an environment to evaluate RAG architectures for accurate querying of internal knowledge sources.",
 
-    implementation: "Built a FastAPI backend integrated with Qdrant for vector retrieval and PostgreSQL for metadata storage. Containerized the application using Docker Compose for reproducible deployment and local development.",
+      implementation:
+        "Built a FastAPI backend integrated with Qdrant for vector retrieval and PostgreSQL for metadata storage. Containerized the application using Docker Compose for reproducible deployment and local development.",
 
-    outcome: "Delivered a reproducible API capable of answering questions from indexed sources while reducing unsupported or hallucinated responses.",
+      outcome: "Delivered a reproducible API capable of answering questions from indexed sources while reducing unsupported or hallucinated responses.",
 
-    stack: ["FastAPI", "Qdrant", "PostgreSQL", "Docker Compose"]
-  },
+      stack: ["FastAPI", "Qdrant", "PostgreSQL", "Docker Compose"],
+    },
 
-  { 
-    name: "AI Automation & Workflow Engineering Platform", 
-    desc: "Practical AI automation environment for support workflows, retrieval systems, and agentic software development experiments.",
+    {
+      name: "AI Automation & Workflow Engineering Platform",
+      desc: "Practical AI automation environment for support workflows, retrieval systems, and agentic software development experiments.",
 
-    context: "Repeated technical support and knowledge retrieval tasks created opportunities for AI-assisted workflows that could reduce manual effort and improve consistency.",
+      context: "Repeated technical support and knowledge retrieval tasks created opportunities for AI-assisted workflows that could reduce manual effort and improve consistency.",
 
-    implementation: "Combined local LLM tooling, RAG patterns, FastAPI, Qdrant, Docker Compose, and n8n to prototype workflows for retrieval, troubleshooting, and AI automation.",
+      implementation: "Combined local LLM tooling, RAG patterns, FastAPI, Qdrant, Docker Compose, and n8n to prototype workflows for retrieval, troubleshooting, and AI automation.",
 
-    outcome: "Created a practical AI automation foundation for experimenting with support tooling, workflow engineering, and agentic full stack development.",
+      outcome: "Created a practical AI automation foundation for experimenting with support tooling, workflow engineering, and agentic full stack development.",
 
-    stack: ["AI Automation", "RAG", "Local LLMs", "FastAPI", "Qdrant", "Docker Compose", "n8n"]
-  },
+      stack: ["AI Automation", "RAG", "Local LLMs", "FastAPI", "Qdrant", "Docker Compose", "n8n"],
+    },
 
-  { 
-    name: "GTM AI Workflow Platform", 
-    desc: "AI workflow engineering for lead enrichment and outbound sales processes.",
+    {
+      name: "GTM AI Workflow Platform",
+      desc: "AI workflow engineering for lead enrichment and outbound sales processes.",
 
-    context: "Manual prospect research and lead routing created operational bottlenecks and delayed outreach workflows.",
+      context: "Manual prospect research and lead routing created operational bottlenecks and delayed outreach workflows.",
 
-    implementation: "Designed AI-assisted workflow pipelines in n8n to orchestrate data movement between enrichment platforms and CRM workflows. Integrated APIs to automate lead enrichment, routing, and personalized actions.",
+      implementation:
+        "Designed AI-assisted workflow pipelines in n8n to orchestrate data movement between enrichment platforms and CRM workflows. Integrated APIs to automate lead enrichment, routing, and personalized actions.",
 
-    outcome: "Reduced manual administrative effort and accelerated lead qualification and outreach processes.",
+      outcome: "Reduced manual administrative effort and accelerated lead qualification and outreach processes.",
 
-    stack: ["n8n", "Clay", "WeFlow", "REST APIs"]
-  },
+      stack: ["n8n", "Clay", "WeFlow", "REST APIs"],
+    },
 
-  { 
-    name: "Operations Analytics & Forecasting Dashboard", 
-    desc: "Operational reporting dashboard for KPI tracking and trend analysis.",
+    {
+      name: "Operations Analytics & Forecasting Dashboard",
+      desc: "Operational reporting dashboard for KPI tracking and trend analysis.",
 
-    context: "Teams required greater visibility into ticket trends, workload distribution, and operational performance metrics.",
+      context: "Teams required greater visibility into ticket trends, workload distribution, and operational performance metrics.",
 
-    implementation: "Developed reporting workflows using SQL for data extraction and Python for transformation and visualization. Implemented historical trend analysis and forecasting views using Matplotlib.",
+      implementation:
+        "Developed reporting workflows using SQL for data extraction and Python for transformation and visualization. Implemented historical trend analysis and forecasting views using Matplotlib.",
 
-    outcome: "Improved operational reporting and supported resource planning through clearer visibility into performance trends.",
+      outcome: "Improved operational reporting and supported resource planning through clearer visibility into performance trends.",
 
-    stack: ["Python", "SQL", "Matplotlib"]
-  },
+      stack: ["Python", "SQL", "Matplotlib"],
+    },
 
-  { 
-    name: "Network Discovery & Topology Mapping Tool", 
-    desc: "Python-based network discovery utility for identifying live hosts and visualizing device relationships.",
-    
-    context: "Infrastructure environments lacked centralized documentation, making troubleshooting and architecture analysis difficult.",
+    {
+      name: "Network Discovery & Topology Mapping Tool",
+      desc: "Python-based network discovery utility for identifying live hosts and visualizing device relationships.",
 
-    implementation: "Developed a Python application integrating nmap for subnet scanning and host discovery. Processed scan outputs into structured JSON and used NetworkX to generate relationship and topology visualizations.",
+      context: "Infrastructure environments lacked centralized documentation, making troubleshooting and architecture analysis difficult.",
 
-    outcome: "Improved network visibility and reduced manual effort required for infrastructure documentation and troubleshooting.",
+      implementation:
+        "Developed a Python application integrating nmap for subnet scanning and host discovery. Processed scan outputs into structured JSON and used NetworkX to generate relationship and topology visualizations.",
 
-    stack: ["Python", "nmap", "NetworkX", "JSON"]
-  },
+      outcome: "Improved network visibility and reduced manual effort required for infrastructure documentation and troubleshooting.",
 
-  {
-    name: "Optical Fiber Quality Control Assembly Workflow",
-    desc: "Quality control and precision assembly workflow for optical fiber cable preparation and inspection.",
+      stack: ["Python", "nmap", "NetworkX", "JSON"],
+    },
 
-    context: "Fiber cable assemblies required repeatable quality control practices across polishing, tubing, gluing, connectors, and core/cladding handling.",
+    {
+      name: "Optical Fiber Quality Control Assembly Workflow",
+      desc: "Quality control and precision assembly workflow for optical fiber cable preparation and inspection.",
 
-    implementation: "Managed quality control tasks for optical fiber cable assembly, including precision tubing, gluing, polishing, and connector preparation.",
+      context: "Fiber cable assemblies required repeatable quality control practices across polishing, tubing, gluing, connectors, and core/cladding handling.",
 
-    outcome: "Supported consistent optical fiber assembly quality through disciplined process execution and inspection.",
+      implementation: "Managed quality control tasks for optical fiber cable assembly, including precision tubing, gluing, polishing, and connector preparation.",
 
-    stack: ["Optical Fiber QA/QC", "Cable Assembly", "Polishing", "Precision Tubing", "Fiber Gluing", "Core & Cladding", "Connector Prep"]
-  },
+      outcome: "Supported consistent optical fiber assembly quality through disciplined process execution and inspection.",
 
-  {
-    name: "Optical Fiber Solarization Research System",
-    desc: "Research and measurement workflow for characterizing solarization in glass optical fiber bundles under high-power UV irradiation.",
+      stack: ["Optical Fiber QA/QC", "Cable Assembly", "Polishing", "Precision Tubing", "Fiber Gluing", "Core & Cladding", "Connector Prep"],
+    },
 
-    context: "Optical systems exposed to high-power UV light required technical characterization to understand material behavior, degradation patterns, and measurement reliability.",
+    {
+      name: "Optical Fiber Solarization Research System",
+      desc: "Research and measurement workflow for characterizing solarization in glass optical fiber bundles under high-power UV irradiation.",
 
-    implementation: "Designed and executed thesis research across optical fiber handling, splicing, gluing, hardware setup, data collection, analysis, and technical presentation of findings.",
+      context: "Optical systems exposed to high-power UV light required technical characterization to understand material behavior, degradation patterns, and measurement reliability.",
 
-    outcome: "Delivered a complete research body covering experimental planning, optical system handling, data analysis, and technical reporting.",
+      implementation: "Designed and executed thesis research across optical fiber handling, splicing, gluing, hardware setup, data collection, analysis, and technical presentation of findings.",
 
-    stack: ["Specialized Fiber Optic Cables", "High-Power UV Irradiation", "Solarization Characterization", "Optical Fiber Splicing", "Optical Fiber Gluing", "Measurement Workflow", "Technical Reporting"]
-  },
+      outcome: "Delivered a complete research body covering experimental planning, optical system handling, data analysis, and technical reporting.",
 
-  { 
-    name: "Shahriar Haque Abir Portfolio", 
-    desc: "AI-enabled interactive portfolio experience demonstrating engineering projects through dynamic content generation.",
+      stack: [
+        "Specialized Fiber Optic Cables",
+        "High-Power UV Irradiation",
+        "Solarization Characterization",
+        "Optical Fiber Splicing",
+        "Optical Fiber Gluing",
+        "Measurement Workflow",
+        "Technical Reporting",
+      ],
+    },
 
-    context: "Traditional portfolio websites often fail to communicate technical depth or provide interactive demonstrations of capabilities.",
+    {
+      name: "Shahriar Haque Abir Portfolio",
+      desc: "AI-enabled interactive portfolio experience demonstrating engineering projects through dynamic content generation.",
 
-    implementation: "Built an interactive portfolio using React and Next.js with local AI inference through WebLLM, Llama 3.2 1B, and Web Workers. Designed a custom design system and implemented motion-based interactions using Framer Motion.",
+      context: "Traditional portfolio websites often fail to communicate technical depth or provide interactive demonstrations of capabilities.",
 
-    outcome: "Created a portfolio experience combining storytelling, technical demonstrations, and AI-assisted exploration.",
+      implementation:
+        "Built an interactive portfolio using React and Next.js with local AI inference through WebLLM, Llama 3.2 1B, and Web Workers. Designed a custom design system and implemented motion-based interactions using Framer Motion.",
 
-    stack: ["React", "Next.js", "WebLLM", "Llama 3.2 1B", "Tailwind CSS", "Framer Motion"]
-  }
-],
+      outcome: "Created a portfolio experience combining storytelling, technical demonstrations, and AI-assisted exploration.",
+
+      stack: ["React", "Next.js", "WebLLM", "Llama 3.2 1B", "Tailwind CSS", "Framer Motion"],
+    },
+  ],
   skills: [
-  {
-    group: "Engineering & Systems Foundation",
-    items: [
-      "Electrical & Electronic Engineering",
-      "Information & Communication Engineering",
-      "Optical Fibers",
-      "IT Networks",
-      "Linux",
-      "LAN/WAN"
-    ]
-  },
+    {
+      group: "Engineering & Systems Foundation",
+      items: ["Electrical & Electronic Engineering", "Information & Communication Engineering", "Optical Fibers", "IT Networks", "Linux", "LAN/WAN"],
+    },
 
-  {
-    group: "Project Delivery & L&T Coordination",
-    items: [
-      "Project Management",
-      "Technical Training Coordination",
-      "Curriculum Planning",
-      "Scheduling",
-      "Documentation",
-      "Stakeholder Follow-up"
-    ]
-  },
+    {
+      group: "Project Delivery & L&T Coordination",
+      items: ["Project Management", "Technical Training Coordination", "Curriculum Planning", "Scheduling", "Documentation", "Stakeholder Follow-up"],
+    },
 
-  {
-    group: "B2B SaaS Solution Consulting",
-    items: [
-      "Technical Discovery",
-      "RFI/RFP Support",
-      "Proof of Concept (PoC)",
-      "B2B Product Sales",
-      "Customer Onboarding",
-      "SME/Enterprise Stakeholders"
-    ]
-  },
+    {
+      group: "B2B SaaS Solution Consulting",
+      items: ["Technical Discovery", "RFI/RFP Support", "Proof of Concept (PoC)", "B2B Product Sales", "Customer Onboarding", "SME/Enterprise Stakeholders"],
+    },
 
-  {
-    group: "Tier-3 Technical Support",
-    items: [
-      "SLA Management",
-      "Incident Triage",
-      "Root Cause Analysis",
-      "API Troubleshooting",
-      "Database Troubleshooting",
-      "Release Validation"
-    ]
-  },
+    {
+      group: "Tier-3 Technical Support",
+      items: ["SLA Management", "Incident Triage", "Root Cause Analysis", "API Troubleshooting", "Database Troubleshooting", "Release Validation"],
+    },
 
-  {
-    group: "AI Automation & Workflow Engineering",
-    items: [
-      "RAG",
-      "Local LLMs",
-      "FastAPI",
-      "Qdrant",
-      "Docker Compose",
-      "n8n",
-      "GTM Workflows",
-      "SDR Systems",
-      "Agentic Full Stack Development",
-      "Cybersecurity"
-    ]
-  }
-],
-  languages: [
-    "English (C2 / Professional Fluency)",
-    "German (B2 / Professional Working Proficiency)",
-    "Bengali (Native)",
-    "Hindi (B2 / Conversational-Professional)"
+    {
+      group: "AI Automation & Workflow Engineering",
+      items: ["RAG", "Local LLMs", "FastAPI", "Qdrant", "Docker Compose", "n8n", "GTM Workflows", "SDR Systems", "Agentic Full Stack Development", "Cybersecurity"],
+    },
   ],
-  certifications: [
-    "Cisco Scaling Networks",
-    "Networking Foundations",
-    "Linux System Engineer",
-    "Cyber Security Foundation",
-    "Goethe-Zertifikat B1"
-  ],
+  languages: ["English (C2 / Professional Fluency)", "German (B2 / Professional Working Proficiency)", "Bengali (Native)", "Hindi (B2 / Conversational-Professional)"],
+  certifications: ["Cisco Scaling Networks", "Networking Foundations", "Linux System Engineer", "Cyber Security Foundation", "Goethe-Zertifikat B1"],
   education: [
     { degree: "Master of Science - MSc, Information and Communication Engineering", school: "Technische Hochschule Mittelhessen, Germany", period: "2016 – 2020" },
-    { degree: "Bachelor of Science - BSc, Electrical and Electronics Engineering", school: "North South University, Bangladesh", period: "2009 – 2014" }
-  ]
+    { degree: "Bachelor of Science - BSc, Electrical and Electronics Engineering", school: "North South University, Bangladesh", period: "2009 – 2014" },
+  ],
 };

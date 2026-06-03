@@ -23,12 +23,7 @@ const getContactIcon = (label: string): typeof Mail => {
 
 export default function ContactView({ setView }: { setView: (view: ViewKey) => void }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      className="pt-10 pb-20 max-w-5xl"
-    >
+    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="pt-10 pb-20 max-w-5xl">
       <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">— Contact</div>
       <h2 className="text-5xl md:text-7xl font-syne font-black mb-10 text-(--text) leading-[0.9]">
         Let&apos;s <span className="italic font-playfair font-normal text-(--text-muted) lowercase tracking-normal">talk.</span>
@@ -40,7 +35,8 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
             <div className="font-mono text-[10px] text-(--accent) uppercase tracking-widest mb-6">Conversation Fit</div>
             <h3 className="text-4xl font-syne font-black text-(--text) leading-none mb-6">{CONFIG.name}</h3>
             <p className="text-sm text-(--text-muted) leading-relaxed max-w-md">
-              Best reached for technical solution consulting, customer-facing SaaS work, GTM support, and AI automation conversations where product, customer, and engineering context need to come together.
+              Best reached for technical solution consulting, customer-facing SaaS work, GTM support, and AI automation conversations where product, customer, and engineering context need to come
+              together.
             </p>
             <div className="mt-8 flex flex-wrap gap-2">
               {["Solution Consulting", "GTM Execution", "Customer Success"].map((tagline) => (
@@ -87,7 +83,13 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
               );
 
               return item.href ? (
-                <a key={item.label} href={item.href} download={item.label === "CV" ? "Shahriar_Haque_Abir_CV.pdf" : undefined} target={item.href.startsWith("http") ? "_blank" : undefined} rel={item.href.startsWith("http") ? "noreferrer" : undefined}>
+                <a
+                  key={item.label}
+                  href={item.href}
+                  download={item.label === "CV" ? "Shahriar_Haque_Abir_CV.pdf" : undefined}
+                  target={item.href.startsWith("http") ? "_blank" : undefined}
+                  rel={item.href.startsWith("http") ? "noreferrer" : undefined}
+                >
                   {content}
                 </a>
               ) : (
