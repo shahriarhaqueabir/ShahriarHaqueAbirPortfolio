@@ -12,11 +12,11 @@ The site should feel calm, intelligent, premium, exploratory, and human. The cur
 
 ## Visual Principles
 
-- Warm cream/off-white surfaces for most views.
-- Soft charcoal typography with restrained accent colors.
-- Dark immersive treatment only where the content benefits from it, such as the Stats orbit.
-- Glass, borders, and grid textures should support hierarchy, not become the story.
-- Cards should stay functional and compact.
+- Deep technical backgrounds (#030509) for an immersive "data void" atmosphere.
+- Holographic glassmorphism (`.glass-panel`) for main content areas to create depth and focus.
+- Restrained technical accent colors (Sky Blue, Amber, Emerald) against off-white text.
+- Grid textures and scanline overlays to support the technical narrative.
+- Cards should stay functional, compact, and highly structured.
 
 Avoid:
 
@@ -95,22 +95,22 @@ The page should connect Bangladesh, Germany, engineering foundations, L&T coordi
 
 ### Projects
 
-Projects should read as selected work and case studies. The two main showcase projects are:
+Projects should read as selected work and case studies. The lead showcase projects are:
 
-- Pathfinder International SDR & GTM Operating Model.
-- L&T Technical Training & Project Coordination Program.
+- Interactive Database Architect & Visualizer.
+- Customer Onboarding & Validation Portal.
 
-Other work can support the broader profile as case studies.
+Other work supports the broader technical operations and integration profile.
 
 ### Skills
 
-The skills page should be a capability map. It should reduce duplication and group evidence around:
+The skills page is a capability map. Evidence is grouped around:
 
-- Engineering & systems foundation.
-- Project delivery & L&T coordination.
-- B2B SaaS solution consulting.
-- Tier-3 technical support.
-- AI automation & workflow engineering.
+- Technical Operations (Tier-3, Incident Management).
+- Systems Integration (APIs, Docker).
+- Data & Troubleshooting (SQL, Log analysis).
+- Solutions Engineering (Discovery, PoCs).
+- Infrastructure & Networking (LAN/WAN, Cisco).
 
 ### Stats
 
