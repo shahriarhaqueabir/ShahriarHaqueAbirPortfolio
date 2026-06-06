@@ -107,7 +107,7 @@ export default function PortfolioSidebar({
                 className={`w-3 h-3 shrink-0 ${isReady && !localAiPaused ? (localAiFallback ? "text-(--accent)" : "text-green-500") : localAiEnabled ? "text-orange-500" : "text-(--text-muted)"}`}
               />
             </h2>
-            <p className="text-[9px] font-mono text-(--accent) uppercase tracking-tighter">Lead Technical Solution Consultant</p>
+            <p className="text-[9px] font-mono text-(--accent) uppercase tracking-tighter">Technical Operations & Integration Engineer</p>
           </div>
         </div>
         <div className="flex items-center gap-2 shrink-0">

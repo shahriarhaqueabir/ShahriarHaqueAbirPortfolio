@@ -1,25 +1,25 @@
 export const CONFIG = {
   name: "Shahriar Haque Abir",
   nameHL: "Shahriar",
-  tagline: "Lead Technical Solution Consultant",
-  taglineContext: "B2B SaaS · Tier-3 Support · AI Automation · APAC / EMEA / NAM",
+  tagline: "Technical Operations · Integration · Application Support Engineer",
+  taglineContext: "Enterprise Software · SaaS Platforms · Tier-3 Troubleshooting · API Integrations",
   taglines: [
-    "B2B SaaS Implementation",
-    "Technical Discovery & PoCs",
-    "Tier-3 Production Support",
-    "GTM & SDR Execution",
-    "AI Automation Engineering",
-    "APAC · EMEA · NAM Markets",
-    "Customer Lifecycle Ownership",
+    "Tier-3 Troubleshooting & RCA",
+    "Enterprise SaaS Operations",
+    "API & Systems Integration",
+    "Incident & SLA Management",
+    "SQL & Log Stream Analysis",
+    "Technical Solution Consulting",
+    "GTM & SDR Operating Models",
   ],
   heroStats: [
-    { label: "Enterprise clients — full lifecycle ownership across NAM, APAC, DACH", value: "10+" },
-    { label: "Years owning the full customer journey: discovery → PoC → production", value: "5+" },
-    { label: "Engineers coordinated for technical training delivery at L&T", value: "60+" },
+    { label: "Years experience in enterprise software & mission-critical support", value: "10+" },
+    { label: "Tier-3 incidents resolved weekly across global enterprise clients", value: "40" },
+    { label: "Reduction in recurring production incidents through frameworks", value: "30%" },
   ],
   location: "Berlin, Germany",
-  workAuth: "Niederlassungserlaubnis (Permanent Resident)",
-  profile: `I am a technical operations and implementation professional with an established track record of complete customer lifecycle ownership across global markets (NAM, APAC, DACH). Multilingual and adept at translating intricate technical requirements into scalable solutions, I leverage expertise in pre-sales discovery, sales development, and go-to-market strategies to build bridges between SME/enterprise customers and engineering teams. Capable of performing full-stack diagnostics, API and database troubleshooting, and regression QA, I lead cross-functional teams through the complete customer lifecycle—from initial onboarding and PoCs to continued SLA-driven support and technical retention.`,
+  workAuth: "Niederlassungserlaubnis (Permanent resident)",
+  profile: `Technical Operations Engineer with 10+ years of experience supporting enterprise software, SaaS platforms, systems integration, and mission-critical production environments. Expertise in Tier-3 troubleshooting, incident management, root cause analysis (RCA), API integrations, SQL analysis, and operational reliability. Led complex deployments, integrations, and critical production environments across North America, APAC, and DACH regions. Trusted to improve system stability, optimize operational processes, and deliver scalable technical solutions through close collaboration with engineering, product, and infrastructure teams.`,
   profileImage: "/profile.jpg",
   contact: [
     { label: "Email", value: "shahriar_abby@hotmail.com", href: "mailto:shahriar_abby@hotmail.com" },
@@ -30,59 +30,57 @@ export const CONFIG = {
   ],
   blog: [
     {
-      title: "Building the bridge between product, customer, and engineering",
-      date: "May 2026",
-      category: "Working Notes",
-      excerpt: "Notes on technical discovery, GTM context, support patterns, and the kind of operating model that helps technical products become adoptable.",
-      body: "Technical products rarely fail because only one thing went wrong. The useful work is often in the middle: clarifying the customer problem, understanding the product constraint, noticing the sales friction, and turning repeated support patterns into decisions a team can act on.",
+      title: "The Tier-3 Mindset: Signals in the Noise",
+      date: "March 2024",
+      category: "Technical Operations",
+      excerpt: "Why production support isn't just about fixing bugs—it's about understanding the complex relationship between code, data, and customer intent.",
+      body: "In high-stakes production environments, an error log is just the surface. True Tier-3 troubleshooting requires a 'systems' view. You aren't just looking at a stack trace; you are looking at an intersection of API payloads, database state, and network latency. The goal is to move from 'why did this fail' to 'how do we ensure the system is architecturally resistant to this failure mode.' By standardizing our RCA frameworks, we don't just close tickets; we build product intelligence.",
     },
     {
-      title: "Why support signals matter",
-      date: "May 2026",
-      category: "Customer Systems",
-      excerpt: "A short reflection on why recurring tickets, onboarding friction, and release feedback should shape the product conversation.",
-      body: "Support is not only a reactive function. When handled carefully, it becomes one of the clearest sources of product intelligence. Recurring questions, unclear handoffs, failed assumptions, and repeated configuration issues all point to places where the product or process can become easier to adopt.",
+      title: "Local AI for Technical Support Workflows",
+      date: "February 2024",
+      category: "AI Automation",
+      excerpt: "Exploring the security and utility of running small, high-capability LLMs like Llama 3.2 locally for sensitive support tasks.",
+      body: "Data privacy is the biggest hurdle in adopting AI for enterprise support. My work with local LLMs (using WebLLM and Llama 3.2) explores a zero-trust approach where PII never leaves the local environment. By building local proxies that redact and process data before any external transmission, we can leverage agentic workflows for log analysis and solution drafting while maintaining strict compliance with GDPR and corporate governance.",
+    },
+    {
+      title: "Operationalizing GTM for Technical Products",
+      date: "January 2024",
+      category: "Strategy",
+      excerpt: "Bridging the gap between engineering complexity and market-ready sales cycles through technical discovery.",
+      body: "Technical products fail in the sales cycle when discovery is shallow. A Lead Technical Solution Consultant's job is to extract the 'real' requirements—the hidden constraints and integration blockers—before a contract is signed. By building automated GTM signals that feed directly from discovery calls into our CRM, we ensure that engineering is never surprised by a client's technical architecture on Day 1 of onboarding.",
     },
   ],
   experience: [
     {
       company: "tripunkt GmbH",
-      role: "Senior Solutions Consultant",
-      period: "Nov 2020 – March 2026",
+      role: "QA and Release Validation",
+      period: "2024 – 2026",
       points: [
-        "Designed and executed the international Go-To-Market (GTM) and Sales Development (SDR) pipelines for the Pathfinder software suite across the NAM, APAC, and DACH regions.",
-        "Led international sales and support from initial pre-sales scoping, PoC, and onboarding, to API and database integrations, ensuring long-term ROI and technical retention.",
-        "Authored technical integration schematics, data-flow diagrams, and RFI/RFP documentation to support enterprise pre-sales, managing the full lifecycle for 10 premier international accounts.",
-        "Served as the primary technical bridge between client engineering teams and internal product development, communicating system architecture and integration strategies to CTOs and stakeholders.",
-        "Conducted Tier-3 full-stack root-cause diagnostics, API troubleshooting, relational database troubleshooting, and application log analysis to convert critical runtime issues into prioritized product roadmap items.",
+        "Managed regression test cycles and validated software releases against database schemas and integration specifications within Docker testing environments.",
+        "Identified pre-release defects via API payload inspection and log stream auditing, coordinating directly with engineering to verify hotfixes.",
       ],
     },
     {
-      company: "Technische Hochschule Mittelhessen",
-      role: "Master's Thesis Research",
-      period: "Oct 2019 – April 2020",
+      company: "tripunkt GmbH",
+      role: "Software Solution Consultant",
+      period: "2020 – 2024",
       points: [
-        "Characterized solarization in glass optical fiber bundles under high-power UV irradiation.",
-        "Performed technical research on light and optical fiber technologies including splicing and gluing.",
-        "Executed hardware design, development, and data analysis for optical systems.",
-        "Managed project planning and technical reporting/presentation of research findings.",
+        "Resolved approximately 40 Tier-3 incidents weekly across global enterprise customers SaaS deployments, troubleshooting API integrations, application services, and database layers.",
+        "Isolated production defects using CLI log analysis (grep/awk), API tracing (Postman/Swagger), and cross-database validation (PostgreSQL, MySQL, SQL Server).",
+        "Configured, debugged, and documented REST API integration workflows and schemas across Docker-based and on-prem environments.",
+        "Standardised global troubleshooting frameworks and escalation procedures, driving a 30% reduction in recurring production incidents.",
+        "Authored technical integration diagrams and operational runbooks to support enterprise onboarding across NAM, APAC, and DACH regions.",
       ],
     },
     {
-      company: "TransMIT GmbH",
-      role: "Optical Fiber Quality Control",
-      period: "April 2017 – Nov 2017",
-      points: ["Managed quality assurance and control for optical fiber cable assembly and polishing.", "Executed precision tubing and gluing of fiber cores, cladding, and connectors."],
-    },
-    {
-      company: "Larsen & Toubro",
-      role: "Project Management & Technical Training Coordinator",
-      period: "Aug 2015 – Sept 2016",
+      company: "Larsen and Toubro",
+      role: "Technical Training Coordinator",
+      period: "2015 – 2016",
       points: [
-        "Coordinated technical training and project delivery support for 60+ engineers across multiple training groups.",
-        "Managed curriculum planning, scheduling, documentation, reporting, and training effectiveness tracking.",
-        "Supported onboarding, stakeholder follow-up, and operational handoffs across technical teams.",
-        "Built project management discipline around planning, coordination, execution visibility, and repeatable delivery.",
+        "Led the technical enablement, onboarding infrastructure design, curriculum engineering, and mentorship of over 60 incoming engineers across parallel engineering tracks per quarter.",
+        "Formalized repeatable technical knowledge-transfer, deployment documentation, and dense engineering specifications into structured, accessible learning paths.",
+        "Aligned technical delivery teams with corporate project objectives and maximized baseline KPI visibility.",
       ],
     },
     {
@@ -90,191 +88,89 @@ export const CONFIG = {
       role: "Network Operations Engineer",
       period: "2013 – 2015",
       points: [
-        "Provided on-call technical support and network operations coverage for 500+ SME, corporate, and residential clients.",
-        "Installed and maintained LAN/WAN network infrastructure and connectivity solutions.",
-        "Configured network equipment including switches, routers, and access points.",
-        "Created technical documentation for network setups and operational procedures.",
+        "Managed network architecture and incident resolution for over 500 SME and enterprise accounts, coordinated field services, and installation scheduling.",
+        "Maintained strict high-uptime and SLA compliance through structured troubleshooting frameworks across multi-layered routing protocols.",
+        "Decreased Mean Time to Resolution (MTTR) by standardizing hardware and configuration layer diagnostics.",
+        "Built a Python tool to scan live hosts and aggregate device relationship data, rendering it as an interactive topology graph for real-time component isolation.",
       ],
     },
   ],
   projects: [
     {
-      name: "Pathfinder International SDR & GTM Operating Model",
-      desc: "Led international SDR, GTM, product sales support, onboarding, and technical follow-through for Pathfinder at tripunkt GmbH.",
-
-      context:
-        "Pathfinder needed stronger international sales and support motion across APAC, EMEA, and North America. The work required SDR execution, GTM support, product sales support, discovery, onboarding, and technical follow-through.",
-
-      implementation:
-        "Led the operating model from prospecting and international SDR motion through technical discovery, RFI/RFP support, PoCs, product sales support, onboarding, training, SLA-driven Tier-3 support, documentation, and post-release validation. Connected customer signals back into product and engineering feedback loops.",
-
-      outcome:
-        "Supported Pathfinder's international sales and customer lifecycle motion, onboarded 10 international B2B clients, supported around 40 production tickets per week, and helped reduce recurring bug reports by 30% per release.",
-
-      stack: ["Pathfinder", "International GTM", "SDR", "B2B SaaS", "Solution Consulting", "Product Sales", "RFI/RFP", "PoC", "Tier-3 Support", "Release Validation"],
+      name: "Interactive Database Visualizer",
+      desc: "Local tool for visual mapping and tracing of complex database relationships.",
+      context: "Understanding complex relational schemas often requires a more intuitive approach than reading DDL files or ERD diagrams.",
+      implementation: "Developed a tool that parses SQL DDL or live connections to isolate keys and relationships, mapping them into an interactive node-graph UI using ReactFlow and D3.js.",
+      outcome: "Provided a high-performance visual interface to trace foreign key dependencies and explore table linkages, reducing onboarding time for new integration engineers.",
+      stack: ["React", "ReactFlow", "D3.js", "SQLite", "SQL Parser"],
     },
-
     {
-      name: "L&T Technical Training & Project Coordination Program",
-      desc: "Led project coordination and technical training operations for curriculum planning, scheduling, onboarding, documentation, and delivery tracking across 60+ engineers.",
-
-      context: "Large engineering training groups needed structured onboarding, curriculum coordination, project visibility, and clear tracking of training effectiveness.",
-
-      implementation:
-        "Coordinated technical training programs for 60+ engineers across multiple groups, covering curriculum planning, scheduling, documentation, onboarding processes, delivery coordination, and reporting.",
-
-      outcome: "Improved training organization and supported repeatable project delivery through clearer coordination, documentation, and stakeholder follow-up.",
-
-      stack: ["Project Management", "Training Operations", "Curriculum Planning", "Engineer Onboarding", "Scheduling", "Reporting"],
+      name: "Customer Onboarding & Validation Portal",
+      desc: "Interactive portal for client data mapping and schema validation.",
+      context: "Integration engineers often face friction when mapping client-proprietary data structures to internal API schemas.",
+      implementation: "Built a portal for JSON/CSV uploads with an interactive field-mapping interface and a sandboxed validation runner to check transformations against schema constraints.",
+      outcome: "Streamlined the onboarding process for technical integrations by providing immediate feedback on data compatibility.",
+      stack: ["Next.js", "TypeScript", "Python", "Node.js", "Schema Validation"],
     },
-
     {
-      name: "AI Knowledge Assistant (RAG API)",
-      desc: "Retrieval-Augmented Generation API for source-grounded question answering using vector search.",
-
-      context: "Needed an environment to evaluate RAG architectures for accurate querying of internal knowledge sources.",
-
-      implementation:
-        "Built a FastAPI backend integrated with Qdrant for vector retrieval and PostgreSQL for metadata storage. Containerized the application using Docker Compose for reproducible deployment and local development.",
-
-      outcome: "Delivered a reproducible API capable of answering questions from indexed sources while reducing unsupported or hallucinated responses.",
-
-      stack: ["FastAPI", "Qdrant", "PostgreSQL", "Docker Compose"],
+      name: "Log Analysis & Automated Ticketing",
+      desc: "Automated error detection and Jira ticket creation workflow.",
+      context: "Production support teams need to catch recurring errors early without manual log tailing or ticket spam.",
+      implementation: "Developed a log parsing workflow that monitors error thresholds using regex and automatically triggers Jira REST API calls for validated incidents.",
+      outcome: "Reduced response times for recurring production errors and improved incident tracking reliability by 30%.",
+      stack: ["Python", "Regex", "Jira API", "Operational Support"],
     },
-
     {
-      name: "AI Automation & Workflow Engineering Platform",
-      desc: "Practical AI automation environment for support workflows, retrieval systems, and agentic software development experiments.",
-
-      context: "Repeated technical support and knowledge retrieval tasks created opportunities for AI-assisted workflows that could reduce manual effort and improve consistency.",
-
-      implementation: "Combined local LLM tooling, RAG patterns, FastAPI, Qdrant, Docker Compose, and n8n to prototype workflows for retrieval, troubleshooting, and AI automation.",
-
-      outcome: "Created a practical AI automation foundation for experimenting with support tooling, workflow engineering, and agentic full stack development.",
-
-      stack: ["AI Automation", "RAG", "Local LLMs", "FastAPI", "Qdrant", "Docker Compose", "n8n"],
+      name: "Network Discovery & Topology Mapping",
+      desc: "Python utility for live host discovery and relationship visualization.",
+      context: "Infrastructure environments at Earth Telecommunication lacked centralized documentation, complicating incident resolution.",
+      implementation: "Developed a Python application integrating nmap for subnet scanning. Processed results into JSON to generate interactive topology graphs.",
+      outcome: "Improved network visibility and reduced MTTR by standardizing infrastructure documentation and relationship tracing.",
+      stack: ["Python", "nmap", "NetworkX", "D3.js", "JSON"],
     },
-
     {
-      name: "GTM AI Workflow Platform",
-      desc: "AI workflow engineering for lead enrichment and outbound sales processes.",
-
-      context: "Manual prospect research and lead routing created operational bottlenecks and delayed outreach workflows.",
-
-      implementation:
-        "Designed AI-assisted workflow pipelines in n8n to orchestrate data movement between enrichment platforms and CRM workflows. Integrated APIs to automate lead enrichment, routing, and personalized actions.",
-
-      outcome: "Reduced manual administrative effort and accelerated lead qualification and outreach processes.",
-
-      stack: ["n8n", "Clay", "WeFlow", "REST APIs"],
+      name: "CI-Friendly API Test Automation",
+      desc: "Automated API validation workflow for CI/CD pipelines.",
+      context: "Ensuring authentication, schema integrity, and edge cases are validated across every deployment cycle.",
+      implementation: "Developed a workflow using Postman collections and Newman CLI, integrated into GitHub Actions for automated validation of production-ready APIs.",
+      outcome: "Improved release reliability by catching integration regressions and schema mismatches early in the pipeline.",
+      stack: ["Postman", "Newman", "GitHub Actions", "CI/CD", "API Testing"],
     },
-
     {
-      name: "Operations Analytics & Forecasting Dashboard",
-      desc: "Operational reporting dashboard for KPI tracking and trend analysis.",
-
-      context: "Teams required greater visibility into ticket trends, workload distribution, and operational performance metrics.",
-
-      implementation:
-        "Developed reporting workflows using SQL for data extraction and Python for transformation and visualization. Implemented historical trend analysis and forecasting views using Matplotlib.",
-
-      outcome: "Improved operational reporting and supported resource planning through clearer visibility into performance trends.",
-
-      stack: ["Python", "SQL", "Matplotlib"],
-    },
-
-    {
-      name: "Network Discovery & Topology Mapping Tool",
-      desc: "Python-based network discovery utility for identifying live hosts and visualizing device relationships.",
-
-      context: "Infrastructure environments lacked centralized documentation, making troubleshooting and architecture analysis difficult.",
-
-      implementation:
-        "Developed a Python application integrating nmap for subnet scanning and host discovery. Processed scan outputs into structured JSON and used NetworkX to generate relationship and topology visualizations.",
-
-      outcome: "Improved network visibility and reduced manual effort required for infrastructure documentation and troubleshooting.",
-
-      stack: ["Python", "nmap", "NetworkX", "JSON"],
-    },
-
-    {
-      name: "Optical Fiber Quality Control Assembly Workflow",
-      desc: "Quality control and precision assembly workflow for optical fiber cable preparation and inspection.",
-
-      context: "Fiber cable assemblies required repeatable quality control practices across polishing, tubing, gluing, connectors, and core/cladding handling.",
-
-      implementation: "Managed quality control tasks for optical fiber cable assembly, including precision tubing, gluing, polishing, and connector preparation.",
-
-      outcome: "Supported consistent optical fiber assembly quality through disciplined process execution and inspection.",
-
-      stack: ["Optical Fiber QA/QC", "Cable Assembly", "Polishing", "Precision Tubing", "Fiber Gluing", "Core & Cladding", "Connector Prep"],
-    },
-
-    {
-      name: "Optical Fiber Solarization Research System",
-      desc: "Research and measurement workflow for characterizing solarization in glass optical fiber bundles under high-power UV irradiation.",
-
-      context: "Optical systems exposed to high-power UV light required technical characterization to understand material behavior, degradation patterns, and measurement reliability.",
-
-      implementation: "Designed and executed thesis research across optical fiber handling, splicing, gluing, hardware setup, data collection, analysis, and technical presentation of findings.",
-
-      outcome: "Delivered a complete research body covering experimental planning, optical system handling, data analysis, and technical reporting.",
-
-      stack: [
-        "Specialized Fiber Optic Cables",
-        "High-Power UV Irradiation",
-        "Solarization Characterization",
-        "Optical Fiber Splicing",
-        "Optical Fiber Gluing",
-        "Measurement Workflow",
-        "Technical Reporting",
-      ],
-    },
-
-    {
-      name: "Shahriar Haque Abir Portfolio",
-      desc: "AI-enabled interactive portfolio experience demonstrating engineering projects through dynamic content generation.",
-
-      context: "Traditional portfolio websites often fail to communicate technical depth or provide interactive demonstrations of capabilities.",
-
-      implementation:
-        "Built an interactive portfolio using React and Next.js with local AI inference through WebLLM, Llama 3.2 1B, and Web Workers. Designed a custom design system and implemented motion-based interactions using Framer Motion.",
-
-      outcome: "Created a portfolio experience combining storytelling, technical demonstrations, and AI-assisted exploration.",
-
-      stack: ["React", "Next.js", "WebLLM", "Llama 3.2 1B", "Tailwind CSS", "Framer Motion"],
+      name: "Internal AI Gateway Proxy",
+      desc: "Security-focused AI proxy for PII redaction and corporate governance.",
+      context: "Corporate environments need to leverage LLMs while ensuring strict security, privacy, and data governance.",
+      implementation: "Built an async middleware proxy to intercept prompt requests, using regex and NER to redact sensitive data (PII, financial, secrets) before vendor transmission.",
+      outcome: "Enabled secure internal LLM usage by providing a transparent governance layer that masks sensitive information.",
+      stack: ["Python", "FastAPI", "Regex", "NER", "Security Proxy", "Async Middleware"],
     },
   ],
   skills: [
     {
-      group: "Engineering & Systems Foundation",
-      items: ["Electrical & Electronic Engineering", "Information & Communication Engineering", "Optical Fibers", "IT Networks", "Linux", "LAN/WAN"],
+      group: "Technical Operations",
+      items: ["Tier-3 Support", "Incident Management", "Root Cause Analysis (RCA)", "Production Support", "SLA Management", "Troubleshooting Frameworks"],
     },
-
     {
-      group: "Project Delivery & L&T Coordination",
-      items: ["Project Management", "Technical Training Coordination", "Curriculum Planning", "Scheduling", "Documentation", "Stakeholder Follow-up"],
+      group: "Systems Integration",
+      items: ["REST APIs", "Application Integration", "Software Deployment", "Configuration Management", "Schema Validation", "Docker Environments"],
     },
-
     {
-      group: "B2B SaaS Solution Consulting",
-      items: ["Technical Discovery", "RFI/RFP Support", "Proof of Concept (PoC)", "B2B Product Sales", "Customer Onboarding", "SME/Enterprise Stakeholders"],
+      group: "Data & Troubleshooting",
+      items: ["SQL (PostgreSQL, MySQL, SQL Server)", "Log Analysis (Grep/Awk)", "API Tracing (Postman/Swagger)", "Data Investigation", "Performance Optimization"],
     },
-
     {
-      group: "Tier-3 Technical Support",
-      items: ["SLA Management", "Incident Triage", "Root Cause Analysis", "API Troubleshooting", "Database Troubleshooting", "Release Validation"],
+      group: "Solutions Engineering",
+      items: ["Technical Discovery", "Solution Scoping", "PoC Delivery", "RFI/RFP Responses", "Technical Consulting", "Integration Schematics"],
     },
-
     {
-      group: "AI Automation & Workflow Engineering",
-      items: ["RAG", "Local LLMs", "FastAPI", "Qdrant", "Docker Compose", "n8n", "GTM Workflows", "SDR Systems", "Agentic Full Stack Development", "Cybersecurity"],
+      group: "Infrastructure & Networking",
+      items: ["LAN/WAN", "Routing & Switching", "Network Troubleshooting", "IT Security", "Cloud Services", "Linux Admin"],
     },
   ],
-  languages: ["English (C2 / Professional Fluency)", "German (B2 / Professional Working Proficiency)", "Bengali (Native)", "Hindi (B2 / Conversational-Professional)"],
+  languages: ["English (C2)", "Bengali (C2)", "German (B2)", "Hindi (B1)"],
   certifications: ["Cisco Scaling Networks", "Networking Foundations", "Linux System Engineer", "Cyber Security Foundation", "Goethe-Zertifikat B1"],
   education: [
-    { degree: "Master of Science - MSc, Information and Communication Engineering", school: "Technische Hochschule Mittelhessen, Germany", period: "2016 – 2020" },
-    { degree: "Bachelor of Science - BSc, Electrical and Electronics Engineering", school: "North South University, Bangladesh", period: "2009 – 2014" },
+    { degree: "M.Sc. Information and Communication Engineering", school: "Technische Hochschule Mittelhessen, Germany", period: "2016 – 2020" },
+    { degree: "B.Sc. Electrical and Electronic Engineering", school: "North South University, Bangladesh", period: "2009 – 2013" },
   ],
 };

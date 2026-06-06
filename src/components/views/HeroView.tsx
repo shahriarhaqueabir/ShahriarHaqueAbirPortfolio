@@ -18,13 +18,13 @@ export default function HeroView({
   const [aiInput, setAiInput] = useState("");
 
   const phrases: Array<{ text: string; highlight: string; color: string }> = [
-    { text: "B2B SaaS Implementation", highlight: "SaaS", color: "#38BDF8" },
-    { text: "Technical Discovery & PoCs", highlight: "Discovery", color: "#F59E0B" },
-    { text: "Tier-3 Production Support", highlight: "Production", color: "#A78BFA" },
-    { text: "GTM & SDR Execution", highlight: "GTM", color: "#10B981" },
-    { text: "AI Automation Engineering", highlight: "AI", color: "#F472B6" },
-    { text: "APAC · EMEA · NAM Markets", highlight: "EMEA", color: "#5EEAD4" },
-    { text: "Customer Lifecycle Ownership", highlight: "Lifecycle", color: "#6366F1" },
+    { text: "Tier-3 Technical Support", highlight: "Support", color: "#38BDF8" },
+    { text: "Systems & API Integration", highlight: "Integration", color: "#F59E0B" },
+    { text: "Incident & SLA Management", highlight: "Incident", color: "#A78BFA" },
+    { text: "Root Cause Analysis", highlight: "RCA", color: "#10B981" },
+    { text: "Technical Operations Engineer", highlight: "Operations", color: "#F472B6" },
+    { text: "SQL & Log Stream Auditing", highlight: "Log", color: "#5EEAD4" },
+    { text: "Enterprise SaaS Operations", highlight: "SaaS", color: "#6366F1" },
   ];
 
   useEffect(() => {
