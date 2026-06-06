@@ -11,9 +11,9 @@ The site is built as a multi-view portfolio experience with an optional local AI
 - **Home:** Lead identity, hero badges, case-study entry points, and downloadable CV.
 - **Blog:** Owner-authored posts only, managed through local portfolio data.
 - **About:** Personal and professional narrative from engineering foundations to AI workflow interests.
-- **Projects:** Selected work and case studies, led by Pathfinder international SDR/GTM and L&T project coordination.
+- **Projects:** Selected work and case studies, led by the Interactive Database Visualizer and Customer Onboarding Portal.
 - **Experience:** Chronological professional record and career influence map.
-- **Skills:** Capability map organized around engineering foundations, project delivery, solution consulting, Tier-3 support, and AI automation.
+- **Skills:** Capability map organized around Technical Operations, Systems Integration, Data & Troubleshooting, Solutions Engineering, and Infrastructure & Networking.
 - **Stats:** Proof points, professional metrics, and working-style orbit.
 - **Contact:** Direct contact links and CV download.
 
@@ -48,7 +48,7 @@ npx playwright test
 npm run build
 ```
 
-The app is configured for static export with `output: "export"`, so production files are generated in `out/`.
+The app is optimized for Vercel deployment with standard Next.js build outputs.
 
 ## Deploying
 
@@ -56,7 +56,7 @@ For Vercel, use:
 
 - Framework preset: `Next.js`
 - Build command: `npm run build`
-- Output directory: `out`
+- Output directory: `.next`
 
 If this project lives inside a larger repository, set Vercel's root directory to the folder that contains this `package.json`.
 
