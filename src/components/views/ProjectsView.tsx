@@ -9,34 +9,35 @@ import type { ViewKey } from "@/lib/types";
 
 type Project = (typeof CONFIG.projects)[number];
 
-// Projects to display — curated to 5 supporting + 1 hero
-const HERO_PROJECT_INDEX = 0; // Pathfinder
-const SUPPORTING_INDEXES = [2, 3, 5, 6, 9]; // AI KA, AI Automation, Analytics, Network Discovery, Portfolio
+// Projects to display — curated to supporting + 1 hero
+const HERO_PROJECT_INDEX = 0; // Database Visualizer
+const SUPPORTING_INDEXES = [1, 2, 3, 4, 5]; // Onboarding, Log Analysis, Network, API Test, AI Proxy
 
-const pathfinderMetrics = [
-  { value: "10+", label: "International B2B clients onboarded" },
-  { value: "5+", label: "Years full customer lifecycle ownership" },
-  { value: "40/wk", label: "Production tickets supported at peak" },
-  { value: "30%", label: "Recurring bug reports reduced per release" },
+const heroMetrics = [
+  { value: "4ms", label: "Query parsing latency" },
+  { value: "60fps", label: "Render performance" },
+  { value: "100%", label: "Schema coverage" },
+  { value: "Zero", label: "Server-side overhead" },
 ];
 
 function getProjectVisual(project: Project): { Icon: typeof Workflow; color: string; symbol: string } {
-  if (project.name.includes("Pathfinder")) return { Icon: Workflow, color: "#34D399", symbol: "GTM" };
+  if (project.name.includes("Database")) return { Icon: Workflow, color: "#34D399", symbol: "DB" };
   if (project.name.includes("Network Discovery")) return { Icon: Network, color: "#38BDF8", symbol: "NET" };
-  if (project.name.includes("Knowledge Assistant")) return { Icon: BrainCircuit, color: "#A78BFA", symbol: "RAG" };
-  if (project.name.includes("AI Automation")) return { Icon: ServerCog, color: "#22D3EE", symbol: "AI" };
-  if (project.name.includes("Dashboard")) return { Icon: ChartSpline, color: "#F59E0B", symbol: "KPI" };
-  if (project.name.includes("Portfolio")) return { Icon: Sparkles, color: "#F472B6", symbol: "WEB" };
+  if (project.name.includes("Onboarding")) return { Icon: BrainCircuit, color: "#A78BFA", symbol: "PORTAL" };
+  if (project.name.includes("Log Analysis")) return { Icon: ServerCog, color: "#22D3EE", symbol: "LOG" };
+  if (project.name.includes("API Test")) return { Icon: ChartSpline, color: "#F59E0B", symbol: "TEST" };
+  if (project.name.includes("AI Gateway")) return { Icon: Sparkles, color: "#F472B6", symbol: "SEC" };
   return { Icon: Sparkles, color: "#38BDF8", symbol: "SYS" };
 }
 
 function getArchitectureNodes(project: Project): string[] {
-  if (project.name.includes("Pathfinder")) return ["Market Signal", "SDR Motion", "Technical Discovery", "Client Onboarding"];
-  if (project.name.includes("Network Discovery")) return ["IP Range", "nmap Scanner", "JSON Topology", "NetworkX Map"];
-  if (project.name.includes("Knowledge Assistant")) return ["Source Docs", "FastAPI", "Qdrant + SQL", "Grounded Answer"];
-  if (project.name.includes("AI Automation")) return ["Support Signals", "RAG + LLM", "n8n Workflows", "AI Automation"];
-  if (project.name.includes("Dashboard")) return ["SQL Data", "Python Pipeline", "Forecast Model", "KPI View"];
-  return ["Visitor", "Next.js UI", "Worker LLM", "Portfolio Views"];
+  if (project.name.includes("Database")) return ["SQL Parser", "Relationship Map", "Interactive UI", "Visual Query"];
+  if (project.name.includes("Network Discovery")) return ["IP Range", "nmap Scanner", "JSON Topology", "Interactive Map"];
+  if (project.name.includes("Onboarding")) return ["Data Upload", "Schema Mapper", "Sandbox Runner", "Live Validation"];
+  if (project.name.includes("Log Analysis")) return ["Log Stream", "Regex Filter", "Threshold Sync", "Jira Automation"];
+  if (project.name.includes("API Test")) return ["Collections", "Newman CLI", "CI/CD Pipeline", "Health Report"];
+  if (project.name.includes("AI Gateway")) return ["Request Intercept", "NER Redaction", "Model Relay", "Token Unmask"];
+  return ["Input", "Process", "Logic", "Outcome"];
 }
 
 function getDiagramLabel(project: Project): string {
@@ -142,7 +143,7 @@ function PathfinderHeroCard({ project, onClick }: { project: Project; onClick: (
 
           {/* Outcome metrics */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-px border border-(--border) bg-(--border)">
-            {pathfinderMetrics.map((m) => (
+            {heroMetrics.map((m) => (
               <div key={m.label} className="bg-(--bg) p-4">
                 <div className="font-syne font-black text-2xl md:text-3xl text-(--text) leading-none mb-2" style={{ color: "#34D399" }}>
                   {m.value}
@@ -300,10 +301,10 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
                   </button>
                 </div>
 
-                {/* Pathfinder-specific metrics in modal */}
+                {/* Hero-specific metrics in modal */}
                 {selectedProject === HERO_PROJECT_INDEX && (
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-px border border-(--border) bg-(--border) mb-12">
-                    {pathfinderMetrics.map((m) => (
+                    {heroMetrics.map((m) => (
                       <div key={m.label} className="bg-(--bg) p-5">
                         <div className="font-syne font-black text-2xl text-(--text) mb-1" style={{ color: selectedVisual?.color }}>{m.value}</div>
                         <p className="font-mono text-[9px] uppercase tracking-widest text-(--text-muted) leading-4">{m.label}</p>
