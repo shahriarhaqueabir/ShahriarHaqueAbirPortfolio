@@ -9,20 +9,20 @@ import type { ViewKey } from "@/lib/types";
 const primaryCompetencies = [
   {
     number: "01",
-    title: "Technical Solution Consulting",
-    text: "Discovery, stakeholder translation, PoCs, onboarding, and customer-facing technical decisions across SME and enterprise accounts.",
+    title: "Technical Operations",
+    text: "Tier-3 Support, incident management, root cause analysis (RCA), production support, and SLA management across global enterprise accounts.",
     accent: "#38BDF8",
   },
   {
     number: "02",
-    title: "B2B SaaS Implementation",
-    text: "Configuration, training, adoption support, release feedback, and customer lifecycle follow-through for technical products.",
+    title: "Systems Integration",
+    text: "REST APIs, application integration, software deployment, configuration management, and schema validation in Docker and on-prem environments.",
     accent: "#34D399",
   },
   {
     number: "03",
-    title: "Tier-3 Technical Support",
-    text: "Production troubleshooting across APIs, databases, integrations, application logs, and recurring defect patterns.",
+    title: "Data & Troubleshooting",
+    text: "SQL databases, log analysis (grep/awk), API tracing (Postman/Swagger), and cross-database validation for production defect isolation.",
     accent: "#A78BFA",
   },
 ];
@@ -30,40 +30,40 @@ const primaryCompetencies = [
 const expandingCompetencies = [
   {
     number: "04",
-    title: "AI Automation Workflows",
-    text: "RAG, local LLMs, workflow orchestration with n8n, support automation, and practical AI-enabled tooling.",
+    title: "Solutions Engineering",
+    text: "Technical discovery, solution scoping, PoC delivery, RFI/RFP responses, and authoring technical integration schematics.",
     accent: "#F472B6",
   },
   {
     number: "05",
-    title: "International GTM & SDR",
-    text: "Sales development and market-entry execution for technical products across NAM, APAC, and DACH regions.",
+    title: "Infrastructure & Networking",
+    text: "LAN/WAN architecture, routing & switching, network troubleshooting, and standardized hardware configuration frameworks.",
     accent: "#F59E0B",
   },
   {
     number: "06",
-    title: "IT Networks & Systems",
-    text: "LAN/WAN operations, Linux system administration, network discovery, documentation, and root-cause diagnostics.",
+    title: "AI Automation",
+    text: "Agentic workflow orchestration, RAG systems, and AI-enabled support tooling to optimize operational processes and reliability.",
     accent: "#22D3EE",
   },
 ];
 
 const toolGroups = [
   {
-    title: "Customer & SaaS Operations",
-    items: ["Jira", "Postman", "SQL", "Documentation", "Release Validation", "Customer Onboarding", "RFI/RFP Support"],
+    title: "Technical Operations",
+    items: ["Postman", "Swagger", "CLI (Grep/Awk)", "Docker", "Jira", "Confluence", "SLA Management"],
   },
   {
-    title: "AI Automation",
-    items: ["n8n", "FastAPI", "Qdrant", "RAG", "Local LLMs", "Docker Compose", "Workflow Engineering"],
+    title: "Data & Integration",
+    items: ["PostgreSQL", "MySQL", "SQL Server", "REST APIs", "JSON/XML", "Schema Validation", "API Tracing"],
   },
   {
-    title: "Systems & Networks",
-    items: ["Linux", "LAN/WAN", "nmap", "Cisco", "DNS", "Routing", "Troubleshooting"],
+    title: "Automation & Analytics",
+    items: ["Python", "n8n", "Qdrant", "Power BI", "Looker", "Matplotlib", "Git", "CI/CD"],
   },
   {
-    title: "Development",
-    items: ["Python", "TypeScript", "React", "Next.js", "REST APIs", "PostgreSQL", "Git"],
+    title: "Systems & Networking",
+    items: ["Linux", "LAN/WAN", "Cisco", "Routing/Switching", "Network Discovery", "nmap", "Security Foundations"],
   },
 ];
 
@@ -145,7 +145,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
             Primary Operating Context
           </div>
           <div className="font-syne font-black text-xl uppercase text-(--text)">
-            Technical products with customer-facing complexity
+            Mission-critical production environments and enterprise SaaS
           </div>
         </div>
       </div>

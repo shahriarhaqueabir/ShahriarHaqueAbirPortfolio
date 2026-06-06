@@ -8,12 +8,11 @@ import type { ViewKey } from "@/lib/types";
 const lifeMilestones = [
   { label: "2009", detail: "Electrical & Electronics Engineering foundation", marker: "BSc" },
   { label: "2013", detail: "Network operations and infrastructure support", marker: "NETWORK" },
-  { label: "2015", detail: "Project management and training coordination at L&T", marker: "L&T" },
-  { label: "2016", detail: "MSc path in Germany", marker: "GERMANY" },
-  { label: "2017", detail: "Optical fiber research and quality control work", marker: "FIBER" },
-  { label: "2020", detail: "B2B SaaS product sales, solution consulting, and Tier-3 support", marker: "SAAS" },
-  { label: "2024+", detail: "AI automation, RAG, GTM, SDR workflows, and agentic full stack builds", marker: "AI OPS" },
-  { label: "Now", detail: "Lead technical solution consultant profile", marker: "PRESENT" },
+  { label: "2015", detail: "Technical training coordination at L&T", marker: "L&T" },
+  { label: "2016", detail: "MSc Information & Communication Engineering", marker: "MSc" },
+  { label: "2020", detail: "Software Solution Consulting & Tier-3 Support", marker: "SAAS" },
+  { label: "2024", detail: "QA and Release Validation engineering", marker: "QA/REL" },
+  { label: "Now", detail: "Technical Operations & Integration Engineering", marker: "PRESENT" },
 ];
 
 export default function ExperienceView({ setView }: { setView: (view: ViewKey) => void }) {
@@ -109,8 +108,8 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
 
         <div className="mt-8 border-l-2 border-(--accent) pl-5 max-w-2xl">
           <p className="text-sm text-(--text-muted) leading-relaxed font-inter">
-            The timeline shows the influences that shaped the profile: engineering fundamentals, optical fibers, IT networks, L&T project management, B2B SaaS product sales, Tier-3 support, and the
-            current move into AI automation and workflow engineering.
+            The timeline shows the influences that shaped the profile: engineering fundamentals, network operations, technical enablement at L&T, B2B SaaS solution consulting, Tier-3 production
+            support, and current focus on QA, release validation, and technical operations engineering.
           </p>
         </div>
       </div>

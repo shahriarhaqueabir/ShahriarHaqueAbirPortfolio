@@ -11,27 +11,26 @@ const storyBeats = [
   {
     label: "Foundation",
     title: "Built from engineering fundamentals.",
-    text: "The foundation starts with Electrical and Electronic Engineering, Information and Communication Engineering, optical fibers, and IT networks. That mix shaped how I think about systems: signals, constraints, infrastructure, reliability, and the practical details that decide whether something works.",
-    context: "Engineering grounding: electrical/electronic systems, information and communication engineering, optical fibers, LAN/WAN operations, documentation, and root-cause thinking.",
+    text: "The foundation starts with Electrical and Electronic Engineering and IT network operations. That mix shaped how I think about systems: signals, constraints, infrastructure, reliability, and the practical details that decide whether something works.",
+    context: "Engineering grounding: electrical/electronic systems, information and communication engineering, network operations (LAN/WAN), and root-cause thinking.",
   },
   {
     label: "Delivery",
-    title: "Added project management and technical coordination.",
-    text: "At Larsen & Toubro, the work added project management, training coordination, documentation, scheduling, and stakeholder follow-through. It made the technical foundation operational: not just understanding systems, but coordinating people and delivery around them.",
-    context: "L&T influence: project management, technical training coordination, curriculum planning, handoffs, reporting, and operational discipline.",
+    title: "Project management and technical coordination.",
+    text: "At Larsen & Toubro, the work added project management, technical training coordination, and stakeholder follow-through. It made the technical foundation operational: not just understanding systems, but coordinating people and delivery around them.",
+    context: "L&T influence: technical enablement, onboarding infrastructure, curriculum engineering, and operational discipline.",
   },
   {
-    label: "Consulting",
-    title: "Moved into B2B SaaS solution consultation.",
-    text: "In Germany, the work expanded into B2B SME and enterprise product sales, software solution consultation, Tier-3 technical support, discovery, RFI/RFP support, PoCs, onboarding, production troubleshooting, and release validation.",
-    context:
-      "SaaS consulting: product sales support, technical discovery, customer onboarding, API/database troubleshooting, SLA-driven Tier-3 support, release validation, and engineering coordination.",
+    label: "Support",
+    title: "Enterprise SaaS operations and Tier-3 support.",
+    text: "In Germany, the work expanded into B2B SaaS solution consulting and Tier-3 technical support. Resolving high-impact production incidents, troubleshooting API integrations, and translating requirements into scalable technical solutions.",
+    context: "SaaS operations: Tier-3 troubleshooting, API/database integration, SLA management, and engineering/product coordination.",
   },
   {
     label: "Now",
-    title: "Engineering AI automation and workflows.",
-    text: "Current interests extend that operating experience into AI automation, workflow engineering, cybersecurity, GTM, SDR systems, and agentic full stack software development. The goal is practical: turn repeated technical work into systems that scale.",
-    context: "AI automation layer: RAG, local LLMs, FastAPI, Qdrant, Docker, n8n, GTM workflows, agentic software development, and cybersecurity-aware systems thinking.",
+    title: "Operational reliability and systems integration.",
+    text: "Leading technical operations, QA, and release validation. The focus is on improving platform performance, optimizing operational processes, and building the automation that prevents recurring incidents.",
+    context: "Present: QA automation, release validation, regression testing, and driving operational excellence at scale.",
   },
 ];
 
