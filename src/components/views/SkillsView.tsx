@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { GraduationCap, Languages, ShieldCheck, Wrench } from "lucide-react";
+import TechIcon from "@/components/TechIcon";
 import GuidedNext from "@/components/GuidedNext";
 import { CONFIG } from "@/lib/data";
 import type { ViewKey } from "@/lib/types";
@@ -214,8 +215,9 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
                 {group.items.map((item) => (
                   <span
                     key={item}
-                    className="px-3 py-2 bg-(--bg) border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted)"
+                    className="px-4 py-2 bg-(--bg) border border-(--border) text-[10px] font-mono font-bold uppercase tracking-widest text-(--text-muted) flex items-center gap-2.5 group hover:border-(--accent) hover:text-(--text) transition-colors"
                   >
+                    <TechIcon name={item} className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 transition-opacity" />
                     {item}
                   </span>
                 ))}

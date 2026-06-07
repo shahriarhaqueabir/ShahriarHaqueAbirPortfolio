@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import CompanyLogo from "@/components/CompanyLogo";
 import GuidedNext from "@/components/GuidedNext";
 import { CONFIG } from "@/lib/data";
 import type { ViewKey } from "@/lib/types";
@@ -139,29 +140,32 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
               />
             </div>
             <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-6">
-              <div className="flex-1">
-                {i === 0 && (
-                  <div className="font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent) mb-3 flex items-center gap-2">
-                    <span className="signal-dot text-(--accent)" />
-                    Most Recent Role
-                  </div>
-                )}
-                <div className="text-(--accent) font-mono text-[10px] tracking-[0.2em] uppercase mb-2">{e.company}</div>
-                <h3 className={`text-3xl font-black font-syne mb-6 transition-colors duration-200 ${
-                  i === 0
-                    ? "text-(--text) group-hover:text-(--accent)"
-                    : "text-(--text) group-hover:text-(--accent)"
-                }`}>
-                  {e.role}
-                </h3>
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
-                  {e.points.map((p, pIdx) => (
-                    <li key={pIdx} className="flex items-start gap-4 text-sm text-(--text-muted) leading-relaxed">
-                      <span className="w-1.5 h-1.5 rounded-full bg-(--accent)/40 mt-1.5 shrink-0" />
-                      <span>{p}</span>
-                    </li>
-                  ))}
-                </ul>
+              <div className="flex-1 flex gap-6 items-start">
+                <CompanyLogo name={e.company} className="w-14 h-14 shrink-0 hidden sm:flex" />
+                <div className="flex-1">
+                  {i === 0 && (
+                    <div className="font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent) mb-3 flex items-center gap-2">
+                      <span className="signal-dot text-(--accent)" />
+                      Most Recent Role
+                    </div>
+                  )}
+                  <div className="text-(--accent) font-mono text-[10px] tracking-[0.2em] uppercase mb-2">{e.company}</div>
+                  <h3 className={`text-3xl font-black font-syne mb-6 transition-colors duration-200 ${
+                    i === 0
+                      ? "text-(--text) group-hover:text-(--accent)"
+                      : "text-(--text) group-hover:text-(--accent)"
+                  }`}>
+                    {e.role}
+                  </h3>
+                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
+                    {e.points.map((p, pIdx) => (
+                      <li key={pIdx} className="flex items-start gap-4 text-sm text-(--text-muted) leading-relaxed">
+                        <span className="w-1.5 h-1.5 rounded-full bg-(--accent)/40 mt-1.5 shrink-0" />
+                        <span>{p}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
               <div className={`font-mono text-[10px] font-bold border px-4 py-2 uppercase tracking-widest transition-all shrink-0 ${
                 i === 0

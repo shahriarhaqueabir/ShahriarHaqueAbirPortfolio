@@ -180,8 +180,6 @@ export default function PortfolioSidebar({
         {!localAiPaused && !localAiEnabled && (
           <div className="flex flex-col gap-3 mx-1">
             <div className="relative">
-              {/* Pulsing ring */}
-              <div className="absolute inset-[-3px] rounded-sm border border-(--accent) opacity-40 animate-ping" />
               <button
                 type="button"
                 onClick={enableLocalAi}

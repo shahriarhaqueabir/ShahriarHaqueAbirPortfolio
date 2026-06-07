@@ -14,6 +14,7 @@ import {
   User,
   Workflow
 } from "lucide-react";
+import TechIcon from "@/components/TechIcon";
 import GuidedNext from "@/components/GuidedNext";
 import { CONFIG } from "@/lib/data";
 import type { ViewKey } from "@/lib/types";
@@ -167,9 +168,9 @@ function FeaturedProject({ project, index, setView }: { project: Project; index:
             {project.stack.map((item) => (
               <span
                 key={item}
-                className="px-3 py-1.5 border border-(--border) bg-(--surface)/50 rounded-full font-mono text-[10px] font-bold text-(--text-muted) flex items-center gap-2 group hover:border-(--accent) hover:text-(--text) transition-colors"
+                className="px-3 py-1.5 border border-(--border) bg-(--surface)/50 rounded-full font-mono text-[10px] font-bold text-(--text-muted) flex items-center gap-2.5 group hover:border-(--accent) hover:text-(--text) transition-colors"
               >
-                <div className="w-1 h-1 rounded-full bg-(--accent) opacity-40 group-hover:opacity-100" />
+                <TechIcon name={item} className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />
                 {item}
               </span>
             ))}
