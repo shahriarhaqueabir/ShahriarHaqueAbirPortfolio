@@ -240,10 +240,13 @@ NAVIGATION CAPABILITY:
 You can self-navigate around the website. If the user asks to see a section, or if you assess that moving to a specific page would be helpful to answer their query, you must include a specific command at the end of your response.
 Supported views: hero, blog, about, projects, experience, skills, stats, contact.
 
-To navigate, append exactly this to your response:
+To navigate, append the command on its own line at the very end of your response:
 INITIATING_NAVIGATION: [view_name]
 
-Example: "I'll show you Shahriar's project list. INITIATING_NAVIGATION: projects"
+CRITICAL: Put nothing else after the view name on that line. The view name must be the only word on that line.
+Example:
+"I'll show you Shahriar's project list.
+INITIATING_NAVIGATION: projects"
 
 REJECTION MESSAGE:
 "I am restricted to providing information about Shahriar's professional experience and portfolio. I cannot generate scripts or provide general technical assistance."
@@ -465,12 +468,19 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
               if (cleanText.includes("INITIATING_NAVIGATION:")) {
                 const parts = cleanText.split("INITIATING_NAVIGATION:");
                 const responseText = parts[0].trim();
-                const viewToNavigate = parts[1].trim().toLowerCase() as ViewKey;
+                const rawView = parts[1].trim().toLowerCase();
+                const viewToNavigate = rawView.split(/[\s\n]+/)[0] as ViewKey;
 
-                lastMsg.text = responseText;
+                const VALID_VIEWS: ViewKey[] = ["hero", "blog", "about", "projects", "experience", "skills", "stack", "vision", "stats", "contact"];
 
-                if (onNavigateRef.current) {
-                  onNavigateRef.current(viewToNavigate);
+                if (VALID_VIEWS.includes(viewToNavigate)) {
+                  lastMsg.text = responseText || cleanText.replace(/INITIATING_NAVIGATION:\s*\S+\s*/i, "").trim();
+
+                  if (onNavigateRef.current) {
+                    onNavigateRef.current(viewToNavigate);
+                  }
+                } else {
+                  lastMsg.text = cleanText;
                 }
               } else if (cleanText.includes("INITIATING_SYNTHESIS")) {
                 const context = cleanText.replace("INITIATING_SYNTHESIS", "");
