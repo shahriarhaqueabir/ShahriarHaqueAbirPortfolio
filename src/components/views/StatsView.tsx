@@ -1,21 +1,20 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import type { ViewKey } from "@/lib/types";
 
-const ORBIT_ROTATION_DEGREES = -10;
-const ORBIT_RADIUS = 41;
-const ORBIT_DURATION_SECONDS = 108;
+const ORBIT_RADIUS = 38;
+const ORBIT_DURATION_SECONDS = 80;
 
-const rawOrbitNodes = [
-  { id: "calm", label: "Calm Under Pressure", angle: -90, color: "#A78BFA" },
-  { id: "story", label: "Story Teller", angle: -30, color: "#F59E0B" },
-  { id: "person", label: "A Wonderful Person", angle: 30, color: "#F472B6" },
-  { id: "solution", label: "Solution Driven", angle: 90, color: "#34D399" },
-  { id: "problem", label: "Problem Solver", angle: 150, color: "#38BDF8" },
-  { id: "bridge", label: "Technical Translator", angle: 210, color: "#EF4444" },
+const orbitNodes = [
+  { id: "calm", label: "Calm Under Pressure", angle: 0, color: "#A78BFA" },
+  { id: "story", label: "Story Teller", angle: 60, color: "#F59E0B" },
+  { id: "person", label: "A Wonderful Person", angle: 120, color: "#F472B6" },
+  { id: "solution", label: "Solution Driven", angle: 180, color: "#34D399" },
+  { id: "problem", label: "Problem Solver", angle: 240, color: "#38BDF8" },
+  { id: "bridge", label: "Technical Translator", angle: 300, color: "#EF4444" },
 ];
 
 const metrics = [
@@ -35,308 +34,265 @@ const nextPaths: Array<{ view: ViewKey; label: string; question: string }> = [
   { view: "contact", label: "Contact", question: "How do I reach him?" },
 ];
 
-function getOrbitPoint(angle: number) {
-  const radians = ((angle + ORBIT_ROTATION_DEGREES) * Math.PI) / 180;
-
-  return {
-    x: 50 + Math.cos(radians) * ORBIT_RADIUS,
-    y: 50 + Math.sin(radians) * ORBIT_RADIUS,
+function MetricGlyph({ type }: { type: string }) {
+  const icons = {
+    code: (
+      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6">
+        <path d="M8 8 4 12l4 4" /><path d="m16 8 4 4-4 4" /><path d="m14 5-4 14" />
+      </svg>
+    ),
+    globe: (
+      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6">
+        <circle cx="12" cy="12" r="8" /><path d="M4 12h16M12 4c2 2.5 3 5.2 3 8s-1 5.5-3 8M12 4c-2 2.5-3 5.2-3 8s1 5.5 3 8" />
+      </svg>
+    ),
+    book: (
+      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6">
+        <path d="M5 5h6a3 3 0 0 1 3 3v11a3 3 0 0 0-3-3H5z" /><path d="M19 5h-5a3 3 0 0 0-3 3" />
+      </svg>
+    ),
+    lab: (
+      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6">
+        <path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6A2 2 0 0 0 19 18l-5-9V3" /><path d="M7 16h10" />
+      </svg>
+    ),
+    default: (
+      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6">
+        <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z" /><path d="M4 7.5 12 12l8-4.5M12 12v9" />
+      </svg>
+    )
   };
+  return icons[type as keyof typeof icons] || icons.default;
 }
 
-const orbitNodes = rawOrbitNodes.map((node) => ({
-  ...node,
-  ...getOrbitPoint(node.angle),
-}));
-
-function MetricGlyph({ type }: { type: string }) {
-  if (type === "code") {
-    return (
-      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6">
-        <path d="M8 8 4 12l4 4" />
-        <path d="m16 8 4 4-4 4" />
-        <path d="m14 5-4 14" />
-      </svg>
-    );
-  }
-
-  if (type === "globe") {
-    return (
-      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6">
-        <circle cx="12" cy="12" r="8" />
-        <path d="M4 12h16M12 4c2 2.5 3 5.2 3 8s-1 5.5-3 8M12 4c-2 2.5-3 5.2-3 8s1 5.5 3 8" />
-      </svg>
-    );
-  }
-
-  if (type === "book") {
-    return (
-      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6">
-        <path d="M5 5h6a3 3 0 0 1 3 3v11a3 3 0 0 0-3-3H5z" />
-        <path d="M19 5h-5a3 3 0 0 0-3 3" />
-      </svg>
-    );
-  }
-
-  if (type === "lab") {
-    return (
-      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6">
-        <path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6A2 2 0 0 0 19 18l-5-9V3" />
-        <path d="M7 16h10" />
-      </svg>
-    );
-  }
+function OrbitingNode({ node, index, activeNode, setActiveNode }: { node: typeof orbitNodes[0], index: number, activeNode: any, setActiveNode: any }) {
+  const isActive = activeNode.id === node.id;
 
   return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6">
-      <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z" />
-      <path d="M4 7.5 12 12l8-4.5M12 12v9" />
-    </svg>
+    <motion.div
+      className="absolute left-1/2 top-1/2 z-20"
+      style={{
+        transformStyle: "preserve-3d",
+      }}
+      animate={{
+        rotateY: [node.angle, node.angle + 360],
+      }}
+      transition={{
+        duration: ORBIT_DURATION_SECONDS,
+        repeat: Infinity,
+        ease: "linear"
+      }}
+    >
+      <div
+        style={{ transform: `translateZ(${ORBIT_RADIUS}vw) rotateY(-${node.angle}deg)` }}
+        className="relative"
+      >
+        <button
+          type="button"
+          onMouseEnter={() => setActiveNode(node)}
+          onClick={() => setActiveNode(node)}
+          className="relative h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full outline-none group"
+        >
+          {/* Node Glow */}
+          <motion.div
+            className="absolute inset-0 rounded-full blur-xl opacity-40 group-hover:opacity-60 transition-opacity"
+            style={{ backgroundColor: node.color }}
+            animate={{ scale: isActive ? [1, 1.4, 1] : 1 }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+
+          {/* Star Core */}
+          <div
+            className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white shadow-[0_0_15px_white]"
+            style={{ backgroundColor: node.color }}
+          />
+
+          {/* Label (Face camera) */}
+          <div className="absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2 whitespace-nowrap hidden md:block">
+            <motion.span
+              className="block font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-white opacity-40 group-hover:opacity-100 transition-opacity"
+              animate={{ opacity: isActive ? 1 : 0.4 }}
+            >
+              {node.label}
+            </motion.span>
+          </div>
+        </button>
+      </div>
+    </motion.div>
   );
 }
 
 export default function StatsView({ setView }: { setView: (view: ViewKey) => void }) {
-  const [activeNode, setActiveNode] = useState(orbitNodes[4]);
+  const [activeNode, setActiveNode] = useState(orbitNodes[0]);
   const [futureIndex, setFutureIndex] = useState(0);
+
+  // Mouse tilt effect
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springConfig = { damping: 25, stiffness: 150 };
+  const rotateX = useSpring(useTransform(mouseY, [-300, 300], [15, -15]), springConfig);
+  const rotateY = useSpring(useTransform(mouseX, [-300, 300], [-15, 15]), springConfig);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set(e.clientX - rect.left - rect.width / 2);
+    mouseY.set(e.clientY - rect.top - rect.height / 2);
+  };
 
   const particleField = useMemo(
     () =>
-      Array.from({ length: 96 }, (_, index) => ({
+      Array.from({ length: 120 }, (_, index) => ({
         id: index,
-        x: 2 + ((index * 19) % 96),
-        y: 3 + ((index * 31) % 94),
-        delay: (index % 11) * 0.16,
-        warm: index % 7 === 0,
+        x: Math.random() * 100 - 50,
+        y: Math.random() * 100 - 50,
+        z: Math.random() * 200 - 100,
+        delay: Math.random() * 5,
+        size: Math.random() * 2 + 1,
       })),
     [],
   );
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      className="relative -m-5 min-h-screen overflow-hidden bg-[#070B12] px-6 py-10 text-(--text) md:-m-12 md:px-10 md:py-14 xl:-m-16 xl:px-12"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onMouseMove={handleMouseMove}
+      className="relative -m-5 min-h-screen overflow-hidden bg-[#030509] px-6 py-10 text-(--text) md:-m-12 md:px-10 md:py-14 xl:-m-16 xl:px-12 flex flex-col items-center"
+      style={{ perspective: "1200px" }}
     >
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.42]"
-        style={{
-          backgroundImage: "radial-gradient(rgba(238,246,248,0.14) 1px, transparent 1px), radial-gradient(circle at 48% 42%, rgba(56,189,248,0.12), transparent 24rem)",
-          backgroundSize: "31px 31px, 100% 100%",
-        }}
-      />
+      {/* 3D Background Particles */}
+      <div className="absolute inset-0 pointer-events-none">
+        {particleField.map((p) => (
+          <motion.div
+            key={p.id}
+            className="absolute left-1/2 top-1/2 rounded-full bg-white/20"
+            style={{
+              width: p.size,
+              height: p.size,
+              x: `${p.x}vw`,
+              y: `${p.y}vh`,
+              z: p.z,
+            }}
+            animate={{
+              opacity: [0.1, 0.4, 0.1],
+              scale: [1, 1.5, 1]
+            }}
+            transition={{ duration: 4 + p.delay, repeat: Infinity, delay: p.delay }}
+          />
+        ))}
+      </div>
 
-      <section className="relative z-10 mx-auto grid max-w-[1280px] grid-cols-1 gap-10 lg:grid-cols-[0.78fr_1.46fr_0.9fr] lg:items-start">
-        <aside className="pt-24 lg:pt-32">
-          <div className="mb-7 font-mono text-[10px] uppercase tracking-[0.34em] text-(--text-muted)">Human Qualities</div>
-          <h2 className="max-w-[290px] font-syne text-6xl font-medium leading-[0.92] tracking-normal text-(--text) md:text-7xl">
-            Life&apos;s sky.
-            <br />
-            Human signals.
-          </h2>
-          <p className="mt-12 max-w-[280px] font-mono text-[11px] font-bold leading-8 text-(--text)">
-            Calm when stakes rise. Clear when systems get tangled. Kind enough to keep people with the work.
+      <section className="relative z-10 w-full max-w-7xl grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-10 items-center">
+        {/* Left Column: Context */}
+        <aside className="space-y-12 order-2 lg:order-1">
+          <div className="space-y-4">
+            <div className="font-mono text-[10px] uppercase tracking-[0.4em] text-(--accent)">Human Qualities</div>
+            <h2 className="font-syne text-6xl font-black leading-tight text-white tracking-tighter">
+              Life&apos;s sky.<br/>
+              <span className="text-(--accent)">3D Space.</span>
+            </h2>
+          </div>
+          <p className="font-mono text-xs leading-relaxed text-(--text-muted) max-w-xs">
+            A volumetric map of professional traits and operational influence. Navigate the constellation.
           </p>
-          <p className="mt-12 max-w-[190px] font-mono text-[10px] uppercase leading-5 tracking-[0.28em] text-(--text-muted)">Follow the constellation.</p>
+          <div className="pt-8 hidden lg:block">
+            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-(--text-muted) mb-4">Focusing On</div>
+            <div className="text-xl font-syne font-black text-white">{activeNode.label}</div>
+            <div className="mt-2 h-1 w-12 bg-(--accent)" />
+          </div>
         </aside>
 
-        <div className="relative mx-auto aspect-square w-full max-w-[620px]">
-          <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 100 100" aria-hidden="true">
-            <circle cx="50" cy="50" r={ORBIT_RADIUS} fill="none" stroke="rgba(238,246,248,0.07)" strokeWidth="0.1" />
-            <motion.circle
-              cx="50"
-              cy="50"
-              r="22"
-              fill="none"
-              stroke="rgba(155,58,71,0.12)"
-              strokeWidth="0.2"
-              strokeDasharray="1 1.7"
-              animate={{ rotate: -360 }}
-              style={{ transformOrigin: "50% 50%" }}
-              transition={{ duration: 58, repeat: Infinity, ease: "linear" }}
-            />
-            {particleField.map((particle) => (
-              <motion.circle
-                key={particle.id}
-                cx={particle.x}
-                cy={particle.y}
-                r={particle.warm ? 0.25 : 0.14}
-                fill={particle.warm ? "rgba(245,158,11,0.48)" : "rgba(148,163,184,0.28)"}
-                animate={{ opacity: [0.72, 0.68, 0.62] }}
-                transition={{ duration: 4.6, delay: particle.delay, repeat: Infinity, ease: "easeInOut" }}
+        {/* Center: 3D Orbit */}
+        <div className="relative aspect-square w-full flex items-center justify-center order-1 lg:order-2 py-20 lg:py-0">
+          <motion.div
+            style={{
+              rotateX,
+              rotateY,
+              transformStyle: "preserve-3d"
+            }}
+            className="relative w-full h-full flex items-center justify-center"
+          >
+            {/* Sun / Core */}
+            <div className="relative z-10 h-24 w-24 rounded-full" style={{ transformStyle: "preserve-3d" }}>
+                <div className="absolute inset-0 rounded-full bg-sky-500/20 blur-3xl animate-pulse" />
+                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-sky-400 to-white shadow-[0_0_60px_rgba(56,189,248,0.6)]" />
+                <div className="absolute inset-0 rounded-full border border-white/40" />
+            </div>
+
+            {/* Orbit Rings */}
+            <div className="absolute h-[76vw] w-[76vw] lg:h-[40vw] lg:w-[40vw] border border-white/5 rounded-full" style={{ transform: "rotateX(90deg)" }} />
+
+            {/* Nodes */}
+            {orbitNodes.map((node, i) => (
+              <OrbitingNode
+                key={node.id}
+                node={node}
+                index={i}
+                activeNode={activeNode}
+                setActiveNode={setActiveNode}
               />
             ))}
-          </svg>
-
-          <motion.div
-            className="absolute left-1/2 top-1/2 z-10 h-14 w-14 -translate-x-1/2 -translate-y-1/2 rounded-full"
-            animate={{ scale: [1, 1.08, 1] }}
-            transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <span className="pointer-events-none absolute left-1/2 top-1/2 h-px w-5 -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,transparent,rgba(56,189,248,0.46),transparent)] blur-[0.5px]" />
-            <span className="pointer-events-none absolute left-1/2 top-1/2 h-5 w-px -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(180deg,transparent,rgba(56,189,248,0.46),transparent)] blur-[0.5px]" />
-            <span className="pointer-events-none absolute left-1/2 top-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-sky-300/30 blur-lg" />
-            <span className="pointer-events-none absolute left-1/2 top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full bg-sky-300/10 blur-xl" />
-            <span
-              className="absolute left-1/2 top-1/2 block h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full border border-sky-200"
-              style={{
-                background: "radial-gradient(circle at 34% 28%, rgba(255,255,255,1), rgba(125,211,252,1) 46%, rgba(56,189,248,0.72) 100%)",
-                filter: "brightness(2.8)",
-                boxShadow: "0 0 20px rgba(56,189,248,1), 0 0 58px rgba(125,211,252,0.9), 0 0 108px rgba(56,189,248,0.48)",
-              }}
-            />
-          </motion.div>
-
-          <motion.div className="absolute inset-0" animate={{ rotate: -360 }} transition={{ duration: ORBIT_DURATION_SECONDS, repeat: Infinity, ease: "linear" }}>
-            <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 100 100" aria-hidden="true">
-              <g stroke="rgba(238,246,248,0.2)" strokeWidth="0.16" strokeLinecap="round" strokeDasharray="0.8 1.5">
-                <line x1={orbitNodes[5].x} y1={orbitNodes[5].y} x2="50" y2="50" />
-                <line x1={orbitNodes[5].x} y1={orbitNodes[5].y} x2={orbitNodes[4].x} y2={orbitNodes[4].y} />
-                <line x1={orbitNodes[5].x} y1={orbitNodes[5].y} x2={orbitNodes[3].x} y2={orbitNodes[3].y} />
-                <line x1="50" y1="50" x2={orbitNodes[1].x} y2={orbitNodes[1].y} />
-                <line x1={orbitNodes[3].x} y1={orbitNodes[3].y} x2={orbitNodes[4].x} y2={orbitNodes[4].y} />
-              </g>
-              <g stroke="rgba(238,246,248,0.2)" strokeWidth="0.18" strokeLinecap="round" strokeDasharray="0.8 1.4">
-                {[
-                  [0, 1],
-                  [2, 3],
-                ].map(([fromIndex, toIndex]) => {
-                  const fromNode = orbitNodes[fromIndex];
-                  const toNode = orbitNodes[toIndex];
-                  return <line key={`${fromNode.id}-${toNode.id}`} x1={fromNode.x} y1={fromNode.y} x2={toNode.x} y2={toNode.y} />;
-                })}
-              </g>
-              <g fill="rgba(238,246,248,0.62)">
-                <circle cx="50" cy="50" r="0.35" />
-                {orbitNodes.map((node) => (
-                  <circle key={`net-node-${node.id}`} cx={node.x} cy={node.y} r="0.28" />
-                ))}
-              </g>
-            </svg>
-            {orbitNodes.map((node) => {
-              const isActive = activeNode.id === node.id;
-              const orbGlow = isActive
-                ? "0 0 20px rgba(255,255,255,1), 0 0 58px rgba(238,246,248,0.9), 0 0 108px rgba(238,246,248,0.48)"
-                : "0 0 16px rgba(255,255,255,0.9), 0 0 44px rgba(238,246,248,0.52)";
-              return (
-                <button
-                  type="button"
-                  key={node.id}
-                  onPointerEnter={() => setActiveNode(node)}
-                  onPointerMove={() => setActiveNode(node)}
-                  onMouseEnter={() => setActiveNode(node)}
-                  onFocus={() => setActiveNode(node)}
-                  onClick={() => setActiveNode(node)}
-                  className="absolute z-10 h-14 w-14 -translate-x-1/2 -translate-y-1/2 rounded-full text-left outline-none"
-                  style={{ left: `${node.x}%`, top: `${node.y}%` }}
-                >
-                  <motion.span className="absolute inset-0 block" animate={{ rotate: 360 }} transition={{ duration: ORBIT_DURATION_SECONDS, repeat: Infinity, ease: "linear" }}>
-                    <span className="pointer-events-none absolute left-1/2 top-1/2 h-px w-5 -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.38),transparent)] blur-[0.5px]" />
-                    <span className="pointer-events-none absolute left-1/2 top-1/2 h-5 w-px -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(180deg,transparent,rgba(255,255,255,0.38),transparent)] blur-[0.5px]" />
-                    <span className="pointer-events-none absolute left-1/2 top-1/2 h-px w-4 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.28),transparent)] blur-[0.5px]" />
-                    <span className="pointer-events-none absolute left-1/2 top-1/2 h-px w-4 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.28),transparent)] blur-[0.5px]" />
-                    <span className="pointer-events-none absolute left-1/2 top-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/30 blur-lg" />
-                    <span className="pointer-events-none absolute left-1/2 top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/10 blur-xl" />
-                    <motion.span
-                      className="absolute left-1/2 top-1/2 block h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full border backdrop-blur"
-                      style={{
-                        background: "radial-gradient(circle at 34% 28%, rgba(255,255,255,1), rgba(255,255,255,1) 46%, rgba(238,246,248,0.72) 100%)",
-                        borderColor: "rgba(255,255,255,1)",
-                        filter: "brightness(2.8)",
-                        boxShadow: orbGlow,
-                      }}
-                      animate={{ scale: isActive ? [1, 1.55, 1] : [1, 1.18, 1] }}
-                      transition={{ duration: isActive ? 2.2 : 3.2, repeat: Infinity, ease: "easeInOut" }}
-                    />
-                    <span className="pointer-events-none absolute left-1/2 top-[calc(100%+18px)] hidden sm:block min-w-32 -translate-x-1/2 text-center">
-                      <span className="block font-mono text-[10px] font-bold uppercase tracking-[0.32em] text-(--text)">{node.label}</span>
-                    </span>
-                  </motion.span>
-                </button>
-              );
-            })}
           </motion.div>
         </div>
 
-        {/* Mobile-only: centred active node label — replaces clipping per-star labels */}
-        <div className="mt-6 flex flex-col items-center gap-1 sm:hidden">
-          <div className="font-mono text-[8px] uppercase tracking-[0.28em] text-(--text-muted)">tap a star</div>
-          <div className="font-mono text-[11px] font-bold uppercase tracking-[0.28em] text-(--text)">{activeNode.label}</div>
-          <div className="mt-1 h-px w-8 bg-(--accent)" />
-        </div>
-
-        <aside className="relative pt-8 lg:pt-20">
-          <div className="mb-32 hidden text-right font-mono text-[8px] font-bold uppercase tracking-[0.32em] text-(--text-muted) lg:block">
-            <div>Last Updated</div>
-            <div className="mt-4 text-(--text)">May 15, 2026&nbsp;&nbsp;20:45</div>
+        {/* Right Column: Metrics */}
+        <aside className="space-y-10 order-3">
+          <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-(--text-muted) flex items-center gap-4">
+            <div className="h-px flex-1 bg-white/10" />
+            Key Metrics
           </div>
-
-          <div className="mb-8">
-            <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--text-muted)">Key Metrics</div>
-            <div className="mt-3 h-px w-12 bg-(--accent2)" />
-          </div>
-          <div className="space-y-7">
+          <div className="space-y-6">
             {metrics.map((metric) => (
-              <div key={metric.label} className="grid grid-cols-[46px_1fr_84px] items-center gap-5">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-(--border) bg-[#101826]/90 text-(--text)">
-                  <MetricGlyph type={metric.glyph} />
+              <div key={metric.label} className="group">
+                <div className="flex items-center gap-4">
+                  <div className="h-10 w-10 flex items-center justify-center rounded-sm bg-white/5 border border-white/10 text-white group-hover:border-(--accent) group-hover:bg-(--accent)/10 transition-all">
+                    <MetricGlyph type={metric.glyph} />
+                  </div>
+                  <div>
+                    <div className="font-syne text-2xl font-black text-white leading-none">{metric.value}</div>
+                    <div className="text-[10px] uppercase tracking-wider text-(--text-muted) mt-1">{metric.label}</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="font-syne text-3xl font-black leading-none text-(--text)">{metric.value}</div>
-                  <div className="mt-1 text-xs leading-tight text-(--text-muted)">{metric.label}</div>
-                </div>
-                <svg viewBox="0 0 24 24" className="h-8 w-full text-(--text-muted)" fill="none" stroke="currentColor" strokeWidth="0.8">
-                  <path d={metric.spark} />
-                  <circle cx="20" cy="7" r="1" fill="currentColor" stroke="none" />
-                </svg>
               </div>
             ))}
           </div>
         </aside>
       </section>
 
-      <section className="relative z-10 mx-auto mt-10 grid max-w-[1280px] grid-cols-1 gap-8 border-t border-(--border) pt-8 lg:grid-cols-[300px_1fr]">
-        <div className="overflow-hidden border border-(--border) bg-[#101826]/86">
-          <div className="p-8">
-            <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--text-muted)">Working Style</div>
-            <div className="mt-7 flex items-end gap-2">
-              <div className="font-syne text-5xl font-black leading-none text-(--text)">Integration</div>
-              <div className="pb-2 text-xs text-(--text-muted)">technical operations engineer</div>
-            </div>
-            <div className="my-7 h-px w-11 bg-(--text)" />
-            <p className="max-w-[220px] text-sm leading-relaxed text-(--text-muted)">
-              The technical profile matters, but the work is remembered through steadiness, clarity, follow-through, and care for the customer&apos;s actual situation.
-            </p>
-            <div className="mt-8 font-mono text-[9px] uppercase tracking-[0.2em] text-(--accent)">{futurePaths[futureIndex]}</div>
-          </div>
-          <button
-            type="button"
-            onClick={() => setFutureIndex((current) => (current + 1) % futurePaths.length)}
-            className="flex w-full items-center justify-between bg-(--text) px-8 py-6 font-mono text-[10px] uppercase tracking-[0.22em] text-[#070B12]"
-          >
-            Explore current interests
-            <ArrowRight className="h-4 w-4" />
-          </button>
+      {/* Footer Details */}
+      <section className="relative z-10 w-full max-w-7xl mt-20 pt-10 border-t border-white/5 grid grid-cols-1 lg:grid-cols-2 gap-20">
+        <div className="flex gap-10 items-start">
+           <div className="p-8 border border-white/10 bg-white/[0.02] flex-1">
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-(--text-muted) mb-6">Current Orbit</div>
+              <div className="font-syne text-4xl font-black text-white mb-4">Integration</div>
+              <p className="text-sm text-(--text-muted) leading-relaxed">
+                Technical operations profile emphasizing stability, clear technical translation, and automated follow-through.
+              </p>
+              <div className="mt-8 text-(--accent) font-mono text-[10px] uppercase tracking-widest">{futurePaths[futureIndex]}</div>
+              <button
+                onClick={() => setFutureIndex(f => (f + 1) % futurePaths.length)}
+                className="mt-6 flex items-center gap-3 text-[10px] uppercase font-bold tracking-widest text-white hover:text-(--accent) transition-colors"
+              >
+                Change Viewport <ArrowRight className="h-3 w-3" />
+              </button>
+           </div>
         </div>
 
-        <div className="pt-10">
-          <p className="max-w-xl text-base leading-relaxed text-(--text-muted) md:text-lg">Numbers show the scale. The work depends on staying useful, steady, and clear when the problem is live.</p>
-          <div className="mt-8 grid grid-cols-1 gap-3 md:grid-cols-2">
-            {nextPaths.map((path) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {nextPaths.map(path => (
               <button
                 key={path.view}
-                type="button"
                 onClick={() => setView(path.view)}
-                className="group flex min-h-28 flex-col justify-between border border-(--border) bg-[#070B12]/70 p-5 text-left transition-colors hover:border-(--accent) hover:bg-[#101826]"
+                className="group p-6 border border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all text-left flex flex-col justify-between aspect-square md:aspect-auto md:h-40"
               >
-                <div className="flex items-center justify-between gap-4">
-                  <span className="font-mono text-[8px] uppercase tracking-[0.28em] text-(--accent)">{path.label}</span>
-                  <ArrowRight className="h-4 w-4 text-(--text-muted) transition-transform group-hover:translate-x-1 group-hover:text-(--accent)" />
+                <div className="flex justify-between items-start">
+                   <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-(--accent)">{path.label}</span>
+                   <ArrowRight className="h-4 w-4 text-white/20 group-hover:text-(--accent) group-hover:translate-x-1 transition-all" />
                 </div>
-                <span className="mt-7 font-syne text-lg font-black leading-tight text-(--text)">{path.question}</span>
+                <div className="font-syne text-xl font-black text-white leading-tight">{path.question}</div>
               </button>
             ))}
-          </div>
         </div>
       </section>
     </motion.div>

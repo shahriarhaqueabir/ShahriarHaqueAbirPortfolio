@@ -73,6 +73,15 @@ body::after {
   100% { transform: translate(100px, 50px) scale(1.2); } 
 }
 
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
 @layer utilities {
   .glass-panel {
     background-color: rgba(16, 24, 38, 0.4);
