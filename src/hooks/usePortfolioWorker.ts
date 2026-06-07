@@ -307,6 +307,7 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = 
   const [progress, setProgress] = useState(0);
   const [showReadyToast, setShowReadyToast] = useState(false);
   const [visitorProfile, setVisitorProfile] = useState<VisitorProfile>({});
+  const [queuedMessage, setQueuedMessage] = useState<{ text: string; activeView: ViewKey; routerMemory?: RouterMemory } | null>(null);
 
   const onSynthesisRef = useRef(onSynthesis);
   const timeoutsRef = useRef<Array<ReturnType<typeof setTimeout>>>([]);
@@ -492,6 +493,23 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = 
     setMessages((prev) => [...prev, { id: Date.now().toString(), text, sender: "sys" }]);
   };
 
+  useEffect(() => {
+    if (isReady && queuedMessage) {
+      const { text, activeView, routerMemory } = queuedMessage;
+      setQueuedMessage(null);
+
+      // Perform sending logic directly
+      const nextVisitorProfile = inferVisitorProfile(text, visitorProfile);
+      setVisitorProfile(nextVisitorProfile);
+
+      const chatHistory = [{ role: "user" as const, content: text }];
+
+      sharedWorker?.postMessage({
+        messages: [{ role: "system", content: buildSystemPrompt(text, activeView, nextVisitorProfile, routerMemory) }, ...chatHistory],
+      });
+    }
+  }, [isReady, queuedMessage, visitorProfile]);
+
   const sendMessage = (userText: string, activeView: ViewKey, routerMemory?: RouterMemory) => {
     if (!userText.trim()) return;
 
@@ -509,28 +527,30 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = 
     }
 
     if (!localAiEnabled) {
+      // Automatically trigger enablement instead of showing an error message
+      enableLocalAi();
+
+      // Add the user message and "Thinking..." placeholder
       setMessages((prev) => [
         ...prev,
         { id: Date.now().toString(), text: userText, sender: "user" },
-        {
-          id: (Date.now() + 1).toString(),
-          text: "The local AI guide is opt-in. Use Enable AI guide first if you want browser-only portfolio Q&A.",
-          sender: "sys",
-        },
+        { id: (Date.now() + 1).toString(), text: "Thinking...", sender: "ai", isTyping: true },
       ]);
+
+      // Queue the message for when it's ready
+      setQueuedMessage({ text: userText, activeView, routerMemory });
       return;
     }
 
     if (!isReady) {
+      // AI is enabled but still loading. Add the user message and queue it.
       setMessages((prev) => [
         ...prev,
         { id: Date.now().toString(), text: userText, sender: "user" },
-        {
-          id: (Date.now() + 1).toString(),
-          text: "The local AI guide is still loading in this browser. You can keep browsing; it will be ready shortly.",
-          sender: "sys",
-        },
+        { id: (Date.now() + 1).toString(), text: "Thinking...", sender: "ai", isTyping: true },
       ]);
+
+      setQueuedMessage({ text: userText, activeView, routerMemory });
       return;
     }
 
