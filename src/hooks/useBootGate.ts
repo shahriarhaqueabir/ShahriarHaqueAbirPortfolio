@@ -23,15 +23,16 @@ function markBooted() {
 }
 
 export function useBootGate() {
-  const [isBooting, setIsBooting] = useState(true);
+  const [isBooting, setIsBooting] = useState(() => !hasBooted());
 
   useEffect(() => {
+    if (!isBooting) return;
     const timer = window.setTimeout(() => {
       setIsBooting(!hasBooted());
     }, 0);
 
     return () => window.clearTimeout(timer);
-  }, []);
+  }, [isBooting]);
 
   const enterPortfolio = () => {
     markBooted();

@@ -67,7 +67,7 @@ export const VIEW_GOALS: Record<ViewKey, ViewGoal> = {
     coreQuestion: "How does he think?",
     layer: "experience",
     intentDescription: "Professional point of view, story progression, principles, and working style.",
-    nextViews: ["experience", "blog", "contact"],
+    nextViews: ["experience", "blog", "vision", "contact"],
   },
   projects: {
     coreQuestion: "What has he built?",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { type RefObject, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Coffee, MapPin, MessageCircle, Sparkles } from "lucide-react";
 import GuidedNext from "@/components/GuidedNext";
@@ -42,9 +42,9 @@ const principles = [
   "AI automation should preserve transparency",
 ];
 
-export default function AboutView({ setView }: { setView: (view: ViewKey) => void }) {
+export default function AboutView({ setView, scrollContainerRef }: { setView: (view: ViewKey) => void; scrollContainerRef?: RefObject<HTMLElement | null> }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
+  const { scrollYProgress } = useScroll({ container: scrollContainerRef, target: containerRef, offset: ["start start", "end end"] });
   const lineScale = useTransform(scrollYProgress, [0.04, 0.88], [0, 1]);
   const portraitY = useTransform(scrollYProgress, [0, 1], [0, -72]);
   const glowOpacity = useTransform(scrollYProgress, [0, 0.35, 0.8], [0.16, 0.32, 0.12]);
