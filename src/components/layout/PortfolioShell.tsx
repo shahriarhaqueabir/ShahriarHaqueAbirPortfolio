@@ -109,9 +109,9 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
       <section
         ref={contentScrollRef}
         data-testid="content-scroll"
-        className="flex-1 h-full overflow-y-auto overflow-x-hidden px-5 py-6 md:px-12 md:py-16 xl:px-16 relative custom-scrollbar pb-[180px]"
+        className="flex-1 h-full overflow-y-auto overflow-x-hidden px-5 py-6 md:px-12 md:py-16 xl:px-16 relative custom-scrollbar pb-[220px]"
       >
-        <div className="content-stage w-full max-w-[1360px] mx-auto">
+        <div className="content-stage w-full max-w-5xl mx-auto">
           <AnimatePresence mode="wait">
             <PortfolioViewRenderer activeView={activeView} setView={setActiveView} onAiQuery={handleHeroAiQuery} scrollContainerRef={contentScrollRef} />
           </AnimatePresence>
