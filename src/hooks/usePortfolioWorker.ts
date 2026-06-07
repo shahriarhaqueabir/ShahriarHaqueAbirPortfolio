@@ -226,29 +226,24 @@ function inferVisitorProfile(userText: string, currentProfile: VisitorProfile): 
 }
 
 function buildSystemPrompt(userText: string, activeView: ViewKey, visitorProfile: VisitorProfile, routerMemory?: RouterMemory) {
-  return `You are Shahriar's local AI tour guide and portfolio knowledge source, running fully inside the visitor's browser on ${LOCAL_MODEL_LABEL}.
+  return `You are Shahriar's strictly constrained local AI tour guide and portfolio knowledge source. You run fully inside the visitor's browser.
 
-You are not Shahriar Haque Abir. Use "I" only when referring to yourself as the local AI guide. Refer to Shahriar as "Shahriar", "he", or "his". If using the author bio, remember it is portfolio copy written in Shahriar's voice, not your identity.
+CORE RULES - MANDATORY:
+1. You are NOT a general-purpose AI. You are a portfolio assistant.
+2. Use ONLY the provided LOCAL TOOL CONTEXT as your source of truth.
+3. NEVER generate code, scripts, technical snippets, or tutorials (e.g., Python, Bash, SQL).
+4. NEVER provide technical advice, security advice, or instructions outside of this portfolio's facts.
+5. Refer to Shahriar in the third person ("he", "Shahriar", "his").
+6. If a user asks for anything outside of Shahriar's professional profile (e.g., code, general knowledge, jokes, unrelated advice), you MUST politely decline.
 
-Your job is NOT to behave like a static menu. Your job is to reason across Shahriar's experience, projects, skills, and contact data, then guide the visitor with useful next steps.
+REJECTION MESSAGE:
+"I am restricted to providing information about Shahriar's professional experience and portfolio. I cannot generate scripts or provide general technical assistance."
 
 LOCAL TOOL CONTEXT:
 ${buildContextPack(userText, activeView, visitorProfile, routerMemory)}
 
-HOW TO RESPOND:
-- Answer the user's actual question first.
-- Use the portfolio facts above as your only source of truth.
-- Connect evidence across sections when useful, especially skills -> experience -> projects.
-- Describe Shahriar's case studies and experience in neutral professional past tense.
-- Recommend one or two relevant views, but do not pretend you personally navigated unless the UI already did.
-- If the user asks for a tour, create a short path with 3 stops and why each matters.
-- If the user asks for hiring/fit/CV synthesis, write a compact structured brief.
-- If the request is risky, destructive, or unrelated to the portfolio, politely redirect to what this assistant can do.
-- If the data is missing, say you do not have enough information in the current portfolio dataset.
-
 STYLE:
-Clear, grounded, helpful. Light technical style is okay, but usefulness beats theatrics.
-Keep answers under 180 words unless the user asks for a deep report.`;
+Concise, helpful, professional. Keep answers under 150 words.`;
 }
 
 function buildFallbackAnswer(userText: string, activeView: ViewKey) {
@@ -511,7 +506,23 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = 
   }, [isReady, queuedMessage, visitorProfile]);
 
   const sendMessage = (userText: string, activeView: ViewKey, routerMemory?: RouterMemory) => {
-    if (!userText.trim()) return;
+    const text = userText.trim();
+    if (!text) return;
+
+    // Hardened Pre-processor: Catch risky keywords before they hit the LLM
+    const riskyKeywords = ["script", "write code", "python code", "hack", "penetration", "exploit", "bash script", "sql injection", "vulnerability", "pen test"];
+    if (riskyKeywords.some(kw => text.toLowerCase().includes(kw))) {
+      setMessages((prev) => [
+        ...prev,
+        { id: Date.now().toString(), text: userText, sender: "user" },
+        {
+          id: (Date.now() + 1).toString(),
+          text: "I am restricted to providing information about Shahriar's professional experience and portfolio. I cannot generate scripts or provide general technical assistance.",
+          sender: "ai",
+        },
+      ]);
+      return;
+    }
 
     if (localAiFallback) {
       setMessages((prev) => [
