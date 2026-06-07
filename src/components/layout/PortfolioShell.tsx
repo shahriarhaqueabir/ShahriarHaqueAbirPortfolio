@@ -28,7 +28,12 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
   const contentScrollRef = useRef<HTMLElement>(null);
   const { isBooting, enterPortfolio } = useBootGate();
   const { activeView, conversationState, setActiveView, handleCommand } = useCommandRouter(initialView);
-  const worker = usePortfolioWorker();
+  const worker = usePortfolioWorker({
+    onNavigate: (view: ViewKey) => {
+      const item = desktopRailItems.find(i => i.view === view);
+      navigate(view, item?.name);
+    }
+  });
 
   const navigate = (view: ViewKey, name?: string) => {
     setActiveView(view);

@@ -1,101 +1,77 @@
 "use client";
 
 import React from "react";
-import {
-  SiPostman,
-  SiDocker,
-  SiJira,
-  SiConfluence,
-  SiPostgresql,
-  SiMysql,
-  SiMicrosoftsqlserver,
-  SiPython,
-  SiN8N,
-  SiPowerbi,
-  SiLooker,
-  SiLinux,
-  SiCisco,
-  SiGit,
-  SiNextdotjs,
-  SiReact,
-  SiTypescript,
-  SiNodedotjs,
-  SiSwagger,
-  SiD3Dotjs,
-  SiFastapi,
-  SiNmap,
-  SiGithubactions,
-  SiJavascript,
-  SiHtml5,
-  SiPydantic,
-  SiZod,
-  SiJson,
-  SiMarkdown,
-  SiUbuntu
-} from "react-icons/si";
-import { LuTerminal, LuDatabase, LuWorkflow, LuShieldCheck, LuCpu } from "react-icons/lu";
+import * as Si from "react-icons/si";
+import * as Lu from "react-icons/lu";
 
 type TechIconProps = {
   name: string;
   className?: string;
 };
 
+// Safe access helper for icons that might have changed names in Si library
+const getSiIcon = (key: string): React.ReactNode => {
+  const icons = Si as any;
+  const IconComponent = icons[key] || icons[`Si${key}`];
+  return IconComponent ? React.createElement(IconComponent) : null;
+};
+
 const iconMap: Record<string, React.ReactNode> = {
   // Tools
-  postman: <SiPostman />,
-  swagger: <SiSwagger />,
-  cli: <LuTerminal />,
-  "cli (grep/awk)": <LuTerminal />,
-  docker: <SiDocker />,
-  jira: <SiJira />,
-  confluence: <SiConfluence />,
+  postman: <Si.SiPostman />,
+  swagger: <Si.SiSwagger />,
+  cli: <Lu.LuTerminal />,
+  "cli (grep/awk)": <Lu.LuTerminal />,
+  docker: <Si.SiDocker />,
+  jira: <Si.SiJira />,
+  confluence: <Si.SiConfluence />,
 
   // Databases
-  postgresql: <SiPostgresql />,
-  mysql: <SiMysql />,
-  "sql server": <SiMicrosoftsqlserver />,
-  sqlite: <LuDatabase />,
-  qdrant: <LuDatabase />,
+  postgresql: <Si.SiPostgresql />,
+  mysql: <Si.SiMysql />,
+  "sql server": getSiIcon("SiMicrosoftsqlserver") || <Lu.LuDatabase />,
+  sqlite: <Lu.LuDatabase />,
+  qdrant: <Lu.LuDatabase />,
 
   // Languages & Analytics
-  python: <SiPython />,
-  javascript: <SiJavascript />,
-  typescript: <SiTypescript />,
-  html: <SiHtml5 />,
-  n8n: <SiN8N />,
-  "power bi": <SiPowerbi />,
-  looker: <SiLooker />,
-  matplotlib: <LuWorkflow />,
-  git: <SiGit />,
-  "ci/cd": <SiGithubactions />,
-  "github actions": <SiGithubactions />,
+  python: <Si.SiPython />,
+  javascript: <Si.SiJavascript />,
+  typescript: <Si.SiTypescript />,
+  html: <Si.SiHtml5 />,
+  n8n: <Si.SiN8N />,
+  "power bi": getSiIcon("SiPowerbi") || <Lu.LuWorkflow />,
+  looker: <Si.SiLooker />,
+  matplotlib: <Lu.LuWorkflow />,
+  git: <Si.SiGit />,
+  "ci/cd": <Si.SiGithubactions />,
+  "github actions": <Si.SiGithubactions />,
 
   // Infrastructure
-  linux: <SiLinux />,
-  "linux admin": <SiLinux />,
-  ubuntu: <SiUbuntu />,
-  cisco: <SiCisco />,
-  nmap: <SiNmap />,
-  "security foundations": <LuShieldCheck />,
-  "it security": <LuShieldCheck />,
+  linux: <Si.SiLinux />,
+  "linux admin": <Si.SiLinux />,
+  ubuntu: <Si.SiUbuntu />,
+  cisco: <Si.SiCisco />,
+  nmap: getSiIcon("SiNmap") || <Lu.LuShieldCheck />,
+  "security foundations": <Lu.LuShieldCheck />,
+  "it security": <Lu.LuShieldCheck />,
 
   // Modern Stack
-  "next.js": <SiNextdotjs />,
-  react: <SiReact />,
-  reactflow: <LuWorkflow />,
-  "node.js": <SiNodedotjs />,
-  fastapi: <SiFastapi />,
-  d3: <SiD3Dotjs />,
-  "d3.js": <SiD3Dotjs />,
-  "rest apis": <LuWorkflow />,
-  json: <SiJson />,
-  "json/xml": <SiJson />,
-  pydantic: <SiPydantic />,
-  zod: <SiZod />,
-  markdown: <SiMarkdown />,
+  "next.js": <Si.SiNextdotjs />,
+  react: <Si.SiReact />,
+  reactflow: <Lu.LuWorkflow />,
+  "node.js": <Si.SiNodedotjs />,
+  fastapi: <Si.SiFastapi />,
+  d3: getSiIcon("SiD3Dotjs") || <Lu.LuWorkflow />,
+  "d3.js": getSiIcon("SiD3Dotjs") || <Lu.LuWorkflow />,
+  "rest apis": <Lu.LuWorkflow />,
+  json: <Si.SiJson />,
+  "json/xml": <Si.SiJson />,
+  pydantic: <Si.SiPydantic />,
+  zod: <Si.SiZod />,
+  markdown: <Si.SiMarkdown />,
 
   // Generic
-  default: <LuCpu />
+  default: <Lu.LuCpu />
 };
 
 export default function TechIcon({ name, className = "w-4 h-4" }: TechIconProps) {

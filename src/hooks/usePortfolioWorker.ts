@@ -236,6 +236,15 @@ CORE RULES - MANDATORY:
 5. Refer to Shahriar in the third person ("he", "Shahriar", "his").
 6. If a user asks for anything outside of Shahriar's professional profile (e.g., code, general knowledge, jokes, unrelated advice), you MUST politely decline.
 
+NAVIGATION CAPABILITY:
+You can self-navigate around the website. If the user asks to see a section, or if you assess that moving to a specific page would be helpful to answer their query, you must include a specific command at the end of your response.
+Supported views: hero, blog, about, projects, experience, skills, stats, contact.
+
+To navigate, append exactly this to your response:
+INITIATING_NAVIGATION: [view_name]
+
+Example: "I'll show you Shahriar's project list. INITIATING_NAVIGATION: projects"
+
 REJECTION MESSAGE:
 "I am restricted to providing information about Shahriar's professional experience and portfolio. I cannot generate scripts or provide general technical assistance."
 
@@ -284,9 +293,10 @@ function buildFallbackAnswer(userText: string, activeView: ViewKey) {
 
 type UsePortfolioWorkerOptions = {
   onSynthesis?: (context: string) => void;
+  onNavigate?: (view: ViewKey) => void;
 };
 
-export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = {}) {
+export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWorkerOptions = {}) {
   const [localAiFallbackReason] = useState(getLocalAiFallbackReason);
   const [localAiFallback, setLocalAiFallback] = useState(false);
   const [localAiPaused] = useState(false);
@@ -310,11 +320,16 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = 
   }, [visitorProfile]);
 
   const onSynthesisRef = useRef(onSynthesis);
+  const onNavigateRef = useRef(onNavigate);
   const timeoutsRef = useRef<Array<ReturnType<typeof setTimeout>>>([]);
 
   useEffect(() => {
     onSynthesisRef.current = onSynthesis;
   }, [onSynthesis]);
+
+  useEffect(() => {
+    onNavigateRef.current = onNavigate;
+  }, [onNavigate]);
 
   const enableLocalAi = useCallback(() => {
     setLocalAiEnabled(true);
@@ -447,7 +462,17 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = 
             if (lastMsg && lastMsg.sender === "ai" && lastMsg.isTyping) {
               const cleanText = typeof event.data.text === "string" ? event.data.text.trim() : "";
 
-              if (cleanText.includes("INITIATING_SYNTHESIS")) {
+              if (cleanText.includes("INITIATING_NAVIGATION:")) {
+                const parts = cleanText.split("INITIATING_NAVIGATION:");
+                const responseText = parts[0].trim();
+                const viewToNavigate = parts[1].trim().toLowerCase() as ViewKey;
+
+                lastMsg.text = responseText;
+
+                if (onNavigateRef.current) {
+                  onNavigateRef.current(viewToNavigate);
+                }
+              } else if (cleanText.includes("INITIATING_SYNTHESIS")) {
                 const context = cleanText.replace("INITIATING_SYNTHESIS", "");
                 if (onSynthesisRef.current) onSynthesisRef.current(context);
                 lastMsg.text = context;
