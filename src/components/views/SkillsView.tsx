@@ -128,7 +128,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
-      className="pt-10 pb-20 max-w-6xl"
+      className="pt-10 pb-20 max-w-5xl"
     >
       <div className="font-mono text-xs text-(--accent) uppercase tracking-[0.2em] mb-4">— Skills</div>
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
@@ -215,9 +215,9 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
                 {group.items.map((item) => (
                   <span
                     key={item}
-                    className="px-4 py-2 bg-(--bg) border border-(--border) text-[10px] font-mono font-bold uppercase tracking-widest text-(--text-muted) flex items-center gap-2.5 group hover:border-(--accent) hover:text-(--text) transition-colors"
+                    className="px-4 py-2 bg-(--bg) border border-(--border) text-[9px] font-sans font-semibold uppercase text-(--text-muted) flex items-center gap-2.5 group hover:border-(--accent) hover:text-(--text) transition-colors"
                   >
-                    <TechIcon name={item} className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 transition-opacity" />
+                    <TechIcon name={item} size={20} className="transition-opacity shrink-0" />
                     {item}
                   </span>
                 ))}

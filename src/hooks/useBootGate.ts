@@ -6,7 +6,6 @@ const BOOT_STORAGE_KEY = "shahriar_portfolio_booted";
 
 function hasBooted() {
   if (typeof window === "undefined") return false;
-
   try {
     return window.sessionStorage.getItem(BOOT_STORAGE_KEY) === "1";
   } catch {
@@ -23,16 +22,13 @@ function markBooted() {
 }
 
 export function useBootGate() {
-  const [isBooting, setIsBooting] = useState(() => !hasBooted());
+  const [isBooting, setIsBooting] = useState(true);
 
   useEffect(() => {
-    if (!isBooting) return;
-    const timer = window.setTimeout(() => {
-      setIsBooting(!hasBooted());
-    }, 0);
-
-    return () => window.clearTimeout(timer);
-  }, [isBooting]);
+    if (hasBooted()) {
+      setIsBooting(false);
+    }
+  }, []);
 
   const enterPortfolio = () => {
     markBooted();
