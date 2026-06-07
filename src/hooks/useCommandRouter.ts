@@ -181,9 +181,9 @@ function isExplicitNavigationCommand(input: string, view: ViewKey | null, score:
   return true;
 }
 
-export function useCommandRouter() {
+export function useCommandRouter(initialView: ViewKey = "hero") {
   const [conversationState, setConversationState] = useState<ConversationState>({
-    currentView: "hero",
+    currentView: initialView,
     previousViews: [],
     detectedInterests: [],
     visitorType: null,
