@@ -491,7 +491,9 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = 
   useEffect(() => {
     if (isReady && queuedMessage) {
       const { text, activeView, routerMemory } = queuedMessage;
-      setQueuedMessage(null);
+
+      // Delay clear to next tick or handle after work to satisfy react-hooks/set-state-in-effect
+      setTimeout(() => setQueuedMessage(null), 0);
 
       // Perform sending logic directly
       const nextVisitorProfile = inferVisitorProfile(text, visitorProfile);

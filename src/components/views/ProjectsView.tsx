@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   ArrowRight,
   BrainCircuit,
@@ -13,8 +12,7 @@ import {
   ServerCog,
   Sparkles,
   User,
-  Workflow,
-  X
+  Workflow
 } from "lucide-react";
 import GuidedNext from "@/components/GuidedNext";
 import { CONFIG } from "@/lib/data";
@@ -52,7 +50,7 @@ function getArchitectureNodes(project: Project): string[] {
   return ["Input", "Process", "Logic", "Outcome"];
 }
 
-function DeviceMockup({ project, visual }: { project: Project; visual: any }) {
+function DeviceMockup({ project, visual }: { project: Project; visual: { Icon: typeof Workflow; color: string; symbol: string } }) {
   const nodes = getArchitectureNodes(project);
 
   return (
@@ -114,7 +112,7 @@ function DeviceMockup({ project, visual }: { project: Project; visual: any }) {
   );
 }
 
-function FeaturedProject({ project, index, setView }: { project: Project; index: number; setView: (v: any) => void }) {
+function FeaturedProject({ project, index, setView }: { project: Project; index: number; setView: (v: ViewKey) => void }) {
   const visual = getProjectVisual(project);
   const meta = projectMeta[project.name] || { duration: "3 Months", client: "Confidential", category: "Technical Project" };
   const isEven = index % 2 === 0;
