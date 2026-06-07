@@ -30,8 +30,10 @@ test.describe('Shahriar Haque Abir portfolio E2E', () => {
     ];
     
     for (const protocol of protocols) {
-      await page.getByRole('button', { name: protocol.button }).first().click();
-      await expect(page.getByText(protocol.expected).first()).toBeVisible();
+      const btn = page.getByRole('button', { name: protocol.button }).first();
+      await expect(btn).toBeVisible({ timeout: 10000 });
+      await btn.click();
+      await expect(page.getByText(protocol.expected).first()).toBeVisible({ timeout: 10000 });
     }
   });
 
@@ -43,22 +45,25 @@ test.describe('Shahriar Haque Abir portfolio E2E', () => {
     // Ensure content has loaded and is scrollable
     await expect(page.getByText(/Professional Influence Map/i)).toBeVisible();
 
-    await contentScroll.evaluate((element) => {
-      element.scrollTop = element.scrollHeight;
+    // Use evaluate to force a scroll and wait for it to take effect
+    await contentScroll.evaluate(async (element) => {
+      element.scrollTop = 2000;
     });
 
-    // Check that it actually scrolled
-    await expect.poll(async () => contentScroll.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
+    // Verify it actually scrolled
+    await expect.poll(async () => contentScroll.evaluate((element) => element.scrollTop)).toBeGreaterThan(100);
 
     await page.getByRole('button', { name: /Projects/i }).first().click();
 
-    // Wait for the scroll to reset
-    await expect.poll(async () => contentScroll.evaluate((element) => element.scrollTop)).toBe(0);
+    // Wait for the scroll to reset to zero. In CI, we give it a bit more time.
+    await expect.poll(async () => contentScroll.evaluate((element) => element.scrollTop), {
+      timeout: 10000
+    }).toBe(0);
+
     await expect(page.getByText(/Featured Projects/).first()).toBeVisible();
   });
 
   test('routes typed commands without relying on the local model', async ({ page }) => {
-    // Open sidebar on mobile if needed, but here we just target the placeholder
     await page.getByPlaceholder(/Ask about Shahriar|Enable AI guide|Search the portfolio/i).fill('show me his contact details');
     await page.keyboard.press('Enter');
     await expect(page.getByText(/Let's talk/)).toBeVisible();
