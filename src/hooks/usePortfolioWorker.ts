@@ -492,17 +492,17 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = 
     if (isReady && queuedMessage) {
       const { text, activeView, routerMemory } = queuedMessage;
 
-      // Delay clear to next tick or handle after work to satisfy react-hooks/set-state-in-effect
-      setTimeout(() => setQueuedMessage(null), 0);
+      // Defer state updates to satisfy react-hooks/set-state-in-effect
+      setTimeout(() => {
+        setQueuedMessage(null);
+        setVisitorProfile(inferVisitorProfile(text, visitorProfile));
+      }, 0);
 
-      // Perform sending logic directly
-      const nextVisitorProfile = inferVisitorProfile(text, visitorProfile);
-      setVisitorProfile(nextVisitorProfile);
-
+      // chatHistory for the immediate worker message
       const chatHistory = [{ role: "user" as const, content: text }];
 
       sharedWorker?.postMessage({
-        messages: [{ role: "system", content: buildSystemPrompt(text, activeView, nextVisitorProfile, routerMemory) }, ...chatHistory],
+        messages: [{ role: "system", content: buildSystemPrompt(text, activeView, visitorProfile, routerMemory) }, ...chatHistory],
       });
     }
   }, [isReady, queuedMessage, visitorProfile]);
