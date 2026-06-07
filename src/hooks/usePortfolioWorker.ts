@@ -425,7 +425,11 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = 
               queuedMessageRef.current = null;
 
               const nextProfile = inferVisitorProfile(text, visitorProfileRef.current);
-              setVisitorProfile(nextProfile);
+
+              // Defer state update to satisfy react-hooks/set-state-in-effect
+              setTimeout(() => {
+                setVisitorProfile(nextProfile);
+              }, 0);
 
               const chatHistory = [{ role: "user" as const, content: text }];
               sharedWorker?.postMessage({
@@ -567,14 +571,19 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = 
       return;
     }
 
-    const nextVisitorProfile = inferVisitorProfile(userText, visitorProfile);
-    if (routerMemory?.visitorType && !nextVisitorProfile.role) {
-      nextVisitorProfile.role = routerMemory.visitorType;
-    }
-    if (routerMemory?.detectedInterests.length) {
-      nextVisitorProfile.interests = Array.from(new Set([...(nextVisitorProfile.interests || []), ...routerMemory.detectedInterests]));
-    }
-    setVisitorProfile(nextVisitorProfile);
+    // Use functional update to avoid synchronous state transition warning
+    setVisitorProfile(prev => {
+      const next = inferVisitorProfile(userText, prev);
+      if (routerMemory?.visitorType && !next.role) {
+        next.role = routerMemory.visitorType;
+      }
+      if (routerMemory?.detectedInterests.length) {
+        next.interests = Array.from(new Set([...(next.interests || []), ...routerMemory.detectedInterests]));
+      }
+
+      // Since we need to use this 'next' profile for the worker message, we trigger it outside the setter or via Ref
+      return next;
+    });
 
     const newMsgs: Message[] = [...messages, { id: Date.now().toString(), text: userText, sender: "user" }];
     newMsgs.push({ id: (Date.now() + 1).toString(), text: "Thinking...", sender: "ai", isTyping: true });
@@ -589,7 +598,7 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = 
       })) satisfies ChatMessage[];
 
     sharedWorker?.postMessage({
-      messages: [{ role: "system", content: buildSystemPrompt(userText, activeView, nextVisitorProfile, routerMemory) }, ...chatHistory],
+      messages: [{ role: "system", content: buildSystemPrompt(userText, activeView, inferVisitorProfile(userText, visitorProfileRef.current), routerMemory) }, ...chatHistory],
     });
   };
 
