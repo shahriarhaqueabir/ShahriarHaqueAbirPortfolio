@@ -302,7 +302,12 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = 
   const [progress, setProgress] = useState(0);
   const [showReadyToast, setShowReadyToast] = useState(false);
   const [visitorProfile, setVisitorProfile] = useState<VisitorProfile>({});
-  const [queuedMessage, setQueuedMessage] = useState<{ text: string; activeView: ViewKey; routerMemory?: RouterMemory } | null>(null);
+  const queuedMessageRef = useRef<{ text: string; activeView: ViewKey; routerMemory?: RouterMemory } | null>(null);
+  const visitorProfileRef = useRef<VisitorProfile>({});
+
+  useEffect(() => {
+    visitorProfileRef.current = visitorProfile;
+  }, [visitorProfile]);
 
   const onSynthesisRef = useRef(onSynthesis);
   const timeoutsRef = useRef<Array<ReturnType<typeof setTimeout>>>([]);
@@ -413,6 +418,20 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = 
             queueTimeout(() => setShowReadyToast(false), 5000);
             setMessages((prev) => prev.filter((message) => message.id !== "1"));
             queueOnboarding();
+
+            // Process queued message if any
+            if (queuedMessageRef.current) {
+              const { text, activeView, routerMemory } = queuedMessageRef.current;
+              queuedMessageRef.current = null;
+
+              const nextProfile = inferVisitorProfile(text, visitorProfileRef.current);
+              setVisitorProfile(nextProfile);
+
+              const chatHistory = [{ role: "user" as const, content: text }];
+              sharedWorker?.postMessage({
+                messages: [{ role: "system", content: buildSystemPrompt(text, activeView, nextProfile, routerMemory) }, ...chatHistory],
+              });
+            }
           }
 
           if (event.data.status === "ready") break;
@@ -488,25 +507,6 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = 
     setMessages((prev) => [...prev, { id: Date.now().toString(), text, sender: "sys" }]);
   };
 
-  useEffect(() => {
-    if (isReady && queuedMessage) {
-      const { text, activeView, routerMemory } = queuedMessage;
-
-      // Defer state updates to satisfy react-hooks/set-state-in-effect
-      setTimeout(() => {
-        setQueuedMessage(null);
-        setVisitorProfile(inferVisitorProfile(text, visitorProfile));
-      }, 0);
-
-      // chatHistory for the immediate worker message
-      const chatHistory = [{ role: "user" as const, content: text }];
-
-      sharedWorker?.postMessage({
-        messages: [{ role: "system", content: buildSystemPrompt(text, activeView, visitorProfile, routerMemory) }, ...chatHistory],
-      });
-    }
-  }, [isReady, queuedMessage, visitorProfile]);
-
   const sendMessage = (userText: string, activeView: ViewKey, routerMemory?: RouterMemory) => {
     const text = userText.trim();
     if (!text) return;
@@ -551,7 +551,7 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = 
       ]);
 
       // Queue the message for when it's ready
-      setQueuedMessage({ text: userText, activeView, routerMemory });
+      queuedMessageRef.current = { text: userText, activeView, routerMemory };
       return;
     }
 
@@ -563,7 +563,7 @@ export function usePortfolioWorker({ onSynthesis }: UsePortfolioWorkerOptions = 
         { id: (Date.now() + 1).toString(), text: "Thinking...", sender: "ai", isTyping: true },
       ]);
 
-      setQueuedMessage({ text: userText, activeView, routerMemory });
+      queuedMessageRef.current = { text: userText, activeView, routerMemory };
       return;
     }
 
