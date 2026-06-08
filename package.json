@@ -13,6 +13,11 @@
     "test:headed": "playwright test --headed",
     "ci": "npm run lint && npm run build && npm run test"
   },
+  {
+  "scripts": {
+    "vercel-install": "npm install --legacy-peer-deps"
+  }
+},
   "dependencies": {
     "@mlc-ai/web-llm": "^0.2.83",
     "@vercel/analytics": "^1.5.0",
