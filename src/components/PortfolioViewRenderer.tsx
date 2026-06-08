@@ -1,5 +1,6 @@
 "use client";
 
+import { type RefObject } from "react";
 import HeroView from "@/components/views/HeroView";
 import BlogView from "@/components/views/BlogView";
 import AboutView from "@/components/views/AboutView";
@@ -14,16 +15,17 @@ type PortfolioViewRendererProps = {
   activeView: ViewKey;
   setView: (view: ViewKey) => void;
   onAiQuery?: (input: string) => void;
+  scrollContainerRef?: RefObject<HTMLElement | null>;
 };
 
-export default function PortfolioViewRenderer({ activeView, setView, onAiQuery }: PortfolioViewRendererProps) {
+export default function PortfolioViewRenderer({ activeView, setView, onAiQuery, scrollContainerRef }: PortfolioViewRendererProps) {
   switch (activeView) {
     case "hero":
       return <HeroView key="hero" setView={setView} onAiQuery={onAiQuery} />;
     case "blog":
       return <BlogView key="blog" setView={setView} />;
     case "about":
-      return <AboutView key="about" setView={setView} />;
+      return <AboutView key="about" setView={setView} scrollContainerRef={scrollContainerRef} />;
     case "projects":
       return <ProjectsView key="projects" setView={setView} />;
     case "experience":
@@ -33,7 +35,7 @@ export default function PortfolioViewRenderer({ activeView, setView, onAiQuery }
     case "stack":
       return <SkillsView key="skills-stack" setView={setView} />;
     case "vision":
-      return <AboutView key="about-vision" setView={setView} />;
+      return <AboutView key="about-vision" setView={setView} scrollContainerRef={scrollContainerRef} />;
     case "stats":
       return <StatsView key="stats" setView={setView} />;
     case "contact":

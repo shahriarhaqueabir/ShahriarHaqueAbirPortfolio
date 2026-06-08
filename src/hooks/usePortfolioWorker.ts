@@ -7,12 +7,7 @@ import type { Message, ViewKey } from "@/lib/types";
 
 const LOCAL_MODEL_LABEL = "Llama 3.2 1B";
 const MAX_CHAT_MESSAGES = 10;
-
-let sharedWorker: Worker | null = null;
-let initialLoadDone = false;
-let initialLoadRequested = false;
-let onboardingQueued = false;
-let initialLoadProgress = 0;
+const MAX_UI_MESSAGES = 100;
 
 type VisitorProfile = {
   name?: string;
@@ -34,16 +29,6 @@ type ChatMessage = {
   role: "system" | "user" | "assistant";
   content: string;
 };
-
-function getPortfolioWorker() {
-  if (!sharedWorker) {
-    sharedWorker = new Worker(new URL("../lib/worker.ts", import.meta.url), {
-      type: "module",
-    });
-  }
-
-  return sharedWorker;
-}
 
 function getLocalAiFallbackReason() {
   if (typeof window === "undefined" || typeof navigator === "undefined") return null;
@@ -180,7 +165,7 @@ ${CONFIG.contact.map((c) => `- ${c.label}: ${c.value}`).join("\n")}`;
 }
 
 function getTypewriterDelay(text: string) {
-  return text.length * 16 + 700;
+  return Math.min(text.length * 16 + 700, 5000);
 }
 
 function inferVisitorProfile(userText: string, currentProfile: VisitorProfile): VisitorProfile {
@@ -238,7 +223,7 @@ CORE RULES - MANDATORY:
 
 NAVIGATION CAPABILITY:
 You can self-navigate around the website. If the user asks to see a section, or if you assess that moving to a specific page would be helpful to answer their query, you must include a specific command at the end of your response.
-Supported views: hero, blog, about, projects, experience, skills, stats, contact.
+Supported views: hero, blog, about, projects, experience, skills, stack, vision, stats, contact.
 
 To navigate, append the command on its own line at the very end of your response:
 INITIATING_NAVIGATION: [view_name]
@@ -300,7 +285,6 @@ type UsePortfolioWorkerOptions = {
 };
 
 export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWorkerOptions = {}) {
-  const [localAiFallbackReason] = useState(getLocalAiFallbackReason);
   const [localAiFallback, setLocalAiFallback] = useState(false);
   const [localAiPaused] = useState(false);
   const [localAiEnabled, setLocalAiEnabled] = useState(false);
@@ -315,16 +299,20 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
   const [progress, setProgress] = useState(0);
   const [showReadyToast, setShowReadyToast] = useState(false);
   const [visitorProfile, setVisitorProfile] = useState<VisitorProfile>({});
+
+  const sharedWorkerRef = useRef<Worker | null>(null);
+  const initialLoadDoneRef = useRef(false);
+  const initialLoadRequestedRef = useRef(false);
+  const onboardingQueuedRef = useRef(false);
+  const initialLoadProgressRef = useRef(0);
+  const messageIdCounterRef = useRef(0);
+  const localAiFallbackReasonRef = useRef(getLocalAiFallbackReason());
   const queuedMessageRef = useRef<{ text: string; activeView: ViewKey; routerMemory?: RouterMemory } | null>(null);
   const visitorProfileRef = useRef<VisitorProfile>({});
-
-  useEffect(() => {
-    visitorProfileRef.current = visitorProfile;
-  }, [visitorProfile]);
-
   const onSynthesisRef = useRef(onSynthesis);
   const onNavigateRef = useRef(onNavigate);
   const timeoutsRef = useRef<Array<ReturnType<typeof setTimeout>>>([]);
+  const handleHeroTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     onSynthesisRef.current = onSynthesis;
@@ -334,41 +322,72 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
     onNavigateRef.current = onNavigate;
   }, [onNavigate]);
 
+  useEffect(() => {
+    visitorProfileRef.current = visitorProfile;
+  }, [visitorProfile]);
+
+  const getNextId = () => `msg-${++messageIdCounterRef.current}`;
+
+  const pruneMessages = (msgs: Message[]): Message[] => {
+    if (msgs.length <= MAX_UI_MESSAGES) return msgs;
+    return msgs.slice(-MAX_UI_MESSAGES);
+  };
+
+  const createUserMessage = (text: string): Message => ({
+    id: getNextId(),
+    text,
+    sender: "user",
+  });
+
+  const createAiMessage = (text: string, isTyping = false): Message => ({
+    id: getNextId(),
+    text,
+    sender: "ai",
+    ...(isTyping ? { isTyping: true as const } : {}),
+  });
+
+  const createSysMessage = (text: string): Message => ({
+    id: getNextId(),
+    text,
+    sender: "sys",
+  });
+
   const enableLocalAi = useCallback(() => {
     setLocalAiEnabled(true);
 
-    if (localAiFallbackReason) {
+    const fallbackReason = localAiFallbackReasonRef.current;
+
+    if (fallbackReason) {
       setLocalAiFallback(true);
       setIsReady(true);
       setProgress(100);
-      setMessages((prev) => [
-        ...prev.filter((message) => message.id !== "ai-opt-in" && message.id !== "1"),
-        {
-          id: Date.now().toString(),
-          text: `WebGPU model mode is unavailable here: ${localAiFallbackReason} Using a lightweight portfolio fallback instead; no Llama model will be downloaded or cached.`,
-          sender: "sys",
-        },
-      ]);
+      setMessages((prev) =>
+        pruneMessages([
+          ...prev.filter((message) => message.id !== "ai-opt-in" && message.id !== "1"),
+          createSysMessage(`WebGPU model mode is unavailable here: ${fallbackReason} Using a lightweight portfolio fallback instead; no Llama model will be downloaded or cached.`),
+        ])
+      );
       return;
     }
 
-    if (initialLoadDone) {
+    if (initialLoadDoneRef.current) {
       setProgress(100);
       setIsReady(true);
     }
     setMessages((prev) => {
       const withoutOptIn = prev.filter((message) => message.id !== "ai-opt-in");
-      if (initialLoadDone) return withoutOptIn;
+      if (initialLoadDoneRef.current) return withoutOptIn;
       if (withoutOptIn.some((message) => message.id === "1")) return withoutOptIn;
 
       return [...withoutOptIn, { id: "1", text: `Initializing Local AI Tour Guide (${LOCAL_MODEL_LABEL})... This may take a moment to cache the model on first use.`, sender: "sys" }];
     });
-  }, [localAiFallbackReason]);
+  }, []);
 
   useEffect(() => {
     if (localAiFallback || !localAiEnabled) return;
 
-    const worker = getPortfolioWorker();
+    const worker = new Worker(new URL("../lib/worker.ts", import.meta.url), { type: "module" });
+    sharedWorkerRef.current = worker;
 
     const queueTimeout = (callback: () => void, delay: number) => {
       const timeout = setTimeout(callback, delay);
@@ -376,32 +395,18 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
     };
 
     const queueOnboarding = () => {
-      if (onboardingQueued) return;
-      onboardingQueued = true;
+      if (onboardingQueuedRef.current) return;
+      onboardingQueuedRef.current = true;
       const welcomeText = "Welcome to Shahriar's Portfolio.";
       const assistantText = "I am the local AI tour guide. Ask me to compare skills to experience, explain project evidence, build a recruiter path, or synthesize Shahriar's fit for a role.";
       const objectiveText = "What would make this visit useful: hiring signal, technical depth, AI projects, support experience, or a quick guided tour?";
 
       queueTimeout(() => {
-        setMessages((prev) => [...prev, { id: "onboard-1", text: welcomeText, sender: "ai", isReadyGreen: true }]);
+        setMessages((prev) => pruneMessages([...prev, { id: getNextId(), text: welcomeText, sender: "ai", isReadyGreen: true }]));
         queueTimeout(() => {
-          setMessages((prev) => [
-            ...prev,
-            {
-              id: "onboard-2",
-              text: assistantText,
-              sender: "ai",
-            },
-          ]);
+          setMessages((prev) => pruneMessages([...prev, createAiMessage(assistantText)]));
           queueTimeout(() => {
-            setMessages((prev) => [
-              ...prev,
-              {
-                id: "onboard-3",
-                text: objectiveText,
-                sender: "ai",
-              },
-            ]);
+            setMessages((prev) => pruneMessages([...prev, createAiMessage(objectiveText)]));
           }, getTypewriterDelay(assistantText));
         }, getTypewriterDelay(welcomeText));
       }, 1000);
@@ -411,14 +416,14 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
       switch (event.data.status) {
         case "progress": {
           const nextProgress = event.data.data?.progress || 0;
-          initialLoadProgress = initialLoadDone ? initialLoadProgress : Math.max(initialLoadProgress, nextProgress);
-          setProgress(initialLoadProgress);
+          initialLoadProgressRef.current = initialLoadDoneRef.current ? initialLoadProgressRef.current : Math.max(initialLoadProgressRef.current, nextProgress);
+          setProgress(initialLoadProgressRef.current);
 
-          if (!initialLoadDone) {
+          if (!initialLoadDoneRef.current) {
             setMessages((prev) => {
               const newMsgs = [...prev];
               if (newMsgs[0]) {
-                newMsgs[0].text = `Caching ${LOCAL_MODEL_LABEL} in browser... ${initialLoadProgress.toFixed(0)}%`;
+                newMsgs[0] = { ...newMsgs[0], text: `Caching ${LOCAL_MODEL_LABEL} in browser... ${initialLoadProgressRef.current.toFixed(0)}%` };
               }
               return newMsgs;
             });
@@ -427,9 +432,9 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
         }
         case "ready":
         case "complete": {
-          if (!initialLoadDone) {
-            initialLoadDone = true;
-            initialLoadProgress = 100;
+          if (!initialLoadDoneRef.current) {
+            initialLoadDoneRef.current = true;
+            initialLoadProgressRef.current = 100;
             setProgress(100);
             setIsReady(true);
             setShowReadyToast(true);
@@ -437,20 +442,19 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
             setMessages((prev) => prev.filter((message) => message.id !== "1"));
             queueOnboarding();
 
-            // Process queued message if any
             if (queuedMessageRef.current) {
               const { text, activeView, routerMemory } = queuedMessageRef.current;
               queuedMessageRef.current = null;
 
               const nextProfile = inferVisitorProfile(text, visitorProfileRef.current);
+              visitorProfileRef.current = nextProfile;
 
-              // Defer state update to satisfy react-hooks/set-state-in-effect
               setTimeout(() => {
                 setVisitorProfile(nextProfile);
               }, 0);
 
               const chatHistory = [{ role: "user" as const, content: text }];
-              sharedWorker?.postMessage({
+              worker.postMessage({
                 messages: [{ role: "system", content: buildSystemPrompt(text, activeView, nextProfile, routerMemory) }, ...chatHistory],
               });
             }
@@ -459,11 +463,11 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
           if (event.data.status === "ready") break;
 
           setMessages((prev) => {
-            const newMsgs = [...prev];
-            const lastMsg = newMsgs[newMsgs.length - 1];
-
+            const idx = prev.length - 1;
+            const lastMsg = prev[idx];
             if (lastMsg && lastMsg.sender === "ai" && lastMsg.isTyping) {
               const cleanText = typeof event.data.text === "string" ? event.data.text.trim() : "";
+              let updatedText: string;
 
               if (cleanText.includes("INITIATING_NAVIGATION:")) {
                 const parts = cleanText.split("INITIATING_NAVIGATION:");
@@ -474,26 +478,26 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
                 const VALID_VIEWS: ViewKey[] = ["hero", "blog", "about", "projects", "experience", "skills", "stack", "vision", "stats", "contact"];
 
                 if (VALID_VIEWS.includes(viewToNavigate)) {
-                  lastMsg.text = responseText || cleanText.replace(/INITIATING_NAVIGATION:\s*\S+\s*/i, "").trim();
-
+                  updatedText = responseText || cleanText.replace(/INITIATING_NAVIGATION:\s*\S+\s*/i, "").trim();
                   if (onNavigateRef.current) {
                     onNavigateRef.current(viewToNavigate);
                   }
                 } else {
-                  lastMsg.text = cleanText;
+                  updatedText = cleanText;
                 }
               } else if (cleanText.includes("INITIATING_SYNTHESIS")) {
                 const context = cleanText.replace("INITIATING_SYNTHESIS", "");
                 if (onSynthesisRef.current) onSynthesisRef.current(context);
-                lastMsg.text = context;
+                updatedText = context;
               } else {
-                lastMsg.text = cleanText;
+                updatedText = cleanText;
               }
 
-              lastMsg.isTyping = false;
+              const newMsgs = [...prev];
+              newMsgs[idx] = { ...lastMsg, text: updatedText, isTyping: false };
+              return newMsgs;
             }
-
-            return newMsgs;
+            return prev;
           });
           break;
         }
@@ -501,24 +505,22 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
           setLocalAiFallback(true);
           setIsReady(true);
           setProgress(100);
-          setMessages((prev) => [
-            ...prev.filter((message) => message.id !== "1"),
-            {
-              id: Date.now().toString(),
-              text: `WebGPU model mode could not start (${event.data.error}). Using the lightweight portfolio fallback instead.`,
-              sender: "sys",
-            },
-          ]);
+          setMessages((prev) =>
+            pruneMessages([
+              ...prev.filter((message) => message.id !== "1"),
+              createSysMessage(`WebGPU model mode could not start (${event.data.error}). Using the lightweight portfolio fallback instead.`),
+            ])
+          );
           break;
       }
     };
 
     worker.addEventListener("message", onMessageReceived);
 
-    if (initialLoadDone) {
+    if (initialLoadDoneRef.current) {
       queueOnboarding();
-    } else if (!initialLoadRequested) {
-      initialLoadRequested = true;
+    } else if (!initialLoadRequestedRef.current) {
+      initialLoadRequestedRef.current = true;
       worker.postMessage({
         messages: [{ role: "user", content: "warm up" }],
         warmup: true,
@@ -535,105 +537,98 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
   const addNavigationMessage = (userText: string, view: ViewKey) => {
     const viewGoal = VIEW_GOALS[view];
 
-    setMessages((prev) => [
-      ...prev,
-      { id: Date.now().toString(), text: userText, sender: "user" },
-      { id: (Date.now() + 1).toString(), text: `Opened ${formatViewName(view)} - ${viewGoal.coreQuestion}`, sender: "sys" },
-    ]);
+    setMessages((prev) =>
+      pruneMessages([
+        ...prev,
+        createUserMessage(userText),
+        createSysMessage(`Opened ${formatViewName(view)} - ${viewGoal.coreQuestion}`),
+      ])
+    );
   };
 
   const addSystemMessage = (text: string) => {
-    setMessages((prev) => [...prev, { id: Date.now().toString(), text, sender: "sys" }]);
+    setMessages((prev) => pruneMessages([...prev, createSysMessage(text)]));
   };
 
   const sendMessage = (userText: string, activeView: ViewKey, routerMemory?: RouterMemory) => {
     const text = userText.trim();
     if (!text) return;
 
-    // Hardened Pre-processor: Catch risky keywords before they hit the LLM
     const riskyKeywords = ["script", "write code", "python code", "hack", "penetration", "exploit", "bash script", "sql injection", "vulnerability", "pen test"];
     if (riskyKeywords.some(kw => text.toLowerCase().includes(kw))) {
-      setMessages((prev) => [
-        ...prev,
-        { id: Date.now().toString(), text: userText, sender: "user" },
-        {
-          id: (Date.now() + 1).toString(),
-          text: "I am restricted to providing information about Shahriar's professional experience and portfolio. I cannot generate scripts or provide general technical assistance.",
-          sender: "ai",
-        },
-      ]);
+      setMessages((prev) =>
+        pruneMessages([
+          ...prev,
+          createUserMessage(userText),
+          createAiMessage("I am restricted to providing information about Shahriar's professional experience and portfolio. I cannot generate scripts or provide general technical assistance."),
+        ])
+      );
       return;
     }
 
     if (localAiFallback) {
-      setMessages((prev) => [
-        ...prev,
-        { id: Date.now().toString(), text: userText, sender: "user" },
-        {
-          id: (Date.now() + 1).toString(),
-          text: buildFallbackAnswer(userText, activeView),
-          sender: "ai",
-        },
-      ]);
+      setMessages((prev) =>
+        pruneMessages([
+          ...prev,
+          createUserMessage(userText),
+          createAiMessage(buildFallbackAnswer(userText, activeView)),
+        ])
+      );
       return;
     }
 
     if (!localAiEnabled) {
-      // Automatically trigger enablement instead of showing an error message
       enableLocalAi();
 
-      // Add the user message and "Thinking..." placeholder
-      setMessages((prev) => [
-        ...prev,
-        { id: Date.now().toString(), text: userText, sender: "user" },
-        { id: (Date.now() + 1).toString(), text: "Thinking...", sender: "ai", isTyping: true },
-      ]);
+      setMessages((prev) =>
+        pruneMessages([
+          ...prev,
+          createUserMessage(userText),
+          createAiMessage("Thinking...", true),
+        ])
+      );
 
-      // Queue the message for when it's ready
       queuedMessageRef.current = { text: userText, activeView, routerMemory };
       return;
     }
 
     if (!isReady) {
-      // AI is enabled but still loading. Add the user message and queue it.
-      setMessages((prev) => [
-        ...prev,
-        { id: Date.now().toString(), text: userText, sender: "user" },
-        { id: (Date.now() + 1).toString(), text: "Thinking...", sender: "ai", isTyping: true },
-      ]);
+      setMessages((prev) =>
+        pruneMessages([
+          ...prev,
+          createUserMessage(userText),
+          createAiMessage("Thinking...", true),
+        ])
+      );
 
       queuedMessageRef.current = { text: userText, activeView, routerMemory };
       return;
     }
 
-    // Use functional update to avoid synchronous state transition warning
-    setVisitorProfile(prev => {
-      const next = inferVisitorProfile(userText, prev);
-      if (routerMemory?.visitorType && !next.role) {
-        next.role = routerMemory.visitorType;
+    const nextProfile = inferVisitorProfile(userText, visitorProfileRef.current);
+    visitorProfileRef.current = nextProfile;
+
+    setVisitorProfile(nextProfile);
+
+    setMessages((prev) => {
+      const newMsgs = pruneMessages([...prev, createUserMessage(userText), createAiMessage("Thinking...", true)]);
+
+      const chatHistory: ChatMessage[] = newMsgs
+        .filter((m) => m.sender !== "sys" && !m.isTyping)
+        .slice(-MAX_CHAT_MESSAGES)
+        .map((m) => ({
+          role: m.sender === "user" ? "user" : "assistant",
+          content: m.text,
+        }));
+
+      const worker = sharedWorkerRef.current;
+      if (worker) {
+        worker.postMessage({
+          messages: [{ role: "system", content: buildSystemPrompt(userText, activeView, nextProfile, routerMemory) }, ...chatHistory],
+        });
       }
-      if (routerMemory?.detectedInterests.length) {
-        next.interests = Array.from(new Set([...(next.interests || []), ...routerMemory.detectedInterests]));
-      }
 
-      // Since we need to use this 'next' profile for the worker message, we trigger it outside the setter or via Ref
-      return next;
-    });
-
-    const newMsgs: Message[] = [...messages, { id: Date.now().toString(), text: userText, sender: "user" }];
-    newMsgs.push({ id: (Date.now() + 1).toString(), text: "Thinking...", sender: "ai", isTyping: true });
-    setMessages(newMsgs);
-
-    const chatHistory = newMsgs
-      .filter((message) => message.sender !== "sys" && !message.isTyping)
-      .slice(-MAX_CHAT_MESSAGES)
-      .map((message) => ({
-        role: message.sender === "user" ? "user" : "assistant",
-        content: message.text,
-      })) satisfies ChatMessage[];
-
-    sharedWorker?.postMessage({
-      messages: [{ role: "system", content: buildSystemPrompt(userText, activeView, inferVisitorProfile(userText, visitorProfileRef.current), routerMemory) }, ...chatHistory],
+      return newMsgs;
     });
   };
 

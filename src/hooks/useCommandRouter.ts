@@ -66,12 +66,12 @@ const viewMap: Partial<Record<ViewKey, ViewIntent>> = {
     weight: 2,
   },
   skills: {
-    keywords: ["skills", "competencies", "matrix", "stack", "tools", "technologies", "libraries", "software", "capabilities", "tech stack", "technical skills", "languages", "frameworks", "platforms"],
+    keywords: ["skills", "competencies", "matrix", "capabilities", "technical skills", "languages"],
     description: VIEW_GOALS.skills.intentDescription,
     weight: 2,
   },
   stack: {
-    keywords: ["stack", "tech stack", "tooling", "tools", "technology", "platforms", "libraries", "frameworks", "infrastructure"],
+    keywords: ["stack", "tech stack", "tooling", "tools", "technology", "platforms", "libraries", "frameworks", "infrastructure", "cli", "environment", "ecosystem"],
     description: VIEW_GOALS.stack.intentDescription,
     weight: 2,
   },

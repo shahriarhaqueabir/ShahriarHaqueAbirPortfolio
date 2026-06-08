@@ -64,7 +64,8 @@ test.describe('Shahriar Haque Abir portfolio E2E', () => {
   });
 
   test('routes typed commands without relying on the local model', async ({ page }) => {
-    await page.getByPlaceholder(/Ask about Shahriar|Enable AI guide|Search the portfolio/i).fill('show me his contact details');
+    await page.getByRole('button', { name: /Enable AI Portfolio Guide/i }).click();
+    await page.getByPlaceholder(/Ask about Shahriar|Ask the fallback guide/i).fill('show me his contact details');
     await page.keyboard.press('Enter');
     await expect(page.getByText(/Let's talk/)).toBeVisible();
   });

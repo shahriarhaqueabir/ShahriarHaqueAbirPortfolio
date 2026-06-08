@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { type RefObject, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Coffee, MapPin, MessageCircle, Sparkles } from "lucide-react";
 import GuidedNext from "@/components/GuidedNext";
@@ -42,15 +42,15 @@ const principles = [
   "AI automation should preserve transparency",
 ];
 
-export default function AboutView({ setView }: { setView: (view: ViewKey) => void }) {
+export default function AboutView({ setView, scrollContainerRef }: { setView: (view: ViewKey) => void; scrollContainerRef?: RefObject<HTMLElement | null> }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
+  const { scrollYProgress } = useScroll({ container: scrollContainerRef, target: containerRef, offset: ["start start", "end end"] });
   const lineScale = useTransform(scrollYProgress, [0.04, 0.88], [0, 1]);
   const portraitY = useTransform(scrollYProgress, [0, 1], [0, -72]);
   const glowOpacity = useTransform(scrollYProgress, [0, 0.35, 0.8], [0.16, 0.32, 0.12]);
 
   return (
-    <motion.div ref={containerRef} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="relative max-w-6xl pb-24">
+    <motion.div ref={containerRef} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="relative max-w-5xl pb-24">
       <motion.div
         className="pointer-events-none fixed right-12 top-20 hidden h-[60vh] w-px origin-top bg-[linear-gradient(to_bottom,var(--accent),var(--accent2),transparent)] lg:block"
         style={{ scaleY: lineScale }}

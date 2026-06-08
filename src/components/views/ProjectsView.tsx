@@ -168,9 +168,9 @@ function FeaturedProject({ project, index, setView }: { project: Project; index:
             {project.stack.map((item) => (
               <span
                 key={item}
-                className="px-3 py-1.5 border border-(--border) bg-(--surface)/50 rounded-full font-mono text-[10px] font-bold text-(--text-muted) flex items-center gap-2.5 group hover:border-(--accent) hover:text-(--text) transition-colors"
+                className="px-3 py-1.5 border border-(--border) bg-(--surface)/50 rounded-full text-[9px] font-sans font-semibold text-(--text-muted) flex items-center gap-2.5 group hover:border-(--accent) hover:text-(--text) transition-colors"
               >
-                <TechIcon name={item} className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />
+                <TechIcon name={item} size={20} className="transition-opacity shrink-0" />
                 {item}
               </span>
             ))}
@@ -203,7 +203,7 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 20 }}
-      className="pt-10 max-w-7xl mx-auto"
+      className="pt-10 max-w-5xl mx-auto"
     >
       <div className="flex items-center justify-between mb-16">
         <div>
