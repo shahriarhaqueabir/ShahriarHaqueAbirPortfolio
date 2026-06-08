@@ -109,7 +109,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
 
         <div className="mt-8 border-l-2 border-(--accent) pl-5 max-w-2xl">
           <p className="text-sm text-(--text-muted) leading-relaxed font-inter">
-            The timeline shows the influences that shaped the profile: engineering fundamentals, network operations, technical enablement at L&T, B2B SaaS solution consulting, Tier-3 production
+            The timeline shows the influences that shaped the profile: engineering fundamentals, network operations, technical enablement at L&T, SaaS solution consulting, Tier-3 production
             support, and current focus on QA, release validation, and technical operations engineering.
           </p>
         </div>

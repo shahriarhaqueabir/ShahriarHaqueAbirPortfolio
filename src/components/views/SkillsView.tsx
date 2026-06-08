@@ -59,8 +59,8 @@ const toolGroups = [
     items: ["PostgreSQL", "MySQL", "SQL Server", "REST APIs", "JSON/XML", "Schema Validation", "API Tracing"],
   },
   {
-    title: "Automation & Analytics",
-    items: ["Python", "n8n", "Qdrant", "Power BI", "Looker", "Matplotlib", "Git", "CI/CD"],
+    title: "AI & Automation",
+    items: ["Python", "n8n", "Ollama", "LangChain", "RAG", "Qdrant", "Git", "CI/CD"],
   },
   {
     title: "Systems & Networking",

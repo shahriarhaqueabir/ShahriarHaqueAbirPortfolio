@@ -35,11 +35,11 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
             <div className="font-mono text-[10px] text-(--accent) uppercase tracking-widest mb-6">Conversation Fit</div>
             <h3 className="text-2xl font-syne font-black text-(--text) leading-none mb-6 tracking-tight">{CONFIG.name}</h3>
             <p className="text-sm text-(--text-muted) leading-relaxed max-w-md">
-              Best reached for technical solution consulting, customer-facing SaaS work, GTM support, and AI automation conversations where product, customer, and engineering context need to come
+              Best reached for technical operations, systems integration, SaaS support engineering, and AI automation conversations where product, customer, and engineering context need to come
               together.
             </p>
             <div className="mt-8 flex flex-wrap gap-2">
-              {["Solution Consulting", "GTM Execution", "Customer Success"].map((tagline) => (
+              {["Technical Operations", "Systems Integration", "SaaS Support"].map((tagline) => (
                 <span key={tagline} className="border border-(--accent)/30 text-(--accent) bg-(--accent)/5 px-4 py-2.5 rounded-sm text-[10px] font-bold uppercase tracking-widest">
                   {tagline}
                 </span>

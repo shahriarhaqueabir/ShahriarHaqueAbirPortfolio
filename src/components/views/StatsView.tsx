@@ -20,14 +20,14 @@ const orbitNodes = [
 
 const metrics = [
   { value: "10+", label: "Years Enterprise Support Experience", glyph: "code", spark: "M3 16 L8 13 L13 15 L20 7" },
-  { value: "40", label: "Tier-3 Incidents Resolved Weekly", glyph: "lab", spark: "M3 18 L8 12 L12 15 L16 9 L21 5" },
+  { value: "~40", label: "Complex Production Incidents Triaged Weekly", glyph: "lab", spark: "M3 18 L8 12 L12 15 L16 9 L21 5" },
   { value: "30%", label: "Reduction in Recurring Defects", glyph: "box", spark: "M3 18 L10 14 L16 16 L21 8" },
   { value: "500+", label: "Network Clients Managed at Earth Tel", glyph: "globe", spark: "M3 18 L8 10 L13 15 L19 11" },
   { value: "60+", label: "Engineers Mentored at L&T", glyph: "book", spark: "M3 17 L8 16 L12 12 L16 14 L20 6" },
-  { value: "10", label: "Enterprise Global Onboardings", glyph: "globe", spark: "M3 18 L8 10 L13 15 L19 11" },
+  { value: "3", label: "Global Regions Supported (NAM, APAC, DACH)", glyph: "globe", spark: "M3 18 L8 10 L13 15 L19 11" },
 ];
 
-const futurePaths = ["AI automation and workflow engineering", "cybersecurity-aware systems thinking", "GTM, SDR, and agentic full stack development"];
+const futurePaths = ["AI automation and workflow engineering", "cybersecurity-aware systems thinking", "Agentic automation and full stack development"];
 
 const nextPaths: Array<{ view: ViewKey; label: string; question: string }> = [
   { view: "experience", label: "Experience", question: "Can he operate in real environments?" },

@@ -145,6 +145,22 @@ function FeaturedProject({ project, index }: { project: Project; index: number }
           {project.desc}
         </p>
 
+        {/* Problem / Solution / Result fields */}
+        <div className="space-y-3">
+          <div className="border-l-2 border-(--border) pl-4">
+            <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-(--accent) mb-1">Problem</div>
+            <p className="text-sm text-(--text-muted) leading-relaxed">{project.context}</p>
+          </div>
+          <div className="border-l-2 border-(--border) pl-4">
+            <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-(--accent) mb-1">Solution</div>
+            <p className="text-sm text-(--text-muted) leading-relaxed">{project.implementation}</p>
+          </div>
+          <div className="border-l-2 border-(--border) pl-4">
+            <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-(--accent) mb-1">Result</div>
+            <p className="text-sm text-(--text-muted) leading-relaxed">{project.outcome}</p>
+          </div>
+        </div>
+
         <div className="flex flex-wrap gap-8 py-2">
           <div className="flex items-center gap-3">
             <Clock className="w-4 h-4 text-(--accent)" />

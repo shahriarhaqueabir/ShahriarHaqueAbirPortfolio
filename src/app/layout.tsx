@@ -4,7 +4,7 @@ import "./globals.css";
 import { PersonJsonLd } from "@/components/PersonJsonLd";
 import { VercelInsightsWrapper } from "@/components/VercelInsightsWrapper";
 import { CONFIG } from "@/lib/data";
-import { seoKeywords, siteDescription, siteTitle, siteUrl } from "@/lib/seo";
+import { siteDescription, siteTitle, siteUrl } from "@/lib/seo";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-playfair" });
@@ -18,7 +18,6 @@ export const metadata: Metadata = {
     template: "%s | Shahriar Haque Abir",
   },
   description: siteDescription,
-  keywords: seoKeywords,
   authors: [{ name: CONFIG.name, url: siteUrl }],
   creator: CONFIG.name,
   publisher: CONFIG.name,
@@ -39,13 +38,13 @@ export const metadata: Metadata = {
         url: "/profile.jpg",
         width: 1200,
         height: 630,
-        alt: "Shahriar Haque Abir, Lead Technical Solution Consultant",
+        alt: "Shahriar Haque Abir, Technical Operations Engineer",
       },
       {
         url: "/profile.jpg",
         width: 3456,
         height: 2305,
-        alt: "Shahriar Haque Abir, Lead Technical Solution Consultant",
+        alt: "Shahriar Haque Abir, Technical Operations Engineer",
       },
       {
         url: "/logo.jpg",

@@ -1,6 +1,6 @@
 import { CreateMLCEngine, type ChatCompletionMessageParam, type InitProgressReport, type MLCEngine } from "@mlc-ai/web-llm";
 
-const MODEL_ID = "Llama-3.2-1B-Instruct-q4f16_1-MLC";
+const MODEL_ID = "Qwen2.5-1.5B-Instruct-q4f16_1-MLC";
 
 class LlamaEngineSingleton {
   static instance: MLCEngine | null = null;

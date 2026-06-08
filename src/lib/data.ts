@@ -10,12 +10,12 @@ export const CONFIG = {
     "Incident & SLA Management",
     "SQL & Log Stream Analysis",
     "Technical Solution Consulting",
-    "GTM & SDR Operating Models",
+    "QA & Release Validation",
   ],
   heroStats: [
     { label: "Years experience in enterprise software & mission-critical support", value: "10+" },
-    { label: "Tier-3 incidents resolved weekly across global enterprise clients", value: "40" },
-    { label: "Premier international enterprise accounts managed", value: "10" },
+    { label: "Complex production incidents triaged weekly across integrated SaaS environments", value: "~40" },
+    { label: "Regions supported across enterprise deployments", value: "3" },
   ],
   location: "Berlin, Germany",
   workAuth: "Niederlassungserlaubnis (Permanent resident)",
@@ -36,15 +36,24 @@ Trusted to improve system stability, optimize operational processes, and deliver
   experience: [
     {
       company: "tripunkt GmbH",
-      role: "Software solutions consultant",
-      period: "Nov 2020 – March 2026",
+      role: "QA and Release Validation",
+      period: "2024 – March 2026",
       points: [
-        "Resolved approximately 40 Tier-3 incidents weekly across global enterprise customers SaaS deployments, troubleshooting API integrations, application services, and database layers.",
-        "Managed regression test cycles and validated software releases against database schemas and integration specifications within Docker testing environments.",
-        "Identified pre-release defects via API inspection and log auditing, coordinating directly with engineering to verify hotfixes.",
-        "Designed and executed international GTM and SDR pipelines for the Pathfinder software suite, building commercial pipelines from inception across NAM, APAC, and DACH.",
-        "Owned the full technical and commercial lifecycle for enterprise accounts across NAM, APAC, and DACH serving as the primary bridge between client engineering teams and internal product development.",
-        "Personally managed the complete technical and customer lifecycle for 10 premier international enterprise accounts across 3 global regions.",
+        "Executed regression test cycles and validated software releases against database schemas and integration specifications within Docker container environments.",
+        "Inspected API request/response payloads and audited log streams to identify pre-release defects, coordinating directly with engineering for hotfix verification.",
+        "Managed structured defect triage workflows, tracking issues from identification through engineering resolution and regression revalidation.",
+      ],
+    },
+    {
+      company: "tripunkt GmbH",
+      role: "Software Solution Consultant",
+      period: "Nov 2020 – 2024",
+      points: [
+        "Conducted root cause analysis for ~40 Tier-3 production incidents weekly across global enterprise SaaS deployments, troubleshooting API integrations, application services, and database layers.",
+        "Investigated complex production issues using SQL queries across PostgreSQL and MySQL databases, tracing data flow through integrated platform layers.",
+        "Provided API integration support and schema validation for enterprise customer deployments, ensuring seamless data interchange between CRM/ERP systems and the tripunkt platform.",
+        "Designed and implemented technical onboarding frameworks and escalation procedures for enterprise customers across NAM, APAC, and DACH regions.",
+        "Owned technical account management and production support for premier enterprise accounts across 3 global regions, serving as the primary bridge between client engineering teams and internal product development.",
       ],
     },
     {
@@ -86,11 +95,10 @@ Trusted to improve system stability, optimize operational processes, and deliver
       role: "Network Engineer",
       period: "June 2014 – Sept 2015",
       points: [
+        "Built a Python tool to scan live hosts and aggregate device relationship data, rendering the output as an interactive JS/HTML topology graph for real-time component isolation and data-path tracing.",
         "Installed, configured, and maintained LAN/WAN infrastructure including switches, routers, and access points.",
-        "Provided on-call technical support for 500+ corporate and residential clients.",
         "Conducted site surveys and led network deployments for new client installations.",
         "Created and maintained technical documentation for network configurations and operational procedures.",
-        "Built a Python tool to scan live hosts and aggregate device relationship data, rendering it as an interactive JS/HTML topology graph for real-time component isolation.",
       ],
     },
     {
@@ -106,10 +114,10 @@ Trusted to improve system stability, optimize operational processes, and deliver
   projects: [
     {
       name: "Network Discovery & Topology Mapping",
-      desc: "Python-based tool for live host scanning and interactive relationship visualization.",
-      context: "Infrastructure environments lacked centralized documentation, complicating incident resolution and path tracing.",
-      implementation: "Built a Python tool to scan live hosts and aggregate device relationship data, rendering the output as an interactive JS/HTML topology graph.",
-      outcome: "Enabled real-time component isolation and data-path tracing for over 500 accounts, significantly reducing troubleshooting time.",
+      desc: "Python-based tool for live host scanning and interactive relationship visualization. Built at Earth Telecommunication (2013–2015).",
+      context: "Infrastructure environments at Earth Telecommunication lacked centralized documentation, complicating incident resolution and data-path tracing for over 500 SME and enterprise accounts.",
+      implementation: "Built a Python tool to scan live hosts and aggregate device relationship data, rendering the output as an interactive JS/HTML topology graph for real-time component isolation.",
+      outcome: "Enabled real-time component isolation and data-path tracing during network incidents, significantly reducing Mean Time to Resolution (MTTR).",
       stack: ["Python", "JavaScript", "HTML", "Topology Mapping", "Network Operations"],
     },
     {

@@ -65,8 +65,7 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
           </div>
           <h2 className="max-w-3xl font-syne text-3xl font-black leading-[0.9] tracking-tight text-(--text) md:text-5xl">It&apos;s good to catch up.</h2>
           <p className="mt-8 max-w-2xl font-playfair text-xl italic leading-relaxed tracking-tight text-(--text)">
-            Hi. I&apos;m Shahriar. I was born and raised in Bangladesh, moved halfway across the world to Germany, and I&apos;m currently living in Berlin. I specialize in helping technical products
-            reach and retain customers through technical discovery, sales development, GTM strategy, in-depth support, and customer success-focused execution.
+            Hi. I&apos;m Shahriar. I was born and raised in Bangladesh, moved halfway across the world to Germany, and I&apos;m currently living in Berlin. I specialize in technical operations, systems integration, and keeping production environments reliable — turning complex incidents into clear outcomes and repeatable processes.
           </p>
           <div className="mt-10 grid max-w-2xl grid-cols-1 gap-px border border-(--border) bg-(--border) sm:grid-cols-2">
             <div className="bg-(--bg) p-6">

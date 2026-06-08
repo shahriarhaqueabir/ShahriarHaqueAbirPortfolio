@@ -161,7 +161,7 @@ export default function HeroView({
                 </button>
               </div>
               <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-(--text-muted)">
-                Powered by Llama 3.2 · Runs locally in your browser · No data sent
+                Powered by Qwen2.5 · Runs locally in your browser · No data sent
               </p>
             </motion.div>
           )}
@@ -220,6 +220,73 @@ export default function HeroView({
               </AnimatePresence>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Location and work auth callout */}
+      <div className="mt-8 w-full max-w-6xl mx-auto flex flex-wrap gap-4 items-center">
+        <div className="inline-flex items-center gap-3 border border-(--border) px-4 py-3">
+          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-(--accent)">Based in</span>
+          <span className="font-syne font-black text-sm text-(--text)">Berlin, Germany</span>
+        </div>
+        <div className="inline-flex items-center gap-3 border border-(--border) px-4 py-3">
+          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-(--accent2)">Language</span>
+          <span className="font-syne font-black text-sm text-(--text)">German B2 (Professional)</span>
+        </div>
+        <div className="inline-flex items-center gap-3 border border-(--border) px-4 py-3">
+          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-(--accent2)">Authorization</span>
+          <span className="font-syne font-black text-sm text-(--text)">Niederlassungserlaubnis</span>
+        </div>
+      </div>
+
+      {/* Capabilities panel — scannable tool grid below hero */}
+      <div className="mt-20 w-full max-w-6xl mx-auto border-t border-(--border) pt-12">
+        <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--accent) mb-8">Capability Stack</div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-px bg-(--border) border border-(--border)">
+          {[
+            {
+              group: "Integration",
+              accent: "#38BDF8",
+              items: ["REST APIs", "Webhooks", "OAuth 2.0", "OpenAPI", "Postman"],
+            },
+            {
+              group: "Data",
+              accent: "#34D399",
+              items: ["SQL", "PostgreSQL", "MySQL", "DBeaver"],
+            },
+            {
+              group: "Observability",
+              accent: "#A78BFA",
+              items: ["Splunk", "Grafana", "Kibana", "Datadog"],
+            },
+            {
+              group: "AI & Automation",
+              accent: "#F472B6",
+              items: ["Ollama", "LangChain", "RAG", "n8n"],
+            },
+            {
+              group: "Infrastructure",
+              accent: "#F59E0B",
+              items: ["Docker", "Linux", "GitHub", "Windows Server"],
+            },
+          ].map((cluster) => (
+            <div key={cluster.group} className="bg-(--bg) p-5 md:p-6">
+              <div
+                className="font-syne text-xs font-black uppercase tracking-wider mb-4"
+                style={{ color: cluster.accent }}
+              >
+                {cluster.group}
+              </div>
+              <ul className="space-y-2">
+                {cluster.items.map((item) => (
+                  <li key={item} className="font-mono text-[11px] text-(--text-muted) flex items-center gap-2">
+                    <span className="w-1 h-1 rounded-full" style={{ backgroundColor: cluster.accent }} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
     </motion.div>
