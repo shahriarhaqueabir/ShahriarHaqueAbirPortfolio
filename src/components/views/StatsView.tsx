@@ -129,7 +129,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
       <section className="relative z-10 mx-auto grid max-w-[1280px] grid-cols-1 gap-10 lg:grid-cols-[0.78fr_1.46fr_0.9fr] lg:items-start">
         <aside className="pt-24 lg:pt-32">
           <div className="mb-7 font-mono text-xs uppercase tracking-[0.34em] text-(--text-muted)">Human Qualities</div>
-          <h2 className="max-w-[290px] font-syne text-6xl font-medium leading-[0.92] tracking-normal text-(--text) md:text-7xl">
+          <h2 className="max-w-[290px] font-syne text-4xl font-medium leading-[0.92] tracking-tight text-(--text) md:text-5xl">
             Life&apos;s sky.
             <br />
             Human signals.
@@ -282,7 +282,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
                   <MetricGlyph type={metric.glyph} />
                 </div>
                 <div>
-                  <div className="font-syne text-3xl font-black leading-none text-(--text)">{metric.value}</div>
+                  <div className="font-syne text-xl font-black leading-none tracking-tight text-(--text)">{metric.value}</div>
                   <div className="mt-1 text-xs leading-tight text-(--text-muted)">{metric.label}</div>
                 </div>
                 <svg viewBox="0 0 24 24" className="h-8 w-full text-(--text-muted)" fill="none" stroke="currentColor" strokeWidth="0.8">
@@ -300,7 +300,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
           <div className="p-8">
             <div className="font-mono text-xs uppercase tracking-[0.28em] text-(--text-muted)">Working Style</div>
             <div className="mt-7 flex items-end gap-2">
-              <div className="font-syne text-5xl font-black leading-none text-(--text)">Integration</div>
+              <div className="font-syne text-3xl font-black leading-none tracking-tight text-(--text)">Integration</div>
               <div className="pb-2 text-xs text-(--text-muted)">technical operations engineer</div>
             </div>
             <div className="my-7 h-px w-11 bg-(--text)" />

@@ -20,7 +20,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
   return (
     <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="pt-10 max-w-5xl">
       <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">— Career Trajectory</div>
-      <h2 className="text-5xl font-syne font-black mb-12 text-(--text)">Experience</h2>
+      <h2 className="text-3xl font-syne font-black mb-12 tracking-tight text-(--text)">Experience</h2>
 
       <div className="bg-(--surface) border border-(--border) p-8 mb-20 relative overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-1 bg-(--accent)"></div>
@@ -98,7 +98,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
                     transition={{ delay: pulseDelay, duration: isNow ? 1.4 : 0.9, ease: "easeOut" }}
                   >
                     <div className={`font-mono text-[10px] uppercase tracking-[0.24em] mb-3 ${isNow ? "text-(--accent)" : "text-(--text-muted)"}`}>{milestone.marker}</div>
-                    <div className="font-syne font-black text-2xl md:text-xl text-(--text) leading-none mb-3">{milestone.label}</div>
+                    <div className="font-syne font-black text-xl tracking-tight text-(--text) leading-none mb-3">{milestone.label}</div>
                     <p className="text-xs text-(--text-muted) leading-relaxed font-inter">{milestone.detail}</p>
                   </motion.div>
                 </motion.div>
@@ -150,7 +150,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
                     </div>
                   )}
                   <div className="text-(--accent) font-mono text-[10px] tracking-[0.2em] uppercase mb-2">{e.company}</div>
-                  <h3 className={`text-3xl font-black font-syne mb-6 transition-colors duration-200 ${
+                  <h3 className={`text-xl font-black font-syne mb-6 tracking-tight transition-colors duration-200 ${
                     i === 0
                       ? "text-(--text) group-hover:text-(--accent)"
                       : "text-(--text) group-hover:text-(--accent)"

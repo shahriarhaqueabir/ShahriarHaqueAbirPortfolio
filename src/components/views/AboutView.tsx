@@ -63,8 +63,8 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
             <MessageCircle className="h-3.5 w-3.5" />
             Biography / Point of View
           </div>
-          <h2 className="max-w-3xl font-syne text-5xl font-black leading-[0.9] text-(--text) md:text-7xl">It&apos;s good to catch up.</h2>
-          <p className="mt-8 max-w-2xl font-playfair text-2xl italic leading-relaxed text-(--text)">
+          <h2 className="max-w-3xl font-syne text-3xl font-black leading-[0.9] tracking-tight text-(--text) md:text-5xl">It&apos;s good to catch up.</h2>
+          <p className="mt-8 max-w-2xl font-playfair text-xl italic leading-relaxed tracking-tight text-(--text)">
             Hi. I&apos;m Shahriar. I was born and raised in Bangladesh, moved halfway across the world to Germany, and I&apos;m currently living in Berlin. I specialize in helping technical products
             reach and retain customers through technical discovery, sales development, GTM strategy, in-depth support, and customer success-focused execution.
           </p>
@@ -74,14 +74,14 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
                 <MapPin className="h-3.5 w-3.5" />
                 Base
               </div>
-              <div className="font-syne text-2xl font-black text-(--text)">{CONFIG.location}</div>
+              <div className="font-syne text-xl font-black tracking-tight text-(--text)">{CONFIG.location}</div>
             </div>
             <div className="bg-(--bg) p-6">
               <div className="mb-3 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-(--accent2)">
                 <Sparkles className="h-3.5 w-3.5" />
                 Philosophy
               </div>
-              <div className="font-syne text-2xl font-black text-(--text)">make systems reliable, explainable, and usable</div>
+              <div className="font-syne text-xl font-black tracking-tight text-(--text)">make systems reliable, explainable, and usable</div>
             </div>
           </div>
         </div>
@@ -92,7 +92,7 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
             <div className="relative p-8 md:p-10">
               <div className="mb-10 flex items-center justify-between gap-6 border-b border-(--border) pb-6">
                 <div>
-                  <div className="font-syne text-2xl font-black text-(--text)">Coffee and conversation</div>
+                  <div className="font-syne text-xl font-black tracking-tight text-(--text)">Coffee and conversation</div>
                 </div>
                 <div className="flex h-12 w-12 items-center justify-center border border-(--border) bg-(--bg) text-(--accent)">
                   <Coffee className="h-5 w-5" />
@@ -115,7 +115,7 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
       <section className="relative py-14 border-y border-(--border)">
         <div className="max-w-3xl border-l-4 border-(--accent) pl-8">
           <div className="mb-4 font-mono text-[10px] uppercase tracking-[0.24em] text-(--accent)">Working Style</div>
-          <p className="font-playfair text-3xl italic leading-snug text-(--text) md:text-5xl">
+          <p className="font-playfair text-xl italic leading-snug tracking-tight text-(--text) md:text-3xl">
             I like being the person who can enter a messy technical situation, find the signal,
             explain the tradeoffs, and turn ambiguity into a clear plan of action.
           </p>
@@ -140,10 +140,10 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
                 <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--text-muted) mb-1">
                   {String(index + 1).padStart(2, "0")}
                 </div>
-                <div className="font-syne font-black text-2xl text-(--accent) uppercase">{beat.label}</div>
+                <div className="font-syne font-black text-xl tracking-tight text-(--accent) uppercase">{beat.label}</div>
               </div>
               <div className="max-w-3xl">
-                <h3 className="font-syne text-3xl font-black leading-tight text-(--text) md:text-5xl">{beat.title}</h3>
+                <h3 className="font-syne text-xl font-black leading-tight tracking-tight text-(--text) md:text-3xl">{beat.title}</h3>
                 <p className="mt-6 text-lg leading-9 text-(--text-muted)">{beat.text}</p>
                 <div className="mt-8 border border-(--border) bg-(--surface) p-5">
                   <div className="bg-(--surface) p-5">
@@ -160,7 +160,7 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
       <section className="grid grid-cols-1 gap-px border border-(--border) bg-(--border) lg:grid-cols-[0.85fr_1.15fr]">
         <div className="bg-(--bg) p-8 md:p-12">
           <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-(--accent)">What I care about in the work</div>
-          <h3 className="mt-5 font-syne text-4xl font-black leading-none text-(--text)">Reliable systems, clear handoffs, and fewer repeated failures.</h3>
+          <h3 className="mt-5 font-syne text-2xl font-black leading-none tracking-tight text-(--text)">Reliable systems, clear handoffs, and fewer repeated failures.</h3>
         </div>
         <div className="grid grid-cols-1 gap-px bg-(--border) sm:grid-cols-2">
           {principles.map((principle, index) => (
@@ -173,7 +173,7 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
               className="min-h-40 bg-(--surface) p-7"
             >
               <div className="mb-8 font-mono text-[10px] uppercase tracking-[0.24em] text-(--text-muted)">principle {String(index + 1).padStart(2, "0")}</div>
-              <div className="font-syne text-2xl font-black uppercase leading-tight text-(--text)">{principle}</div>
+              <div className="font-syne text-xl font-black uppercase leading-tight tracking-tight text-(--text)">{principle}</div>
             </motion.div>
           ))}
         </div>

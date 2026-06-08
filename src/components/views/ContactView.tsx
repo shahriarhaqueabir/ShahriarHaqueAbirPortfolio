@@ -25,7 +25,7 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
   return (
     <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="pt-10 pb-20 max-w-5xl">
       <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">— Contact</div>
-      <h2 className="text-5xl md:text-7xl font-syne font-black mb-10 text-(--text) leading-[0.9]">
+      <h2 className="text-3xl md:text-5xl font-syne font-black mb-10 text-(--text) leading-[0.9] tracking-tight">
         Let&apos;s <span className="italic font-playfair font-normal text-(--text-muted) lowercase tracking-normal">talk.</span>
       </h2>
 
@@ -33,7 +33,7 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
         <section className="bg-(--bg) p-10 md:p-12 flex flex-col justify-between min-h-[420px] relative overflow-hidden">
           <div>
             <div className="font-mono text-[10px] text-(--accent) uppercase tracking-widest mb-6">Conversation Fit</div>
-            <h3 className="text-4xl font-syne font-black text-(--text) leading-none mb-6">{CONFIG.name}</h3>
+            <h3 className="text-2xl font-syne font-black text-(--text) leading-none mb-6 tracking-tight">{CONFIG.name}</h3>
             <p className="text-sm text-(--text-muted) leading-relaxed max-w-md">
               Best reached for technical solution consulting, customer-facing SaaS work, GTM support, and AI automation conversations where product, customer, and engineering context need to come
               together.

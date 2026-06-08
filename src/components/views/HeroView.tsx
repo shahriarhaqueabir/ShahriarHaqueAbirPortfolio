@@ -63,7 +63,7 @@ export default function HeroView({
           </div>
 
           {/* Name */}
-          <h1 className="mb-6 max-w-[760px] font-syne text-[3.4rem] font-black leading-[0.96] tracking-normal text-(--text) md:mb-7 md:text-7xl xl:text-[6.3rem] 2xl:text-[7rem]">
+          <h1 className="mb-6 max-w-[760px] font-syne text-[2.2rem] font-black leading-[0.96] tracking-tight text-(--text) md:mb-7 md:text-3xl xl:text-[4.3rem] 2xl:text-[5rem]">
             <span className="block mb-2">
               {CONFIG.name.split(" ").map((word, i) =>
                 word === CONFIG.nameHL ? (
@@ -85,7 +85,7 @@ export default function HeroView({
           </h1>
 
           {/* Hero quote — the best line in the portfolio */}
-          <p className="mb-8 max-w-[680px] font-playfair text-xl italic leading-9 text-(--text) md:text-2xl md:leading-10">
+          <p className="mb-8 max-w-[680px] font-playfair text-lg italic leading-9 text-(--text) md:text-xl md:leading-10">
             I like being the person who can enter a messy technical situation, find the signal,
             explain the tradeoffs, and help the next step become clear —
             <span className="not-italic font-inter font-normal text-base md:text-lg text-(--text-muted) ml-1">
@@ -97,7 +97,7 @@ export default function HeroView({
           <div className="mb-10 grid max-w-3xl grid-cols-1 gap-px border border-(--border) bg-(--border) sm:grid-cols-3">
             {CONFIG.heroStats.map((stat) => (
               <div key={stat.label} className="bg-(--bg) p-5">
-                <div className="mb-3 font-syne text-3xl font-black leading-none text-(--text)">
+                <div className="mb-3 font-syne text-2xl font-black leading-none text-(--text)">
                   {stat.value}
                 </div>
                 <p className="text-xs font-bold uppercase leading-5 tracking-[0.12em] text-(--text-muted)">

@@ -138,7 +138,7 @@ function FeaturedProject({ project, index, setView }: { project: Project; index:
              <div className="w-6 h-px bg-(--accent)" />
              <span className="font-mono text-xs uppercase tracking-[0.3em] text-(--accent)">{meta.category}</span>
           </div>
-          <h3 className="font-syne text-4xl lg:text-5xl font-black text-(--text) leading-tight">{project.name}</h3>
+          <h3 className="font-syne text-2xl lg:text-3xl font-black text-(--text) leading-tight tracking-tight">{project.name}</h3>
         </div>
 
         <p className="text-(--text-muted) text-base lg:text-lg leading-relaxed max-w-xl">
@@ -207,7 +207,7 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
     >
       <div className="flex items-center justify-between mb-16">
         <div>
-          <h2 className="text-6xl lg:text-7xl font-syne font-black text-(--text) tracking-tighter uppercase mb-4">
+          <h2 className="text-4xl lg:text-5xl font-syne font-black text-(--text) tracking-tighter uppercase mb-4">
             Featured <span className="text-(--accent)">Projects</span>
           </h2>
           <p className="max-w-2xl text-sm lg:text-base leading-relaxed text-(--text-muted) font-mono uppercase tracking-tight">

@@ -106,14 +106,14 @@ function CompetencyCard({
         {/* Prominent number + accent bar */}
         <div className="flex items-center gap-4 mb-6">
           <div
-            className="font-syne font-black text-4xl leading-none"
+            className="font-syne font-black text-2xl leading-none tracking-tight"
             style={{ color: accent }}
           >
             {number}
           </div>
           <div className="h-px flex-1 bg-(--border)" style={{ background: `linear-gradient(to right, ${accent}60, transparent)` }} />
         </div>
-        <h3 className="font-syne text-xl font-black leading-tight text-(--text) mb-4 group-hover:text-(--text) transition-colors">
+        <h3 className="font-syne text-lg font-black leading-tight tracking-tight text-(--text) mb-4 group-hover:text-(--text) transition-colors">
           {title}
         </h3>
         <p className="text-base leading-relaxed text-(--text-muted)">{text}</p>
@@ -133,7 +133,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
       <div className="font-mono text-xs text-(--accent) uppercase tracking-[0.2em] mb-4">— Skills</div>
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
         <div>
-          <h2 className="text-5xl md:text-7xl font-syne font-black text-(--text) leading-none">
+          <h2 className="text-3xl md:text-5xl font-syne font-black text-(--text) leading-none tracking-tight">
             Capability Map
           </h2>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-(--text-muted)">
@@ -145,7 +145,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
           <div className="font-mono text-xs uppercase tracking-[0.18em] text-(--text-muted) mb-2">
             Primary Operating Context
           </div>
-          <div className="font-syne font-black text-xl uppercase text-(--text)">
+          <div className="font-syne font-black text-lg uppercase tracking-tight text-(--text)">
             Mission-critical production environments and enterprise SaaS
           </div>
         </div>
@@ -188,7 +188,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
             <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--accent)">
               Tools I Use
             </div>
-            <h3 className="mt-4 font-syne text-4xl font-black text-(--text)">
+            <h3 className="mt-4 font-syne text-2xl font-black tracking-tight text-(--text)">
               Grouped by working context
             </h3>
           </div>
@@ -209,7 +209,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
             >
               <div className="mb-6 flex items-center gap-3">
                 <Wrench className="h-4 w-4 text-(--accent)" />
-                <h4 className="font-syne text-2xl font-black text-(--text)">{group.title}</h4>
+                <h4 className="font-syne text-xl font-black tracking-tight text-(--text)">{group.title}</h4>
               </div>
               <div className="flex flex-wrap gap-2">
                 {group.items.map((item) => (
