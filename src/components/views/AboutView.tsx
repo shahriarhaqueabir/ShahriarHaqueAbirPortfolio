@@ -59,7 +59,7 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
 
       <section className="relative grid min-h-[78vh] grid-cols-1 items-center gap-12 py-12 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="relative z-10">
-          <div className="mb-7 inline-flex items-center gap-3 border border-(--border) bg-(--surface)/82 px-4 py-3 font-mono text-[9px] uppercase tracking-[0.22em] text-(--accent)">
+          <div className="mb-7 inline-flex items-center gap-3 border border-(--border) bg-(--surface)/82 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.22em] text-(--accent)">
             <MessageCircle className="h-3.5 w-3.5" />
             Biography / Point of View
           </div>
@@ -70,14 +70,14 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
           </p>
           <div className="mt-10 grid max-w-2xl grid-cols-1 gap-px border border-(--border) bg-(--border) sm:grid-cols-2">
             <div className="bg-(--bg) p-6">
-              <div className="mb-3 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-(--accent)">
+              <div className="mb-3 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-(--accent)">
                 <MapPin className="h-3.5 w-3.5" />
                 Base
               </div>
               <div className="font-syne text-2xl font-black text-(--text)">{CONFIG.location}</div>
             </div>
             <div className="bg-(--bg) p-6">
-              <div className="mb-3 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-(--accent2)">
+              <div className="mb-3 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-(--accent2)">
                 <Sparkles className="h-3.5 w-3.5" />
                 Philosophy
               </div>
@@ -101,7 +101,7 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
               <p className="text-base leading-8 text-(--text-muted)">{CONFIG.profile}</p>
               <div className="mt-10 flex flex-wrap gap-2">
                 {CONFIG.taglines.map((tagline) => (
-                  <span key={tagline} className="border border-(--accent)/30 bg-(--accent)/10 px-3 py-2 font-mono text-[9px] font-bold uppercase tracking-widest text-(--accent)">
+                  <span key={tagline} className="border border-(--accent)/30 bg-(--accent)/10 px-4 py-2.5 font-mono text-[10px] font-bold uppercase tracking-widest text-(--accent)">
                     {tagline}
                   </span>
                 ))}
@@ -111,13 +111,13 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
         </motion.aside>
       </section>
 
-      {/* Working style quote — moved to top of narrative arc */}
+      {/* Working style quote — complements the Hero version without repeating the automation clause */}
       <section className="relative py-14 border-y border-(--border)">
         <div className="max-w-3xl border-l-4 border-(--accent) pl-8">
-          <div className="mb-4 font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent)">Working Style</div>
+          <div className="mb-4 font-mono text-[10px] uppercase tracking-[0.24em] text-(--accent)">Working Style</div>
           <p className="font-playfair text-3xl italic leading-snug text-(--text) md:text-5xl">
             I like being the person who can enter a messy technical situation, find the signal,
-            explain the tradeoffs, and help the next step become clear.
+            explain the tradeoffs, and turn ambiguity into a clear plan of action.
           </p>
         </div>
       </section>
@@ -137,7 +137,7 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
               className="grid grid-cols-1 gap-8 lg:grid-cols-[220px_1fr]"
             >
               <div>
-                <div className="font-mono text-[9px] uppercase tracking-[0.28em] text-(--text-muted) mb-1">
+                <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--text-muted) mb-1">
                   {String(index + 1).padStart(2, "0")}
                 </div>
                 <div className="font-syne font-black text-2xl text-(--accent) uppercase">{beat.label}</div>
@@ -147,7 +147,7 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
                 <p className="mt-6 text-lg leading-9 text-(--text-muted)">{beat.text}</p>
                 <div className="mt-8 border border-(--border) bg-(--surface) p-5">
                   <div className="bg-(--surface) p-5">
-                    <div className="mb-3 font-mono text-[9px] uppercase tracking-[0.22em] text-(--accent)">System Context</div>
+                    <div className="mb-3 font-mono text-[10px] uppercase tracking-[0.22em] text-(--accent)">System Context</div>
                     <p className="text-sm leading-relaxed text-(--text-muted)">{beat.context}</p>
                   </div>
                 </div>
@@ -172,7 +172,7 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
               transition={{ delay: index * 0.06, duration: 0.35 }}
               className="min-h-40 bg-(--surface) p-7"
             >
-              <div className="mb-8 font-mono text-[9px] uppercase tracking-[0.24em] text-(--text-muted)">principle {String(index + 1).padStart(2, "0")}</div>
+              <div className="mb-8 font-mono text-[10px] uppercase tracking-[0.24em] text-(--text-muted)">principle {String(index + 1).padStart(2, "0")}</div>
               <div className="font-syne text-2xl font-black uppercase leading-tight text-(--text)">{principle}</div>
             </motion.div>
           ))}

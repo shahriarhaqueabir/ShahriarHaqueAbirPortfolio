@@ -38,6 +38,12 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/profile.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Shahriar Haque Abir, Lead Technical Solution Consultant",
+      },
+      {
+        url: "/profile.jpg",
         width: 3456,
         height: 2305,
         alt: "Shahriar Haque Abir, Lead Technical Solution Consultant",

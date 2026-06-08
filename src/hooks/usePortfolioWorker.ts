@@ -223,7 +223,7 @@ CORE RULES - MANDATORY:
 
 NAVIGATION CAPABILITY:
 You can self-navigate around the website. If the user asks to see a section, or if you assess that moving to a specific page would be helpful to answer their query, you must include a specific command at the end of your response.
-Supported views: hero, blog, about, projects, experience, skills, stack, vision, stats, contact.
+Supported views: hero, about, projects, experience, skills, stack, vision, stats, contact.
 
 To navigate, append the command on its own line at the very end of your response:
 INITIATING_NAVIGATION: [view_name]
@@ -475,7 +475,7 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
                 const rawView = parts[1].trim().toLowerCase();
                 const viewToNavigate = rawView.split(/[\s\n]+/)[0] as ViewKey;
 
-                const VALID_VIEWS: ViewKey[] = ["hero", "blog", "about", "projects", "experience", "skills", "stack", "vision", "stats", "contact"];
+                const VALID_VIEWS: ViewKey[] = ["hero", "about", "projects", "experience", "skills", "stack", "vision", "stats", "contact"];
 
                 if (VALID_VIEWS.includes(viewToNavigate)) {
                   updatedText = responseText || cleanText.replace(/INITIATING_NAVIGATION:\s*\S+\s*/i, "").trim();

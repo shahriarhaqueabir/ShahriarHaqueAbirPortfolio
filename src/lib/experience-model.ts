@@ -46,7 +46,7 @@ export const CAREER_STATES: CareerState[] = [
     primarySkills: ["FastAPI", "Qdrant", "Docker Compose", "n8n", "RAG", "local LLMs"],
     systemExposure: "Adaptive systems where retrieval, AI automation, and orchestration reduce operational friction.",
     answers: ["What has he built recently?", "Can he build AI-enabled systems with practical constraints?"],
-    nextViews: ["projects", "stack", "blog"],
+    nextViews: ["projects", "stack", "contact"],
   },
 ];
 
@@ -55,25 +55,20 @@ export const VIEW_GOALS: Record<ViewKey, ViewGoal> = {
     coreQuestion: "Where should I start?",
     layer: "experience",
     intentDescription: "Opening overview, first impression, and fast paths into the portfolio.",
-    nextViews: ["projects", "blog", "contact"],
-  },
-  blog: {
-    coreQuestion: "What is he thinking about?",
-    layer: "experience",
-    intentDescription: "Owner-authored notes on product adoption, GTM context, support patterns, and AI automation.",
     nextViews: ["projects", "about", "contact"],
   },
+
   about: {
     coreQuestion: "How does he think?",
     layer: "experience",
     intentDescription: "Professional point of view, story progression, principles, and working style.",
-    nextViews: ["experience", "blog", "vision", "contact"],
+    nextViews: ["experience", "vision", "contact"],
   },
   projects: {
     coreQuestion: "What has he built?",
     layer: "logic",
     intentDescription: "Technical implementations, AI systems, AI automation workflows, architecture, and case studies.",
-    nextViews: ["stack", "stats", "blog"],
+    nextViews: ["stack", "stats", "contact"],
   },
   experience: {
     coreQuestion: "Can he operate in real environments?",
@@ -91,13 +86,13 @@ export const VIEW_GOALS: Record<ViewKey, ViewGoal> = {
     coreQuestion: "What tools does he use to build systems?",
     layer: "logic",
     intentDescription: "Technology stack, frameworks, APIs, AI tooling, AI automation, infrastructure, and operations tools.",
-    nextViews: ["projects", "skills", "blog"],
+    nextViews: ["projects", "skills", "contact"],
   },
   vision: {
     coreQuestion: "What direction is the work moving in?",
     layer: "experience",
     intentDescription: "Principles, product philosophy, future direction, and explainable system design.",
-    nextViews: ["about", "projects", "blog"],
+    nextViews: ["about", "projects", "contact"],
   },
   stats: {
     coreQuestion: "What proof points support the story?",
@@ -109,6 +104,6 @@ export const VIEW_GOALS: Record<ViewKey, ViewGoal> = {
     coreQuestion: "How do I reach him?",
     layer: "experience",
     intentDescription: "Direct contact, LinkedIn, GitHub, location, and work authorization details.",
-    nextViews: ["hero", "blog", "projects"],
+    nextViews: ["hero", "projects", "contact"],
   },
 };

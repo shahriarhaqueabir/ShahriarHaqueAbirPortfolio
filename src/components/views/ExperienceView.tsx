@@ -13,7 +13,7 @@ const lifeMilestones = [
   { label: "2016", detail: "MSc Information & Communication Engineering", marker: "MSc" },
   { label: "2020", detail: "Software Solution Consulting & Tier-3 Support", marker: "SAAS" },
   { label: "2024", detail: "QA and Release Validation engineering", marker: "QA/REL" },
-  { label: "Now", detail: "Technical Operations & Integration Engineering", marker: "PRESENT" },
+  { label: "2026", detail: "Technical Operations & Integration Engineering", marker: "CURRENT" },
 ];
 
 export default function ExperienceView({ setView }: { setView: (view: ViewKey) => void }) {
@@ -25,8 +25,8 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
       <div className="bg-(--surface) border border-(--border) p-8 mb-20 relative overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-1 bg-(--accent)"></div>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
-          <h4 className="font-syne font-bold text-[10px] text-(--text-muted) uppercase tracking-widest">Professional Influence Map</h4>
-          <div className="hidden sm:flex gap-2 font-mono text-[8px] uppercase tracking-widest text-(--text-muted)">
+          <h4 className="font-syne font-bold text-xs text-(--text-muted) uppercase tracking-widest">Professional Influence Map</h4>
+          <div className="hidden sm:flex gap-2 font-mono text-[10px] uppercase tracking-widest text-(--text-muted)">
             <span className="border border-(--border) px-2 py-1">2009</span>
             <span className="border border-(--border) px-2 py-1">now</span>
           </div>
@@ -97,9 +97,9 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
                     }}
                     transition={{ delay: pulseDelay, duration: isNow ? 1.4 : 0.9, ease: "easeOut" }}
                   >
-                    <div className={`font-mono text-[8px] uppercase tracking-[0.24em] mb-3 ${isNow ? "text-(--accent)" : "text-(--text-muted)"}`}>{milestone.marker}</div>
+                    <div className={`font-mono text-[10px] uppercase tracking-[0.24em] mb-3 ${isNow ? "text-(--accent)" : "text-(--text-muted)"}`}>{milestone.marker}</div>
                     <div className="font-syne font-black text-2xl md:text-xl text-(--text) leading-none mb-3">{milestone.label}</div>
-                    <p className="text-[11px] text-(--text-muted) leading-relaxed font-inter">{milestone.detail}</p>
+                    <p className="text-xs text-(--text-muted) leading-relaxed font-inter">{milestone.detail}</p>
                   </motion.div>
                 </motion.div>
               );
@@ -144,7 +144,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
                 <CompanyLogo name={e.company} className="w-14 h-14 shrink-0 hidden sm:flex" />
                 <div className="flex-1">
                   {i === 0 && (
-                    <div className="font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent) mb-3 flex items-center gap-2">
+                    <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-(--accent) mb-3 flex items-center gap-2">
                       <span className="signal-dot text-(--accent)" />
                       Most Recent Role
                     </div>
@@ -159,7 +159,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
                   </h3>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
                     {e.points.map((p, pIdx) => (
-                      <li key={pIdx} className="flex items-start gap-4 text-sm text-(--text-muted) leading-relaxed">
+                      <li key={pIdx} className="flex items-start gap-4 text-base text-(--text-muted) leading-relaxed">
                         <span className="w-1.5 h-1.5 rounded-full bg-(--accent)/40 mt-1.5 shrink-0" />
                         <span>{p}</span>
                       </li>

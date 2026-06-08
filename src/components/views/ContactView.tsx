@@ -40,7 +40,7 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
             </p>
             <div className="mt-8 flex flex-wrap gap-2">
               {["Solution Consulting", "GTM Execution", "Customer Success"].map((tagline) => (
-                <span key={tagline} className="border border-(--accent)/30 text-(--accent) bg-(--accent)/5 px-3 py-1.5 rounded-sm text-[9px] font-bold uppercase tracking-widest">
+                <span key={tagline} className="border border-(--accent)/30 text-(--accent) bg-(--accent)/5 px-4 py-2.5 rounded-sm text-[10px] font-bold uppercase tracking-widest">
                   {tagline}
                 </span>
               ))}
@@ -53,7 +53,7 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
                 <ShieldCheck className="w-4 h-4 text-(--accent)" />
               </div>
               <div>
-                <div className="font-mono text-[9px] text-(--accent) uppercase tracking-widest mb-2">Work Authorization</div>
+                <div className="font-mono text-[10px] text-(--accent) uppercase tracking-widest mb-2">Work Authorization</div>
                 <div className="text-sm font-bold text-(--text)">{CONFIG.workAuth}</div>
               </div>
             </div>
@@ -72,7 +72,7 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
                       <Icon className="w-4 h-4 text-(--accent)" />
                     </div>
                     <div className="min-w-0">
-                      <div className="font-mono text-[9px] text-(--text-muted) uppercase tracking-[0.2em] mb-2">
+                      <div className="font-mono text-[10px] text-(--text-muted) uppercase tracking-[0.2em] mb-2">
                         {String(index + 1).padStart(2, "0")} / {item.label}
                       </div>
                       <div className="text-sm font-syne font-black leading-snug text-(--text) wrap-anywhere xl:text-base">{item.value}</div>
@@ -98,7 +98,7 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
             })}
           </div>
 
-          <div className="mt-8 font-mono text-[9px] text-(--text-muted) uppercase tracking-widest flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div className="mt-8 font-mono text-[10px] text-(--text-muted) uppercase tracking-widest flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <span>Direct contact preferred</span>
             <span>Available for relevant technical, consulting, and support-focused conversations</span>
           </div>

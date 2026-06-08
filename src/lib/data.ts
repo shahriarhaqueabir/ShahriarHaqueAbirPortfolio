@@ -19,7 +19,11 @@ export const CONFIG = {
   ],
   location: "Berlin, Germany",
   workAuth: "Niederlassungserlaubnis (Permanent resident)",
-  profile: `Technical Operations Engineer with 10+ years of experience supporting enterprise software, SaaS platforms, systems integration, and mission-critical production environments. Expertise in Tier-3 troubleshooting, incident management, root cause analysis (RCA), API integrations, SQL analysis, and operational reliability. Led complex deployments, integrations, and critical production environments across North America, APAC, and DACH regions. Recognized for resolving high-impact technical issues, improving platform performance, and driving operational excellence at scale. Trusted to improve system stability, optimize operational processes, and deliver scalable technical solutions through close collaboration with engineering, product, and infrastructure teams.`,
+  profile: `Technical Operations Engineer with 10+ years of experience supporting enterprise software, SaaS platforms, systems integration, and mission-critical production environments. Expertise in Tier-3 troubleshooting, incident management, root cause analysis (RCA), API integrations, SQL analysis, and operational reliability.
+
+Led complex deployments, integrations, and critical production environments across North America, APAC, and DACH regions. Recognized for resolving high-impact technical issues, improving platform performance, and driving operational excellence at scale.
+
+Trusted to improve system stability, optimize operational processes, and deliver scalable technical solutions through close collaboration with engineering, product, and infrastructure teams.`,
   profileImage: "/profile.jpg",
   contact: [
     { label: "Email", value: "shahriar_abby@hotmail.com", href: "mailto:shahriar_abby@hotmail.com" },
@@ -28,29 +32,7 @@ export const CONFIG = {
     { label: "CV", value: "Download CV (PDF)", href: "/shahriar-haque-abir-cv.pdf" },
     { label: "Location", value: "Berlin, Germany", href: null },
   ],
-  blog: [
-    {
-      title: "The Tier-3 Mindset: Signals in the Noise",
-      date: "March 2024",
-      category: "Technical Operations",
-      excerpt: "Why production support isn't just about fixing bugs—it's about understanding the complex relationship between code, data, and customer intent.",
-      body: "In high-stakes production environments, an error log is just the surface. True Tier-3 troubleshooting requires a 'systems' view. You aren't just looking at a stack trace; you are looking at an intersection of API payloads, database state, and network latency. The goal is to move from 'why did this fail' to 'how do we ensure the system is architecturally resistant to this failure mode.' By standardizing our RCA frameworks, we don't just close tickets; we build product intelligence.",
-    },
-    {
-      title: "Local AI for Technical Support Workflows",
-      date: "February 2024",
-      category: "AI Automation",
-      excerpt: "Exploring the security and utility of running small, high-capability LLMs like Llama 3.2 locally for sensitive support tasks.",
-      body: "Data privacy is the biggest hurdle in adopting AI for enterprise support. My work with local LLMs (using WebLLM and Llama 3.2) explores a zero-trust approach where PII never leaves the local environment. By building local proxies that redact and process data before any external transmission, we can leverage agentic workflows for log analysis and solution drafting while maintaining strict compliance with GDPR and corporate governance.",
-    },
-    {
-      title: "Operationalizing GTM for Technical Products",
-      date: "January 2024",
-      category: "Strategy",
-      excerpt: "Bridging the gap between engineering complexity and market-ready sales cycles through technical discovery.",
-      body: "Technical products fail in the sales cycle when discovery is shallow. A Lead Technical Solution Consultant's job is to extract the 'real' requirements—the hidden constraints and integration blockers—before a contract is signed. By building automated GTM signals that feed directly from discovery calls into our CRM, we ensure that engineering is never surprised by a client's technical architecture on Day 1 of onboarding.",
-    },
-  ],
+
   experience: [
     {
       company: "tripunkt GmbH",
@@ -191,6 +173,10 @@ export const CONFIG = {
     {
       group: "Infrastructure & Networking",
       items: ["LAN/WAN", "Routing & Switching", "Network Troubleshooting", "IT Security", "Cloud Services", "Linux Admin"],
+    },
+    {
+      group: "AI Automation",
+      items: ["Agentic Workflows", "RAG Systems", "Local LLM Integration", "Prompt Engineering", "AI Governance"],
     },
   ],
   languages: ["English (Native or Bilingual)", "Bangla (Native or Bilingual)", "German (Professional Working)", "Hindi (Limited Working)"],

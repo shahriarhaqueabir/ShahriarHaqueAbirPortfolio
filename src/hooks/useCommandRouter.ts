@@ -23,11 +23,7 @@ const viewMap: Partial<Record<ViewKey, ViewIntent>> = {
     description: VIEW_GOALS.hero.intentDescription,
     weight: 2,
   },
-  blog: {
-    keywords: ["blog", "notes", "writing", "posts", "updates", "thoughts", "articles", "journal"],
-    description: VIEW_GOALS.blog.intentDescription,
-    weight: 2,
-  },
+
   about: {
     keywords: ["about", "bio", "who", "profile", "story", "approach", "thinking", "philosophy", "background"],
     description: VIEW_GOALS.about.intentDescription,

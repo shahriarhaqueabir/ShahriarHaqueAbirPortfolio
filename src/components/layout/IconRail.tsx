@@ -1,12 +1,11 @@
 "use client";
 
-import { BarChart3, Briefcase, Home as HomeIcon, Layers, Mail, Newspaper, User, Zap } from "lucide-react";
+import { BarChart3, Briefcase, Home as HomeIcon, Layers, Mail, User, Zap } from "lucide-react";
 import type { ViewKey } from "@/lib/types";
 
 const sectionColors: Record<ViewKey, string> = {
   hero: "#0EA5E9",
   about: "#A855F7",
-  blog: "#F59E0B",
   projects: "#10B981",
   experience: "#6366F1",
   skills: "#06B6D4",
@@ -19,7 +18,6 @@ const sectionColors: Record<ViewKey, string> = {
 const desktopRailItems: Array<{ name: string; icon: typeof User; view: ViewKey }> = [
   { name: "Home", icon: HomeIcon, view: "hero" },
   { name: "About", icon: User, view: "about" },
-  { name: "Blog", icon: Newspaper, view: "blog" },
   { name: "Projects", icon: Briefcase, view: "projects" },
   { name: "Experience", icon: Layers, view: "experience" },
   { name: "Skills", icon: Zap, view: "skills" },
