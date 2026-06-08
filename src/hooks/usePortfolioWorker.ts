@@ -312,7 +312,6 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
   const onSynthesisRef = useRef(onSynthesis);
   const onNavigateRef = useRef(onNavigate);
   const timeoutsRef = useRef<Array<ReturnType<typeof setTimeout>>>([]);
-  const handleHeroTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     onSynthesisRef.current = onSynthesis;
@@ -529,6 +528,7 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
 
     return () => {
       worker.removeEventListener("message", onMessageReceived);
+      worker.terminate();
       timeoutsRef.current.forEach((timeout) => clearTimeout(timeout));
       timeoutsRef.current = [];
     };

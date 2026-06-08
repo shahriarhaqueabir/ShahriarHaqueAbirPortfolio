@@ -144,14 +144,15 @@ export default function AiGuideFooter({
           </button>
         ) : (
           <div className="relative">
-            <input
-              ref={inputRef}
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-              onFocus={onFocus}
-              placeholder={
+              <input
+                ref={inputRef}
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+                onFocus={onFocus}
+                aria-label="Ask the AI guide about Shahriar"
+                placeholder={
                 localAiFallback
                   ? "Ask the fallback guide..."
                   : isReady

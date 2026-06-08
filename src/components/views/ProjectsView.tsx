@@ -113,7 +113,7 @@ function DeviceMockup({ project, visual }: { project: Project; visual: { Icon: t
   );
 }
 
-function FeaturedProject({ project, index, setView }: { project: Project; index: number; setView: (v: ViewKey) => void }) {
+function FeaturedProject({ project, index }: { project: Project; index: number }) {
   const visual = getProjectVisual(project);
   const meta = projectMeta[project.name] || { duration: "3 Months", client: "Confidential", category: "Technical Project" };
   const isEven = index % 2 === 0;
@@ -180,7 +180,7 @@ function FeaturedProject({ project, index, setView }: { project: Project; index:
         <div className="flex items-center gap-6 pt-4">
           <button
             className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-(--text) hover:text-(--accent) transition-colors"
-            onClick={() => setView("hero")} // Placeholder for detail view
+            aria-label="Preview (not yet available)"
           >
             <Eye className="w-4 h-4" />
             <span>Preview</span>
@@ -217,10 +217,10 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
         </div>
         <div className="flex flex-col items-end gap-4">
           <button
-            onClick={() => setView("experience")}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="flex items-center gap-2 group text-[10px] font-bold uppercase tracking-widest text-(--text-muted) hover:text-(--accent) transition-colors"
           >
-            <span>View All Projects</span>
+            <span>Back to Top</span>
             <div className="w-8 h-px bg-(--accent)/30 group-hover:bg-(--accent) group-hover:w-12 transition-all" />
           </button>
           <button
@@ -239,7 +239,6 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
             key={project.name}
             project={project}
             index={i}
-            setView={setView}
           />
         ))}
       </section>

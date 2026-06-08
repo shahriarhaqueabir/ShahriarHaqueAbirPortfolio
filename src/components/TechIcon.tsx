@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
-import * as Si from "react-icons/si";
-import * as Lu from "react-icons/lu";
+import { SiJira, SiConfluence, SiLooker, SiGithubactions, SiJson, SiPydantic } from "react-icons/si";
+import { LuTerminal, LuDatabase, LuChartBar, LuChartLine, LuShieldCheck, LuWorkflow, LuCpu } from "react-icons/lu";
 import {
   Postman,
   Swagger,
@@ -69,29 +68,22 @@ const SvgN8N = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-const SvgGoogleAnalytics = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 2195.9 2430.9" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <path fill="#F9AB00" d="M2195.9,2126.7c0.9,166.9-133.7,302.8-300.5,303.7c-12.4,0.1-24.9-0.6-37.2-2.1c-154.8-22.9-268.2-157.6-264.4-314V316.1c-3.7-156.6,110-291.3,264.9-314c165.7-19.4,315.8,99.2,335.2,264.9c1.4,12.2,2.1,24.4,2,36.7L2195.9,2126.7z" />
-    <path fill="#E37400" d="M301.1,1828.7c166.3,0,301.1,134.8,301.1,301.1c0,166.3-134.8,301.1-301.1,301.1C134.8,2430.9,0,2296.1,0,2129.8C0,1963.5,134.8,1828.7,301.1,1828.7z M1093.3,916.2c-167.1,9.2-296.7,149.3-292.8,316.6v808.7c0,219.5,96.6,352.7,238.1,381.1c163.3,33.1,322.4-72.4,355.5-235.7c4.1-20,6.1-40.3,6-60.7v-907.4c0.3-166.9-134.7-302.4-301.6-302.7C1096.8,916.1,1095,916.1,1093.3,916.2z" />
-  </svg>
-);
-
 const iconMap: Record<string, (size: number) => React.ReactNode> = {
   // Tools
   postman: (s) => <Postman width={s} height={s} />,
   swagger: (s) => <Swagger width={s} height={s} />,
-  cli: (s) => <Lu.LuTerminal size={s} style={{ color: "#00FF41" }} />,
-  "cli (grep/awk)": (s) => <Lu.LuTerminal size={s} style={{ color: "#00FF41" }} />,
+  cli: (s) => <LuTerminal size={s} style={{ color: "#00FF41" }} />,
+  "cli (grep/awk)": (s) => <LuTerminal size={s} style={{ color: "#00FF41" }} />,
   docker: (s) => <Docker width={s} height={s} />,
-  jira: (s) => <Si.SiJira size={s} />,
-  confluence: (s) => <Si.SiConfluence size={s} />,
+  jira: (s) => <SiJira size={s} />,
+  confluence: (s) => <SiConfluence size={s} />,
 
   // Databases
   postgresql: (s) => <PostgreSQL width={s} height={s} />,
   mysql: (s) => <MySQLLight width={s} height={s} />,
-  "sql server": (s) => <Lu.LuDatabase size={s} style={{ color: "#0078D4" }} />,
-  sqlite: (s) => <Lu.LuDatabase size={s} style={{ color: "#003B57" }} />,
-  qdrant: (s) => <Lu.LuDatabase size={s} style={{ color: "#EB1F2F" }} />,
+  "sql server": (s) => <LuDatabase size={s} style={{ color: "#0078D4" }} />,
+  sqlite: (s) => <LuDatabase size={s} style={{ color: "#003B57" }} />,
+  qdrant: (s) => <LuDatabase size={s} style={{ color: "#EB1F2F" }} />,
 
   // Languages & Analytics
   python: (s) => <Python width={s} height={s} />,
@@ -99,38 +91,38 @@ const iconMap: Record<string, (size: number) => React.ReactNode> = {
   typescript: (s) => <TypeScript width={s} height={s} />,
   html: (s) => <HTML5 width={s} height={s} />,
   n8n: (s) => <SvgN8N width={s} height={s} preserveAspectRatio="xMidYMid meet" />,
-  "power bi": (s) => <Lu.LuChartBar size={s} style={{ color: "#F2C811" }} />,
-  looker: (s) => <Si.SiLooker size={s} />,
-  matplotlib: (s) => <Lu.LuChartLine size={s} style={{ color: "#11557C" }} />,
+  "power bi": (s) => <LuChartBar size={s} style={{ color: "#F2C811" }} />,
+  looker: (s) => <SiLooker size={s} />,
+  matplotlib: (s) => <LuChartLine size={s} style={{ color: "#11557C" }} />,
   git: (s) => <Git width={s} height={s} />,
-  "ci/cd": (s) => <Si.SiGithubactions size={s} />,
-  "github actions": (s) => <Si.SiGithubactions size={s} />,
+  "ci/cd": (s) => <SiGithubactions size={s} />,
+  "github actions": (s) => <SiGithubactions size={s} />,
 
   // Infrastructure
   linux: (s) => <Linux width={s} height={s} />,
   "linux admin": (s) => <Linux width={s} height={s} />,
   ubuntu: (s) => <Ubuntu width={s} height={s} />,
   cisco: (s) => <CiscoDark width={s} height={s} />,
-  nmap: (s) => <Lu.LuShieldCheck size={s} style={{ color: "#4ADE80" }} />,
-  "security foundations": (s) => <Lu.LuShieldCheck size={s} style={{ color: "#4ADE80" }} />,
-  "it security": (s) => <Lu.LuShieldCheck size={s} style={{ color: "#4ADE80" }} />,
+  nmap: (s) => <LuShieldCheck size={s} style={{ color: "#4ADE80" }} />,
+  "security foundations": (s) => <LuShieldCheck size={s} style={{ color: "#4ADE80" }} />,
+  "it security": (s) => <LuShieldCheck size={s} style={{ color: "#4ADE80" }} />,
 
   // Modern Stack
   "next.js": (s) => <Nextjs width={s} height={s} />,
   react: (s) => <ReactLight width={s} height={s} />,
-  reactflow: (s) => <Lu.LuWorkflow size={s} style={{ color: "#FF0072" }} />,
+  reactflow: (s) => <LuWorkflow size={s} style={{ color: "#FF0072" }} />,
   "node.js": (s) => <Nodejs width={s} height={s} />,
   fastapi: (s) => <FastAPI width={s} height={s} />,
   d3: (s) => <SvgD3 width={s} height={s} />,
   "d3.js": (s) => <SvgD3 width={s} height={s} />,
-  "rest apis": (s) => <Lu.LuWorkflow size={s} style={{ color: "#38BDF8" }} />,
-  json: (s) => <Si.SiJson size={s} />,
-  "json/xml": (s) => <Si.SiJson size={s} />,
-  pydantic: (s) => <Si.SiPydantic size={s} />,
+  "rest apis": (s) => <LuWorkflow size={s} style={{ color: "#38BDF8" }} />,
+  json: (s) => <SiJson size={s} />,
+  "json/xml": (s) => <SiJson size={s} />,
+  pydantic: (s) => <SiPydantic size={s} />,
   zod: (s) => <Zod width={s} height={s} />,
   markdown: (s) => <MarkdownDark width={s} height={s} />,
 
-  default: (s) => <Lu.LuCpu size={s} style={{ color: "#38BDF8" }} />,
+  default: (s) => <LuCpu size={s} style={{ color: "#38BDF8" }} />,
 };
 
 export default function TechIcon({ name, className, size = 20 }: TechIconProps) {

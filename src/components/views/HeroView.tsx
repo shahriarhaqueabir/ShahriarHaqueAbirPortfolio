@@ -147,6 +147,7 @@ export default function HeroView({
                   value={aiInput}
                   onChange={(e) => setAiInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleAiSubmit()}
+                  aria-label="Ask me anything about Shahriar"
                   placeholder="Ask me anything about Shahriar..."
                   className="w-full bg-(--surface) border border-(--border) rounded-sm pl-4 pr-12 py-3.5 text-sm font-mono text-(--text) placeholder:text-(--text-muted) focus:outline-none focus:border-(--accent) transition-colors"
                 />
