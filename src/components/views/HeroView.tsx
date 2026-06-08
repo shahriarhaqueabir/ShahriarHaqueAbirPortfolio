@@ -172,7 +172,7 @@ export default function HeroView({
           <div className="relative">
             <div className="absolute -inset-5 bg-(--accent) opacity-14 rounded-sm blur-2xl group-hover:opacity-28 transition-opacity" />
             <div className="absolute -inset-10 bg-[#F59E0B] opacity-10 rounded-full blur-3xl" />
-            <div className="relative w-full h-[360px] md:h-[520px] 2xl:h-[580px] z-10 border border-(--border) grayscale-[0.25] hover:grayscale-0 transition-all duration-700 shadow-2xl overflow-hidden rounded-sm glass-panel">
+            <div className="relative w-full h-[280px] md:h-[520px] 2xl:h-[580px] z-10 border border-(--border) grayscale-[0.25] hover:grayscale-0 transition-all duration-700 shadow-2xl overflow-hidden rounded-sm glass-panel">
               <div className="scanline-overlay absolute inset-0 z-20 pointer-events-none" />
               <Image
                 src={CONFIG.profileImage || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800"}

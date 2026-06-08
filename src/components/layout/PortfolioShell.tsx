@@ -109,7 +109,7 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
       <section
         ref={contentScrollRef}
         data-testid="content-scroll"
-        className="flex-1 h-full overflow-y-auto overflow-x-hidden px-5 py-6 md:px-12 md:py-16 xl:px-16 relative custom-scrollbar pb-[220px]"
+        className="flex-1 h-full overflow-y-auto overflow-x-hidden px-5 py-6 md:py-16 pb-[300px] relative custom-scrollbar"
       >
         <div className="content-stage w-full max-w-5xl mx-auto">
           <AnimatePresence mode="wait">

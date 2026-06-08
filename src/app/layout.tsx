@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display, Syne, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { PersonJsonLd } from "@/components/PersonJsonLd";
+import { VercelInsightsWrapper } from "@/components/VercelInsightsWrapper";
 import { CONFIG } from "@/lib/data";
 import { seoKeywords, siteDescription, siteTitle, siteUrl } from "@/lib/seo";
 
@@ -92,8 +91,7 @@ export default function RootLayout({
           <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(238,246,248,0.35),transparent)]" />
         </div>
         {children}
-        <Analytics />
-        <SpeedInsights />
+        <VercelInsightsWrapper />
       </body>
     </html>
   );

@@ -33,6 +33,15 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, onNa
     }
   }, [messages, open]);
 
+  useEffect(() => {
+    if (!open) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [open, onClose]);
+
   return (
     <AnimatePresence>
       {open && (
@@ -72,7 +81,7 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, onNa
                       }`}
                     >
                       <item.icon className="w-2.5 h-2.5" />
-                      <span className="hidden xs:inline">{item.name}</span>
+                      <span className="inline">{item.name}</span>
                     </button>
                   ))}
                 </div>
