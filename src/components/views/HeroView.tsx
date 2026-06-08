@@ -54,10 +54,10 @@ export default function HeroView({
         <div className="relative z-10 w-full xl:flex-[1.05]">
           {/* Role badge */}
           <div className="mb-5 max-w-3xl border-l-2 border-(--accent) pl-5">
-            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-(--accent)">
+            <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-(--accent)">
               {CONFIG.tagline}
             </p>
-            <p className="mt-2 text-xs font-mono text-(--text-muted) tracking-widest">
+            <p className="mt-2 text-sm font-mono text-(--text-muted) tracking-widest">
               {CONFIG.taglineContext}
             </p>
           </div>
@@ -100,7 +100,7 @@ export default function HeroView({
                 <div className="mb-3 font-syne text-3xl font-black leading-none text-(--text)">
                   {stat.value}
                 </div>
-                <p className="text-[11px] font-bold uppercase leading-5 tracking-[0.12em] text-(--text-muted)">
+                <p className="text-xs font-bold uppercase leading-5 tracking-[0.12em] text-(--text-muted)">
                   {stat.label}
                 </p>
               </div>
@@ -159,7 +159,7 @@ export default function HeroView({
                   <Send className="h-4 w-4" />
                 </button>
               </div>
-              <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.18em] text-(--text-muted)">
+              <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-(--text-muted)">
                 Powered by Llama 3.2 · Runs locally in your browser · No data sent
               </p>
             </motion.div>
@@ -189,7 +189,7 @@ export default function HeroView({
               animate={{ y: [0, 12, 0], rotate: [-2, 2, -2] }}
               transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
             >
-              <div className="font-mono text-[8px] uppercase tracking-[0.3em] opacity-60">status</div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] opacity-60">status</div>
               <div className="whitespace-nowrap font-syne font-black text-sm uppercase">human in the loop</div>
             </motion.div>
 

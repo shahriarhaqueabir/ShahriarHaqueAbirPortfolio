@@ -2,7 +2,7 @@
 
 import { type RefObject } from "react";
 import HeroView from "@/components/views/HeroView";
-import BlogView from "@/components/views/BlogView";
+
 import AboutView from "@/components/views/AboutView";
 import ProjectsView from "@/components/views/ProjectsView";
 import ExperienceView from "@/components/views/ExperienceView";
@@ -22,8 +22,7 @@ export default function PortfolioViewRenderer({ activeView, setView, onAiQuery, 
   switch (activeView) {
     case "hero":
       return <HeroView key="hero" setView={setView} onAiQuery={onAiQuery} />;
-    case "blog":
-      return <BlogView key="blog" setView={setView} />;
+
     case "about":
       return <AboutView key="about" setView={setView} scrollContainerRef={scrollContainerRef} />;
     case "projects":

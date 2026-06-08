@@ -87,7 +87,7 @@ function DeviceMockup({ project, visual }: { project: Project; visual: { Icon: t
                >
                  <div className="w-8 h-px bg-white/20" />
                  <div
-                  className="px-3 py-1.5 border border-white/10 bg-white/5 font-mono text-[9px] uppercase tracking-widest text-white/80"
+                   className="px-3 py-1.5 border border-white/10 bg-white/5 font-mono text-[10px] uppercase tracking-widest text-white/80"
                   style={{ borderLeft: `2px solid ${visual.color}` }}
                  >
                    {node}
@@ -136,7 +136,7 @@ function FeaturedProject({ project, index, setView }: { project: Project; index:
         <div className="space-y-2">
           <div className="flex items-center gap-3">
              <div className="w-6 h-px bg-(--accent)" />
-             <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-(--accent)">{meta.category}</span>
+             <span className="font-mono text-xs uppercase tracking-[0.3em] text-(--accent)">{meta.category}</span>
           </div>
           <h3 className="font-syne text-4xl lg:text-5xl font-black text-(--text) leading-tight">{project.name}</h3>
         </div>
@@ -149,26 +149,26 @@ function FeaturedProject({ project, index, setView }: { project: Project; index:
           <div className="flex items-center gap-3">
             <Clock className="w-4 h-4 text-(--accent)" />
             <div>
-              <div className="text-[9px] uppercase font-mono text-(--text-muted) tracking-widest">Duration</div>
+              <div className="text-[10px] uppercase font-mono text-(--text-muted) tracking-widest">Duration</div>
               <div className="text-xs font-bold text-(--text)">{meta.duration}</div>
             </div>
           </div>
           <div className="flex items-center gap-3">
             <User className="w-4 h-4 text-(--accent)" />
             <div>
-              <div className="text-[9px] uppercase font-mono text-(--text-muted) tracking-widest">Client / Partner</div>
+              <div className="text-[10px] uppercase font-mono text-(--text-muted) tracking-widest">Client / Partner</div>
               <div className="text-xs font-bold text-(--text)">{meta.client}</div>
             </div>
           </div>
         </div>
 
         <div className="space-y-4">
-          <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-(--text-muted)">Tech Stack</div>
+          <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-(--text-muted)">Tech Stack</div>
           <div className="flex flex-wrap gap-2">
             {project.stack.map((item) => (
               <span
                 key={item}
-                className="px-3 py-1.5 border border-(--border) bg-(--surface)/50 rounded-full text-[9px] font-sans font-semibold text-(--text-muted) flex items-center gap-2.5 group hover:border-(--accent) hover:text-(--text) transition-colors"
+                className="px-4 py-2.5 border border-(--border) bg-(--surface)/50 rounded-full text-[10px] font-sans font-semibold text-(--text-muted) flex items-center gap-2.5 group hover:border-(--accent) hover:text-(--text) transition-colors"
               >
                 <TechIcon name={item} size={20} className="transition-opacity shrink-0" />
                 {item}

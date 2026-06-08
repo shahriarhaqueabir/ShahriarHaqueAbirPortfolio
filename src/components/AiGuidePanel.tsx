@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import TypewriterText from "@/components/TypewriterText";
-import { MessageSquare, User, X, Home, Briefcase, Layers, Newspaper, Zap, BarChart3, Mail, User as UserIcon } from "lucide-react";
+import { MessageSquare, User, X, Home, Briefcase, Layers, Zap, BarChart3, Mail, User as UserIcon } from "lucide-react";
 import type { Message, ViewKey } from "@/lib/types";
 
 type AiGuidePanelProps = {
@@ -17,7 +17,6 @@ type AiGuidePanelProps = {
 const navItems: Array<{ name: string; icon: typeof User; view: ViewKey }> = [
   { name: "Home", icon: Home, view: "hero" },
   { name: "About", icon: UserIcon, view: "about" },
-  { name: "Blog", icon: Newspaper, view: "blog" },
   { name: "Projects", icon: Briefcase, view: "projects" },
   { name: "Experience", icon: Layers, view: "experience" },
   { name: "Skills", icon: Zap, view: "skills" },

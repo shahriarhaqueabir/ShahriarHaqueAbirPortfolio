@@ -6,4 +6,4 @@ export type Message = {
   isReadyGreen?: boolean;
 };
 
-export type ViewKey = "hero" | "blog" | "about" | "projects" | "experience" | "skills" | "stack" | "vision" | "stats" | "contact";
+export type ViewKey = "hero" | "about" | "projects" | "experience" | "skills" | "stack" | "vision" | "stats" | "contact";

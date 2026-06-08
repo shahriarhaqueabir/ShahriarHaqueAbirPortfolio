@@ -116,7 +116,7 @@ function CompetencyCard({
         <h3 className="font-syne text-xl font-black leading-tight text-(--text) mb-4 group-hover:text-(--text) transition-colors">
           {title}
         </h3>
-        <p className="text-sm leading-relaxed text-(--text-muted)">{text}</p>
+        <p className="text-base leading-relaxed text-(--text-muted)">{text}</p>
       </div>
     </motion.article>
   );
@@ -215,7 +215,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
                 {group.items.map((item) => (
                   <span
                     key={item}
-                    className="px-4 py-2 bg-(--bg) border border-(--border) text-[9px] font-sans font-semibold uppercase text-(--text-muted) flex items-center gap-2.5 group hover:border-(--accent) hover:text-(--text) transition-colors"
+                    className="px-4 py-2.5 bg-(--bg) border border-(--border) text-[10px] font-sans font-semibold uppercase text-(--text-muted) flex items-center gap-2.5 group hover:border-(--accent) hover:text-(--text) transition-colors"
                   >
                     <TechIcon name={item} size={20} className="transition-opacity shrink-0" />
                     {item}

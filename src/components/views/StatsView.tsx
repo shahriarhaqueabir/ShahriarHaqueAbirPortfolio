@@ -128,16 +128,16 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
 
       <section className="relative z-10 mx-auto grid max-w-[1280px] grid-cols-1 gap-10 lg:grid-cols-[0.78fr_1.46fr_0.9fr] lg:items-start">
         <aside className="pt-24 lg:pt-32">
-          <div className="mb-7 font-mono text-[10px] uppercase tracking-[0.34em] text-(--text-muted)">Human Qualities</div>
+          <div className="mb-7 font-mono text-xs uppercase tracking-[0.34em] text-(--text-muted)">Human Qualities</div>
           <h2 className="max-w-[290px] font-syne text-6xl font-medium leading-[0.92] tracking-normal text-(--text) md:text-7xl">
             Life&apos;s sky.
             <br />
             Human signals.
           </h2>
-          <p className="mt-12 max-w-[280px] font-mono text-[11px] font-bold leading-8 text-(--text)">
+          <p className="mt-12 max-w-[280px] font-mono text-xs font-bold leading-8 text-(--text)">
             Calm when stakes rise. Clear when systems get tangled. Kind enough to keep people with the work.
           </p>
-          <p className="mt-12 max-w-[190px] font-mono text-[10px] uppercase leading-5 tracking-[0.28em] text-(--text-muted)">Follow the constellation.</p>
+          <p className="mt-12 max-w-[190px] font-mono text-xs uppercase leading-5 tracking-[0.28em] text-(--text-muted)">Follow the constellation.</p>
         </aside>
 
         <div className="relative mx-auto aspect-square w-full max-w-[620px]">
@@ -260,19 +260,19 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
 
         {/* Mobile-only: centred active node label — replaces clipping per-star labels */}
         <div className="mt-6 flex flex-col items-center gap-1 sm:hidden">
-          <div className="font-mono text-[8px] uppercase tracking-[0.28em] text-(--text-muted)">tap a star</div>
-          <div className="font-mono text-[11px] font-bold uppercase tracking-[0.28em] text-(--text)">{activeNode.label}</div>
+          <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--text-muted)">tap a star</div>
+          <div className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-(--text)">{activeNode.label}</div>
           <div className="mt-1 h-px w-8 bg-(--accent)" />
         </div>
 
         <aside className="relative pt-8 lg:pt-20">
-          <div className="mb-32 hidden text-right font-mono text-[8px] font-bold uppercase tracking-[0.32em] text-(--text-muted) lg:block">
+          <div className="mb-32 hidden text-right font-mono text-[10px] font-bold uppercase tracking-[0.32em] text-(--text-muted) lg:block">
             <div>Last Updated</div>
             <div className="mt-4 text-(--text)">May 15, 2026&nbsp;&nbsp;20:45</div>
           </div>
 
           <div className="mb-8">
-            <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--text-muted)">Key Metrics</div>
+            <div className="font-mono text-xs uppercase tracking-[0.28em] text-(--text-muted)">Key Metrics</div>
             <div className="mt-3 h-px w-12 bg-(--accent2)" />
           </div>
           <div className="space-y-7">
@@ -298,16 +298,16 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
       <section className="relative z-10 mx-auto mt-10 grid max-w-[1280px] grid-cols-1 gap-8 border-t border-(--border) pt-8 lg:grid-cols-[300px_1fr]">
         <div className="overflow-hidden border border-(--border) bg-[#101826]/86">
           <div className="p-8">
-            <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--text-muted)">Working Style</div>
+            <div className="font-mono text-xs uppercase tracking-[0.28em] text-(--text-muted)">Working Style</div>
             <div className="mt-7 flex items-end gap-2">
               <div className="font-syne text-5xl font-black leading-none text-(--text)">Integration</div>
               <div className="pb-2 text-xs text-(--text-muted)">technical operations engineer</div>
             </div>
             <div className="my-7 h-px w-11 bg-(--text)" />
-            <p className="max-w-[220px] text-sm leading-relaxed text-(--text-muted)">
+            <p className="max-w-[220px] text-base leading-relaxed text-(--text-muted)">
               The technical profile matters, but the work is remembered through steadiness, clarity, follow-through, and care for the customer&apos;s actual situation.
             </p>
-            <div className="mt-8 font-mono text-[9px] uppercase tracking-[0.2em] text-(--accent)">{futurePaths[futureIndex]}</div>
+            <div className="mt-8 font-mono text-[10px] uppercase tracking-[0.2em] text-(--accent)">{futurePaths[futureIndex]}</div>
           </div>
           <button
             type="button"
@@ -330,7 +330,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
                 className="group flex min-h-28 flex-col justify-between border border-(--border) bg-[#070B12]/70 p-5 text-left transition-colors hover:border-(--accent) hover:bg-[#101826]"
               >
                 <div className="flex items-center justify-between gap-4">
-                  <span className="font-mono text-[8px] uppercase tracking-[0.28em] text-(--accent)">{path.label}</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--accent)">{path.label}</span>
                   <ArrowRight className="h-4 w-4 text-(--text-muted) transition-transform group-hover:translate-x-1 group-hover:text-(--accent)" />
                 </div>
                 <span className="mt-7 font-syne text-lg font-black leading-tight text-(--text)">{path.question}</span>

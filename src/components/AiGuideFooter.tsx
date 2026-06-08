@@ -84,10 +84,10 @@ export default function AiGuideFooter({
                     : "bg-(--text-muted)"
               }`}
             />
-            <span className="text-[8px] font-mono text-(--text-muted) uppercase tracking-wider shrink-0">
+            <span className="text-[10px] font-mono text-(--text-muted) uppercase tracking-wider shrink-0">
               [{localAiPaused ? "Paused" : localAiFallback ? "Fallback" : !localAiEnabled ? "Opt-in" : isReady ? "Ready" : "Loading"}]
             </span>
-            <span className="text-[9px] font-mono text-(--text-muted) uppercase tracking-wider hidden sm:inline">
+            <span className="text-[10px] font-mono text-(--text-muted) uppercase tracking-wider hidden sm:inline">
               Shahriar&apos;s AI Guide
             </span>
           </div>
@@ -119,7 +119,7 @@ export default function AiGuideFooter({
                   onSend(s.input);
                   onFocus();
                 }}
-                className="shrink-0 px-3 py-1.5 rounded-sm border border-(--border) text-[9px] font-mono uppercase tracking-wider text-(--text-muted) hover:text-(--accent) hover:border-(--accent) transition-colors bg-(--bg)/50"
+                className="shrink-0 px-4 py-2.5 rounded-sm border border-(--border) text-[10px] font-mono uppercase tracking-wider text-(--text-muted) hover:text-(--accent) hover:border-(--accent) transition-colors bg-(--bg)/50"
               >
                 {s.label}
               </button>
