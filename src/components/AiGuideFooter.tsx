@@ -51,7 +51,7 @@ export default function AiGuideFooter({
   };
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 md:left-[76px] z-30 border-t border-(--border) bg-(--surface)/90 backdrop-blur-3xl">
+    <footer className="fixed bottom-0 left-0 right-0 md:left-[76px] z-50 border-t border-(--border) bg-(--surface)/90 backdrop-blur-3xl">
       <AnimatePresence>
         {showReadyToast && (
           <motion.div

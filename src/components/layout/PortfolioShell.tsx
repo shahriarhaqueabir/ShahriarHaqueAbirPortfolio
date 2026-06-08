@@ -83,7 +83,7 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
   }, [activeView]);
 
   return (
-    <main suppressHydrationWarning className="flex h-screen w-full relative z-10 font-inter text-(--text) bg-(--bg) overflow-hidden">
+    <main suppressHydrationWarning className="flex h-screen w-full relative z-10 font-inter text-(--text) bg-(--bg)">
       <AnimatePresence>
         {isBooting && (
           <BootScreen

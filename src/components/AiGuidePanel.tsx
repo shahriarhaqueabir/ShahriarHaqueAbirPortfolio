@@ -97,7 +97,7 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, onNa
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-5 py-4 flex flex-col gap-4 custom-scrollbar" role="log" aria-live="polite" aria-label="Chat messages">
+            <div className="flex-1 overflow-y-auto px-5 py-4 pb-[160px] flex flex-col gap-4 custom-scrollbar" role="log" aria-live="polite" aria-label="Chat messages">
               {messages.length === 0 && (
                 <p className="text-[11px] font-mono text-(--text-muted) text-center mt-8">
                   Start a conversation...
