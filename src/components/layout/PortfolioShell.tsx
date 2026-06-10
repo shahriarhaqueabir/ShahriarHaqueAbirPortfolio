@@ -83,7 +83,7 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
   }, [activeView]);
 
   return (
-    <main suppressHydrationWarning className="flex h-screen w-full relative z-10 font-inter text-(--text) bg-(--bg)">
+    <main suppressHydrationWarning className="flex h-screen w-full relative z-10 font-sans text-(--text) bg-(--bg)">
       <AnimatePresence>
         {isBooting && (
           <BootScreen
@@ -109,7 +109,7 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
       <section
         ref={contentScrollRef}
         data-testid="content-scroll"
-        className="flex-1 h-full overflow-y-auto overflow-x-hidden px-5 py-6 md:py-16 pb-[300px] relative custom-scrollbar"
+        className="flex-1 h-full overflow-y-auto overflow-x-hidden px-5 py-6 md:py-16 pb-[180px] md:pb-[300px] relative custom-scrollbar"
       >
         <div className="content-stage w-full max-w-5xl mx-auto">
           <AnimatePresence mode="wait">
@@ -137,6 +137,7 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
         messages={worker.messages}
         activeView={activeView}
         onNavigate={(view) => navigate(view)}
+        onSend={send}
       />
 
       {!panelOpen && !isBooting && (

@@ -40,7 +40,7 @@ export default function AiGuideFooter({
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const lastAiMessage = [...messages].reverse().find((m) => m.sender === "ai" && !m.isTyping && !m.isReadyGreen);
+  const lastAiMessage = [...messages].reverse().find((m) => (m.sender === "ai" || m.sender === "fallback") && !m.isTyping && !m.isReadyGreen);
 
   const handleSubmit = () => {
     const text = input.trim();

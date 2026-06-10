@@ -2,6 +2,7 @@
 
 import { type RefObject, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { Coffee, MapPin, MessageCircle, Sparkles } from "lucide-react";
 import GuidedNext from "@/components/GuidedNext";
 import { CONFIG } from "@/lib/data";
@@ -43,6 +44,7 @@ const principles = [
 ];
 
 export default function AboutView({ setView, scrollContainerRef }: { setView: (view: ViewKey) => void; scrollContainerRef?: RefObject<HTMLElement | null> }) {
+  const shouldReduceMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ container: scrollContainerRef, target: containerRef, offset: ["start start", "end end"] });
   const lineScale = useTransform(scrollYProgress, [0.04, 0.88], [0, 1]);
@@ -50,7 +52,7 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
   const glowOpacity = useTransform(scrollYProgress, [0, 0.35, 0.8], [0.16, 0.32, 0.12]);
 
   return (
-    <motion.div ref={containerRef} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="relative max-w-5xl pb-24">
+    <motion.div ref={containerRef} initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }} animate={shouldReduceMotion ? {} : { opacity: 1, x: 0 }} exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }} className="relative max-w-5xl pb-24">
       <motion.div
         className="pointer-events-none fixed right-12 top-20 hidden h-[60vh] w-px origin-top bg-[linear-gradient(to_bottom,var(--accent),var(--accent2),transparent)] lg:block"
         style={{ scaleY: lineScale }}
@@ -125,14 +127,14 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
         <div className="absolute left-4 top-20 bottom-20 hidden w-px bg-(--border) md:block">
           <motion.div className="h-full origin-top bg-(--accent)" style={{ scaleY: lineScale }} />
         </div>
-        <div className="space-y-20 md:pl-20">
+        <div className="space-y-10 md:space-y-20 md:pl-20">
           {storyBeats.map((beat, index) => (
             <motion.article
               key={beat.title}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 28 }}
+              whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.42 }}
-              transition={{ duration: 0.55, ease: "easeOut" }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.55, ease: "easeOut" }}
               className="grid grid-cols-1 gap-8 lg:grid-cols-[220px_1fr]"
             >
               <div>
@@ -165,10 +167,10 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
           {principles.map((principle, index) => (
             <motion.div
               key={principle}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+              whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.55 }}
-              transition={{ delay: index * 0.06, duration: 0.35 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { delay: index * 0.06, duration: 0.35 }}
               className="min-h-40 bg-(--surface) p-7"
             >
               <div className="mb-8 font-mono text-[10px] uppercase tracking-[0.24em] text-(--text-muted)">principle {String(index + 1).padStart(2, "0")}</div>

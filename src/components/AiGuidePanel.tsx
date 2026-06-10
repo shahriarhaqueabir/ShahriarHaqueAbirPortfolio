@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import TypewriterText from "@/components/TypewriterText";
-import { MessageSquare, User, X, Home, Briefcase, Layers, Zap, BarChart3, Mail, User as UserIcon } from "lucide-react";
+import { MessageSquare, User, X, Home, Briefcase, Layers, Zap, BarChart3, Mail, User as UserIcon, Cpu } from "lucide-react";
 import type { Message, ViewKey } from "@/lib/types";
 
 type AiGuidePanelProps = {
@@ -12,6 +12,7 @@ type AiGuidePanelProps = {
   messages: Message[];
   activeView: ViewKey;
   onNavigate: (view: ViewKey) => void;
+  onSend: (input: string) => void;
 };
 
 const navItems: Array<{ name: string; icon: typeof User; view: ViewKey }> = [
@@ -24,7 +25,7 @@ const navItems: Array<{ name: string; icon: typeof User; view: ViewKey }> = [
   { name: "Contact", icon: Mail, view: "contact" },
 ];
 
-export default function AiGuidePanel({ open, onClose, messages, activeView, onNavigate }: AiGuidePanelProps) {
+export default function AiGuidePanel({ open, onClose, messages, activeView, onNavigate, onSend }: AiGuidePanelProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -111,13 +112,16 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, onNa
                       ? "bg-(--text) text-(--bg) self-end font-medium"
                       : msg.sender === "sys"
                         ? "bg-transparent text-(--text-muted) border-l-2 border-(--border) self-start font-mono text-[9px] uppercase tracking-widest pl-3 py-1 shadow-none"
-                        : msg.isReadyGreen
-                          ? "bg-green-500 text-white border-green-400 self-start font-bold"
-                          : "bg-(--surface) text-(--text) border border-(--border) self-start font-mono text-[11px]"
+                        : msg.sender === "fallback"
+                          ? "bg-(--surface) text-(--text) border-l-2 border-(--accent) self-start font-mono text-[11px]"
+                          : msg.isReadyGreen
+                            ? "bg-green-500 text-white border-green-400 self-start font-bold"
+                            : "bg-(--surface) text-(--text) border border-(--border) self-start font-mono text-[11px]"
                   }`}
                 >
                   <div className="flex items-start gap-3">
                     {msg.sender === "ai" && !msg.isTyping && <MessageSquare className="w-3 h-3 mt-1 text-(--accent) opacity-50 shrink-0" />}
+                    {msg.sender === "fallback" && <Cpu className="w-3 h-3 mt-1 text-(--accent) opacity-50 shrink-0" />}
                     {msg.sender === "user" && <User className="w-3 h-3 mt-1 text-(--bg) opacity-50 shrink-0" />}
                     <span>
                       {msg.isTyping ? (
@@ -133,6 +137,20 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, onNa
                       )}
                     </span>
                   </div>
+                  {msg.sender === "fallback" && msg.suggestions && msg.suggestions.length > 0 && (
+                    <div className="flex gap-2 mt-3 flex-wrap">
+                      {msg.suggestions.map((suggestion) => (
+                        <button
+                          key={suggestion}
+                          type="button"
+                          onClick={() => onSend(suggestion)}
+                          className="px-3 py-1.5 rounded-sm border border-(--accent)/40 text-[10px] font-mono text-(--accent) hover:bg-(--accent) hover:text-(--bg) transition-colors"
+                        >
+                          {suggestion}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
               <div ref={messagesEndRef} />

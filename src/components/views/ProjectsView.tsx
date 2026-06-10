@@ -1,13 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import {
   ArrowRight,
   BrainCircuit,
   ChartSpline,
   Clock,
-  ExternalLink,
-  Eye,
   Network,
   ServerCog,
   Sparkles,
@@ -52,6 +51,7 @@ function getArchitectureNodes(project: Project): string[] {
 }
 
 function DeviceMockup({ project, visual }: { project: Project; visual: { Icon: typeof Workflow; color: string; symbol: string } }) {
+  const mockupReduceMotion = useReducedMotion();
   const nodes = getArchitectureNodes(project);
 
   return (
@@ -77,14 +77,14 @@ function DeviceMockup({ project, visual }: { project: Project; visual: { Icon: t
           <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: "linear-gradient(90deg, #fff 1px, transparent 1px), linear-gradient(#fff 1px, transparent 1px)", backgroundSize: "20px 20px" }} />
 
           <div className="relative z-10 h-full flex flex-col justify-center gap-4">
-             {nodes.map((node, i) => (
-               <motion.div
-                 key={node}
-                 initial={{ opacity: 0, x: -10 }}
-                 whileInView={{ opacity: 1, x: 0 }}
-                 transition={{ delay: i * 0.1 }}
-                 className="flex items-center gap-3"
-               >
+              {nodes.map((node, i) => (
+                <motion.div
+                  key={node}
+                  initial={mockupReduceMotion ? false : { opacity: 0, x: -10 }}
+                  whileInView={mockupReduceMotion ? undefined : { opacity: 1, x: 0 }}
+                  transition={mockupReduceMotion ? { duration: 0 } : { delay: i * 0.1 }}
+                  className="flex items-center gap-3"
+                >
                  <div className="w-8 h-px bg-white/20" />
                  <div
                    className="px-3 py-1.5 border border-white/10 bg-white/5 font-mono text-[10px] uppercase tracking-widest text-white/80"
@@ -114,6 +114,7 @@ function DeviceMockup({ project, visual }: { project: Project; visual: { Icon: t
 }
 
 function FeaturedProject({ project, index }: { project: Project; index: number }) {
+  const featureReduceMotion = useReducedMotion();
   const visual = getProjectVisual(project);
   const meta = projectMeta[project.name] || { duration: "3 Months", client: "Confidential", category: "Technical Project" };
   const isEven = index % 2 === 0;
@@ -121,8 +122,8 @@ function FeaturedProject({ project, index }: { project: Project; index: number }
   return (
     <motion.article
       data-testid={`project-card-${index}`}
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={featureReduceMotion ? false : { opacity: 0, y: 40 }}
+      whileInView={featureReduceMotion ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       className={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center mb-32 ${isEven ? "" : "lg:flex-row-reverse"}`}
     >
@@ -148,16 +149,20 @@ function FeaturedProject({ project, index }: { project: Project; index: number }
         {/* Problem / Solution / Result fields */}
         <div className="space-y-3">
           <div className="border-l-2 border-(--border) pl-4">
-            <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-(--accent) mb-1">Problem</div>
-            <p className="text-sm text-(--text-muted) leading-relaxed">{project.context}</p>
+            <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-(--accent) mb-1">Problem</div>
+            <p className="text-sm text-(--text-muted) leading-relaxed break-words">{project.context}</p>
           </div>
           <div className="border-l-2 border-(--border) pl-4">
-            <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-(--accent) mb-1">Solution</div>
-            <p className="text-sm text-(--text-muted) leading-relaxed">{project.implementation}</p>
+            <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-(--accent) mb-1">Solution</div>
+            <p className="text-sm text-(--text-muted) leading-relaxed break-words">{project.implementation}</p>
           </div>
           <div className="border-l-2 border-(--border) pl-4">
-            <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-(--accent) mb-1">Result</div>
-            <p className="text-sm text-(--text-muted) leading-relaxed">{project.outcome}</p>
+            <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-(--accent) mb-1">Result</div>
+            <p className="text-sm text-(--text-muted) leading-relaxed break-words">{project.outcome}</p>
+          </div>
+          <div className="border-l-2 border-(--border) pl-4">
+            <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-(--accent) mb-1">Lessons Learned</div>
+            <p className="text-sm text-(--text-muted) leading-relaxed break-words">{project.lessons}</p>
           </div>
         </div>
 
@@ -193,32 +198,18 @@ function FeaturedProject({ project, index }: { project: Project; index: number }
           </div>
         </div>
 
-        <div className="flex items-center gap-6 pt-4">
-          <button
-            className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-(--text) hover:text-(--accent) transition-colors"
-            aria-label="Preview (not yet available)"
-          >
-            <Eye className="w-4 h-4" />
-            <span>Preview</span>
-            <div className="w-0 group-hover:w-8 h-px bg-(--accent) transition-all duration-300" />
-          </button>
-          <button className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-(--text) hover:text-(--accent) transition-colors">
-            <ExternalLink className="w-4 h-4" />
-            <span>Live Demo</span>
-            <div className="w-0 group-hover:w-8 h-px bg-(--accent) transition-all duration-300" />
-          </button>
-        </div>
       </div>
     </motion.article>
   );
 }
 
 export default function ProjectsView({ setView }: { setView: (view: ViewKey) => void }) {
+  const shouldReduceMotion = useReducedMotion();
   return (
     <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 20 }}
+      initial={shouldReduceMotion ? false : { opacity: 0, x: -20 }}
+      animate={shouldReduceMotion ? {} : { opacity: 1, x: 0 }}
+      exit={shouldReduceMotion ? undefined : { opacity: 0, x: 20 }}
       className="pt-10 max-w-5xl mx-auto"
     >
       <div className="flex items-center justify-between mb-16">

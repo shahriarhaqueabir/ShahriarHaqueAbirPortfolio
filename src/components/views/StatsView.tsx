@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { ArrowRight } from "lucide-react";
 import type { ViewKey } from "@/lib/types";
 
@@ -96,6 +97,7 @@ function MetricGlyph({ type }: { type: string }) {
 }
 
 export default function StatsView({ setView }: { setView: (view: ViewKey) => void }) {
+  const shouldReduceMotion = useReducedMotion();
   const [activeNode, setActiveNode] = useState(orbitNodesWithPoints[4]);
   const [futureIndex, setFutureIndex] = useState(0);
 
@@ -113,10 +115,10 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      className="relative -m-5 min-h-screen overflow-hidden bg-[#030509] px-6 py-10 text-(--text) md:-m-12 md:px-10 md:py-14 xl:-m-16 xl:px-12"
+      initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }}
+      animate={shouldReduceMotion ? {} : { opacity: 1, x: 0 }}
+      exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }}
+      className="relative min-h-screen overflow-hidden bg-[#030509] px-5 py-10 text-(--text) md:-m-12 md:px-10 md:py-14 xl:-m-16 xl:px-12"
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.42]"
@@ -127,7 +129,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
       />
 
       <section className="relative z-10 mx-auto grid max-w-[1280px] grid-cols-1 gap-10 lg:grid-cols-[0.78fr_1.46fr_0.9fr] lg:items-start">
-        <aside className="pt-24 lg:pt-32">
+        <aside className="pt-12 lg:pt-24">
           <div className="mb-7 font-mono text-xs uppercase tracking-[0.34em] text-(--text-muted)">Human Qualities</div>
           <h2 className="max-w-[290px] font-syne text-4xl font-medium leading-[0.92] tracking-tight text-(--text) md:text-5xl">
             Life&apos;s sky.
@@ -151,9 +153,9 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
               stroke="rgba(155,58,71,0.12)"
               strokeWidth="0.2"
               strokeDasharray="1 1.7"
-              animate={{ rotate: -360 }}
+              animate={shouldReduceMotion ? {} : { rotate: -360 }}
               style={{ transformOrigin: "50% 50%" }}
-              transition={{ duration: 58, repeat: Infinity, ease: "linear" }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 58, repeat: Infinity, ease: "linear" }}
             />
             {particleField.map((particle) => (
               <motion.circle
@@ -162,16 +164,16 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
                 cy={particle.y}
                 r={particle.warm ? 0.25 : 0.14}
                 fill={particle.warm ? "rgba(245,158,11,0.48)" : "rgba(148,163,184,0.28)"}
-                animate={{ opacity: [0.72, 0.68, 0.62] }}
-                transition={{ duration: 4.6, delay: particle.delay, repeat: Infinity, ease: "easeInOut" }}
+                animate={shouldReduceMotion ? {} : { opacity: [0.72, 0.68, 0.62] }}
+                transition={shouldReduceMotion ? { duration: 0 } : { duration: 4.6, delay: particle.delay, repeat: Infinity, ease: "easeInOut" }}
               />
             ))}
           </svg>
 
           <motion.div
             className="absolute left-1/2 top-1/2 z-10 h-14 w-14 -translate-x-1/2 -translate-y-1/2 rounded-full"
-            animate={{ scale: [1, 1.08, 1] }}
-            transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
+            animate={shouldReduceMotion ? {} : { scale: [1, 1.08, 1] }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
           >
             <span className="pointer-events-none absolute left-1/2 top-1/2 h-px w-5 -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,transparent,rgba(56,189,248,0.46),transparent)] blur-[0.5px]" />
             <span className="pointer-events-none absolute left-1/2 top-1/2 h-5 w-px -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(180deg,transparent,rgba(56,189,248,0.46),transparent)] blur-[0.5px]" />
@@ -187,7 +189,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
             />
           </motion.div>
 
-          <motion.div className="absolute inset-0" animate={{ rotate: -360 }} transition={{ duration: ORBIT_DURATION_SECONDS, repeat: Infinity, ease: "linear" }}>
+          <motion.div className="absolute inset-0" animate={shouldReduceMotion ? {} : { rotate: -360 }} transition={shouldReduceMotion ? { duration: 0 } : { duration: ORBIT_DURATION_SECONDS, repeat: Infinity, ease: "linear" }}>
             <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 100 100" aria-hidden="true">
               <g stroke="rgba(238,246,248,0.2)" strokeWidth="0.16" strokeLinecap="round" strokeDasharray="0.8 1.5">
                 <line x1={orbitNodesWithPoints[5].x} y1={orbitNodesWithPoints[5].y} x2="50" y2="50" />
@@ -230,7 +232,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
                   className="absolute z-10 h-14 w-14 -translate-x-1/2 -translate-y-1/2 rounded-full text-left outline-none"
                   style={{ left: `${node.x}%`, top: `${node.y}%` }}
                 >
-                  <motion.span className="absolute inset-0 block" animate={{ rotate: 360 }} transition={{ duration: ORBIT_DURATION_SECONDS, repeat: Infinity, ease: "linear" }}>
+                  <motion.span className="absolute inset-0 block" animate={shouldReduceMotion ? {} : { rotate: 360 }} transition={shouldReduceMotion ? { duration: 0 } : { duration: ORBIT_DURATION_SECONDS, repeat: Infinity, ease: "linear" }}>
                     <span className="pointer-events-none absolute left-1/2 top-1/2 h-px w-5 -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.38),transparent)] blur-[0.5px]" />
                     <span className="pointer-events-none absolute left-1/2 top-1/2 h-5 w-px -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(180deg,transparent,rgba(255,255,255,0.38),transparent)] blur-[0.5px]" />
                     <span className="pointer-events-none absolute left-1/2 top-1/2 h-px w-4 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.28),transparent)] blur-[0.5px]" />
@@ -245,11 +247,11 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
                         filter: "brightness(2.8)",
                         boxShadow: orbGlow,
                       }}
-                      animate={{ scale: isActive ? [1, 1.55, 1] : [1, 1.18, 1] }}
-                      transition={{ duration: isActive ? 2.2 : 3.2, repeat: Infinity, ease: "easeInOut" }}
+                      animate={shouldReduceMotion ? {} : { scale: isActive ? [1, 1.55, 1] : [1, 1.18, 1] }}
+                      transition={shouldReduceMotion ? { duration: 0 } : { duration: isActive ? 2.2 : 3.2, repeat: Infinity, ease: "easeInOut" }}
                     />
                     <span className="pointer-events-none absolute left-1/2 top-[calc(100%+18px)] hidden sm:block min-w-32 -translate-x-1/2 text-center">
-                      <span className="block font-mono text-[10px] font-bold uppercase tracking-[0.32em] text-(--text)">{node.label}</span>
+                      <span className="block font-mono text-[11px] font-bold uppercase tracking-[0.32em] text-(--text)">{node.label}</span>
                     </span>
                   </motion.span>
                 </button>
@@ -260,7 +262,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
 
         {/* Mobile-only: centred active node label — replaces clipping per-star labels */}
         <div className="mt-6 flex flex-col items-center gap-1 sm:hidden">
-          <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--text-muted)">tap a star</div>
+          <div className="font-mono text-[11px] uppercase tracking-[0.28em] text-(--text-muted)">tap a star</div>
           <div className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-(--text)">{activeNode.label}</div>
           <div className="mt-1 h-px w-8 bg-(--accent)" />
         </div>
@@ -277,13 +279,13 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
           </div>
           <div className="space-y-7">
             {metrics.map((metric) => (
-              <div key={metric.label} className="grid grid-cols-[46px_1fr_84px] items-center gap-5">
+              <div key={metric.label} className="grid grid-cols-1 sm:grid-cols-[46px_1fr_84px] items-center gap-5 min-w-0">
                 <div className="flex h-12 w-12 items-center justify-center rounded-full border border-(--border) bg-[#101826]/90 text-(--text)">
                   <MetricGlyph type={metric.glyph} />
                 </div>
                 <div>
                   <div className="font-syne text-xl font-black leading-none tracking-tight text-(--text)">{metric.value}</div>
-                  <div className="mt-1 text-xs leading-tight text-(--text-muted)">{metric.label}</div>
+                  <div className="mt-1 text-xs leading-tight text-(--text-muted) break-words">{metric.label}</div>
                 </div>
                 <svg viewBox="0 0 24 24" className="h-8 w-full text-(--text-muted)" fill="none" stroke="currentColor" strokeWidth="0.8">
                   <path d={metric.spark} />

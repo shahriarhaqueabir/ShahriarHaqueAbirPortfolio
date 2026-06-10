@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import CompanyLogo from "@/components/CompanyLogo";
 import GuidedNext from "@/components/GuidedNext";
 import { CONFIG } from "@/lib/data";
@@ -17,12 +18,13 @@ const lifeMilestones = [
 ];
 
 export default function ExperienceView({ setView }: { setView: (view: ViewKey) => void }) {
+  const shouldReduceMotion = useReducedMotion();
   return (
-    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="pt-10 max-w-5xl">
+    <motion.div initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }} animate={shouldReduceMotion ? {} : { opacity: 1, x: 0 }} exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }} className="pt-10 max-w-5xl">
       <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">— Career Trajectory</div>
       <h2 className="text-3xl font-syne font-black mb-12 tracking-tight text-(--text)">Experience</h2>
 
-      <div className="bg-(--surface) border border-(--border) p-8 mb-20 relative overflow-hidden">
+      <div className="bg-(--surface) border border-(--border) p-5 md:p-8 mb-20 relative overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-1 bg-(--accent)"></div>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
           <h4 className="font-syne font-bold text-xs text-(--text-muted) uppercase tracking-widest">Professional Influence Map</h4>
@@ -36,27 +38,27 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
           <div className="absolute left-3 top-0 bottom-0 w-px bg-(--border) xl:left-0 xl:right-0 xl:top-8 xl:bottom-auto xl:h-px xl:w-full"></div>
           <motion.div
             className="absolute left-3 top-0 bottom-0 w-px origin-top bg-[linear-gradient(to_bottom,var(--accent),transparent)] xl:hidden"
-            initial={{ scaleY: 0 }}
-            animate={{ scaleY: 1 }}
-            transition={{ duration: 4.8, ease: "easeInOut" }}
+            initial={shouldReduceMotion ? false : { scaleY: 0 }}
+            animate={shouldReduceMotion ? {} : { scaleY: 1 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 4.8, ease: "easeInOut" }}
           />
           <motion.div
             className="signal-dot absolute left-3 top-0 -translate-x-1/2 -translate-y-1/2 text-(--accent) xl:hidden"
-            initial={{ top: 0, opacity: 0 }}
-            animate={{ top: "100%", opacity: [0, 1, 1, 0] }}
-            transition={{ duration: 4.8, ease: "easeInOut" }}
+            initial={shouldReduceMotion ? false : { top: 0, opacity: 0 }}
+            animate={shouldReduceMotion ? {} : { top: "100%", opacity: [0, 1, 1, 0] }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 4.8, ease: "easeInOut" }}
           />
           <motion.div
             className="absolute left-0 right-0 top-8 hidden h-px origin-left bg-[linear-gradient(to_right,var(--accent),transparent)] xl:block"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 4.8, ease: "easeInOut" }}
+            initial={shouldReduceMotion ? false : { scaleX: 0 }}
+            animate={shouldReduceMotion ? {} : { scaleX: 1 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 4.8, ease: "easeInOut" }}
           />
           <motion.div
             className="signal-dot absolute top-8 hidden -translate-x-1/2 -translate-y-1/2 text-(--accent) xl:block"
-            initial={{ left: "6.25%", opacity: 0 }}
-            animate={{ left: "93.75%", opacity: [0, 1, 1, 0] }}
-            transition={{ duration: 4.8, ease: "easeInOut" }}
+            initial={shouldReduceMotion ? false : { left: "6.25%", opacity: 0 }}
+            animate={shouldReduceMotion ? {} : { left: "93.75%", opacity: [0, 1, 1, 0] }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 4.8, ease: "easeInOut" }}
           />
           <div className="grid grid-cols-1 xl:grid-cols-8 gap-6">
             {lifeMilestones.map((milestone, index) => {
@@ -66,40 +68,40 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
               return (
                 <motion.div
                   key={`${milestone.label}-${milestone.marker}`}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: isNow ? 1 : 0.72, y: 0, scale: 1 }}
-                  transition={{ delay: index * 0.08, duration: 0.3, ease: "easeOut" }}
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 8 }}
+                  animate={shouldReduceMotion ? {} : { opacity: isNow ? 1 : 0.72, y: 0, scale: 1 }}
+                  transition={shouldReduceMotion ? { duration: 0 } : { delay: index * 0.08, duration: 0.3, ease: "easeOut" }}
                   className="relative pl-10 xl:pl-0 xl:pt-16"
                 >
                   <motion.div
                     className="absolute left-3 top-2 flex h-4 w-4 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-(--accent) xl:left-0 xl:right-0 xl:top-8 xl:mx-auto"
-                    initial={{ scale: 1 }}
-                    animate={{
+                    initial={shouldReduceMotion ? false : { scale: 1 }}
+                    animate={shouldReduceMotion ? {} : {
                       scale: isNow ? [1, 1.45, 1.3] : [1, 1.18, 1],
                     }}
-                    transition={{ delay: pulseDelay, duration: isNow ? 1.4 : 0.9, ease: "easeOut" }}
+                    transition={shouldReduceMotion ? { duration: 0 } : { delay: pulseDelay, duration: isNow ? 1.4 : 0.9, ease: "easeOut" }}
                   >
                     <motion.span
                       className="signal-dot"
-                      initial={{ opacity: 0.28, scale: 1 }}
-                      animate={isNow ? { opacity: [0.28, 1, 1], scale: [1, 1.85, 1.45] } : { opacity: [0.28, 0.95, 0.28], scale: [1, 1.5, 1] }}
-                      transition={{ delay: pulseDelay, duration: isNow ? 1.4 : 0.9, ease: "easeOut" }}
+                      initial={shouldReduceMotion ? false : { opacity: 0.28, scale: 1 }}
+                      animate={shouldReduceMotion ? {} : (isNow ? { opacity: [0.28, 1, 1], scale: [1, 1.85, 1.45] } : { opacity: [0.28, 0.95, 0.28], scale: [1, 1.5, 1] })}
+                      transition={shouldReduceMotion ? { duration: 0 } : { delay: pulseDelay, duration: isNow ? 1.4 : 0.9, ease: "easeOut" }}
                     />
                   </motion.div>
                   <motion.div
                     className="border bg-(--bg) px-4 py-4 min-h-[132px]"
-                    initial={{ borderColor: "var(--border)", boxShadow: "0 0 0 rgba(56, 189, 248, 0)" }}
-                    animate={{
+                    initial={shouldReduceMotion ? false : { borderColor: "var(--border)", boxShadow: "0 0 0 rgba(56, 189, 248, 0)" }}
+                    animate={shouldReduceMotion ? {} : {
                       borderColor: isNow ? ["var(--border)", "rgba(56, 189, 248, 0.95)", "rgba(56, 189, 248, 1)"] : ["var(--border)", "rgba(56, 189, 248, 0.65)", "var(--border)"],
                       boxShadow: isNow
                         ? ["0 0 0 rgba(56, 189, 248, 0)", "0 0 24px rgba(56, 189, 248, 0.12)", "0 0 34px rgba(56, 189, 248, 0.18)"]
                         : ["0 0 0 rgba(56, 189, 248, 0)", "0 0 18px rgba(56, 189, 248, 0.1)", "0 0 0 rgba(56, 189, 248, 0)"],
                     }}
-                    transition={{ delay: pulseDelay, duration: isNow ? 1.4 : 0.9, ease: "easeOut" }}
+                    transition={shouldReduceMotion ? { duration: 0 } : { delay: pulseDelay, duration: isNow ? 1.4 : 0.9, ease: "easeOut" }}
                   >
                     <div className={`font-mono text-[10px] uppercase tracking-[0.24em] mb-3 ${isNow ? "text-(--accent)" : "text-(--text-muted)"}`}>{milestone.marker}</div>
                     <div className="font-syne font-black text-xl tracking-tight text-(--text) leading-none mb-3">{milestone.label}</div>
-                    <p className="text-xs text-(--text-muted) leading-relaxed font-inter">{milestone.detail}</p>
+                    <p className="text-xs text-(--text-muted) leading-relaxed font-sans">{milestone.detail}</p>
                   </motion.div>
                 </motion.div>
               );
@@ -108,7 +110,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
         </div>
 
         <div className="mt-8 border-l-2 border-(--accent) pl-5 max-w-2xl">
-          <p className="text-sm text-(--text-muted) leading-relaxed font-inter">
+          <p className="text-sm text-(--text-muted) leading-relaxed font-sans">
             The timeline shows the influences that shaped the profile: engineering fundamentals, network operations, technical enablement at L&T, SaaS solution consulting, Tier-3 production
             support, and current focus on QA, release validation, and technical operations engineering.
           </p>
@@ -120,10 +122,10 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
         {CONFIG.experience.map((e, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-            className={`bg-(--bg) p-10 group transition-all duration-300 relative overflow-hidden ${
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
+            animate={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { delay: i * 0.1 }}
+            className={`bg-(--bg) p-6 md:p-10 group transition-all duration-300 relative overflow-hidden ${
               i === 0
                 ? "border-l-4 border-l-(--accent) hover:bg-(--surface)"
                 : "border-l-4 border-l-transparent hover:border-l-(--accent)/50 hover:bg-(--surface)"
@@ -135,8 +137,8 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
             <div className="absolute -left-9 top-10 hidden h-4 w-4 items-center justify-center rounded-full text-(--accent) md:flex">
               <motion.span
                 className="signal-dot"
-                animate={{ scale: [1, 1.8, 1], opacity: [1, 0.35, 1] }}
-                transition={{ duration: 2.4, delay: i * 0.2, repeat: Infinity, ease: "easeInOut" }}
+                animate={shouldReduceMotion ? {} : { scale: [1, 1.8, 1], opacity: [1, 0.35, 1] }}
+                transition={shouldReduceMotion ? { duration: 0 } : { duration: 2.4, delay: i * 0.2, repeat: Infinity, ease: "easeInOut" }}
               />
             </div>
             <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-6">
@@ -159,9 +161,9 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
                   </h3>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
                     {e.points.map((p, pIdx) => (
-                      <li key={pIdx} className="flex items-start gap-4 text-base text-(--text-muted) leading-relaxed">
+                      <li key={pIdx} className="flex items-start gap-4 text-base text-(--text-muted) leading-relaxed min-w-0">
                         <span className="w-1.5 h-1.5 rounded-full bg-(--accent)/40 mt-1.5 shrink-0" />
-                        <span>{p}</span>
+                        <span className="break-words">{p}</span>
                       </li>
                     ))}
                   </ul>

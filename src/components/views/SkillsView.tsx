@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { GraduationCap, Languages, ShieldCheck, Wrench } from "lucide-react";
 import TechIcon from "@/components/TechIcon";
 import GuidedNext from "@/components/GuidedNext";
@@ -81,14 +82,15 @@ function CompetencyCard({
   accent: string;
   index: number;
 }) {
+  const cardReduceMotion = useReducedMotion();
   return (
     <motion.article
-      initial={{ opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.06, duration: 0.3 }}
+      initial={cardReduceMotion ? false : { opacity: 0, y: 14 }}
+      animate={cardReduceMotion ? {} : { opacity: 1, y: 0 }}
+      transition={cardReduceMotion ? { duration: 0 } : { delay: index * 0.06, duration: 0.3 }}
       className="relative bg-(--bg) border border-(--border) p-7 min-h-56 flex flex-col justify-between group overflow-hidden hover:border-opacity-80 transition-all duration-300"
       style={{ borderColor: `${accent}22` }}
-      whileHover={{ boxShadow: `0 0 40px ${accent}18` }}
+      whileHover={cardReduceMotion ? undefined : { boxShadow: `0 0 40px ${accent}18` }}
     >
       {/* Background glow */}
       <div
@@ -123,11 +125,12 @@ function CompetencyCard({
 }
 
 export default function SkillsView({ setView }: { setView: (view: ViewKey) => void }) {
+  const shouldReduceMotion = useReducedMotion();
   return (
     <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
+      initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }}
+      animate={shouldReduceMotion ? {} : { opacity: 1, x: 0 }}
+      exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }}
       className="pt-10 pb-20 max-w-5xl"
     >
       <div className="font-mono text-xs text-(--accent) uppercase tracking-[0.2em] mb-4">— Skills</div>
@@ -201,10 +204,10 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
           {toolGroups.map((group, index) => (
             <motion.article
               key={group.title}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
+              whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.35 }}
-              transition={{ delay: index * 0.04, duration: 0.25 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { delay: index * 0.04, duration: 0.25 }}
               className="bg-(--surface) p-7 md:p-9"
             >
               <div className="mb-6 flex items-center gap-3">
@@ -229,7 +232,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
 
       {/* Education / Languages / Certifications */}
       <section className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_1fr] gap-px border border-(--border) bg-(--border)">
-        <article className="bg-(--bg) p-7">
+        <article className="bg-(--bg) p-7 min-w-0">
           <div className="mb-5 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.24em] text-(--accent)">
             <GraduationCap className="h-4 w-4" />
             Education
@@ -237,15 +240,15 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
           <div className="space-y-5">
             {CONFIG.education.map((edu) => (
               <div key={edu.degree}>
-                <div className="font-syne text-lg font-black leading-tight text-(--text)">{edu.degree}</div>
-                <div className="mt-2 text-xs leading-relaxed text-(--text-muted)">{edu.school}</div>
+                <div className="font-syne text-lg font-black leading-tight text-(--text) break-words">{edu.degree}</div>
+                <div className="mt-2 text-xs leading-relaxed text-(--text-muted) break-words">{edu.school}</div>
                 <div className="mt-2 font-mono text-[10px] uppercase tracking-widest text-(--accent)">{edu.period}</div>
               </div>
             ))}
           </div>
         </article>
 
-        <article className="bg-(--bg) p-7">
+        <article className="bg-(--bg) p-7 min-w-0">
           <div className="mb-5 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.24em] text-(--accent)">
             <Languages className="h-4 w-4" />
             Languages
@@ -254,7 +257,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
             {CONFIG.languages.map((item) => (
               <span
                 key={item}
-                className="px-3 py-2 bg-(--surface) border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted)"
+                className="px-3 py-2 bg-(--surface) border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted) break-words"
               >
                 {item}
               </span>
@@ -262,20 +265,32 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
           </div>
         </article>
 
-        <article className="bg-(--bg) p-7">
+        <article className="bg-(--bg) p-7 min-w-0">
           <div className="mb-5 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.24em] text-(--accent)">
             <ShieldCheck className="h-4 w-4" />
             Certifications
           </div>
           <div className="flex flex-wrap gap-2">
-            {CONFIG.certifications.map((item) => (
-              <span
-                key={item}
-                className="px-3 py-2 bg-(--surface) border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted)"
-              >
-                {item}
-              </span>
-            ))}
+            {CONFIG.certifications.map(({ name, href }) =>
+              href ? (
+                <a
+                  key={name}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-2 bg-(--surface) border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted) hover:bg-(--accent)/10 hover:border-(--accent) transition-colors break-words max-w-full"
+                >
+                  {name}
+                </a>
+              ) : (
+                <span
+                  key={name}
+                  className="px-3 py-2 bg-(--surface) border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted) break-words max-w-full"
+                >
+                  {name}
+                </span>
+              )
+            )}
           </div>
         </article>
       </section>

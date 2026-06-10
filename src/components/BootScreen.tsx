@@ -16,7 +16,7 @@ const lines = [
   { id: "system", label: "DESIGN STATUS", status: "OK" },
   { id: "record", label: "CORE OPTIMIZATION", status: "OK" },
   { id: "synthesis", label: "BACKEND PROTOCOLS", status: "OK" },
-  { id: "ai", label: "AI GUIDE (LLAMA 3.2 1B)", status: null },
+  { id: "ai", label: "AI GUIDE (Qwen2.5-1.5B)", status: null },
 ];
 
 const FINAL_REVEAL_STEP = lines.length * 2;

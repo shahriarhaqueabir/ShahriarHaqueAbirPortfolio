@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const BOOT_STORAGE_KEY = "shahriar_portfolio_booted";
 
@@ -22,7 +22,12 @@ function markBooted() {
 }
 
 export function useBootGate() {
-  const [isBooting, setIsBooting] = useState(() => !hasBooted());
+  const [isBooting, setIsBooting] = useState(true);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (hasBooted()) setIsBooting(false);
+  }, []);
 
   const enterPortfolio = () => {
     markBooted();

@@ -25,14 +25,12 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    type: "profile",
+    type: "website",
     locale: "en_US",
     url: siteUrl,
     siteName: "Shahriar Haque Abir Portfolio",
     title: siteTitle,
     description: siteDescription,
-    firstName: "Shahriar",
-    lastName: "Haque Abir",
     images: [
       {
         url: "/profile.jpg",
@@ -45,12 +43,6 @@ export const metadata: Metadata = {
         width: 3456,
         height: 2305,
         alt: "Shahriar Haque Abir, Technical Operations Engineer",
-      },
-      {
-        url: "/logo.jpg",
-        width: 500,
-        height: 500,
-        alt: "Shahriar Haque Abir Portfolio logo",
       },
     ],
   },

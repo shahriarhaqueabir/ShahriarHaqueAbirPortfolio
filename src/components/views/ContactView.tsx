@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { Download, ExternalLink, Link, Mail, MapPin, ShieldCheck } from "lucide-react";
 import GuidedNext from "@/components/GuidedNext";
 import { CONFIG } from "@/lib/data";
@@ -22,15 +23,16 @@ const getContactIcon = (label: string): typeof Mail => {
 };
 
 export default function ContactView({ setView }: { setView: (view: ViewKey) => void }) {
+  const shouldReduceMotion = useReducedMotion();
   return (
-    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="pt-10 pb-20 max-w-5xl">
+    <motion.div initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }} animate={shouldReduceMotion ? {} : { opacity: 1, x: 0 }} exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }} className="pt-10 pb-20 max-w-5xl">
       <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">— Contact</div>
       <h2 className="text-3xl md:text-5xl font-syne font-black mb-10 text-(--text) leading-[0.9] tracking-tight">
         Let&apos;s <span className="italic font-playfair font-normal text-(--text-muted) lowercase tracking-normal">talk.</span>
       </h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-px bg-(--border) border border-(--border)">
-        <section className="bg-(--bg) p-10 md:p-12 flex flex-col justify-between min-h-[420px] relative overflow-hidden">
+        <section className="bg-(--bg) p-10 md:p-12 flex flex-col justify-between min-h-0 md:min-h-[420px] relative overflow-hidden">
           <div>
             <div className="font-mono text-[10px] text-(--accent) uppercase tracking-widest mb-6">Conversation Fit</div>
             <h3 className="text-2xl font-syne font-black text-(--text) leading-none mb-6 tracking-tight">{CONFIG.name}</h3>
@@ -40,7 +42,7 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
             </p>
             <div className="mt-8 flex flex-wrap gap-2">
               {["Technical Operations", "Systems Integration", "SaaS Support"].map((tagline) => (
-                <span key={tagline} className="border border-(--accent)/30 text-(--accent) bg-(--accent)/5 px-4 py-2.5 rounded-sm text-[10px] font-bold uppercase tracking-widest">
+                <span key={tagline} className="border border-(--accent)/30 text-(--accent) bg-(--accent)/5 px-4 py-2.5 rounded-sm text-[11px] font-bold uppercase tracking-widest">
                   {tagline}
                 </span>
               ))}
