@@ -19,8 +19,7 @@ test.describe('Shahriar Haque Abir portfolio E2E', () => {
 
   test('navigates through primary portfolio views', async ({ page }) => {
     const protocols = [
-      { button: /Home/i, expected: /Integration Engineer \| Application Support/ },
-      { button: /Blog/i, expected: /Owner-authored updates/ },
+      { button: /Home/i, expected: /Technical Operations Engineer \| Solutions Engineer/ },
       { button: /About/i, expected: /It's good to catch up/ },
       { button: /Projects/i, expected: /Featured Projects/ },
       { button: /Experience/i, expected: /Experience/ },
