@@ -1,7 +1,7 @@
 export const CONFIG = {
   name: "Shahriar Haque Abir",
   nameHL: "Shahriar",
-  tagline: "Technical Operations Engineer | Integration Engineer | Application Support Engineer",
+  tagline: "Technical Operations Engineer | Solutions Engineer | QA Automation Engineer",
   taglineContext: "Enterprise Software · SaaS Platforms · Tier-3 Troubleshooting · API Integrations",
   taglines: [
     "Tier-3 Troubleshooting & RCA",
@@ -14,17 +14,17 @@ export const CONFIG = {
   ],
   heroStats: [
     { label: "Years experience in enterprise software & mission-critical support", value: "10+" },
-    { label: "SLA compliance maintained across ~40 weekly Tier-3 incidents", value: "99.5%" },
-    { label: "Regions supported across enterprise deployments", value: "3" },
+    { label: "Complex Production Incidents Triaged Weekly", value: "40+" },
+    { label: "Expertise across global enterprise deployments (DACH, NAM, APAC)", value: "3" },
   ],
   location: "Berlin, Germany",
   workAuth: "Niederlassungserlaubnis (Permanent resident)",
-  profile: `Technical Operations Engineer with 10+ years of experience supporting enterprise software, SaaS platforms, systems integration, and mission-critical production environments. Expertise in Tier-3 troubleshooting, incident management, root cause analysis (RCA), API integrations, SQL analysis, and operational reliability.
+  profile: `Technical Operations and Solutions Engineer with 10+ years of experience spanning enterprise software, SaaS platforms, systems integration, and mission-critical production environments. Worked across adjacent roles including Implementation Engineer, Customer Success Engineer, Technical Account Manager, Integration Consultant, Technical Consultant, and Support Engineer — bridging product, customer, and engineering contexts daily. Expertise in Tier-3 troubleshooting, incident management, root cause analysis (RCA), API integrations, SQL analysis, and operational reliability.
 
 Maintained SLA compliance across ~40 weekly Tier-3 incidents spanning NAM, APAC, and DACH enterprise deployments. Built a structured RCA framework that reduced MTTR by 30% and cut recurring defects — working directly with engineering, product, and infrastructure teams to trace root causes through API, database, and application layers.`,
   profileImage: "/profile.jpg",
   contact: [
-    { label: "Email", value: "shahriar_abby@hotmail.com", href: "mailto:shahriar_abby@hotmail.com" },
+    { label: "Email", value: "shahriarhaque90@gmail.com", href: "mailto:shahriarhaque90@gmail.com" },
     { label: "LinkedIn", value: "linkedin.com/in/shahriarhaqueabir", href: "https://www.linkedin.com/in/shahriarhaqueabir" },
     { label: "GitHub", value: "github.com/shahriarhaqueabir", href: "https://github.com/shahriarhaqueabir" },
     { label: "CV", value: "Download CV (PDF)", href: "/shahriar-haque-abir-cv.pdf" },

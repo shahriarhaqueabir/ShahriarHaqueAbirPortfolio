@@ -254,7 +254,7 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
                 const rawView = parts[1].trim().toLowerCase();
                 const viewToNavigate = rawView.split(/[\s\n]+/)[0] as ViewKey;
 
-                const VALID_VIEWS: ViewKey[] = ["hero", "about", "projects", "experience", "skills", "stack", "vision", "stats", "contact"];
+                const VALID_VIEWS: ViewKey[] = ["hero", "about", "projects", "experience", "skills", "stats", "contact"];
 
                 if (VALID_VIEWS.includes(viewToNavigate)) {
                   updatedText = responseText || cleanText.replace(/INITIATING_NAVIGATION:\s*\S+\s*/i, "").trim();

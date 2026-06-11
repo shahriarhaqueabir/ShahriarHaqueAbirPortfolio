@@ -125,7 +125,7 @@ function FeaturedProject({ project, index }: { project: Project; index: number }
       initial={featureReduceMotion ? false : { opacity: 0, y: 40 }}
       whileInView={featureReduceMotion ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      className={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center mb-32 ${isEven ? "" : "lg:flex-row-reverse"}`}
+      className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center mb-20 ${isEven ? "" : "lg:flex-row-reverse"}`}
     >
       {/* Image / Mockup Side */}
       <div className={isEven ? "lg:order-1" : "lg:order-2"}>
@@ -139,57 +139,57 @@ function FeaturedProject({ project, index }: { project: Project; index: number }
              <div className="w-6 h-px bg-(--accent)" />
              <span className="font-mono text-xs uppercase tracking-[0.3em] text-(--accent)">{meta.category}</span>
           </div>
-          <h3 className="font-syne text-2xl lg:text-3xl font-black text-(--text) leading-tight tracking-tight">{project.name}</h3>
+          <h3 className="font-syne text-xl lg:text-2xl font-black text-(--text) leading-tight tracking-tight">{project.name}</h3>
         </div>
 
-        <p className="text-(--text-muted) text-base lg:text-lg leading-relaxed max-w-xl">
+        <p className="text-(--text-muted) text-sm lg:text-base leading-relaxed max-w-xl">
           {project.desc}
         </p>
 
         {/* Problem / Solution / Result fields */}
+        <div className="space-y-2">
+          <div className="border-l-2 border-(--border) pl-3">
+            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-(--accent) mb-0.5">Problem</div>
+            <p className="text-xs text-(--text-muted) leading-relaxed break-words">{project.context}</p>
+          </div>
+          <div className="border-l-2 border-(--border) pl-3">
+            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-(--accent) mb-0.5">Solution</div>
+            <p className="text-xs text-(--text-muted) leading-relaxed break-words">{project.implementation}</p>
+          </div>
+          <div className="border-l-2 border-(--border) pl-3">
+            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-(--accent) mb-0.5">Result</div>
+            <p className="text-xs text-(--text-muted) leading-relaxed break-words">{project.outcome}</p>
+          </div>
+          <div className="border-l-2 border-(--border) pl-3">
+            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-(--accent) mb-0.5">Lessons Learned</div>
+            <p className="text-xs text-(--text-muted) leading-relaxed break-words">{project.lessons}</p>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-4 py-1">
+          <div className="flex items-center gap-2">
+            <Clock className="w-3.5 h-3.5 text-(--accent)" />
+            <div>
+              <div className="text-[9px] uppercase font-mono text-(--text-muted) tracking-widest">Duration</div>
+              <div className="text-[11px] font-bold text-(--text)">{meta.duration}</div>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <User className="w-3.5 h-3.5 text-(--accent)" />
+            <div>
+              <div className="text-[9px] uppercase font-mono text-(--text-muted) tracking-widest">Client / Partner</div>
+              <div className="text-[11px] font-bold text-(--text)">{meta.client}</div>
+            </div>
+          </div>
+        </div>
+
         <div className="space-y-3">
-          <div className="border-l-2 border-(--border) pl-4">
-            <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-(--accent) mb-1">Problem</div>
-            <p className="text-sm text-(--text-muted) leading-relaxed break-words">{project.context}</p>
-          </div>
-          <div className="border-l-2 border-(--border) pl-4">
-            <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-(--accent) mb-1">Solution</div>
-            <p className="text-sm text-(--text-muted) leading-relaxed break-words">{project.implementation}</p>
-          </div>
-          <div className="border-l-2 border-(--border) pl-4">
-            <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-(--accent) mb-1">Result</div>
-            <p className="text-sm text-(--text-muted) leading-relaxed break-words">{project.outcome}</p>
-          </div>
-          <div className="border-l-2 border-(--border) pl-4">
-            <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-(--accent) mb-1">Lessons Learned</div>
-            <p className="text-sm text-(--text-muted) leading-relaxed break-words">{project.lessons}</p>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap gap-8 py-2">
-          <div className="flex items-center gap-3">
-            <Clock className="w-4 h-4 text-(--accent)" />
-            <div>
-              <div className="text-[10px] uppercase font-mono text-(--text-muted) tracking-widest">Duration</div>
-              <div className="text-xs font-bold text-(--text)">{meta.duration}</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <User className="w-4 h-4 text-(--accent)" />
-            <div>
-              <div className="text-[10px] uppercase font-mono text-(--text-muted) tracking-widest">Client / Partner</div>
-              <div className="text-xs font-bold text-(--text)">{meta.client}</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-(--text-muted)">Tech Stack</div>
-          <div className="flex flex-wrap gap-2">
+          <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-(--text-muted)">Tech Stack</div>
+          <div className="flex flex-wrap gap-1.5">
             {project.stack.map((item) => (
               <span
                 key={item}
-                className="px-4 py-2.5 border border-(--border) bg-(--surface)/50 rounded-full text-[10px] font-sans font-semibold text-(--text-muted) flex items-center gap-2.5 group hover:border-(--accent) hover:text-(--text) transition-colors"
+                className="px-3 py-2 border border-(--border) bg-(--surface)/50 rounded-full text-[9px] font-sans font-semibold text-(--text-muted) flex items-center gap-2 group hover:border-(--accent) hover:text-(--text) transition-colors"
               >
                 <TechIcon name={item} size={20} className="transition-opacity shrink-0" />
                 {item}
@@ -210,14 +210,14 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
       initial={shouldReduceMotion ? false : { opacity: 0, x: -20 }}
       animate={shouldReduceMotion ? {} : { opacity: 1, x: 0 }}
       exit={shouldReduceMotion ? undefined : { opacity: 0, x: 20 }}
-      className="pt-10 max-w-5xl mx-auto"
+      className="pt-10 pb-24 max-w-5xl mx-auto"
     >
-      <div className="flex items-center justify-between mb-16">
+      <div className="flex items-center justify-between mb-10">
         <div>
-          <h2 className="text-4xl lg:text-5xl font-syne font-black text-(--text) tracking-tighter uppercase mb-4">
+          <h2 className="text-3xl lg:text-4xl font-syne font-black text-(--text) tracking-tighter uppercase mb-3">
             Featured <span className="text-(--accent)">Projects</span>
           </h2>
-          <p className="max-w-2xl text-sm lg:text-base leading-relaxed text-(--text-muted) font-mono uppercase tracking-tight">
+          <p className="max-w-2xl text-xs lg:text-sm leading-relaxed text-(--text-muted) font-mono uppercase tracking-tight">
             Recent work demonstrating technical operations engineering, systems integration,
             API automation, and scalable dashboard-driven solutions.
           </p>
@@ -240,7 +240,7 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
         </div>
       </div>
 
-      <section className="space-y-12">
+      <section className="space-y-8">
         {CONFIG.projects.map((project, i) => (
           <FeaturedProject
             key={project.name}
@@ -250,10 +250,10 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
         ))}
       </section>
 
-      <div className="flex justify-center py-20 border-t border-(--border)">
+      <div className="flex justify-center py-12 border-t border-(--border)">
         <button
           onClick={() => setView("experience")}
-          className="flex items-center gap-3 px-8 py-4 border border-(--border) font-mono text-xs uppercase tracking-widest text-(--text) hover:bg-(--accent) hover:text-(--bg) hover:border-(--accent) transition-all"
+          className="flex items-center gap-2 px-6 py-3 border border-(--border) font-mono text-[10px] uppercase tracking-widest text-(--text) hover:bg-(--accent) hover:text-(--bg) hover:border-(--accent) transition-all"
         >
           Explore Professional Record
           <ArrowRight className="w-4 h-4" />

@@ -9,8 +9,6 @@ const sectionColors: Record<ViewKey, string> = {
   projects: "#10B981",
   experience: "#6366F1",
   skills: "#06B6D4",
-  stack: "#06B6D4",
-  vision: "#A855F7",
   stats: "#EC4899",
   contact: "#D946EF",
 };
@@ -38,11 +36,11 @@ export default function IconRail({ activeView, onNavigate, aiReady, aiPaused, ai
   const activeColor = sectionColors[activeView] || "var(--accent)";
 
   return (
-    <aside className="hidden md:flex h-full w-[76px] min-w-[76px] flex-col items-center gap-4 px-3 py-6 relative z-20 backdrop-blur-3xl hud-container border-r border-(--border)">
+    <aside className="hidden md:flex h-full w-[68px] min-w-[68px] flex-col items-center gap-3 px-2 py-4 relative z-20 backdrop-blur-3xl hud-container border-r border-(--border)">
       <button
         type="button"
         onClick={() => onNavigate("hero")}
-        className="shine-surface flex h-11 w-11 items-center justify-center rounded-sm border border-(--border) bg-(--text) text-(--bg) font-syne text-sm font-black"
+        className="shine-surface flex h-10 w-10 items-center justify-center rounded-sm border border-(--border) bg-(--text) text-(--bg) font-syne text-xs font-black"
         aria-label="Go to home"
         title="Home"
       >
@@ -56,8 +54,8 @@ export default function IconRail({ activeView, onNavigate, aiReady, aiPaused, ai
         }}
         title={aiPaused ? "Guide paused" : aiFallback ? "Guide fallback" : !aiEnabled ? "Guide opt-in" : aiReady ? "Guide ready" : "Guide loading"}
       />
-      <div className="my-2 h-px w-full bg-(--border)" />
-      <nav className="flex flex-1 flex-col items-center gap-2" aria-label="Portfolio navigation">
+      <div className="my-1.5 h-px w-full bg-(--border)" />
+      <nav className="flex flex-1 flex-col items-center gap-1.5" aria-label="Portfolio navigation">
         {desktopRailItems.map((item) => {
           const color = sectionColors[item.view];
           const isActive = activeView === item.view;
@@ -67,7 +65,7 @@ export default function IconRail({ activeView, onNavigate, aiReady, aiPaused, ai
               key={item.name}
               type="button"
               onClick={() => onNavigate(item.view)}
-              className={`flex h-11 w-11 items-center justify-center rounded-sm border transition-all duration-200 ${
+               className={`flex h-10 w-10 items-center justify-center rounded-sm border transition-all duration-200 ${
                 isActive
                   ? "text-(--bg)"
                   : "border-transparent hover:border-[var(--section-hover)] hover:bg-[var(--section-hover)]/10"
@@ -83,8 +81,8 @@ export default function IconRail({ activeView, onNavigate, aiReady, aiPaused, ai
               <item.icon
                 className="transition-all duration-200"
                 style={{
-                  width: isActive ? "22px" : "20px",
-                  height: isActive ? "22px" : "20px",
+                  width: isActive ? "20px" : "18px",
+                  height: isActive ? "20px" : "18px",
                   color: isActive ? "var(--bg)" : "var(--text-muted)",
                 }}
               />

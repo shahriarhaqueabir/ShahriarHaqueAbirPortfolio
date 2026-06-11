@@ -57,7 +57,7 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, onNa
             onClick={onClose}
           />
           <motion.section
-            className="fixed bottom-0 left-0 right-0 md:left-[76px] z-40 bg-(--surface)/95 backdrop-blur-3xl border-t border-(--border) shadow-2xl flex flex-col"
+            className="fixed bottom-0 left-0 right-0 md:left-[68px] z-40 bg-(--surface)/95 backdrop-blur-3xl border-t border-(--border) shadow-2xl flex flex-col"
             style={{ height: "60vh", maxHeight: "600px" }}
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
@@ -65,8 +65,8 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, onNa
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-5 py-3 border-b border-(--border) shrink-0">
-              <span className="text-[9px] font-mono uppercase tracking-[0.2em] text-(--accent)">AI Guide · Conversation</span>
+            <div className="flex items-center justify-between px-4 py-2 border-b border-(--border) shrink-0">
+              <span className="text-[8px] font-mono uppercase tracking-[0.2em] text-(--accent)">AI Guide · Conversation</span>
               <div className="flex items-center gap-2">
                 {/* Mobile nav buttons */}
                 <div className="flex gap-1 md:hidden overflow-x-auto">
@@ -98,25 +98,25 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, onNa
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-5 py-4 pb-[160px] flex flex-col gap-4 custom-scrollbar" role="log" aria-live="polite" aria-label="Chat messages">
+            <div className="flex-1 overflow-y-auto px-4 py-3 pb-[140px] flex flex-col gap-3 custom-scrollbar" role="log" aria-live="polite" aria-label="Chat messages">
               {messages.length === 0 && (
-                <p className="text-[11px] font-mono text-(--text-muted) text-center mt-8">
+                <p className="text-[10px] font-mono text-(--text-muted) text-center mt-6">
                   Start a conversation...
                 </p>
               )}
               {messages.map((msg) => (
                 <div
                   key={msg.id}
-                  className={`max-w-[90%] p-4 rounded-sm text-[13px] leading-relaxed shadow-sm ${
+                  className={`max-w-[90%] p-3 rounded-sm text-[12px] leading-relaxed shadow-sm ${
                     msg.sender === "user"
                       ? "bg-(--text) text-(--bg) self-end font-medium"
                       : msg.sender === "sys"
-                        ? "bg-transparent text-(--text-muted) border-l-2 border-(--border) self-start font-mono text-[9px] uppercase tracking-widest pl-3 py-1 shadow-none"
-                        : msg.sender === "fallback"
-                          ? "bg-(--surface) text-(--text) border-l-2 border-(--accent) self-start font-mono text-[11px]"
+                          ? "bg-transparent text-(--text-muted) border-l-2 border-(--border) self-start font-mono text-[8px] uppercase tracking-widest pl-3 py-1 shadow-none"
+                          : msg.sender === "fallback"
+                            ? "bg-(--surface) text-(--text) border-l-2 border-(--accent) self-start font-mono text-[10px]"
                           : msg.isReadyGreen
-                            ? "bg-green-500 text-white border-green-400 self-start font-bold"
-                            : "bg-(--surface) text-(--text) border border-(--border) self-start font-mono text-[11px]"
+                              ? "bg-green-500 text-white border-green-400 self-start font-bold"
+                              : "bg-(--surface) text-(--text) border border-(--border) self-start font-mono text-[10px]"
                   }`}
                 >
                   <div className="flex items-start gap-3">
@@ -144,7 +144,7 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, onNa
                           key={suggestion}
                           type="button"
                           onClick={() => onSend(suggestion)}
-                          className="px-3 py-1.5 rounded-sm border border-(--accent)/40 text-[10px] font-mono text-(--accent) hover:bg-(--accent) hover:text-(--bg) transition-colors"
+                          className="px-2.5 py-1 rounded-sm border border-(--accent)/40 text-[9px] font-mono text-(--accent) hover:bg-(--accent) hover:text-(--bg) transition-colors"
                         >
                           {suggestion}
                         </button>

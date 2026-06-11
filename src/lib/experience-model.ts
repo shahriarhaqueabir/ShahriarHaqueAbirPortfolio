@@ -46,7 +46,7 @@ export const CAREER_STATES: CareerState[] = [
     primarySkills: ["FastAPI", "Qdrant", "Docker Compose", "n8n", "RAG", "local LLMs"],
     systemExposure: "Adaptive systems where retrieval, AI automation, and orchestration reduce operational friction.",
     answers: ["What has he built recently?", "Can he build AI-enabled systems with practical constraints?"],
-    nextViews: ["projects", "stack", "contact"],
+    nextViews: ["projects", "skills", "contact"],
   },
 ];
 
@@ -62,13 +62,13 @@ export const VIEW_GOALS: Record<ViewKey, ViewGoal> = {
     coreQuestion: "How does he think?",
     layer: "experience",
     intentDescription: "Professional point of view, story progression, principles, and working style.",
-    nextViews: ["experience", "vision", "contact"],
+    nextViews: ["experience", "projects", "contact"],
   },
   projects: {
     coreQuestion: "What has he built?",
     layer: "logic",
     intentDescription: "Technical implementations, AI systems, AI automation workflows, architecture, and case studies.",
-    nextViews: ["stack", "stats", "contact"],
+    nextViews: ["skills", "stats", "contact"],
   },
   experience: {
     coreQuestion: "Can he operate in real environments?",
@@ -80,19 +80,7 @@ export const VIEW_GOALS: Record<ViewKey, ViewGoal> = {
     coreQuestion: "What capabilities does he bring?",
     layer: "logic",
     intentDescription: "Capability matrix, consulting skills, technical systems, tools, languages, and certifications.",
-    nextViews: ["projects", "stack", "experience"],
-  },
-  stack: {
-    coreQuestion: "What tools does he use to build systems?",
-    layer: "logic",
-    intentDescription: "Technology stack, frameworks, APIs, AI tooling, AI automation, infrastructure, and operations tools.",
-    nextViews: ["projects", "skills", "contact"],
-  },
-  vision: {
-    coreQuestion: "What direction is the work moving in?",
-    layer: "experience",
-    intentDescription: "Principles, product philosophy, future direction, and explainable system design.",
-    nextViews: ["about", "projects", "contact"],
+    nextViews: ["projects", "experience", "contact"],
   },
   stats: {
     coreQuestion: "What proof points support the story?",

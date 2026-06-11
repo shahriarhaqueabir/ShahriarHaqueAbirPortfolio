@@ -7,4 +7,4 @@ export type Message = {
   suggestions?: string[];
 };
 
-export type ViewKey = "hero" | "about" | "projects" | "experience" | "skills" | "stack" | "vision" | "stats" | "contact";
+export type ViewKey = "hero" | "about" | "projects" | "experience" | "skills" | "stats" | "contact";

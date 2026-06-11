@@ -23,7 +23,7 @@ export default function HeroView({
     { text: "Tier-3 Technical Support", highlight: "Support", color: "#38BDF8" },
     { text: "Systems & API Integration", highlight: "Integration", color: "#F59E0B" },
     { text: "Incident & SLA Management", highlight: "Incident", color: "#A78BFA" },
-    { text: "Root Cause Analysis", highlight: "RCA", color: "#10B981" },
+    { text: "Root Cause Analysis", highlight: "Analysis", color: "#10B981" },
     { text: "Technical Operations Engineer", highlight: "Operations", color: "#F472B6" },
     { text: "SQL & Log Stream Auditing", highlight: "Log", color: "#5EEAD4" },
     { text: "Enterprise SaaS Operations", highlight: "SaaS", color: "#6366F1" },
@@ -48,11 +48,11 @@ export default function HeroView({
       initial={shouldReduceMotion ? false : { opacity: 0, x: -20 }}
       animate={shouldReduceMotion ? {} : { opacity: 1, x: 0 }}
       exit={shouldReduceMotion ? undefined : { opacity: 0, x: 20 }}
-      className="min-h-full relative overflow-hidden"
+      className="min-h-full pb-24 relative overflow-hidden"
     >
       <div className="absolute right-0 top-8 hidden h-[72vh] w-px bg-[linear-gradient(to_bottom,transparent,var(--accent),transparent)] opacity-60 xl:block" />
 
-      <div className="flex flex-col items-center gap-12 md:gap-16 w-full">
+      <div className="flex flex-col items-center gap-8 md:gap-12 w-full">
 
         {/* Role badge + Name */}
         <div className="w-full max-w-3xl">
@@ -62,7 +62,7 @@ export default function HeroView({
             </p>
           </div>
 
-          <h1 className="font-syne text-[2.2rem] font-black leading-[1.08] tracking-tight text-(--text) xl:text-[4.3rem] 2xl:text-[5rem]">
+          <h1 className="font-syne text-[1.8rem] font-black leading-[1.08] tracking-tight text-(--text) xl:text-[3.4rem] 2xl:text-[4rem]">
             {CONFIG.name.split(" ").map((word, i) => (
               <span key={i} className={word === CONFIG.nameHL ? "text-(--accent)" : ""}>
                 {word}{i < CONFIG.name.split(" ").length - 1 ? "\u00A0" : ""}
@@ -88,7 +88,7 @@ export default function HeroView({
 
           {/* Rotating competency badge */}
           <div
-            className="absolute bottom-4 right-4 border border-(--border) p-4 md:bottom-6 md:right-6 md:p-6 rounded-sm shadow-2xl z-20 min-w-[140px] md:min-w-[200px] max-w-[calc(100%-2rem)] md:max-w-[calc(100%-3rem)] backdrop-blur"
+            className="absolute bottom-3 right-3 border border-(--border) p-3 md:bottom-4 md:right-4 md:p-4 rounded-sm shadow-2xl z-20 min-w-[120px] md:min-w-[170px] max-w-[calc(100%-1.5rem)] md:max-w-[calc(100%-2.5rem)] backdrop-blur"
             style={{ backgroundColor: "#000000" }}
           >
             <AnimatePresence mode="wait">
@@ -97,7 +97,7 @@ export default function HeroView({
                 initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
                 animate={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
                 exit={shouldReduceMotion ? undefined : { opacity: 0, y: -10 }}
-                className="font-syne font-black text-base uppercase leading-tight md:text-xl"
+                className="font-syne font-black text-sm uppercase leading-tight md:text-lg"
               >
                 {phrases[currentPhrase].text.split(" ").map((word, i) => (
                   <span key={i}>
@@ -115,11 +115,11 @@ export default function HeroView({
 
         {/* Quote */}
         <div className="w-full max-w-3xl">
-          <p className="font-playfair text-lg italic leading-9 text-(--text) md:text-xl md:leading-10">
-            I like being the person who can enter a messy technical situation, find the signal,
-            explain the tradeoffs, and help the next step become clear —
-            <span className="not-italic font-sans font-normal text-base md:text-lg text-(--text-muted) ml-1">
-              then build the automation that makes it not happen again.
+          <p className="font-playfair text-base italic leading-7 text-(--text) md:text-lg md:leading-8">
+            I bridge the gap between complex enterprise architectures and critical system processes;
+            turning production issues into clear decisions, repeatable solutions, and long-term operational frameworks
+            <span className="not-italic font-sans font-normal text-sm md:text-base text-(--text-muted) ml-1">
+              for success and growth.
             </span>
           </p>
         </div>
@@ -129,10 +129,10 @@ export default function HeroView({
           <div className="grid grid-cols-1 gap-px border border-(--border) bg-(--border) sm:grid-cols-3">
             {CONFIG.heroStats.map((stat) => (
               <div key={stat.label} className="bg-(--bg) p-5 min-w-0">
-                <div className="mb-3 font-syne text-2xl font-black leading-none text-(--text)">
+                <div className="mb-2 font-syne text-xl font-black leading-none text-(--text)">
                   {stat.value}
                 </div>
-                <p className="text-xs font-bold uppercase leading-5 tracking-[0.12em] text-(--text-muted) break-words">
+                <p className="text-[10px] font-bold uppercase leading-4 tracking-[0.12em] text-(--text-muted) break-words">
                   {stat.label}
                 </p>
               </div>
@@ -145,7 +145,7 @@ export default function HeroView({
           <div className="flex flex-col gap-3 md:flex-row md:gap-4">
             <button
               onClick={() => setView("projects")}
-              className="shine-surface inline-flex items-center justify-center gap-3 border border-(--accent) px-8 py-4 text-(--accent) rounded-sm text-xs font-bold uppercase tracking-widest transition-all hover:bg-(--accent) hover:text-(--bg) md:border-0 md:bg-(--accent) md:text-(--bg) md:px-10 md:py-5 md:text-sm md:hover:bg-(--text) md:shadow-[0_18px_58px_rgba(var(--accent-rgb),0.44)]"
+              className="shine-surface inline-flex items-center justify-center gap-2 border border-(--accent) px-6 py-3 text-(--accent) rounded-sm text-[10px] font-bold uppercase tracking-widest transition-all hover:bg-(--accent) hover:text-(--bg) md:border-0 md:bg-(--accent) md:text-(--bg) md:px-8 md:py-4 md:text-xs md:hover:bg-(--text) md:shadow-[0_18px_58px_rgba(var(--accent-rgb),0.44)]"
             >
               View Case Studies
               <ArrowRight className="h-4 w-4" />
@@ -153,14 +153,14 @@ export default function HeroView({
             <a
               href="/shahriar-haque-abir-cv.pdf"
               download
-              className="inline-flex items-center justify-center gap-3 bg-(--accent) px-8 py-4 text-(--bg) rounded-sm text-xs font-bold uppercase tracking-widest shadow-[0_18px_58px_rgba(var(--accent-rgb),0.44)] transition-all hover:bg-(--text) md:border md:border-(--accent) md:bg-transparent md:text-(--accent) md:px-10 md:py-5 md:text-sm md:shadow-none md:hover:bg-(--accent) md:hover:text-(--bg) md:hover:shadow-[0_0_34px_rgba(var(--accent-rgb),0.24)]"
+              className="inline-flex items-center justify-center gap-2 bg-(--accent) px-6 py-3 text-(--bg) rounded-sm text-[10px] font-bold uppercase tracking-widest shadow-[0_18px_58px_rgba(var(--accent-rgb),0.44)] transition-all hover:bg-(--text) md:border md:border-(--accent) md:bg-transparent md:text-(--accent) md:px-8 md:py-4 md:text-xs md:shadow-none md:hover:bg-(--accent) md:hover:text-(--bg) md:hover:shadow-[0_0_34px_rgba(var(--accent-rgb),0.24)]"
             >
               <Download className="h-4 w-4" />
               Download CV
             </a>
             <button
               onClick={() => setView("contact")}
-              className="inline-flex items-center justify-center gap-3 border border-(--border) text-(--text) px-8 py-4 rounded-sm text-xs font-bold uppercase tracking-widest hover:border-(--accent) hover:text-(--accent) transition-all hover:shadow-[0_0_34px_rgba(var(--accent-rgb),0.24)] md:px-10 md:py-5 md:text-sm"
+              className="inline-flex items-center justify-center gap-2 border border-(--border) text-(--text) px-6 py-3 rounded-sm text-[10px] font-bold uppercase tracking-widest hover:border-(--accent) hover:text-(--accent) transition-all hover:shadow-[0_0_34px_rgba(var(--accent-rgb),0.24)] md:px-8 md:py-4 md:text-xs"
             >
               <Sparkles className="h-4 w-4" />
               Connect With Me
@@ -170,23 +170,64 @@ export default function HeroView({
 
         {/* Location and work auth */}
         <div className="w-full max-w-3xl flex flex-wrap gap-4 items-center">
-          <div className="inline-flex items-center gap-3 border border-(--border) px-4 py-3">
-            <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-(--accent)">Based in</span>
-            <span className="font-syne font-black text-sm text-(--text)">Berlin, Germany</span>
+          <div className="inline-flex items-center gap-2 border border-(--border) px-3 py-2">
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-(--accent)">Based in</span>
+            <span className="font-syne font-black text-xs text-(--text)">Berlin, Germany</span>
           </div>
-          <div className="inline-flex items-center gap-3 border border-(--border) px-4 py-3">
-            <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-(--accent2)">Language</span>
-            <span className="font-syne font-black text-sm text-(--text)">German B2 (Professional)</span>
+          <div className="inline-flex items-center gap-2 border border-(--border) px-3 py-2">
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-(--accent2)">Language</span>
+            <span className="font-syne font-black text-xs text-(--text)">German B2 (Professional)</span>
           </div>
-          <div className="inline-flex items-center gap-3 border border-(--border) px-4 py-3">
-            <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-(--accent2)">Authorization</span>
-            <span className="font-syne font-black text-sm text-(--text)">Niederlassungserlaubnis</span>
+          <div className="inline-flex items-center gap-2 border border-(--border) px-3 py-2">
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-(--accent2)">Authorization</span>
+            <span className="font-syne font-black text-xs text-(--text)">Niederlassungserlaubnis</span>
+          </div>
+        </div>
+
+        {/* Recruiter Snapshot */}
+        <div className="w-full max-w-3xl">
+          <div className="border-l-2 border-(--accent) bg-(--surface)/40 p-4 md:p-5">
+            <div className="font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent) mb-3">Recruiter Snapshot</div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2">
+              <div className="flex items-center gap-1.5">
+                <span className="h-1 w-1 rounded-full bg-(--accent) shrink-0" />
+                <span className="font-mono text-[10px] text-(--text)">10+ years experience</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="h-1 w-1 rounded-full bg-(--accent) shrink-0" />
+                <span className="font-mono text-[10px] text-(--text)">Germany-based</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="h-1 w-1 rounded-full bg-(--accent) shrink-0" />
+                <span className="font-mono text-[10px] text-(--text)">Permanent work authorization</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="h-1 w-1 rounded-full bg-(--accent) shrink-0" />
+                <span className="font-mono text-[10px] text-(--text)">Enterprise SaaS</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="h-1 w-1 rounded-full bg-(--accent) shrink-0" />
+                <span className="font-mono text-[10px] text-(--text)">Tier-3 Support</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="h-1 w-1 rounded-full bg-(--accent) shrink-0" />
+                <span className="font-mono text-[10px] text-(--text)">Systems Integration</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="h-1 w-1 rounded-full bg-(--accent) shrink-0" />
+                <span className="font-mono text-[10px] text-(--text)">QA &amp; Release Validation</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="h-1 w-1 rounded-full bg-(--accent) shrink-0" />
+                <span className="font-mono text-[10px] text-(--text)">EN / DE / BN / HI</span>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Capability Stack */}
-        <div className="w-full border-t border-(--border) pt-12">
-          <div className="font-mono text-[11px] uppercase tracking-[0.28em] text-(--accent) mb-8">Capability Stack</div>
+        <div className="w-full border-t border-(--border) pt-8">
+          <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--accent) mb-6">Capability Stack</div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-px bg-(--border) border border-(--border)">
             {[
               { group: "Integration", accent: "#38BDF8", items: ["REST APIs", "Webhooks", "OAuth 2.0", "OpenAPI", "Postman"] },
@@ -195,14 +236,14 @@ export default function HeroView({
               { group: "AI & Automation", accent: "#F472B6", items: ["Ollama", "LangChain", "RAG", "n8n"] },
               { group: "Infrastructure", accent: "#F59E0B", items: ["Docker", "Linux", "GitHub", "Windows Server"] },
             ].map((cluster) => (
-              <div key={cluster.group} className="bg-(--bg) p-5 md:p-6">
-                <div className="font-syne text-xs font-black uppercase tracking-wider mb-4" style={{ color: cluster.accent }}>
+              <div key={cluster.group} className="bg-(--bg) p-4 md:p-5">
+                <div className="font-syne text-[11px] font-black uppercase tracking-wider mb-3" style={{ color: cluster.accent }}>
                   {cluster.group}
                 </div>
-                <ul className="space-y-2">
+                <ul className="space-y-1.5">
                   {cluster.items.map((item) => (
-                    <li key={item} className="font-mono text-[11px] text-(--text-muted) flex items-center gap-2">
-                      <span className="w-1 h-1 rounded-full" style={{ backgroundColor: cluster.accent }} />
+                    <li key={item} className="font-mono text-[10px] text-(--text-muted) flex items-center gap-1.5">
+                      <span className="w-0.5 h-0.5 rounded-full" style={{ backgroundColor: cluster.accent }} />
                       {item}
                     </li>
                   ))}
@@ -228,18 +269,18 @@ export default function HeroView({
                 onKeyDown={(e) => e.key === "Enter" && handleAiSubmit()}
                 aria-label="Ask me anything about Shahriar"
                 placeholder="Ask me anything about Shahriar..."
-                className="w-full bg-(--surface) border border-(--border) rounded-sm pl-4 pr-12 py-3.5 text-sm font-mono text-(--text) placeholder:text-(--text-muted) focus:outline-none focus:border-(--accent) transition-colors"
+                className="w-full bg-(--surface) border border-(--border) rounded-sm pl-3 pr-10 py-2.5 text-xs font-mono text-(--text) placeholder:text-(--text-muted) focus:outline-none focus:border-(--accent) transition-colors"
               />
               <button
                 onClick={handleAiSubmit}
                 disabled={!aiInput.trim()}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-(--text-muted) hover:text-(--accent) disabled:opacity-30 transition-colors p-1"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-(--text-muted) hover:text-(--accent) disabled:opacity-30 transition-colors p-1"
                 aria-label="Ask AI guide"
               >
-                <Send className="h-4 w-4" />
+                <Send className="h-3.5 w-3.5" />
               </button>
             </div>
-            <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-(--text-muted)">
+            <p className="mt-1.5 font-mono text-[9px] uppercase tracking-[0.18em] text-(--text-muted)">
               Powered by Qwen2.5 &middot; Runs locally in your browser &middot; No data sent
             </p>
           </motion.div>

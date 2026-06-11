@@ -11,12 +11,12 @@ const ORBIT_RADIUS = 41;
 const ORBIT_DURATION_SECONDS = 108;
 
 const orbitNodes = [
-  { id: "calm", label: "Calm Under Pressure", angle: -90, color: "#A78BFA" },
-  { id: "story", label: "Story Teller", angle: -30, color: "#F59E0B" },
-  { id: "person", label: "A Wonderful Person", angle: 30, color: "#F472B6" },
+  { id: "systems", label: "Systems Thinker", angle: -90, color: "#A78BFA" },
+  { id: "adaptive", label: "Adaptive Learner", angle: -30, color: "#F59E0B" },
+  { id: "cross", label: "Cross Functional", angle: 30, color: "#F472B6" },
   { id: "solution", label: "Solution Driven", angle: 90, color: "#34D399" },
   { id: "problem", label: "Problem Solver", angle: 150, color: "#38BDF8" },
-  { id: "bridge", label: "Technical Translator", angle: 210, color: "#EF4444" },
+  { id: "detail", label: "Detail Oriented", angle: 210, color: "#EF4444" },
 ];
 
 const metrics = [
@@ -118,7 +118,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
       initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }}
       animate={shouldReduceMotion ? {} : { opacity: 1, x: 0 }}
       exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }}
-      className="relative min-h-screen overflow-hidden bg-[#030509] px-5 py-10 text-(--text) md:-m-12 md:px-10 md:py-14 xl:-m-16 xl:px-12"
+      className="relative min-h-screen overflow-hidden bg-[#030509] px-5 pb-24 pt-10 text-(--text) md:-m-12 md:px-10 md:pb-24 md:pt-14 xl:-m-16 xl:px-12"
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.42]"
@@ -131,7 +131,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
       <section className="relative z-10 mx-auto grid max-w-[1280px] grid-cols-1 gap-10 lg:grid-cols-[0.78fr_1.46fr_0.9fr] lg:items-start">
         <aside className="pt-12 lg:pt-24">
           <div className="mb-7 font-mono text-xs uppercase tracking-[0.34em] text-(--text-muted)">Human Qualities</div>
-          <h2 className="max-w-[290px] font-syne text-4xl font-medium leading-[0.92] tracking-tight text-(--text) md:text-5xl">
+          <h2 className="max-w-[290px] font-syne text-3xl font-medium leading-[0.92] tracking-tight text-(--text) md:text-4xl">
             Life&apos;s sky.
             <br />
             Human signals.
@@ -268,24 +268,21 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
         </div>
 
         <aside className="relative pt-8 lg:pt-20">
-          <div className="mb-32 hidden text-right font-mono text-[10px] font-bold uppercase tracking-[0.32em] text-(--text-muted) lg:block">
-            <div>Last Updated</div>
-            <div className="mt-4 text-(--text)">May 15, 2026&nbsp;&nbsp;20:45</div>
-          </div>
+          <div className="mb-32 hidden lg:block" />
 
           <div className="mb-8">
             <div className="font-mono text-xs uppercase tracking-[0.28em] text-(--text-muted)">Key Metrics</div>
             <div className="mt-3 h-px w-12 bg-(--accent2)" />
           </div>
-          <div className="space-y-7">
+          <div className="space-y-5">
             {metrics.map((metric) => (
-              <div key={metric.label} className="grid grid-cols-1 sm:grid-cols-[46px_1fr_84px] items-center gap-5 min-w-0">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-(--border) bg-[#101826]/90 text-(--text)">
+              <div key={metric.label} className="grid grid-cols-1 sm:grid-cols-[40px_1fr_72px] items-center gap-4 min-w-0">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-(--border) bg-[#101826]/90 text-(--text)">
                   <MetricGlyph type={metric.glyph} />
                 </div>
                 <div>
-                  <div className="font-syne text-xl font-black leading-none tracking-tight text-(--text)">{metric.value}</div>
-                  <div className="mt-1 text-xs leading-tight text-(--text-muted) break-words">{metric.label}</div>
+          <div className="font-syne text-lg font-black leading-none tracking-tight text-(--text)">{metric.value}</div>
+          <div className="mt-1 text-[11px] leading-tight text-(--text-muted) break-words">{metric.label}</div>
                 </div>
                 <svg viewBox="0 0 24 24" className="h-8 w-full text-(--text-muted)" fill="none" stroke="currentColor" strokeWidth="0.8">
                   <path d={metric.spark} />

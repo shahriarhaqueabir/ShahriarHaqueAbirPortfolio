@@ -51,7 +51,7 @@ export default function AiGuideFooter({
   };
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 md:left-[76px] z-50 border-t border-(--border) bg-(--surface)/90 backdrop-blur-3xl">
+    <footer className="fixed bottom-0 left-0 right-0 md:left-[68px] z-50 border-t border-(--border) bg-(--surface)/90 backdrop-blur-3xl">
       <AnimatePresence>
         {showReadyToast && (
           <motion.div
@@ -69,10 +69,10 @@ export default function AiGuideFooter({
         )}
       </AnimatePresence>
 
-      <div className="flex flex-col gap-2 px-4 py-3 md:px-6 md:py-4">
+      <div className="flex flex-col gap-1.5 px-3 py-2 md:px-4 md:py-3">
         {/* Top row: status + greeting */}
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 min-w-0 flex-1">
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 min-w-0 flex-1">
             <div
               className={`h-2 w-2 shrink-0 rounded-full ${
                 isReady && !localAiPaused
@@ -84,10 +84,10 @@ export default function AiGuideFooter({
                     : "bg-(--text-muted)"
               }`}
             />
-            <span className="text-[10px] font-mono text-(--text-muted) uppercase tracking-wider shrink-0">
+            <span className="text-[9px] font-mono text-(--text-muted) uppercase tracking-wider shrink-0">
               [{localAiPaused ? "Paused" : localAiFallback ? "Fallback" : !localAiEnabled ? "Opt-in" : isReady ? "Ready" : "Loading"}]
             </span>
-            <span className="text-[10px] font-mono text-(--text-muted) uppercase tracking-wider hidden sm:inline">
+            <span className="text-[9px] font-mono text-(--text-muted) uppercase tracking-wider hidden sm:inline">
               Shahriar&apos;s AI Guide
             </span>
           </div>
@@ -119,7 +119,7 @@ export default function AiGuideFooter({
                   onSend(s.input);
                   onFocus();
                 }}
-                className="shrink-0 px-4 py-2.5 rounded-sm border border-(--border) text-[10px] font-mono uppercase tracking-wider text-(--text-muted) hover:text-(--accent) hover:border-(--accent) transition-colors bg-(--bg)/50"
+                className="shrink-0 px-3 py-2 rounded-sm border border-(--border) text-[9px] font-mono uppercase tracking-wider text-(--text-muted) hover:text-(--accent) hover:border-(--accent) transition-colors bg-(--bg)/50"
               >
                 {s.label}
               </button>
@@ -134,11 +134,11 @@ export default function AiGuideFooter({
           <button
             type="button"
             onClick={enableLocalAi}
-            className="flex items-center gap-2 px-4 py-3 border border-(--accent) bg-(--surface) text-(--text) transition-all hover:bg-(--accent) hover:text-(--bg) group w-full"
+            className="flex items-center gap-2 px-3 py-2.5 border border-(--accent) bg-(--surface) text-(--text) transition-all hover:bg-(--accent) hover:text-(--bg) group w-full"
           >
-            <Power className="h-3.5 w-3.5 shrink-0" />
-            <span className="text-[10px] font-bold uppercase tracking-widest">Enable AI Portfolio Guide</span>
-            <span className="text-[9px] font-mono text-(--text-muted) group-hover:text-(--bg)/80 transition-colors hidden sm:inline">
+            <Power className="h-3 w-3 shrink-0" />
+            <span className="text-[9px] font-bold uppercase tracking-widest">Enable AI Portfolio Guide</span>
+            <span className="text-[8px] font-mono text-(--text-muted) group-hover:text-(--bg)/80 transition-colors hidden sm:inline">
               Ask questions · Get a recruiter path · Explore projects
             </span>
           </button>
@@ -160,7 +160,7 @@ export default function AiGuideFooter({
                     : `Loading guide... ${Math.round(progress)}%`
               }
               disabled={!isReady && !localAiFallback}
-              className="w-full bg-(--surface) border border-(--border) rounded-sm py-2.5 pl-9 pr-10 text-xs font-mono focus:outline-none focus:border-(--accent) transition-all text-(--text) placeholder:text-(--text-muted)"
+              className="w-full bg-(--surface) border border-(--border) rounded-sm py-2 pl-8 pr-9 text-[11px] font-mono focus:outline-none focus:border-(--accent) transition-all text-(--text) placeholder:text-(--text-muted)"
             />
             <MessageSquare className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-(--text-muted)" />
             <button

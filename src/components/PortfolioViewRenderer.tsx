@@ -31,10 +31,6 @@ export default function PortfolioViewRenderer({ activeView, setView, onAiQuery, 
       return <ExperienceView key="experience" setView={setView} />;
     case "skills":
       return <SkillsView key="skills" setView={setView} />;
-    case "stack":
-      return <SkillsView key="skills-stack" setView={setView} />;
-    case "vision":
-      return <AboutView key="about-vision" setView={setView} scrollContainerRef={scrollContainerRef} />;
     case "stats":
       return <StatsView key="stats" setView={setView} />;
     case "contact":

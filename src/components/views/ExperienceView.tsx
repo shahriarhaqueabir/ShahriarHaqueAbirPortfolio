@@ -20,11 +20,11 @@ const lifeMilestones = [
 export default function ExperienceView({ setView }: { setView: (view: ViewKey) => void }) {
   const shouldReduceMotion = useReducedMotion();
   return (
-    <motion.div initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }} animate={shouldReduceMotion ? {} : { opacity: 1, x: 0 }} exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }} className="pt-10 max-w-5xl">
+    <motion.div initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }} animate={shouldReduceMotion ? {} : { opacity: 1, x: 0 }} exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }} className="pt-10 pb-24 max-w-5xl">
       <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">— Career Trajectory</div>
-      <h2 className="text-3xl font-syne font-black mb-12 tracking-tight text-(--text)">Experience</h2>
+      <h2 className="text-2xl font-syne font-black mb-8 tracking-tight text-(--text)">Experience</h2>
 
-      <div className="bg-(--surface) border border-(--border) p-5 md:p-8 mb-20 relative overflow-hidden">
+      <div className="bg-(--surface) border border-(--border) p-4 md:p-6 mb-14 relative overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-1 bg-(--accent)"></div>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
           <h4 className="font-syne font-bold text-xs text-(--text-muted) uppercase tracking-widest">Professional Influence Map</h4>
@@ -89,7 +89,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
                     />
                   </motion.div>
                   <motion.div
-                    className="border bg-(--bg) px-4 py-4 min-h-[132px]"
+                    className="border bg-(--bg) px-3 py-3 min-h-[100px]"
                     initial={shouldReduceMotion ? false : { borderColor: "var(--border)", boxShadow: "0 0 0 rgba(56, 189, 248, 0)" }}
                     animate={shouldReduceMotion ? {} : {
                       borderColor: isNow ? ["var(--border)", "rgba(56, 189, 248, 0.95)", "rgba(56, 189, 248, 1)"] : ["var(--border)", "rgba(56, 189, 248, 0.65)", "var(--border)"],
@@ -99,8 +99,8 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
                     }}
                     transition={shouldReduceMotion ? { duration: 0 } : { delay: pulseDelay, duration: isNow ? 1.4 : 0.9, ease: "easeOut" }}
                   >
-                    <div className={`font-mono text-[10px] uppercase tracking-[0.24em] mb-3 ${isNow ? "text-(--accent)" : "text-(--text-muted)"}`}>{milestone.marker}</div>
-                    <div className="font-syne font-black text-xl tracking-tight text-(--text) leading-none mb-3">{milestone.label}</div>
+                    <div className={`font-mono text-[9px] uppercase tracking-[0.24em] mb-2 ${isNow ? "text-(--accent)" : "text-(--text-muted)"}`}>{milestone.marker}</div>
+                    <div className="font-syne font-black text-lg tracking-tight text-(--text) leading-none mb-2">{milestone.label}</div>
                     <p className="text-xs text-(--text-muted) leading-relaxed font-sans">{milestone.detail}</p>
                   </motion.div>
                 </motion.div>
@@ -111,8 +111,8 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
 
         <div className="mt-8 border-l-2 border-(--accent) pl-5 max-w-2xl">
           <p className="text-sm text-(--text-muted) leading-relaxed font-sans">
-            The timeline shows the influences that shaped the profile: engineering fundamentals, network operations, technical enablement at L&T, SaaS solution consulting, Tier-3 production
-            support, and current focus on QA, release validation, and technical operations engineering.
+            The timeline shows the influences that shaped the profile: engineering fundamentals, network operations, technical enablement at L&T, SaaS solution consulting and integration consulting, Tier-3 production
+            support, technical account management, and current focus on QA, release validation, solutions engineering, and technical operations engineering.
           </p>
         </div>
       </div>
@@ -125,7 +125,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
             initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
             animate={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
             transition={shouldReduceMotion ? { duration: 0 } : { delay: i * 0.1 }}
-            className={`bg-(--bg) p-6 md:p-10 group transition-all duration-300 relative overflow-hidden ${
+            className={`bg-(--bg) p-5 md:p-8 group transition-all duration-300 relative overflow-hidden ${
               i === 0
                 ? "border-l-4 border-l-(--accent) hover:bg-(--surface)"
                 : "border-l-4 border-l-transparent hover:border-l-(--accent)/50 hover:bg-(--surface)"
@@ -152,24 +152,24 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
                     </div>
                   )}
                   <div className="text-(--accent) font-mono text-[10px] tracking-[0.2em] uppercase mb-2">{e.company}</div>
-                  <h3 className={`text-xl font-black font-syne mb-6 tracking-tight transition-colors duration-200 ${
+                  <h3 className={`text-lg font-black font-syne mb-4 tracking-tight transition-colors duration-200 ${
                     i === 0
                       ? "text-(--text) group-hover:text-(--accent)"
                       : "text-(--text) group-hover:text-(--accent)"
                   }`}>
                     {e.role}
                   </h3>
-                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
+                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
                     {e.points.map((p, pIdx) => (
-                      <li key={pIdx} className="flex items-start gap-4 text-base text-(--text-muted) leading-relaxed min-w-0">
-                        <span className="w-1.5 h-1.5 rounded-full bg-(--accent)/40 mt-1.5 shrink-0" />
+                      <li key={pIdx} className="flex items-start gap-3 text-sm text-(--text-muted) leading-relaxed min-w-0">
+                        <span className="w-1 h-1 rounded-full bg-(--accent)/40 mt-1.5 shrink-0" />
                         <span className="break-words">{p}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
               </div>
-              <div className={`font-mono text-[10px] font-bold border px-4 py-2 uppercase tracking-widest transition-all shrink-0 ${
+              <div className={`font-mono text-[9px] font-bold border px-3 py-1.5 uppercase tracking-widest transition-all shrink-0 ${
                 i === 0
                   ? "text-(--bg) bg-(--accent) border-(--accent) group-hover:bg-(--text) group-hover:border-(--text)"
                   : "text-(--text) bg-(--bg) border-(--border) group-hover:bg-(--accent) group-hover:text-white group-hover:border-(--accent)"
