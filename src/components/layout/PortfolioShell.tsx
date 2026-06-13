@@ -24,7 +24,7 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
     },
   });
 
-  const viewToPath = (v: ViewKey) => v === "hero" ? "/" : `/${v}`;
+  const viewToPath = (v: ViewKey) => (v === "hero" ? "/" : `/${v}`);
 
   const navigate = (view: ViewKey, name?: string) => {
     setActiveView(view);
@@ -42,10 +42,11 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
       if (typeof window !== "undefined") {
         window.history.pushState({ view: result.view }, "", viewToPath(result.view));
       }
+      setPanelOpen(false);
     } else {
       worker.sendMessage(input, activeView, conversationState);
+      setPanelOpen(true);
     }
-    setPanelOpen(true);
   };
 
   useEffect(() => {
@@ -83,7 +84,7 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
   }, [activeView]);
 
   return (
-    <main suppressHydrationWarning className="flex h-screen w-full relative z-10 font-sans text-(--text) bg-(--bg)">
+    <main suppressHydrationWarning className="flex h-screen w-full relative z-10 font-sans text-(--text)">
       <AnimatePresence>
         {isBooting && (
           <BootScreen
@@ -106,11 +107,7 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
         aiEnabled={worker.localAiEnabled}
       />
 
-      <section
-        ref={contentScrollRef}
-        data-testid="content-scroll"
-        className="flex-1 h-full overflow-y-auto overflow-x-hidden px-5 py-6 md:py-16 pb-[180px] md:pb-[300px] relative custom-scrollbar"
-      >
+      <section ref={contentScrollRef} data-testid="content-scroll" className="flex-1 h-full overflow-y-auto overflow-x-hidden px-5 py-6 md:py-16 pb-[180px] md:pb-[300px] relative custom-scrollbar">
         <div className="content-stage w-full max-w-5xl mx-auto">
           <AnimatePresence mode="wait">
             <PortfolioViewRenderer activeView={activeView} setView={setActiveView} onAiQuery={handleHeroAiQuery} scrollContainerRef={contentScrollRef} />
@@ -126,7 +123,6 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
         localAiPaused={worker.localAiPaused}
         progress={worker.progress}
         showReadyToast={worker.showReadyToast}
-        enableLocalAi={worker.enableLocalAi}
         onSend={send}
         onFocus={() => setPanelOpen(true)}
       />
@@ -136,6 +132,8 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
         onClose={() => setPanelOpen(false)}
         messages={worker.messages}
         activeView={activeView}
+        localAiEnabled={worker.localAiEnabled}
+        enableLocalAi={worker.enableLocalAi}
         onNavigate={(view) => navigate(view)}
         onSend={send}
       />

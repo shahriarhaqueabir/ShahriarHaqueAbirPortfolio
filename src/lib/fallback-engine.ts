@@ -161,13 +161,19 @@ function answerRoleFit(role: string): string {
   }
   const relevantExp = CONFIG.experience.filter((e) => e.role.toLowerCase().includes(role.toLowerCase()) || e.company.toLowerCase().includes(role.toLowerCase()));
   if (relevantExp.length > 0) {
-    return `Role-fit synthesis for "${role}":\n\n${relevantExp.map((e) => `  • ${e.role} at ${e.company} (${e.period})`).join("\n")}\n\nKey capabilities: ${CONFIG.skills.slice(0, 3).map((s) => s.items.slice(0, 3).join(", ")).join("; ")}`;
+    return `Role-fit synthesis for "${role}":\n\n${relevantExp.map((e) => `  • ${e.role} at ${e.company} (${e.period})`).join("\n")}\n\nKey capabilities: ${CONFIG.skills
+      .slice(0, 3)
+      .map((s) => s.items.slice(0, 3).join(", "))
+      .join("; ")}`;
   }
   return `I couldn't find a specific match for "${role}". Shahriar's career spans: ${CAREER_STATES.map((s) => s.label).join(" → ")}. Try asking about "Technical Operations" or "Integration Engineer".`;
 }
 
 function answerContact(): string {
-  return `Contact Shahriar:\n\n${CONFIG.contact.filter((c) => c.href).map((c) => `  • ${c.label}: ${c.value}`).join("\n")}`;
+  return `Contact Shahriar:\n\n${CONFIG.contact
+    .filter((c) => c.href)
+    .map((c) => `  • ${c.label}: ${c.value}`)
+    .join("\n")}`;
 }
 
 function answerProjectsOverview(): string {
@@ -400,9 +406,7 @@ function buildClarifyingQuestion(input: string): { text: string; suggestions: st
   }
 
   const uniqueSuggestions = [...new Set(suggestions)].slice(0, 3);
-  const questionText = isQuestion
-    ? `I'm not sure I understood your question.`
-    : `I'm not sure what you're looking for.`;
+  const questionText = isQuestion ? `I'm not sure I understood your question.` : `I'm not sure what you're looking for.`;
 
   return {
     text: `${questionText} Are you asking about ${uniqueSuggestions.join(", or ")}?`,
@@ -425,7 +429,10 @@ export function buildFallbackAnswer(userText: string, activeView: ViewKey): { te
 
   if (scored.length === 0 || scored[0].score < SCORE_THRESHOLD) {
     const clarifying = buildClarifyingQuestion(userText);
-    return { text: clarifying.text, suggestions: clarifying.suggestions };
+    return {
+      text: `The AI guide is currently unavailable. ${clarifying.text} ` + `You can explore the portfolio manually or ask about projects, skills, or experience.`,
+      suggestions: clarifying.suggestions,
+    };
   }
 
   return { text: scored[0].answer(userText) };

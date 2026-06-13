@@ -40,8 +40,8 @@ export const metadata: Metadata = {
       },
       {
         url: "/profile.jpg",
-        width: 3456,
-        height: 2305,
+        width: 800,
+        height: 600,
         alt: "Shahriar Haque Abir, Technical Operations Engineer",
       },
     ],
@@ -68,6 +68,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { ParticleBackground } from "@/components/ParticleBackground";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -75,8 +77,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable} ${syne.variable} ${jetbrains.variable}`}>
-      <body className="antialiased min-h-screen bg-(--bg) text-(--text) relative">
+      <body className="antialiased min-h-screen bg-(--bg) text-(--text)">
         <PersonJsonLd />
+        <ParticleBackground />
         <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
           <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(56,189,248,0.08),transparent_34%,rgba(245,158,11,0.07)_72%,transparent)]" />
           <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(238,246,248,0.35),transparent)]" />

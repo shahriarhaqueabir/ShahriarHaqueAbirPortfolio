@@ -144,7 +144,7 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
         pruneMessages([
           ...prev.filter((message) => message.id !== "ai-opt-in" && message.id !== "1"),
           createSysMessage(`WebGPU model mode is unavailable here: ${fallbackReason} Using a lightweight portfolio fallback instead; no model will be downloaded or cached.`),
-        ])
+        ]),
       );
       return;
     }
@@ -242,41 +242,39 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
           if (event.data.status === "ready") break;
 
           setMessages((prev) => {
-            const idx = prev.length - 1;
-            const lastMsg = prev[idx];
-            if (lastMsg && lastMsg.sender === "ai" && lastMsg.isTyping) {
-              const cleanText = typeof event.data.text === "string" ? event.data.text.trim() : "";
-              let updatedText: string;
+            const cleanText = typeof event.data.text === "string" ? event.data.text.trim() : "";
+            let updatedText: string;
+            let navigateTo: ViewKey | null = null;
 
-              if (cleanText.includes("INITIATING_NAVIGATION:")) {
-                const parts = cleanText.split("INITIATING_NAVIGATION:");
-                const responseText = parts[0].trim();
-                const rawView = parts[1].trim().toLowerCase();
-                const viewToNavigate = rawView.split(/[\s\n]+/)[0] as ViewKey;
+            if (cleanText.includes("INITIATING_NAVIGATION:")) {
+              const parts = cleanText.split("INITIATING_NAVIGATION:");
+              const responseText = parts[0].trim();
+              const rawView = parts[1].trim().toLowerCase();
+              const viewToNavigate = rawView.split(/[\s\n]+/)[0] as ViewKey;
 
-                const VALID_VIEWS: ViewKey[] = ["hero", "about", "projects", "experience", "skills", "stats", "contact"];
+              const VALID_VIEWS: ViewKey[] = ["hero", "about", "projects", "experience", "skills", "stats", "contact"];
 
-                if (VALID_VIEWS.includes(viewToNavigate)) {
-                  updatedText = responseText || cleanText.replace(/INITIATING_NAVIGATION:\s*\S+\s*/i, "").trim();
-                  if (onNavigateRef.current) {
-                    onNavigateRef.current(viewToNavigate);
-                  }
-                } else {
-                  updatedText = cleanText;
-                }
-              } else if (cleanText.includes("INITIATING_SYNTHESIS")) {
-                const context = cleanText.replace("INITIATING_SYNTHESIS", "");
-                if (onSynthesisRef.current) onSynthesisRef.current(context);
-                updatedText = context;
+              if (VALID_VIEWS.includes(viewToNavigate)) {
+                updatedText = responseText || cleanText.replace(/INITIATING_NAVIGATION:\s*\S+\s*/i, "").trim();
+                navigateTo = viewToNavigate;
               } else {
                 updatedText = cleanText;
               }
-
-              const newMsgs = [...prev];
-              newMsgs[idx] = { ...lastMsg, text: updatedText, isTyping: false };
-              return newMsgs;
+            } else if (cleanText.includes("INITIATING_SYNTHESIS")) {
+              const context = cleanText.replace("INITIATING_SYNTHESIS", "");
+              if (onSynthesisRef.current) onSynthesisRef.current(context);
+              updatedText = context;
+            } else {
+              updatedText = cleanText;
             }
-            return prev;
+
+            const newMsgs = [...prev, createAiMessage(updatedText)];
+
+            if (navigateTo && onNavigateRef.current) {
+              onNavigateRef.current(navigateTo);
+            }
+
+            return newMsgs;
           });
           break;
         }
@@ -288,7 +286,7 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
             pruneMessages([
               ...prev.filter((message) => message.id !== "1"),
               createSysMessage(`WebGPU model mode could not start (${event.data.error}). Using the lightweight portfolio fallback instead.`),
-            ])
+            ]),
           );
           break;
       }
@@ -317,13 +315,7 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
   const addNavigationMessage = (userText: string, view: ViewKey) => {
     const viewGoal = VIEW_GOALS[view];
 
-    setMessages((prev) =>
-      pruneMessages([
-        ...prev,
-        createUserMessage(userText),
-        createSysMessage(`Opened ${formatViewName(view)} - ${viewGoal.coreQuestion}`),
-      ])
-    );
+    setMessages((prev) => pruneMessages([...prev, createUserMessage(userText), createSysMessage(`Opened ${formatViewName(view)} - ${viewGoal.coreQuestion}`)]));
   };
 
   const addSystemMessage = (text: string) => {
@@ -335,13 +327,13 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
     if (!text) return;
 
     const riskyKeywords = ["script", "write code", "python code", "hack", "penetration", "exploit", "bash script", "sql injection", "vulnerability", "pen test"];
-    if (riskyKeywords.some(kw => text.toLowerCase().includes(kw))) {
+    if (riskyKeywords.some((kw) => text.toLowerCase().includes(kw))) {
       setMessages((prev) =>
         pruneMessages([
           ...prev,
           createUserMessage(userText),
           createAiMessage("I am restricted to providing information about Shahriar's professional experience and portfolio. I cannot generate scripts or provide general technical assistance."),
-        ])
+        ]),
       );
       return;
     }
@@ -352,12 +344,12 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
     visitorProfileRef.current = nextProfile;
     setVisitorProfile(nextProfile);
 
+    const fallbackMsg = createFallbackMessage(fallbackResult.text, fallbackResult.suggestions);
+
     setMessages((prev) => {
-      const updated = pruneMessages([...prev, createUserMessage(userText), createFallbackMessage(fallbackResult.text, fallbackResult.suggestions)]);
+      const updated = pruneMessages([...prev, createUserMessage(userText), fallbackMsg]);
 
       if (localAiEnabled && isReady && !localAiFallback) {
-        updated.push(createAiMessage("Thinking...", true));
-
         const chatHistory: ChatMessage[] = updated
           .filter((m) => m.sender === "user" || (m.sender === "ai" && !m.isTyping))
           .slice(-MAX_CHAT_MESSAGES)
@@ -378,10 +370,6 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
 
       return updated;
     });
-
-    if (!localAiEnabled) {
-      enableLocalAi();
-    }
   };
 
   return {

@@ -2,17 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import {
-  ArrowRight,
-  BrainCircuit,
-  ChartSpline,
-  Clock,
-  Network,
-  ServerCog,
-  Sparkles,
-  User,
-  Workflow
-} from "lucide-react";
+import { ArrowRight, BrainCircuit, ChartSpline, Clock, Network, ServerCog, Sparkles, User, Workflow } from "lucide-react";
 import TechIcon from "@/components/TechIcon";
 import GuidedNext from "@/components/GuidedNext";
 import { CONFIG } from "@/lib/data";
@@ -31,13 +21,13 @@ const projectMeta: Record<string, { duration: string; client: string; category: 
 };
 
 function getProjectVisual(project: Project) {
-  if (project.name.includes("Database")) return { Icon: Workflow, color: "#34D399", symbol: "DB" };
-  if (project.name.includes("Network Discovery")) return { Icon: Network, color: "#38BDF8", symbol: "NET" };
-  if (project.name.includes("Onboarding")) return { Icon: BrainCircuit, color: "#A78BFA", symbol: "PORTAL" };
-  if (project.name.includes("Log Analysis")) return { Icon: ServerCog, color: "#22D3EE", symbol: "LOG" };
-  if (project.name.includes("API Test")) return { Icon: ChartSpline, color: "#F59E0B", symbol: "TEST" };
-  if (project.name.includes("AI Gateway")) return { Icon: Sparkles, color: "#F472B6", symbol: "SEC" };
-  return { Icon: Sparkles, color: "#38BDF8", symbol: "SYS" };
+  if (project.name.includes("Database")) return { Icon: Workflow, color: "var(--accent3)", symbol: "DB" };
+  if (project.name.includes("Network Discovery")) return { Icon: Network, color: "var(--accent)", symbol: "NET" };
+  if (project.name.includes("Onboarding")) return { Icon: BrainCircuit, color: "var(--accent2)", symbol: "PORTAL" };
+  if (project.name.includes("Log Analysis")) return { Icon: ServerCog, color: "var(--accent)", symbol: "LOG" };
+  if (project.name.includes("API Test")) return { Icon: ChartSpline, color: "var(--accent3)", symbol: "TEST" };
+  if (project.name.includes("AI Gateway")) return { Icon: Sparkles, color: "var(--accent)", symbol: "SEC" };
+  return { Icon: Sparkles, color: "var(--accent)", symbol: "SYS" };
 }
 
 function getArchitectureNodes(project: Project): string[] {
@@ -57,10 +47,7 @@ function DeviceMockup({ project, visual }: { project: Project; visual: { Icon: t
   return (
     <div className="relative group w-full aspect-[16/10] max-w-[640px] mx-auto">
       {/* Glow behind laptop */}
-      <div
-        className="absolute inset-0 rounded-full blur-[80px] opacity-20 transition-opacity group-hover:opacity-30"
-        style={{ backgroundColor: visual.color }}
-      />
+      <div className="absolute inset-0 rounded-full blur-[80px] opacity-20 transition-opacity group-hover:opacity-30" style={{ backgroundColor: visual.color }} />
 
       {/* Laptop Frame */}
       <div className="relative z-10 w-full h-full bg-[#0a0a0a] rounded-xl border-[6px] border-[#1a1a1a] shadow-2xl overflow-hidden flex flex-col">
@@ -74,31 +61,31 @@ function DeviceMockup({ project, visual }: { project: Project; visual: { Icon: t
 
         {/* Screen Content */}
         <div className="flex-1 bg-[#050505] p-6 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: "linear-gradient(90deg, #fff 1px, transparent 1px), linear-gradient(#fff 1px, transparent 1px)", backgroundSize: "20px 20px" }} />
+          <div
+            className="absolute inset-0 opacity-[0.05]"
+            style={{ backgroundImage: "linear-gradient(90deg, #fff 1px, transparent 1px), linear-gradient(#fff 1px, transparent 1px)", backgroundSize: "20px 20px" }}
+          />
 
           <div className="relative z-10 h-full flex flex-col justify-center gap-4">
-              {nodes.map((node, i) => (
-                <motion.div
-                  key={node}
-                  initial={mockupReduceMotion ? false : { opacity: 0, x: -10 }}
-                  whileInView={mockupReduceMotion ? undefined : { opacity: 1, x: 0 }}
-                  transition={mockupReduceMotion ? { duration: 0 } : { delay: i * 0.1 }}
-                  className="flex items-center gap-3"
-                >
-                 <div className="w-8 h-px bg-white/20" />
-                 <div
-                   className="px-3 py-1.5 border border-white/10 bg-white/5 font-mono text-[10px] uppercase tracking-widest text-white/80"
-                  style={{ borderLeft: `2px solid ${visual.color}` }}
-                 >
-                   {node}
-                 </div>
-               </motion.div>
-             ))}
+            {nodes.map((node, i) => (
+              <motion.div
+                key={node}
+                initial={mockupReduceMotion ? false : { opacity: 0, x: -10 }}
+                whileInView={mockupReduceMotion ? undefined : { opacity: 1, x: 0 }}
+                transition={mockupReduceMotion ? { duration: 0 } : { delay: i * 0.1 }}
+                className="flex items-center gap-3"
+              >
+                <div className="w-8 h-px bg-white/20" />
+                <div className="px-3 py-1.5 border border-white/10 bg-white/5 font-mono text-[10px] uppercase tracking-widest text-white/80" style={{ borderLeft: `2px solid ${visual.color}` }}>
+                  {node}
+                </div>
+              </motion.div>
+            ))}
 
-             {/* Abstract HUD element */}
-             <div className="absolute right-4 bottom-4 w-24 h-24 opacity-20 border border-white/20 rounded-full flex items-center justify-center animate-spin-slow">
-                <visual.Icon className="w-8 h-8 text-white" />
-             </div>
+            {/* Abstract HUD element */}
+            <div className="absolute right-4 bottom-4 w-24 h-24 opacity-20 border border-white/20 rounded-full flex items-center justify-center animate-spin-slow">
+              <visual.Icon className="w-8 h-8 text-white" />
+            </div>
           </div>
 
           {/* Scanline overlay */}
@@ -136,15 +123,13 @@ function FeaturedProject({ project, index }: { project: Project; index: number }
       <div className={`flex flex-col gap-6 ${isEven ? "lg:order-2" : "lg:order-1"}`}>
         <div className="space-y-2">
           <div className="flex items-center gap-3">
-             <div className="w-6 h-px bg-(--accent)" />
-             <span className="font-mono text-xs uppercase tracking-[0.3em] text-(--accent)">{meta.category}</span>
+            <div className="w-6 h-px bg-(--accent)" />
+            <span className="font-mono text-xs uppercase tracking-[0.3em] text-(--accent)">{meta.category}</span>
           </div>
           <h3 className="font-syne text-xl lg:text-2xl font-black text-(--text) leading-tight tracking-tight">{project.name}</h3>
         </div>
 
-        <p className="text-(--text-muted) text-sm lg:text-base leading-relaxed max-w-xl">
-          {project.desc}
-        </p>
+        <p className="text-(--text-muted) text-sm lg:text-base leading-relaxed max-w-xl">{project.desc}</p>
 
         {/* Problem / Solution / Result fields */}
         <div className="space-y-2">
@@ -191,13 +176,12 @@ function FeaturedProject({ project, index }: { project: Project; index: number }
                 key={item}
                 className="px-3 py-2 border border-(--border) bg-(--surface)/50 rounded-full text-[9px] font-sans font-semibold text-(--text-muted) flex items-center gap-2 group hover:border-(--accent) hover:text-(--text) transition-colors"
               >
-                <TechIcon name={item} size={20} className="transition-opacity shrink-0" />
+                <TechIcon name={item} className="transition-opacity shrink-0" />
                 {item}
               </span>
             ))}
           </div>
         </div>
-
       </div>
     </motion.article>
   );
@@ -218,8 +202,7 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
             Featured <span className="text-(--accent)">Projects</span>
           </h2>
           <p className="max-w-2xl text-xs lg:text-sm leading-relaxed text-(--text-muted) font-mono uppercase tracking-tight">
-            Recent work demonstrating technical operations engineering, systems integration,
-            API automation, and scalable dashboard-driven solutions.
+            Recent work demonstrating technical operations engineering, systems integration, API automation, and scalable dashboard-driven solutions.
           </p>
         </div>
         <div className="flex flex-col items-end gap-4">
@@ -242,11 +225,7 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
 
       <section className="space-y-8">
         {CONFIG.projects.map((project, i) => (
-          <FeaturedProject
-            key={project.name}
-            project={project}
-            index={i}
-          />
+          <FeaturedProject key={project.name} project={project} index={i} />
         ))}
       </section>
 

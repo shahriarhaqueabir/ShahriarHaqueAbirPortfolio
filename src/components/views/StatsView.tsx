@@ -136,9 +136,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
             <br />
             Human signals.
           </h2>
-          <p className="mt-12 max-w-[280px] font-mono text-xs font-bold leading-8 text-(--text)">
-            Calm when stakes rise. Clear when systems get tangled. Kind enough to keep people with the work.
-          </p>
+          <p className="mt-12 max-w-[280px] font-mono text-xs font-bold leading-8 text-(--text)">Calm when stakes rise. Clear when systems get tangled. Kind enough to keep people with the work.</p>
           <p className="mt-12 max-w-[190px] font-mono text-xs uppercase leading-5 tracking-[0.28em] text-(--text-muted)">Follow the constellation.</p>
         </aside>
 
@@ -154,7 +152,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
               strokeWidth="0.2"
               strokeDasharray="1 1.7"
               animate={shouldReduceMotion ? {} : { rotate: -360 }}
-              style={{ transformOrigin: "50% 50%" }}
+              style={{ transformOrigin: "50% 50%", willChange: "transform" }}
               transition={shouldReduceMotion ? { duration: 0 } : { duration: 58, repeat: Infinity, ease: "linear" }}
             />
             {particleField.map((particle) => (
@@ -171,7 +169,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
           </svg>
 
           <motion.div
-            className="absolute left-1/2 top-1/2 z-10 h-14 w-14 -translate-x-1/2 -translate-y-1/2 rounded-full"
+            className="absolute left-1/2 top-1/2 z-10 h-14 w-14 -translate-x-1/2 -translate-y-1/2 rounded-full will-change-transform"
             animate={shouldReduceMotion ? {} : { scale: [1, 1.08, 1] }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
           >
@@ -189,7 +187,11 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
             />
           </motion.div>
 
-          <motion.div className="absolute inset-0" animate={shouldReduceMotion ? {} : { rotate: -360 }} transition={shouldReduceMotion ? { duration: 0 } : { duration: ORBIT_DURATION_SECONDS, repeat: Infinity, ease: "linear" }}>
+          <motion.div
+            className="absolute inset-0"
+            animate={shouldReduceMotion ? {} : { rotate: -360 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: ORBIT_DURATION_SECONDS, repeat: Infinity, ease: "linear" }}
+          >
             <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 100 100" aria-hidden="true">
               <g stroke="rgba(238,246,248,0.2)" strokeWidth="0.16" strokeLinecap="round" strokeDasharray="0.8 1.5">
                 <line x1={orbitNodesWithPoints[5].x} y1={orbitNodesWithPoints[5].y} x2="50" y2="50" />
@@ -232,7 +234,11 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
                   className="absolute z-10 h-14 w-14 -translate-x-1/2 -translate-y-1/2 rounded-full text-left outline-none"
                   style={{ left: `${node.x}%`, top: `${node.y}%` }}
                 >
-                  <motion.span className="absolute inset-0 block" animate={shouldReduceMotion ? {} : { rotate: 360 }} transition={shouldReduceMotion ? { duration: 0 } : { duration: ORBIT_DURATION_SECONDS, repeat: Infinity, ease: "linear" }}>
+                  <motion.span
+                    className="absolute inset-0 block will-change-transform"
+                    animate={shouldReduceMotion ? {} : { rotate: 360 }}
+                    transition={shouldReduceMotion ? { duration: 0 } : { duration: ORBIT_DURATION_SECONDS, repeat: Infinity, ease: "linear" }}
+                  >
                     <span className="pointer-events-none absolute left-1/2 top-1/2 h-px w-5 -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.38),transparent)] blur-[0.5px]" />
                     <span className="pointer-events-none absolute left-1/2 top-1/2 h-5 w-px -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(180deg,transparent,rgba(255,255,255,0.38),transparent)] blur-[0.5px]" />
                     <span className="pointer-events-none absolute left-1/2 top-1/2 h-px w-4 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.28),transparent)] blur-[0.5px]" />
@@ -240,7 +246,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
                     <span className="pointer-events-none absolute left-1/2 top-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/30 blur-lg" />
                     <span className="pointer-events-none absolute left-1/2 top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/10 blur-xl" />
                     <motion.span
-                      className="absolute left-1/2 top-1/2 block h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full border backdrop-blur"
+                      className="absolute left-1/2 top-1/2 block h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full border backdrop-blur will-change-transform"
                       style={{
                         background: "radial-gradient(circle at 34% 28%, rgba(255,255,255,1), rgba(255,255,255,1) 46%, rgba(238,246,248,0.72) 100%)",
                         borderColor: "rgba(255,255,255,1)",
@@ -281,8 +287,8 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
                   <MetricGlyph type={metric.glyph} />
                 </div>
                 <div>
-          <div className="font-syne text-lg font-black leading-none tracking-tight text-(--text)">{metric.value}</div>
-          <div className="mt-1 text-[11px] leading-tight text-(--text-muted) break-words">{metric.label}</div>
+                  <div className="font-syne text-lg font-black leading-none tracking-tight text-(--text)">{metric.value}</div>
+                  <div className="mt-1 text-[11px] leading-tight text-(--text-muted) break-words">{metric.label}</div>
                 </div>
                 <svg viewBox="0 0 24 24" className="h-8 w-full text-(--text-muted)" fill="none" stroke="currentColor" strokeWidth="0.8">
                   <path d={metric.spark} />

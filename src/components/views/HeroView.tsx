@@ -8,13 +8,7 @@ import { CONFIG } from "@/lib/data";
 import Image from "next/image";
 import type { ViewKey } from "@/lib/types";
 
-export default function HeroView({
-  setView,
-  onAiQuery,
-}: {
-  setView: (v: ViewKey) => void;
-  onAiQuery?: (input: string) => void;
-}) {
+export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey) => void; onAiQuery?: (input: string) => void }) {
   const [currentPhrase, setCurrentPhrase] = useState(0);
   const [aiInput, setAiInput] = useState("");
   const shouldReduceMotion = useReducedMotion();
@@ -53,19 +47,17 @@ export default function HeroView({
       <div className="absolute right-0 top-8 hidden h-[72vh] w-px bg-[linear-gradient(to_bottom,transparent,var(--accent),transparent)] opacity-60 xl:block" />
 
       <div className="flex flex-col items-center gap-8 md:gap-12 w-full">
-
         {/* Role badge + Name */}
-        <div className="w-full max-w-3xl">
+        <div className="w-full max-w-5xl">
           <div className="mb-5 border-l-2 border-(--accent) pl-5">
-            <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-(--accent)">
-              {CONFIG.tagline}
-            </p>
+            <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-(--accent)">{CONFIG.tagline}</p>
           </div>
 
-          <h1 className="font-syne text-[1.8rem] font-black leading-[1.08] tracking-tight text-(--text) xl:text-[3.4rem] 2xl:text-[4rem]">
+          <h1 className="font-syne text-[1.8rem] font-black leading-[1.08] tracking-tight text-(--text) xl:text-[3.4rem] 2xl:text-[4rem] whitespace-nowrap">
             {CONFIG.name.split(" ").map((word, i) => (
               <span key={i} className={word === CONFIG.nameHL ? "text-(--accent)" : ""}>
-                {word}{i < CONFIG.name.split(" ").length - 1 ? "\u00A0" : ""}
+                {word}
+                {i < CONFIG.name.split(" ").length - 1 ? "\u00A0" : ""}
               </span>
             ))}
           </h1>
@@ -100,13 +92,7 @@ export default function HeroView({
                 className="font-syne font-black text-sm uppercase leading-tight md:text-lg"
               >
                 {phrases[currentPhrase].text.split(" ").map((word, i) => (
-                  <span key={i}>
-                    {word.includes(phrases[currentPhrase].highlight) ? (
-                      <span style={{ color: phrases[currentPhrase].color }}>{word} </span>
-                    ) : (
-                      word + " "
-                    )}
-                  </span>
+                  <span key={i}>{word.includes(phrases[currentPhrase].highlight) ? <span style={{ color: phrases[currentPhrase].color }}>{word} </span> : word + " "}</span>
                 ))}
               </motion.div>
             </AnimatePresence>
@@ -116,11 +102,9 @@ export default function HeroView({
         {/* Quote */}
         <div className="w-full max-w-3xl">
           <p className="font-playfair text-base italic leading-7 text-(--text) md:text-lg md:leading-8">
-            I bridge the gap between complex enterprise architectures and critical system processes;
-            turning production issues into clear decisions, repeatable solutions, and long-term operational frameworks
-            <span className="not-italic font-sans font-normal text-sm md:text-base text-(--text-muted) ml-1">
-              for success and growth.
-            </span>
+            I bridge the gap between complex enterprise architectures and critical system processes; turning production issues into clear decisions, repeatable solutions, and long-term operational
+            frameworks
+            <span className="not-italic font-sans font-normal text-sm md:text-base text-(--text-muted) ml-1">for success and growth.</span>
           </p>
         </div>
 
@@ -129,12 +113,8 @@ export default function HeroView({
           <div className="grid grid-cols-1 gap-px border border-(--border) bg-(--border) sm:grid-cols-3">
             {CONFIG.heroStats.map((stat) => (
               <div key={stat.label} className="bg-(--bg) p-5 min-w-0">
-                <div className="mb-2 font-syne text-xl font-black leading-none text-(--text)">
-                  {stat.value}
-                </div>
-                <p className="text-[10px] font-bold uppercase leading-4 tracking-[0.12em] text-(--text-muted) break-words">
-                  {stat.label}
-                </p>
+                <div className="mb-2 font-syne text-xl font-black leading-none text-(--text)">{stat.value}</div>
+                <p className="text-[10px] font-bold uppercase leading-4 tracking-[0.12em] text-(--text-muted) break-words">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -280,12 +260,9 @@ export default function HeroView({
                 <Send className="h-3.5 w-3.5" />
               </button>
             </div>
-            <p className="mt-1.5 font-mono text-[9px] uppercase tracking-[0.18em] text-(--text-muted)">
-              Powered by Qwen2.5 &middot; Runs locally in your browser &middot; No data sent
-            </p>
+            <p className="mt-1.5 font-mono text-[9px] uppercase tracking-[0.18em] text-(--text-muted)">Powered by Qwen2.5 &middot; Runs locally in your browser &middot; No data sent</p>
           </motion.div>
         )}
-
       </div>
     </motion.div>
   );

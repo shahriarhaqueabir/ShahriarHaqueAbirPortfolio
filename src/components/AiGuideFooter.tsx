@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Cpu, MessageSquare, Power, Send, CheckCircle2 } from "lucide-react";
+import { Cpu, MessageSquare, Send, CheckCircle2, ChevronUp } from "lucide-react";
 import type { Message } from "@/lib/types";
 
 type AiGuideFooterProps = {
@@ -13,7 +13,6 @@ type AiGuideFooterProps = {
   localAiPaused: boolean;
   progress: number;
   showReadyToast: boolean;
-  enableLocalAi: () => void;
   onSend: (input: string) => void;
   onFocus: () => void;
 };
@@ -25,30 +24,24 @@ const SUGGESTIONS = [
   { label: "Download CV", input: "/shahriar-haque-abir-cv.pdf" },
 ];
 
-export default function AiGuideFooter({
-  messages,
-  isReady,
-  localAiEnabled,
-  localAiFallback,
-  localAiPaused,
-  progress,
-  showReadyToast,
-  enableLocalAi,
-  onSend,
-  onFocus,
-}: AiGuideFooterProps) {
+export default function AiGuideFooter({ messages, isReady, localAiEnabled, localAiFallback, localAiPaused, progress, showReadyToast, onSend, onFocus }: AiGuideFooterProps) {
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const lastAiMessage = [...messages].reverse().find((m) => (m.sender === "ai" || m.sender === "fallback") && !m.isTyping && !m.isReadyGreen);
+  const activeAiOrFallback = localAiEnabled && !localAiPaused;
+  const showSuggestions = activeAiOrFallback && isReady && !localAiFallback && messages.filter((m) => m.sender !== "sys").length <= 1;
 
-  const handleSubmit = () => {
+  const lastMessage = [...messages].reverse().find((m) => (m.sender === "ai" || m.sender === "fallback") && !m.isTyping && !m.isReadyGreen);
+
+  const handleSubmit = useCallback(() => {
     const text = input.trim();
     if (!text) return;
     setInput("");
     onSend(text);
     onFocus();
-  };
+  }, [input, onSend, onFocus]);
+
+  const showExpandHint = !localAiEnabled;
 
   return (
     <footer className="fixed bottom-0 left-0 right-0 md:left-[68px] z-50 border-t border-(--border) bg-(--surface)/90 backdrop-blur-3xl">
@@ -70,45 +63,37 @@ export default function AiGuideFooter({
       </AnimatePresence>
 
       <div className="flex flex-col gap-1.5 px-3 py-2 md:px-4 md:py-3">
-        {/* Top row: status + greeting */}
+        {/* Status bar */}
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5 min-w-0 flex-1">
             <div
               className={`h-2 w-2 shrink-0 rounded-full ${
-                isReady && !localAiPaused
-                  ? localAiFallback
-                    ? "bg-(--accent)"
-                    : "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"
-                  : localAiEnabled
-                    ? "bg-orange-500"
-                    : "bg-(--text-muted)"
+                isReady && !localAiPaused ? (localAiFallback ? "bg-(--accent)" : "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]") : localAiEnabled ? "bg-orange-500" : "bg-(--text-muted)"
               }`}
             />
             <span className="text-[9px] font-mono text-(--text-muted) uppercase tracking-wider shrink-0">
-              [{localAiPaused ? "Paused" : localAiFallback ? "Fallback" : !localAiEnabled ? "Opt-in" : isReady ? "Ready" : "Loading"}]
+              [{localAiPaused ? "Paused" : localAiFallback ? "Fallback" : !localAiEnabled ? "Fallback" : isReady ? "AI Ready" : "Loading"}]
             </span>
-            <span className="text-[9px] font-mono text-(--text-muted) uppercase tracking-wider hidden sm:inline">
-              Shahriar&apos;s AI Guide
-            </span>
+            <span className="text-[9px] font-mono text-(--text-muted) uppercase tracking-wider hidden sm:inline">Shahriar&apos;s Guide</span>
           </div>
           <Cpu className={`w-3 h-3 shrink-0 ${isReady && !localAiPaused ? (localAiFallback ? "text-(--accent)" : "text-green-500") : localAiEnabled ? "text-orange-500" : "text-(--text-muted)"}`} />
         </div>
 
-        {/* Greeting / last AI message */}
-        {!localAiEnabled ? null : localAiPaused ? (
+        {/* Status text / last message */}
+        {localAiPaused ? (
           <p className="text-[11px] font-mono text-(--text-muted) italic">Guide is paused</p>
+        ) : !localAiEnabled ? (
+          <p className="text-[11px] font-mono text-(--text) truncate max-w-full">{lastMessage?.text ?? "Ask about projects, experience, or skills — the fallback guide will respond."}</p>
         ) : !isReady ? (
           <p className="text-[11px] font-mono text-(--text-muted)">Loading guide... {Math.round(progress)}%</p>
-        ) : lastAiMessage ? (
-          <p className="text-[11px] font-mono text-(--text) truncate max-w-full">{lastAiMessage.text}</p>
+        ) : lastMessage ? (
+          <p className="text-[11px] font-mono text-(--text) truncate max-w-full">{lastMessage.text}</p>
         ) : (
-          <p className="text-[11px] font-mono text-(--text-muted)">
-            Welcome. I can walk you through projects, compare experience, or build a recruiter path.
-          </p>
+          <p className="text-[11px] font-mono text-(--text-muted)">Welcome. I can walk you through projects, compare experience, or build a recruiter path.</p>
         )}
 
-        {/* Suggestions chips (only when no messages yet) */}
-        {localAiEnabled && isReady && !localAiPaused && messages.filter(m => m.sender !== "sys").length <= 1 && (
+        {/* Suggestions chips */}
+        {showSuggestions && (
           <div className="flex gap-2 overflow-x-auto pb-1">
             {SUGGESTIONS.map((s) => (
               <button
@@ -127,53 +112,49 @@ export default function AiGuideFooter({
           </div>
         )}
 
-        {/* Input row */}
-        {localAiPaused ? (
-          <p className="text-[10px] font-mono text-(--text-muted) italic">Search disabled while guide is paused</p>
-        ) : !localAiEnabled ? (
-          <button
-            type="button"
-            onClick={enableLocalAi}
-            className="flex items-center gap-2 px-3 py-2.5 border border-(--accent) bg-(--surface) text-(--text) transition-all hover:bg-(--accent) hover:text-(--bg) group w-full"
-          >
-            <Power className="h-3 w-3 shrink-0" />
-            <span className="text-[9px] font-bold uppercase tracking-widest">Enable AI Portfolio Guide</span>
-            <span className="text-[8px] font-mono text-(--text-muted) group-hover:text-(--bg)/80 transition-colors hidden sm:inline">
-              Ask questions · Get a recruiter path · Explore projects
-            </span>
-          </button>
-        ) : (
-          <div className="relative">
-              <input
-                ref={inputRef}
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-                onFocus={onFocus}
-                aria-label="Ask the AI guide about Shahriar"
-                placeholder={
-                localAiFallback
+        {/* Expand hint when AI is off */}
+        {showExpandHint && (
+          <div className="flex items-center gap-2 px-1">
+            <ChevronUp className="w-3 h-3 text-(--accent) animate-bounce" />
+            <span className="text-[8px] font-mono uppercase tracking-widest text-(--text-muted)">Expand the guide panel to enable AI conversations</span>
+          </div>
+        )}
+
+        {/* Input row — always visible */}
+        <div className="relative">
+          <input
+            ref={inputRef}
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+            onFocus={onFocus}
+            aria-label="Ask about Shahriar"
+            placeholder={
+              localAiPaused
+                ? "Guide is paused"
+                : localAiFallback
                   ? "Ask the fallback guide..."
                   : isReady
                     ? "Ask about Shahriar..."
-                    : `Loading guide... ${Math.round(progress)}%`
-              }
-              disabled={!isReady && !localAiFallback}
-              className="w-full bg-(--surface) border border-(--border) rounded-sm py-2 pl-8 pr-9 text-[11px] font-mono focus:outline-none focus:border-(--accent) transition-all text-(--text) placeholder:text-(--text-muted)"
-            />
-            <MessageSquare className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-(--text-muted)" />
-            <button
-              type="button"
-              onClick={handleSubmit}
-              disabled={!input.trim()}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-(--text) hover:text-(--accent) disabled:opacity-30 p-1"
-              aria-label="Send message"
-            >
-              <Send className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        )}
+                    : localAiEnabled
+                      ? `Loading guide... ${Math.round(progress)}%`
+                      : "Ask a question..."
+            }
+            disabled={localAiPaused}
+            className="w-full bg-(--surface) border border-(--border) rounded-sm py-2 pl-8 pr-9 text-sm font-mono focus:outline-none focus:border-(--accent) transition-all text-(--text) placeholder:text-(--text-muted)"
+          />
+          <MessageSquare className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-(--text-muted)" />
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={!input.trim()}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-(--text) hover:text-(--accent) disabled:opacity-30 p-1"
+            aria-label="Send message"
+          >
+            <Send className="w-3.5 h-3.5" />
+          </button>
+        </div>
       </div>
     </footer>
   );

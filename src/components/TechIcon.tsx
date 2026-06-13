@@ -2,32 +2,12 @@
 
 import { SiJira, SiConfluence, SiLooker, SiGithubactions, SiJson, SiPydantic } from "react-icons/si";
 import { LuTerminal, LuDatabase, LuChartBar, LuChartLine, LuShieldCheck, LuWorkflow, LuCpu } from "react-icons/lu";
-import {
-  Postman,
-  Swagger,
-  Docker,
-  PostgreSQL,
-  MySQLLight,
-  Python,
-  JavaScript,
-  TypeScript,
-  HTML5,
-  Git,
-  Linux,
-  Ubuntu,
-  CiscoDark,
-  Nextjs,
-  ReactLight,
-  Nodejs,
-  FastAPI,
-  Zod,
-  MarkdownDark,
-} from "@ridemountainpig/svgl-react";
+import { FaDocker, FaPython, FaJs, FaReact, FaNodeJs, FaGit, FaLinux, FaUbuntu, FaHtml5, FaDatabase } from "react-icons/fa";
+import { SiPostgresql, SiTypescript, SiNextdotjs, SiFastapi, SiZod, SiMarkdown, SiPostman, SiSwagger, SiCisco } from "react-icons/si";
 
 type TechIconProps = {
   name: string;
   className?: string;
-  size?: number;
 };
 
 const SvgD3 = (props: React.SVGProps<SVGSVGElement>) => (
@@ -68,68 +48,74 @@ const SvgN8N = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-const iconMap: Record<string, (size: number) => React.ReactNode> = {
+const iconSize = 20;
+
+const iconMap: Record<string, (size?: number) => React.ReactNode> = {
   // Tools
-  postman: (s) => <Postman width={s} height={s} />,
-  swagger: (s) => <Swagger width={s} height={s} />,
-  cli: (s) => <LuTerminal size={s} style={{ color: "#00FF41" }} />,
-  "cli (grep/awk)": (s) => <LuTerminal size={s} style={{ color: "#00FF41" }} />,
-  docker: (s) => <Docker width={s} height={s} />,
-  jira: (s) => <SiJira size={s} />,
-  confluence: (s) => <SiConfluence size={s} />,
+  postman: () => <SiPostman size={iconSize} />,
+  swagger: () => <SiSwagger size={iconSize} />,
+  cli: () => <LuTerminal size={iconSize} style={{ color: "#00FF41" }} />,
+  "cli (grep/awk)": () => <LuTerminal size={iconSize} style={{ color: "#00FF41" }} />,
+  docker: () => <FaDocker size={iconSize} />,
+  jira: () => <SiJira size={iconSize} />,
+  confluence: () => <SiConfluence size={iconSize} />,
 
   // Databases
-  postgresql: (s) => <PostgreSQL width={s} height={s} />,
-  mysql: (s) => <MySQLLight width={s} height={s} />,
-  "sql server": (s) => <LuDatabase size={s} style={{ color: "#0078D4" }} />,
-  sqlite: (s) => <LuDatabase size={s} style={{ color: "#003B57" }} />,
-  qdrant: (s) => <LuDatabase size={s} style={{ color: "#EB1F2F" }} />,
+  postgresql: () => <SiPostgresql size={iconSize} />,
+  mysql: () => <FaDatabase size={iconSize} style={{ color: "#4479A1" }} />,
+  "sql server": () => <LuDatabase size={iconSize} style={{ color: "#0078D4" }} />,
+  sqlite: () => <LuDatabase size={iconSize} style={{ color: "#003B57" }} />,
+  qdrant: () => <LuDatabase size={iconSize} style={{ color: "#EB1F2F" }} />,
 
   // Languages & Analytics
-  python: (s) => <Python width={s} height={s} />,
-  javascript: (s) => <JavaScript width={s} height={s} />,
-  typescript: (s) => <TypeScript width={s} height={s} />,
-  html: (s) => <HTML5 width={s} height={s} />,
-  n8n: (s) => <SvgN8N width={s} height={s} preserveAspectRatio="xMidYMid meet" />,
-  "power bi": (s) => <LuChartBar size={s} style={{ color: "#F2C811" }} />,
-  looker: (s) => <SiLooker size={s} />,
-  matplotlib: (s) => <LuChartLine size={s} style={{ color: "#11557C" }} />,
-  git: (s) => <Git width={s} height={s} />,
-  "ci/cd": (s) => <SiGithubactions size={s} />,
-  "github actions": (s) => <SiGithubactions size={s} />,
+  python: () => <FaPython size={iconSize} />,
+  javascript: () => <FaJs size={iconSize} />,
+  typescript: () => <SiTypescript size={iconSize} />,
+  html: () => <FaHtml5 size={iconSize} />,
+  n8n: () => <SvgN8N width={iconSize} height={iconSize} preserveAspectRatio="xMidYMid meet" />,
+  "power bi": () => <LuChartBar size={iconSize} style={{ color: "#F2C811" }} />,
+  looker: () => <SiLooker size={iconSize} />,
+  matplotlib: () => <LuChartLine size={iconSize} style={{ color: "#11557C" }} />,
+  git: () => <FaGit size={iconSize} />,
+  "ci/cd": () => <SiGithubactions size={iconSize} />,
+  "github actions": () => <SiGithubactions size={iconSize} />,
 
   // Infrastructure
-  linux: (s) => <Linux width={s} height={s} />,
-  "linux admin": (s) => <Linux width={s} height={s} />,
-  ubuntu: (s) => <Ubuntu width={s} height={s} />,
-  cisco: (s) => <CiscoDark width={s} height={s} />,
-  nmap: (s) => <LuShieldCheck size={s} style={{ color: "#4ADE80" }} />,
-  "security foundations": (s) => <LuShieldCheck size={s} style={{ color: "#4ADE80" }} />,
-  "it security": (s) => <LuShieldCheck size={s} style={{ color: "#4ADE80" }} />,
+  linux: () => <FaLinux size={iconSize} />,
+  "linux admin": () => <FaLinux size={iconSize} />,
+  ubuntu: () => <FaUbuntu size={iconSize} />,
+  cisco: () => <SiCisco size={iconSize} />,
+  nmap: () => <LuShieldCheck size={iconSize} style={{ color: "#4ADE80" }} />,
+  "security foundations": () => <LuShieldCheck size={iconSize} style={{ color: "#4ADE80" }} />,
+  "it security": () => <LuShieldCheck size={iconSize} style={{ color: "#4ADE80" }} />,
 
   // Modern Stack
-  "next.js": (s) => <Nextjs width={s} height={s} />,
-  react: (s) => <ReactLight width={s} height={s} />,
-  reactflow: (s) => <LuWorkflow size={s} style={{ color: "#FF0072" }} />,
-  "node.js": (s) => <Nodejs width={s} height={s} />,
-  fastapi: (s) => <FastAPI width={s} height={s} />,
-  d3: (s) => <SvgD3 width={s} height={s} />,
-  "d3.js": (s) => <SvgD3 width={s} height={s} />,
-  "rest apis": (s) => <LuWorkflow size={s} style={{ color: "#38BDF8" }} />,
-  json: (s) => <SiJson size={s} />,
-  "json/xml": (s) => <SiJson size={s} />,
-  pydantic: (s) => <SiPydantic size={s} />,
-  zod: (s) => <Zod width={s} height={s} />,
-  markdown: (s) => <MarkdownDark width={s} height={s} />,
+  "next.js": () => <SiNextdotjs size={iconSize} />,
+  react: () => <FaReact size={iconSize} />,
+  reactflow: () => <LuWorkflow size={iconSize} style={{ color: "#FF0072" }} />,
+  "node.js": () => <FaNodeJs size={iconSize} />,
+  fastapi: () => <SiFastapi size={iconSize} />,
+  d3: () => <SvgD3 width={iconSize} height={iconSize} />,
+  "d3.js": () => <SvgD3 width={iconSize} height={iconSize} />,
+  "rest apis": () => <LuWorkflow size={iconSize} style={{ color: "#38BDF8" }} />,
+  json: () => <SiJson size={iconSize} />,
+  "json/xml": () => <SiJson size={iconSize} />,
+  pydantic: () => <SiPydantic size={iconSize} />,
+  zod: () => <SiZod size={iconSize} />,
+  markdown: () => <SiMarkdown size={iconSize} />,
 
-  default: (s) => <LuCpu size={s} style={{ color: "#38BDF8" }} />,
+  default: () => <LuCpu size={iconSize} style={{ color: "#38BDF8" }} />,
 };
 
-export default function TechIcon({ name, className, size = 20 }: TechIconProps) {
+import React from "react";
+
+const TechIconMemoized = React.memo(function TechIcon({ name, className }: TechIconProps) {
   const render = iconMap[name.toLowerCase()] || iconMap.default;
   return (
     <span className={className} style={{ display: "inline-flex", alignItems: "center", lineHeight: 0 }}>
-      {render(size)}
+      {render()}
     </span>
   );
-}
+});
+
+export default TechIconMemoized;

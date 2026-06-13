@@ -40,9 +40,9 @@ export default function IconRail({ activeView, onNavigate, aiReady, aiPaused, ai
       <button
         type="button"
         onClick={() => onNavigate("hero")}
-        className="shine-surface flex h-10 w-10 items-center justify-center rounded-sm border border-(--border) bg-(--text) text-(--bg) font-syne text-xs font-black"
-        aria-label="Go to home"
+        aria-label="Go to Home"
         title="Home"
+        className="shine-surface flex h-10 w-10 items-center justify-center rounded-sm border border-(--border) bg-(--text) text-(--bg) font-syne text-xs font-black"
       >
         H
       </button>
@@ -65,18 +65,16 @@ export default function IconRail({ activeView, onNavigate, aiReady, aiPaused, ai
               key={item.name}
               type="button"
               onClick={() => onNavigate(item.view)}
-               className={`flex h-10 w-10 items-center justify-center rounded-sm border transition-all duration-200 ${
-                isActive
-                  ? "text-(--bg)"
-                  : "border-transparent hover:border-[var(--section-hover)] hover:bg-[var(--section-hover)]/10"
+              aria-label={`Navigate to ${item.name}`}
+              title={item.name}
+              className={`flex h-10 w-10 items-center justify-center rounded-sm border transition-all duration-200 ${
+                isActive ? "text-(--bg)" : "border-transparent hover:border-[var(--section-hover)] hover:bg-[var(--section-hover)]/10"
               }`}
               style={{
                 backgroundColor: isActive ? color : "transparent",
                 borderColor: isActive ? color : "transparent",
                 ["--section-hover" as string]: `${color}66`,
               }}
-              aria-label={item.name}
-              title={item.name}
             >
               <item.icon
                 className="transition-all duration-200"

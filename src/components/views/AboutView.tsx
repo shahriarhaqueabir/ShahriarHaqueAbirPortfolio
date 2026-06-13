@@ -52,7 +52,13 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
   const glowOpacity = useTransform(scrollYProgress, [0, 0.35, 0.8], [0.16, 0.32, 0.12]);
 
   return (
-    <motion.div ref={containerRef} initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }} animate={shouldReduceMotion ? {} : { opacity: 1, x: 0 }} exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }} className="relative max-w-5xl pb-24">
+    <motion.div
+      ref={containerRef}
+      initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }}
+      animate={shouldReduceMotion ? {} : { opacity: 1, x: 0 }}
+      exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }}
+      className="relative max-w-5xl pb-24"
+    >
       <motion.div
         className="pointer-events-none fixed right-12 top-20 hidden h-[60vh] w-px origin-top bg-[linear-gradient(to_bottom,var(--accent),var(--accent2),transparent)] lg:block"
         style={{ scaleY: lineScale }}
@@ -67,7 +73,9 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
           </div>
           <h2 className="max-w-3xl font-syne text-2xl font-black leading-[0.9] tracking-tight text-(--text) md:text-4xl">It&apos;s good to catch up.</h2>
           <p className="mt-6 max-w-2xl font-playfair text-lg italic leading-relaxed tracking-tight text-(--text)">
-            Hi. I&apos;m Shahriar. I was born and raised in Bangladesh, moved halfway across the world to Germany, and I&apos;m currently living in Berlin. I specialize in technical operations, solutions engineering, systems integration, and keeping production environments reliable — working across adjacent roles such as implementation engineering, customer success engineering, technical account management, integration consulting, and support engineering to turn complex incidents into clear outcomes and repeatable processes.
+            Hi. I&apos;m Shahriar. I was born and raised in Bangladesh, moved halfway across the world to Germany, and I&apos;m currently living in Berlin. I specialize in technical operations,
+            solutions engineering, systems integration, and keeping production environments reliable — working across adjacent roles such as implementation engineering, customer success engineering,
+            technical account management, integration consulting, and support engineering to turn complex incidents into clear outcomes and repeatable processes.
           </p>
           <div className="mt-8 grid max-w-2xl grid-cols-1 gap-px border border-(--border) bg-(--border) sm:grid-cols-2">
             <div className="bg-(--bg) p-5">
@@ -117,8 +125,7 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
         <div className="max-w-3xl border-l-4 border-(--accent) pl-6">
           <div className="mb-3 font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent)">Working Style</div>
           <p className="font-playfair text-lg italic leading-snug tracking-tight text-(--text) md:text-2xl">
-            I like being the person who can enter a messy technical situation, find the signal,
-            explain the tradeoffs, and turn ambiguity into a clear plan of action.
+            I like being the person who can enter a messy technical situation, find the signal, explain the tradeoffs, and turn ambiguity into a clear plan of action.
           </p>
         </div>
       </section>
@@ -135,12 +142,10 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
               whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.42 }}
               transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.55, ease: "easeOut" }}
-              className="grid grid-cols-1 gap-6 lg:grid-cols-[200px_1fr]"
+              className="grid grid-cols-1 gap-8 lg:grid-cols-[200px_1fr]"
             >
               <div>
-                <div className="font-mono text-[9px] uppercase tracking-[0.28em] text-(--text-muted) mb-1">
-                  {String(index + 1).padStart(2, "0")}
-                </div>
+                <div className="font-mono text-[9px] uppercase tracking-[0.28em] text-(--text-muted) mb-1">{String(index + 1).padStart(2, "0")}</div>
                 <div className="font-syne font-black text-lg tracking-tight text-(--accent) uppercase">{beat.label}</div>
               </div>
               <div className="max-w-3xl">
