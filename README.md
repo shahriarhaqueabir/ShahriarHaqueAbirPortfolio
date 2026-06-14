@@ -5,7 +5,7 @@
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=fff)](https://tailwindcss.com)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-EA4C89?logo=framer&logoColor=fff)](https://motion.dev)
 [![WebLLM](https://img.shields.io/badge/WebLLM-0.2-4F46E5?logo=llama&logoColor=fff)](https://github.com/mlc-ai/web-llm)
-[![AI: Llama 3.2 1B](https://img.shields.io/badge/AI-Llama_3.2_1B-FF6F00?logo=meta&logoColor=fff)](https://llama.meta.com)
+[![AI: Qwen2.5 1.5B](https://img.shields.io/badge/AI-Qwen2.5_1.5B-0288D1?logo=alpacadev&logoColor=fff)](https://github.com/QwenLM/Qwen2.5)
 [![Playwright](https://img.shields.io/badge/Tests-Playwright-45BA4B?logo=playwright&logoColor=fff)](https://playwright.dev)
 [![Vercel](https://img.shields.io/badge/Deploy-Vercel-000?logo=vercel&logoColor=fff)](https://vercel.com)
 [![Known Vulnerabilities](https://snyk.io/package/npm/next/badge.svg)](https://snyk.io/package/npm/next)
@@ -17,7 +17,7 @@
 
 ## ✨ Highlights
 
-- **🧠 Local AI Guide** — Runs Llama 3.2 1B via WebLLM in the browser. Ask questions about projects, experience, or skills. Zero server costs, zero API keys.
+- **🧠 Local AI Guide** — Runs Qwen2.5 1.5B via WebLLM in the browser. Ask questions about projects, experience, or skills. Zero server costs, zero API keys.
 - **🕹️ Multi-View Architecture** — Seven interconnected portfolio views (Hero, About, Projects, Experience, Skills, Stats, Contact) with orbital navigation and command routing.
 - **🎨 Futuristic HUD Aesthetic** — Deep-space palette (`#030509`), glassmorphism panels, animated orbit constellation, terminal-style boot screen.
 - **🔍 Recruiter-First Design** — Recruiter Snapshot, Capability Stack, and a conversation-fit tag system surface the most relevant details immediately.
@@ -43,7 +43,7 @@
 
 The AI Guide is the standout feature — a full LLM running in the visitor's browser:
 
-- **Model:** [Llama 3.2 1B](https://llama.meta.com) via [WebLLM](https://github.com/mlc-ai/web-llm)
+- **Model:** [Qwen2.5 1.5B](https://github.com/QwenLM/Qwen2.5) via [WebLLM](https://github.com/mlc-ai/web-llm)
 - **No backend:** Everything runs client-side through WebGPU/WebGL
 - **Fallback mode:** Rule-based responses if the model fails to load or is declined
 - **Suggested next paths:** After each answer, the guide suggests relevant portfolio views
@@ -97,7 +97,7 @@ src/
 | Styling | [Tailwind CSS 4](https://tailwindcss.com) |
 | Animation | [Framer Motion 12](https://motion.dev) |
 | AI Runtime | [WebLLM 0.2](https://github.com/mlc-ai/web-llm) |
-| Model | [Llama 3.2 1B (Q4_K_M)](https://llama.meta.com) |
+| Model | [Qwen2.5 1.5B (q4f16_1)](https://github.com/QwenLM/Qwen2.5) |
 | Fonts | Syne (headings), Playfair Display (accents), JetBrains Mono (code), Inter (body) |
 | E2E Tests | [Playwright](https://playwright.dev) |
 | Deployment | [Vercel](https://vercel.com) |

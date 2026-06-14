@@ -129,6 +129,7 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, loca
               {messages.map((msg, idx) => {
                 const isLatestAi = msg.sender === "ai" && idx === latestContentIdx;
                 const isPast = idx !== latestContentIdx && (msg.sender === "ai" || msg.sender === "fallback") && !msg.isTyping && !msg.isReadyGreen;
+                // Amber accent for fallback, blue accent for AI
 
                 return (
                   <div
@@ -141,15 +142,21 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, loca
                           : isPast
                             ? "bg-(--surface-2)/60 text-(--text-muted) border border-(--border)/50 self-start font-mono text-[10px]"
                             : msg.sender === "fallback"
-                              ? "bg-(--surface) text-(--text) border-l-2 border-(--accent) self-start font-mono text-[10px]"
+                              ? "bg-(--surface) text-(--text) border-l-2 self-start font-mono text-[10px]"
                               : msg.isReadyGreen
                                 ? "bg-green-500 text-white border-green-400 self-start font-bold"
-                                : "bg-(--surface) text-(--text) border border-(--border) self-start font-mono text-[10px]"
+                                : "bg-(--surface) text-(--text) border self-start font-mono text-[10px]"
                     }`}
+                    style={{
+                      borderLeftColor: msg.sender === "fallback" && !isPast ? "var(--accent2)" : undefined,
+                      borderColor: msg.sender === "ai" && !isPast && !msg.isReadyGreen ? "var(--accent)" : undefined,
+                    }}
                   >
                     <div className={`flex items-start gap-3 ${isPast ? "opacity-60" : ""}`}>
-                      {msg.sender === "ai" && !msg.isTyping && <MessageSquare className={`w-3 h-3 mt-1 shrink-0 ${isPast ? "text-(--text-muted)" : "text-(--accent) opacity-50"}`} />}
-                      {msg.sender === "fallback" && <Cpu className={`w-3 h-3 mt-1 shrink-0 ${isPast ? "text-(--text-muted)" : "text-(--accent) opacity-50"}`} />}
+                      {msg.sender === "ai" && !msg.isTyping && (
+                        <MessageSquare className="w-3 h-3 mt-1 shrink-0" style={{ color: isPast ? "var(--text-muted)" : "var(--accent)", opacity: isPast ? 1 : 0.8 }} />
+                      )}
+                      {msg.sender === "fallback" && <Cpu className="w-3 h-3 mt-1 shrink-0" style={{ color: isPast ? "var(--text-muted)" : "var(--accent2)", opacity: isPast ? 1 : 0.8 }} />}
                       {msg.sender === "user" && <User className="w-3 h-3 mt-1 text-(--bg) opacity-50 shrink-0" />}
                       <span>
                         {msg.isTyping ? (
@@ -172,7 +179,7 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, loca
                             key={suggestion}
                             type="button"
                             onClick={() => onSend(suggestion)}
-                            className="px-2.5 py-1 rounded-sm border border-(--accent)/40 text-[9px] font-mono text-(--accent) hover:bg-(--accent) hover:text-(--bg) transition-colors"
+                            className="px-2.5 py-1 rounded-sm border border-(--accent2)/40 text-[9px] font-mono text-(--accent2) hover:bg-(--accent2) hover:text-(--bg) transition-colors"
                           >
                             {suggestion}
                           </button>

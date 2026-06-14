@@ -25,7 +25,12 @@ const getContactIcon = (label: string): typeof Mail => {
 export default function ContactView({ setView }: { setView: (view: ViewKey) => void }) {
   const shouldReduceMotion = useReducedMotion();
   return (
-    <motion.div initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }} animate={shouldReduceMotion ? {} : { opacity: 1, x: 0 }} exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }} className="pt-10 pb-24 max-w-5xl">
+    <motion.div
+      initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }}
+      animate={shouldReduceMotion ? {} : { opacity: 1, x: 0 }}
+      exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }}
+      className="pt-10 pb-24 max-w-5xl"
+    >
       <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">— Contact</div>
       <h2 className="text-2xl md:text-4xl font-syne font-black mb-8 text-(--text) leading-[0.9] tracking-tight">
         Let&apos;s <span className="italic font-playfair font-normal text-(--text-muted) lowercase tracking-normal">talk.</span>

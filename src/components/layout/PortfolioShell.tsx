@@ -8,6 +8,7 @@ import PortfolioViewRenderer from "@/components/PortfolioViewRenderer";
 import IconRail from "@/components/layout/IconRail";
 import AiGuideFooter from "@/components/AiGuideFooter";
 import AiGuidePanel from "@/components/AiGuidePanel";
+import MobileNav from "@/components/layout/MobileNav";
 import { useBootGate } from "@/hooks/useBootGate";
 import { useCommandRouter } from "@/hooks/useCommandRouter";
 import { usePortfolioWorker } from "@/hooks/usePortfolioWorker";
@@ -114,6 +115,8 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
           </AnimatePresence>
         </div>
       </section>
+
+      <MobileNav activeView={activeView} onNavigate={(view) => navigate(view)} />
 
       <AiGuideFooter
         messages={worker.messages}

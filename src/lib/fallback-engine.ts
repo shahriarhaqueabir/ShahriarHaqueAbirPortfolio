@@ -117,11 +117,11 @@ function answerAboutBio(): string {
 }
 
 function answerHireSynthesis(): string {
-  const years = CONFIG.heroStats[0];
-  const sla = CONFIG.heroStats[1];
-  const regions = CONFIG.heroStats[2];
+  const years = CONFIG.heroStats[0].value;
+  const sla = CONFIG.heroStats[1].value;
+  const regions = CONFIG.heroStats[2].value;
   const skills = CONFIG.skills.map((s) => s.group).join(", ");
-  return `Shahriar brings ${years.value}+ years of ${years.label}. He maintains ${sla.value} SLA compliance across ~40 weekly Tier-3 incidents across ${regions.value} global regions.\n\nCore capability breadth: ${skills}.\n\nKey qualities: ${CONFIG.qualities.join(", ")}.\n\nWorking style: ${CONFIG.workingStyle}`;
+  return `Shahriar brings ${years} years of experience in enterprise software and mission-critical support. He maintains ${sla} SLA compliance across ~40 weekly Tier-3 incidents across ${regions} global regions.\n\nCore capability breadth: ${skills}.\n\nKey qualities: ${CONFIG.qualities.join(", ")}.\n\nWorking style: ${CONFIG.workingStyle}`;
 }
 
 function answerStrengthsQualities(): string {
@@ -349,10 +349,20 @@ const intentPatterns: IntentPattern[] = [
   },
 ];
 
-const SCORE_THRESHOLD = 0.35;
+function normalizeInput(input: string): string {
+  return input
+    .toLowerCase()
+    .replace(/^(?:can you|i want|i need|i'd like|do you have|what about|tell me|let me|show me|show|give me)\s+(?:me|us|him|her|them)?\s*/i, "")
+    .replace(/^(?:please|just)\s*/i, "")
+    .replace(/^(?:about|the|a|an)\s+/i, "")
+    .trim();
+}
+
+const SCORE_THRESHOLD = 0.25;
 
 function scoreIntent(input: string, pattern: IntentPattern): number {
   const lowerInput = input.toLowerCase();
+  const normalized = normalizeInput(input);
 
   const hasExclusive = pattern.exclusive?.some((kw) => lowerInput.includes(kw)) ?? false;
   if (hasExclusive) return 0;
@@ -360,7 +370,13 @@ function scoreIntent(input: string, pattern: IntentPattern): number {
   const matchedKeywords = pattern.keywords.filter((kw) => lowerInput.includes(kw));
   const keywordScore = matchedKeywords.length / Math.max(pattern.keywords.length, 1);
 
-  return keywordScore * pattern.weight;
+  // Phrase bonus: if the normalized input contains the intent name itself
+  const phraseBonus = normalized.includes(pattern.name.replace(/_/g, " ")) ? 0.2 : 0;
+
+  // Compound match bonus: if multiple keywords match as a phrase
+  const compoundBonus = matchedKeywords.length >= 3 ? 0.15 : matchedKeywords.length >= 2 ? 0.05 : 0;
+
+  return keywordScore * pattern.weight + phraseBonus + compoundBonus;
 }
 
 function buildClarifyingQuestion(input: string): { text: string; suggestions: string[] } {
@@ -428,11 +444,7 @@ export function buildFallbackAnswer(userText: string, activeView: ViewKey): { te
     .sort((a, b) => b.score - a.score);
 
   if (scored.length === 0 || scored[0].score < SCORE_THRESHOLD) {
-    const clarifying = buildClarifyingQuestion(userText);
-    return {
-      text: `The AI guide is currently unavailable. ${clarifying.text} ` + `You can explore the portfolio manually or ask about projects, skills, or experience.`,
-      suggestions: clarifying.suggestions,
-    };
+    return buildClarifyingQuestion(userText);
   }
 
   return { text: scored[0].answer(userText) };
@@ -583,6 +595,11 @@ CORE RULES - MANDATORY:
 4. NEVER provide technical advice, security advice, or instructions outside of this portfolio's facts.
 5. Refer to Shahriar in the third person ("he", "Shahriar", "his").
 6. If a user asks for anything outside of Shahriar's professional profile (e.g., code, general knowledge, jokes, unrelated advice), you MUST politely decline.
+
+COOPERATION WITH THE REFERENCE GUIDE:
+A quick-reference system called "the reference guide" may have already provided a brief answer before you. Your role is to acknowledge that and provide a deeper, more contextual response. Start your answer by thanking the reference guide briefly, then expand.
+Example: "Thanks for the quick overview! Let me expand on that..."
+Do NOT waste tokens re-explaining that you are an AI or that the reference guide exists — just acknowledge briefly and dive into the substance.
 
 NAVIGATION CAPABILITY:
 You can self-navigate around the website. If the user asks to see a section, or if you assess that moving to a specific page would be helpful to answer their query, you must include a specific command at the end of your response.
