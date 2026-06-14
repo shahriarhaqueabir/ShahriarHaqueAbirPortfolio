@@ -340,16 +340,26 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
 
     const fallbackResult = buildFallbackAnswer(userText, activeView);
 
+    // Wrap fallback answer with cooperative language
+    const aiIsComing = localAiEnabled && isReady && !localAiFallback;
+    const cooperativeIntro = aiIsComing ? "\u{1F4CB} Quick answer from the reference guide: " : "\u{1F4CB} Quick answer: ";
+    const cooperativeOutro = aiIsComing
+      ? "\n\n\u{1F916} My colleague Qwen is preparing a more detailed response..."
+      : "\n\n\u{1F916} For deeper insights, enable the AI guide in the conversation panel.";
+
+    const fallbackText = `${cooperativeIntro}${fallbackResult.text}${cooperativeOutro}`;
+
     const nextProfile = inferVisitorProfile(userText, visitorProfileRef.current);
     visitorProfileRef.current = nextProfile;
     setVisitorProfile(nextProfile);
 
-    const fallbackMsg = createFallbackMessage(fallbackResult.text, fallbackResult.suggestions);
+    const fallbackMsg = createFallbackMessage(fallbackText, fallbackResult.suggestions);
 
     setMessages((prev) => {
       const updated = pruneMessages([...prev, createUserMessage(userText), fallbackMsg]);
 
-      if (localAiEnabled && isReady && !localAiFallback) {
+      // Add cooperative context to AI system prompt
+      if (aiIsComing) {
         const chatHistory: ChatMessage[] = updated
           .filter((m) => m.sender === "user" || (m.sender === "ai" && !m.isTyping))
           .slice(-MAX_CHAT_MESSAGES)

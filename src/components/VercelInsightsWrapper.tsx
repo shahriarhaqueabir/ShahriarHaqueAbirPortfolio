@@ -4,12 +4,7 @@ import { useEffect, useRef } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const VERCE_PATTERNS = [
-  "Vercel Web Analytics",
-  "Vercel Speed Insights",
-  "/_vercel/insights/",
-  "/_vercel/speed-insights/",
-];
+const VERCE_PATTERNS = ["Vercel Web Analytics", "Vercel Speed Insights", "/_vercel/insights/", "/_vercel/speed-insights/"];
 
 export function VercelInsightsWrapper() {
   const restoredRef = useRef<(() => void) | null>(null);

@@ -140,7 +140,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
           <p className="mt-12 max-w-[190px] font-mono text-xs uppercase leading-5 tracking-[0.28em] text-(--text-muted)">Follow the constellation.</p>
         </aside>
 
-        <div className="relative mx-auto aspect-square w-full max-w-[620px]">
+        <div className="relative mx-auto aspect-square w-full max-w-[620px] hidden lg:block">
           <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 100 100" aria-hidden="true">
             <circle cx="50" cy="50" r={ORBIT_RADIUS} fill="none" stroke="rgba(238,246,248,0.07)" strokeWidth="0.1" />
             <motion.circle

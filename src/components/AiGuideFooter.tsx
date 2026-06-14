@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Cpu, MessageSquare, Send, CheckCircle2, ChevronUp } from "lucide-react";
 import type { Message } from "@/lib/types";
@@ -24,12 +24,29 @@ const SUGGESTIONS = [
   { label: "Download CV", input: "/shahriar-haque-abir-cv.pdf" },
 ];
 
+const FOOTER_TIPS = [
+  'Try "show me his projects" or "what are his skills"',
+  'Ask "compare skills to experience" for a capability overview',
+  'Say "guide me around" for a recruiter-focused tour',
+  "Open the panel and enable AI for deeper conversations",
+];
+
 export default function AiGuideFooter({ messages, isReady, localAiEnabled, localAiFallback, localAiPaused, progress, showReadyToast, onSend, onFocus }: AiGuideFooterProps) {
+  const [tipIndex, setTipIndex] = useState(0);
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const activeAiOrFallback = localAiEnabled && !localAiPaused;
-  const showSuggestions = activeAiOrFallback && isReady && !localAiFallback && messages.filter((m) => m.sender !== "sys").length <= 1;
+  // Rotate through footer tips
+  useEffect(() => {
+    if (localAiPaused) return;
+    const interval = setInterval(() => {
+      setTipIndex((prev) => (prev + 1) % FOOTER_TIPS.length);
+    }, 8000);
+    return () => clearInterval(interval);
+  }, [localAiPaused]);
+
+  // Always show suggestion chips when conversation is fresh (≤1 non-system message)
+  const showSuggestions = messages.filter((m) => m.sender !== "sys").length <= 1;
 
   const lastMessage = [...messages].reverse().find((m) => (m.sender === "ai" || m.sender === "fallback") && !m.isTyping && !m.isReadyGreen);
 
@@ -92,6 +109,9 @@ export default function AiGuideFooter({ messages, isReady, localAiEnabled, local
           <p className="text-[11px] font-mono text-(--text-muted)">Welcome. I can walk you through projects, compare experience, or build a recruiter path.</p>
         )}
 
+        {/* Rotating tip — shown when there are no messages yet */}
+        {!lastMessage && !localAiPaused && <p className="text-[9px] font-mono text-(--accent2) italic truncate">{FOOTER_TIPS[tipIndex]}</p>}
+
         {/* Suggestions chips */}
         {showSuggestions && (
           <div className="flex gap-2 overflow-x-auto pb-1">
@@ -104,7 +124,7 @@ export default function AiGuideFooter({ messages, isReady, localAiEnabled, local
                   onSend(s.input);
                   onFocus();
                 }}
-                className="shrink-0 px-3 py-2 rounded-sm border border-(--border) text-[9px] font-mono uppercase tracking-wider text-(--text-muted) hover:text-(--accent) hover:border-(--accent) transition-colors bg-(--bg)/50"
+                className="shrink-0 px-3 py-2 rounded-sm border border-(--border) text-[11px] md:text-[9px] font-mono uppercase tracking-wider text-(--text-muted) hover:text-(--accent) hover:border-(--accent) transition-colors bg-(--bg)/50"
               >
                 {s.label}
               </button>

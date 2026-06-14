@@ -104,7 +104,9 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
                       shouldReduceMotion
                         ? {}
                         : {
-                            borderColor: isNow ? ["rgba(238, 246, 248, 0.22)", "rgba(56, 189, 248, 0.95)", "rgba(56, 189, 248, 1)"] : ["rgba(238, 246, 248, 0.22)", "rgba(56, 189, 248, 0.65)", "rgba(238, 246, 248, 0.22)"],
+                            borderColor: isNow
+                              ? ["rgba(238, 246, 248, 0.22)", "rgba(56, 189, 248, 0.95)", "rgba(56, 189, 248, 1)"]
+                              : ["rgba(238, 246, 248, 0.22)", "rgba(56, 189, 248, 0.65)", "rgba(238, 246, 248, 0.22)"],
                             boxShadow: isNow
                               ? ["0 0 0 rgba(56, 189, 248, 0)", "0 0 24px rgba(56, 189, 248, 0.12)", "0 0 34px rgba(56, 189, 248, 0.18)"]
                               : ["0 0 0 rgba(56, 189, 248, 0)", "0 0 18px rgba(56, 189, 248, 0.1)", "0 0 0 rgba(56, 189, 248, 0)"],

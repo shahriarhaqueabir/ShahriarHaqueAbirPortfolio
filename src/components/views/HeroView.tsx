@@ -53,7 +53,7 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
             <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-(--accent)">{CONFIG.tagline}</p>
           </div>
 
-          <h1 className="font-syne text-[1.8rem] font-black leading-[1.08] tracking-tight text-(--text) xl:text-[3.4rem] 2xl:text-[4rem] whitespace-nowrap">
+          <h1 className="font-syne text-[1.8rem] font-black leading-[1.08] tracking-tight text-(--text) xl:text-[3.4rem] 2xl:text-[4rem] text-balance">
             {CONFIG.name.split(" ").map((word, i) => (
               <span key={i} className={word === CONFIG.nameHL ? "text-(--accent)" : ""}>
                 {word}
@@ -125,7 +125,7 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
           <div className="flex flex-col gap-3 md:flex-row md:gap-4">
             <button
               onClick={() => setView("projects")}
-              className="shine-surface inline-flex items-center justify-center gap-2 border border-(--accent) px-6 py-3 text-(--accent) rounded-sm text-[10px] font-bold uppercase tracking-widest transition-all hover:bg-(--accent) hover:text-(--bg) md:border-0 md:bg-(--accent) md:text-(--bg) md:px-8 md:py-4 md:text-xs md:hover:bg-(--text) md:shadow-[0_18px_58px_rgba(var(--accent-rgb),0.44)]"
+              className="shine-surface inline-flex items-center justify-center gap-2 border border-(--accent) px-6 text-(--accent) rounded-sm text-[10px] font-bold uppercase tracking-widest transition-all hover:bg-(--accent) hover:text-(--bg) min-h-[44px] md:border-0 md:bg-(--accent) md:text-(--bg) md:px-8 md:py-4 md:min-h-0 md:text-xs md:hover:bg-(--text) md:shadow-[0_18px_58px_rgba(var(--accent-rgb),0.44)]"
             >
               View Case Studies
               <ArrowRight className="h-4 w-4" />
@@ -133,14 +133,14 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
             <a
               href="/shahriar-haque-abir-cv.pdf"
               download
-              className="inline-flex items-center justify-center gap-2 bg-(--accent) px-6 py-3 text-(--bg) rounded-sm text-[10px] font-bold uppercase tracking-widest shadow-[0_18px_58px_rgba(var(--accent-rgb),0.44)] transition-all hover:bg-(--text) md:border md:border-(--accent) md:bg-transparent md:text-(--accent) md:px-8 md:py-4 md:text-xs md:shadow-none md:hover:bg-(--accent) md:hover:text-(--bg) md:hover:shadow-[0_0_34px_rgba(var(--accent-rgb),0.24)]"
+              className="inline-flex items-center justify-center gap-2 bg-(--accent) px-6 text-(--bg) rounded-sm text-[10px] font-bold uppercase tracking-widest shadow-[0_18px_58px_rgba(var(--accent-rgb),0.44)] transition-all hover:bg-(--text) min-h-[44px] md:border md:border-(--accent) md:bg-transparent md:text-(--accent) md:px-8 md:py-4 md:min-h-0 md:text-xs md:shadow-none md:hover:bg-(--accent) md:hover:text-(--bg) md:hover:shadow-[0_0_34px_rgba(var(--accent-rgb),0.24)]"
             >
               <Download className="h-4 w-4" />
               Download CV
             </a>
             <button
               onClick={() => setView("contact")}
-              className="inline-flex items-center justify-center gap-2 border border-(--border) text-(--text) px-6 py-3 rounded-sm text-[10px] font-bold uppercase tracking-widest hover:border-(--accent) hover:text-(--accent) transition-all hover:shadow-[0_0_34px_rgba(var(--accent-rgb),0.24)] md:px-8 md:py-4 md:text-xs"
+              className="inline-flex items-center justify-center gap-2 border border-(--border) text-(--text) px-6 rounded-sm text-[10px] font-bold uppercase tracking-widest hover:border-(--accent) hover:text-(--accent) transition-all hover:shadow-[0_0_34px_rgba(var(--accent-rgb),0.24)] min-h-[44px] md:px-8 md:py-4 md:min-h-0 md:text-xs"
             >
               <Sparkles className="h-4 w-4" />
               Connect With Me

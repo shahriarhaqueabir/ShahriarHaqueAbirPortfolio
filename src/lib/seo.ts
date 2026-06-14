@@ -8,5 +8,3 @@ export const siteDescription =
 export const linkedInUrl = "https://www.linkedin.com/in/shahriarhaqueabir";
 
 export const githubUrl = "https://github.com/shahriarhaqueabir";
-
-

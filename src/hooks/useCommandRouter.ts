@@ -84,9 +84,9 @@ type CommandResult = {
   score?: number;
 };
 
-const fillerWords = new Set(["a", "an", "and", "are", "for", "i", "in", "me", "of", "on", "show", "the", "to", "you", "your"]);
+const fillerWords = new Set(["a", "an", "and", "are", "for", "i", "in", "me", "of", "on", "the", "to", "you", "your"]);
 const followUpCommands = new Set(["more", "show more", "tell me more", "continue", "go deeper", "expand", "details", "more details"]);
-const navigationVerbs = ["go to", "open", "navigate", "take me to", "show me", "show", "load", "switch to", "jump to"];
+const navigationVerbs = ["go to", "open", "navigate", "take me to", "switch to", "jump to"];
 const questionStarters = ["how", "what", "why", "who", "where", "when", "can", "could", "would", "does", "do", "is", "are", "explain", "compare", "relate", "tell me about"];
 
 function tokenize(text: string) {
