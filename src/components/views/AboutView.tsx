@@ -135,7 +135,7 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
           <motion.div className="h-full origin-top bg-(--accent)" style={{ scaleY: lineScale }} />
         </div>
         <div className="space-y-8 md:space-y-14 md:pl-16">
-          {storyBeats.map((beat, index) => (
+          {storyBeats.map((beat) => (
             <motion.article
               key={beat.title}
               initial={shouldReduceMotion ? false : { opacity: 0, y: 28 }}
@@ -145,7 +145,6 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
               className="grid grid-cols-1 gap-8 lg:grid-cols-[200px_1fr]"
             >
               <div>
-                <div className="font-mono text-[9px] uppercase tracking-[0.28em] text-(--text-muted) mb-1">{String(index + 1).padStart(2, "0")}</div>
                 <div className="font-syne font-black text-lg tracking-tight text-(--accent) uppercase">{beat.label}</div>
               </div>
               <div className="max-w-3xl">
@@ -169,16 +168,16 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
           <h3 className="mt-4 font-syne text-xl font-black leading-none tracking-tight text-(--text)">Reliable systems, clear handoffs, and fewer repeated failures.</h3>
         </div>
         <div className="grid grid-cols-1 gap-px bg-(--border) sm:grid-cols-2">
-          {principles.map((principle, index) => (
+          {principles.map((principle) => (
             <motion.div
               key={principle}
               initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
               whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.55 }}
-              transition={shouldReduceMotion ? { duration: 0 } : { delay: index * 0.06, duration: 0.35 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.35 }}
               className="min-h-32 bg-(--surface) p-5"
             >
-              <div className="mb-5 font-mono text-[9px] uppercase tracking-[0.24em] text-(--text-muted)">principle {String(index + 1).padStart(2, "0")}</div>
+              <div className="mb-5 font-mono text-[9px] uppercase tracking-[0.24em] text-(--text-muted)">principle</div>
               <div className="font-syne text-lg font-black uppercase leading-tight tracking-tight text-(--text)">{principle}</div>
             </motion.div>
           ))}

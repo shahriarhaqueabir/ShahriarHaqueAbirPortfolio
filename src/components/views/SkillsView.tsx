@@ -76,7 +76,7 @@ function CompetencyCard({ number, title, text, accent, index }: { number: string
       initial={cardReduceMotion ? false : { opacity: 0, y: 14 }}
       animate={cardReduceMotion ? {} : { opacity: 1, y: 0 }}
       transition={cardReduceMotion ? { duration: 0 } : { delay: index * 0.06, duration: 0.3 }}
-      className="relative bg-(--bg) border border-(--border) p-5 min-h-44 flex flex-col justify-between group overflow-hidden hover:border-opacity-80 transition-all duration-300"
+      className="relative bg-(--bg) border border-(--border) p-5 min-h-44 flex flex-col justify-between group overflow-hidden hover:border-opacity-80 transition-[border-color,opacity,box-shadow] duration-300"
       style={{ borderColor: `${accent}22` }}
       whileHover={cardReduceMotion ? undefined : { boxShadow: `0 0 40px ${accent}18` }}
     >
@@ -110,7 +110,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
       exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }}
       className="pt-10 pb-24 max-w-5xl"
     >
-      <div className="font-mono text-xs text-(--accent) uppercase tracking-[0.2em] mb-4">— Skills</div>
+      <div className="font-mono text-xs text-(--accent) uppercase tracking-[0.2em] mb-4">- Skills</div>
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
         <div>
           <h2 className="text-2xl md:text-4xl font-syne font-black text-(--text) leading-none tracking-tight">Capability Map</h2>

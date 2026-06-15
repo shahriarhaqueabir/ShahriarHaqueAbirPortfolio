@@ -36,7 +36,7 @@ export default function IconRail({ activeView, onNavigate, aiReady, aiPaused, ai
   const activeColor = sectionColors[activeView] || "var(--accent)";
 
   return (
-    <aside className="hidden md:flex h-full w-[68px] min-w-[68px] flex-col items-center gap-3 px-2 py-4 relative z-20 backdrop-blur-3xl hud-container border-r border-(--border)">
+    <aside className="hidden md:flex h-full w-[68px] min-w-[68px] flex-col items-center gap-3 px-2 py-4 relative z-20 glass-panel border-r border-(--border) rounded-none">
       <button
         type="button"
         onClick={() => onNavigate("hero")}
@@ -67,7 +67,7 @@ export default function IconRail({ activeView, onNavigate, aiReady, aiPaused, ai
               onClick={() => onNavigate(item.view)}
               aria-label={`Navigate to ${item.name}`}
               title={item.name}
-              className={`flex h-10 w-10 items-center justify-center rounded-sm border transition-all duration-200 ${
+              className={`flex h-10 w-10 items-center justify-center rounded-sm border transition-[background-color,border-color] duration-200 active:scale-95 ${
                 isActive ? "text-(--bg)" : "border-transparent hover:border-[var(--section-hover)] hover:bg-[var(--section-hover)]/10"
               }`}
               style={{
@@ -77,7 +77,7 @@ export default function IconRail({ activeView, onNavigate, aiReady, aiPaused, ai
               }}
             >
               <item.icon
-                className="transition-all duration-200"
+                className="transition-[color,width,height] duration-200"
                 style={{
                   width: isActive ? "20px" : "18px",
                   height: isActive ? "20px" : "18px",

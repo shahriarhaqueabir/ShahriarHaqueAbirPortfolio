@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display, Syne, JetBrains_Mono } from "next/font/google";
+import { Playfair_Display, Syne, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { PersonJsonLd } from "@/components/PersonJsonLd";
 import { VercelInsightsWrapper } from "@/components/VercelInsightsWrapper";
 import { CONFIG } from "@/lib/data";
 import { siteDescription, siteTitle, siteUrl } from "@/lib/seo";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-playfair" });
 const syne = Syne({ subsets: ["latin"], variable: "--font-syne" });
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
@@ -76,7 +75,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable} ${syne.variable} ${jetbrains.variable}`}>
+    <html lang="en" className={`${playfair.variable} ${syne.variable} ${jetbrains.variable}`}>
       <body className="antialiased min-h-screen bg-(--bg) text-(--text)">
         <PersonJsonLd />
         <ParticleBackground />

@@ -67,15 +67,9 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
         <div className="w-full max-w-sm mx-auto relative group">
           <div className="absolute -inset-5 bg-(--accent) opacity-14 rounded-sm blur-2xl group-hover:opacity-28 transition-opacity" />
           <div className="absolute -inset-10 bg-[#F59E0B] opacity-10 rounded-full blur-3xl" />
-          <div className="relative w-full aspect-[4/5] z-10 border border-(--border) grayscale-[0.25] hover:grayscale-0 transition-all duration-700 shadow-2xl overflow-hidden rounded-sm glass-panel">
+          <div className="relative w-full aspect-[4/5] z-10 border border-(--border) grayscale-[0.25] hover:grayscale-0 transition-[filter,border-color] duration-700 shadow-2xl overflow-hidden rounded-sm glass-panel">
             <div className="scanline-overlay absolute inset-0 z-20 pointer-events-none" />
-            <Image
-              src={CONFIG.profileImage || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800"}
-              alt={CONFIG.name}
-              fill
-              className="object-cover"
-              priority
-            />
+            <Image src={CONFIG.profileImage} alt={CONFIG.name} fill className="object-cover" priority />
           </div>
 
           {/* Rotating competency badge */}
@@ -125,7 +119,7 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
           <div className="flex flex-col gap-3 md:flex-row md:gap-4">
             <button
               onClick={() => setView("projects")}
-              className="shine-surface inline-flex items-center justify-center gap-2 border border-(--accent) px-6 text-(--accent) rounded-sm text-[10px] font-bold uppercase tracking-widest transition-all hover:bg-(--accent) hover:text-(--bg) min-h-[44px] md:border-0 md:bg-(--accent) md:text-(--bg) md:px-8 md:py-4 md:min-h-0 md:text-xs md:hover:bg-(--text) md:shadow-[0_18px_58px_rgba(var(--accent-rgb),0.44)]"
+              className="shine-surface inline-flex items-center justify-center gap-2 border border-(--accent) px-6 text-(--accent) rounded-sm text-[10px] font-bold uppercase tracking-widest transition-[background-color,color,box-shadow,transform] hover:bg-(--accent) hover:text-(--bg) active:scale-95 min-h-[44px] md:border-0 md:bg-(--accent) md:text-(--bg) md:px-8 md:py-4 md:min-h-0 md:text-xs md:hover:bg-(--text) md:shadow-[0_18px_58px_rgba(var(--accent-rgb),0.44)]"
             >
               View Case Studies
               <ArrowRight className="h-4 w-4" />
@@ -133,14 +127,14 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
             <a
               href="/shahriar-haque-abir-cv.pdf"
               download
-              className="inline-flex items-center justify-center gap-2 bg-(--accent) px-6 text-(--bg) rounded-sm text-[10px] font-bold uppercase tracking-widest shadow-[0_18px_58px_rgba(var(--accent-rgb),0.44)] transition-all hover:bg-(--text) min-h-[44px] md:border md:border-(--accent) md:bg-transparent md:text-(--accent) md:px-8 md:py-4 md:min-h-0 md:text-xs md:shadow-none md:hover:bg-(--accent) md:hover:text-(--bg) md:hover:shadow-[0_0_34px_rgba(var(--accent-rgb),0.24)]"
+              className="inline-flex items-center justify-center gap-2 bg-(--accent) px-6 text-(--bg) rounded-sm text-[10px] font-bold uppercase tracking-widest shadow-[0_18px_58px_rgba(var(--accent-rgb),0.44)] transition-[background-color,color,box-shadow,transform] hover:bg-(--text) active:scale-95 min-h-[44px] md:border md:border-(--accent) md:bg-transparent md:text-(--accent) md:px-8 md:py-4 md:min-h-0 md:text-xs md:shadow-none md:hover:bg-(--accent) md:hover:text-(--bg) md:hover:shadow-[0_0_34px_rgba(var(--accent-rgb),0.24)]"
             >
               <Download className="h-4 w-4" />
               Download CV
             </a>
             <button
               onClick={() => setView("contact")}
-              className="inline-flex items-center justify-center gap-2 border border-(--border) text-(--text) px-6 rounded-sm text-[10px] font-bold uppercase tracking-widest hover:border-(--accent) hover:text-(--accent) transition-all hover:shadow-[0_0_34px_rgba(var(--accent-rgb),0.24)] min-h-[44px] md:px-8 md:py-4 md:min-h-0 md:text-xs"
+              className="inline-flex items-center justify-center gap-2 border border-(--border) text-(--text) px-6 rounded-sm text-[10px] font-bold uppercase tracking-widest hover:border-(--accent) hover:text-(--accent) active:scale-95 transition-[border-color,color,box-shadow,transform] hover:shadow-[0_0_34px_rgba(var(--accent-rgb),0.24)] min-h-[44px] md:px-8 md:py-4 md:min-h-0 md:text-xs"
             >
               <Sparkles className="h-4 w-4" />
               Connect With Me
@@ -161,75 +155,6 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
           <div className="inline-flex items-center gap-2 border border-(--border) px-3 py-2">
             <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-(--accent2)">Authorization</span>
             <span className="font-syne font-black text-xs text-(--text)">Niederlassungserlaubnis</span>
-          </div>
-        </div>
-
-        {/* Recruiter Snapshot */}
-        <div className="w-full max-w-3xl">
-          <div className="border-l-2 border-(--accent) bg-(--surface)/40 p-4 md:p-5">
-            <div className="font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent) mb-3">Recruiter Snapshot</div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2">
-              <div className="flex items-center gap-1.5">
-                <span className="h-1 w-1 rounded-full bg-(--accent) shrink-0" />
-                <span className="font-mono text-[10px] text-(--text)">10+ years experience</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="h-1 w-1 rounded-full bg-(--accent) shrink-0" />
-                <span className="font-mono text-[10px] text-(--text)">Germany-based</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="h-1 w-1 rounded-full bg-(--accent) shrink-0" />
-                <span className="font-mono text-[10px] text-(--text)">Permanent work authorization</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="h-1 w-1 rounded-full bg-(--accent) shrink-0" />
-                <span className="font-mono text-[10px] text-(--text)">Enterprise SaaS</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="h-1 w-1 rounded-full bg-(--accent) shrink-0" />
-                <span className="font-mono text-[10px] text-(--text)">Tier-3 Support</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="h-1 w-1 rounded-full bg-(--accent) shrink-0" />
-                <span className="font-mono text-[10px] text-(--text)">Systems Integration</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="h-1 w-1 rounded-full bg-(--accent) shrink-0" />
-                <span className="font-mono text-[10px] text-(--text)">QA &amp; Release Validation</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="h-1 w-1 rounded-full bg-(--accent) shrink-0" />
-                <span className="font-mono text-[10px] text-(--text)">EN / DE / BN / HI</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Capability Stack */}
-        <div className="w-full border-t border-(--border) pt-8">
-          <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--accent) mb-6">Capability Stack</div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-px bg-(--border) border border-(--border)">
-            {[
-              { group: "Integration", accent: "#38BDF8", items: ["REST APIs", "Webhooks", "OAuth 2.0", "OpenAPI", "Postman"] },
-              { group: "Data", accent: "#34D399", items: ["SQL", "PostgreSQL", "MySQL", "DBeaver"] },
-              { group: "Observability", accent: "#A78BFA", items: ["Splunk", "Grafana", "Kibana", "Datadog"] },
-              { group: "AI & Automation", accent: "#F472B6", items: ["Ollama", "LangChain", "RAG", "n8n"] },
-              { group: "Infrastructure", accent: "#F59E0B", items: ["Docker", "Linux", "GitHub", "Windows Server"] },
-            ].map((cluster) => (
-              <div key={cluster.group} className="bg-(--bg) p-4 md:p-5">
-                <div className="font-syne text-[11px] font-black uppercase tracking-wider mb-3" style={{ color: cluster.accent }}>
-                  {cluster.group}
-                </div>
-                <ul className="space-y-1.5">
-                  {cluster.items.map((item) => (
-                    <li key={item} className="font-mono text-[10px] text-(--text-muted) flex items-center gap-1.5">
-                      <span className="w-0.5 h-0.5 rounded-full" style={{ backgroundColor: cluster.accent }} />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
           </div>
         </div>
 

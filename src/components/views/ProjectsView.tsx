@@ -211,7 +211,7 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
             className="flex items-center gap-2 group text-[10px] font-bold uppercase tracking-widest text-(--text-muted) hover:text-(--accent) transition-colors"
           >
             <span>Back to Top</span>
-            <div className="w-8 h-px bg-(--accent)/30 group-hover:bg-(--accent) group-hover:w-12 transition-all" />
+            <div className="w-8 h-px bg-(--accent)/30 group-hover:bg-(--accent) group-hover:w-12 transition-[width,background-color]" />
           </button>
           <button
             onClick={() => setView("experience")}
@@ -232,7 +232,7 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
       <div className="flex justify-center py-12 border-t border-(--border)">
         <button
           onClick={() => setView("experience")}
-          className="flex items-center gap-2 px-6 py-3 border border-(--border) font-mono text-[10px] uppercase tracking-widest text-(--text) hover:bg-(--accent) hover:text-(--bg) hover:border-(--accent) transition-all"
+          className="flex items-center gap-2 px-6 py-3 border border-(--border) font-mono text-[10px] uppercase tracking-widest text-(--text) hover:bg-(--accent) hover:text-(--bg) hover:border-(--accent) transition-[background-color,border-color,color]"
         >
           Explore Professional Record
           <ArrowRight className="w-4 h-4" />

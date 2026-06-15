@@ -3,13 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { MessageCircle } from "lucide-react";
-import BootScreen from "@/components/BootScreen";
 import PortfolioViewRenderer from "@/components/PortfolioViewRenderer";
 import IconRail from "@/components/layout/IconRail";
 import AiGuideFooter from "@/components/AiGuideFooter";
 import AiGuidePanel from "@/components/AiGuidePanel";
 import MobileNav from "@/components/layout/MobileNav";
-import { useBootGate } from "@/hooks/useBootGate";
 import { useCommandRouter } from "@/hooks/useCommandRouter";
 import { usePortfolioWorker } from "@/hooks/usePortfolioWorker";
 import type { ViewKey } from "@/lib/types";
@@ -17,7 +15,6 @@ import type { ViewKey } from "@/lib/types";
 export default function PortfolioShell({ initialView = "hero" }: { initialView?: ViewKey }) {
   const [panelOpen, setPanelOpen] = useState(false);
   const contentScrollRef = useRef<HTMLElement>(null);
-  const { isBooting, enterPortfolio } = useBootGate();
   const { activeView, conversationState, setActiveView, handleCommand } = useCommandRouter(initialView);
   const worker = usePortfolioWorker({
     onNavigate: (view: ViewKey) => {
@@ -86,19 +83,6 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
 
   return (
     <main suppressHydrationWarning className="flex h-screen w-full relative z-10 font-sans text-(--text)">
-      <AnimatePresence>
-        {isBooting && (
-          <BootScreen
-            progress={worker.progress}
-            isReady={worker.isReady}
-            localAiEnabled={worker.localAiEnabled}
-            localAiFallback={worker.localAiFallback}
-            localAiPaused={worker.localAiPaused}
-            onEnter={enterPortfolio}
-          />
-        )}
-      </AnimatePresence>
-
       <IconRail
         activeView={activeView}
         onNavigate={(view) => navigate(view)}
@@ -141,7 +125,7 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
         onSend={send}
       />
 
-      {!panelOpen && !isBooting && (
+      {!panelOpen && (
         <button
           type="button"
           onClick={() => setPanelOpen(true)}
