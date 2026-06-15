@@ -26,7 +26,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
       exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }}
       className="pt-10 pb-24 max-w-5xl"
     >
-      <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">— Career Trajectory</div>
+      <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">- Career Trajectory</div>
       <h2 className="text-2xl font-syne font-black mb-8 tracking-tight text-(--text)">Experience</h2>
 
       <div className="bg-(--surface) border border-(--border) p-4 md:p-6 mb-14 relative overflow-hidden">
@@ -140,7 +140,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
             initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
             animate={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
             transition={shouldReduceMotion ? { duration: 0 } : { delay: i * 0.1 }}
-            className={`bg-(--bg) p-5 md:p-8 group transition-all duration-300 relative overflow-hidden ${
+            className={`bg-(--bg) p-5 md:p-8 group transition-[background-color,border-color] duration-300 relative overflow-hidden ${
               i === 0 ? "border-l-4 border-l-(--accent) hover:bg-(--surface)" : "border-l-4 border-l-transparent hover:border-l-(--accent)/50 hover:bg-(--surface)"
             }`}
           >
@@ -181,7 +181,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
                 </div>
               </div>
               <div
-                className={`font-mono text-[9px] font-bold border px-3 py-1.5 uppercase tracking-widest transition-all shrink-0 ${
+                className={`font-mono text-[9px] font-bold border px-3 py-1.5 uppercase tracking-widest transition-[background-color,border-color,color] shrink-0 ${
                   i === 0
                     ? "text-(--bg) bg-(--accent) border-(--accent) group-hover:bg-(--text) group-hover:border-(--text)"
                     : "text-(--text) bg-(--bg) border-(--border) group-hover:bg-(--accent) group-hover:text-white group-hover:border-(--accent)"
