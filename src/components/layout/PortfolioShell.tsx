@@ -129,7 +129,7 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
         <button
           type="button"
           onClick={() => setPanelOpen(true)}
-          className="fixed bottom-6 right-5 z-30 flex h-12 w-12 items-center justify-center rounded-full border border-(--accent)/45 bg-(--accent) text-(--bg) shadow-[0_18px_48px_rgba(var(--accent-rgb),0.36)] transition-transform active:scale-95 md:hidden"
+          className="fixed bottom-20 right-5 z-30 flex h-14 w-14 items-center justify-center rounded-full border border-(--accent)/45 bg-(--accent) text-(--bg) shadow-[0_18px_48px_rgba(var(--accent-rgb),0.36)] transition-transform active:scale-95 md:hidden"
           aria-label="Open AI guide"
         >
           <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-(--bg)/15">

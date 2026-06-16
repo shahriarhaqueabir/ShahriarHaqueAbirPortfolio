@@ -67,45 +67,13 @@ Maintained SLA compliance across ~40 weekly Tier-3 incidents spanning NAM, APAC,
       ],
     },
     {
-      company: "TransMIT GmbH",
-      role: "Quality Assurance Quality Control of Optical Fibers",
-      period: "April 2017 – Nov 2017",
-      points: [
-        "Assembled fiber optic cables (FOCs) including core, cladding, and connector integration as part of a production/lab workflow.",
-        "Performed tubing and adhesive gluing of optical components to specification.",
-        "Polished fiber end-faces to optical-grade finish for signal integrity.",
-      ],
-    },
-    {
-      company: "Larsen & Toubro",
-      role: "Training Coordinator",
-      period: "Aug 2015 – Sept 2016",
-      points: [
-        "Led the technical onboarding and enablement program for incoming engineers across multiple parallel engineering tracks.",
-        "Onboarded and mentored 60+ engineers per quarter across 6 concurrent training groups.",
-        "Designed and owned the end-to-end onboarding infrastructure — from curriculum engineering to deployment documentation.",
-        "Translated dense engineering specifications into structured, accessible learning paths aligned with project delivery objectives.",
-        "Managed scheduling, training effectiveness tracking, and coordination across trainers and facilitators.",
-      ],
-    },
-    {
       company: "Earth Telecommunication PVT. LTD.",
-      role: "Network Engineer",
-      period: "June 2014 – Sept 2015",
-      points: [
-        "Built a Python tool to scan live hosts and aggregate device relationship data, rendering the output as an interactive JS/HTML topology graph for real-time component isolation and data-path tracing.",
-        "Installed, configured, and maintained LAN/WAN infrastructure including switches, routers, and access points.",
-        "Conducted site surveys and led network deployments for new client installations.",
-        "Created and maintained technical documentation for network configurations and operational procedures.",
-      ],
-    },
-    {
-      company: "Earth Telecommunication (Pvt.) Limited",
       role: "Network Operations Engineer",
-      period: "2013 – July 2014",
+      period: "2013 – Sept 2015",
       points: [
-        "Managed network architecture and incident resolution for over 500 SME and enterprise accounts, maintaining strict high-uptime and SLA compliance.",
-        "Standardized structural troubleshooting frameworks across localized hardware, multi-layered routing protocols, and configuration layers, decreasing Mean Time to Resolution (MTTR).",
+        "Managed network architecture, incident resolution, and deployments for over 500 SME and enterprise accounts, maintaining strict SLA compliance.",
+        "Built a Python tool to scan live hosts and aggregate device relationship data, rendering an interactive JS/HTML topology graph for real-time component isolation.",
+        "Standardized structural troubleshooting frameworks across multi-layered routing protocols, significantly decreasing MTTR."
       ],
     },
   ],
@@ -163,53 +131,37 @@ Maintained SLA compliance across ~40 weekly Tier-3 incidents spanning NAM, APAC,
     {
       name: "CI-Friendly API Test Automation",
       desc: "Automated API validation workflow for CI/CD pipelines.",
-      context:
-        "Ensuring authentication, schema integrity, and edge cases are validated across every deployment cycle is critical for release reliability. Manual regression testing was slow and inconsistent, often missing subtle contract breaks between services. A CI-integrated automated test suite was the obvious solution to catch regressions before they reached staging.",
-      implementation:
-        "Developed a testing workflow using Postman collections with pre-request scripts and test assertions, executed via Newman CLI. The suite is integrated into GitHub Actions to run on every pull request and deploy, validating authentication tokens, response schemas, and business logic edge cases. Results are published as structured test reports and routed to Slack for immediate visibility.",
-      outcome:
-        "Improved release reliability by catching integration regressions and schema mismatches early in the pipeline before they reached production. The suite reduced pre-release defect escapes by over 70% and gave the QA team confidence to approve deployments faster, shortening the release cycle by roughly two days.",
-      lessons:
-        "Flaky tests — typically from timing dependencies and environment state leakage — eroded team trust in the pipeline. We learned to isolate test data per run, pin service versions, and implement a 'quarantine' mechanism that moved consistently flaky tests out of the critical path until fixed. Environment parity between CI runners and staging was harder to maintain than expected, requiring Docker-compose based local environments.",
+      context: "Ensuring authentication, schema integrity, and edge cases are validated across every deployment cycle is critical for release reliability. A CI-integrated automated test suite was needed to catch regressions.",
+      implementation: "Developed a testing workflow using Postman collections with pre-request scripts, executed via Newman CLI. The suite is integrated into GitHub Actions to run on every PR and deploy.",
+      outcome: "Improved release reliability by catching integration regressions early. The suite reduced pre-release defect escapes by over 70% and gave the QA team confidence to approve deployments faster.",
+      lessons: "Flaky tests eroded team trust. We learned to isolate test data per run, pin service versions, and implement a 'quarantine' mechanism that moved flaky tests out of the critical path.",
       stack: ["Postman", "Newman", "GitHub Actions", "CI/CD", "API Testing"],
-    },
-    {
-      name: "Internal AI Gateway Proxy",
-      desc: "Security-focused AI proxy for PII redaction and corporate governance.",
-      context: "Direct API access to vendor LLMs risked PII leakage and compliance violations. An internal gateway could enforce governance transparently.",
-      implementation:
-        "Built an async FastAPI middleware proxy that intercepts all outgoing prompt requests, applies regex patterns and named entity recognition (NER) to redact sensitive data — including PII, financial identifiers, and secrets — before forwarding to the vendor API. The response path unmaps redacted tokens so the user experience remains seamless. The proxy supports audit logging, configurable redaction policies per team, and rate limiting.",
-      outcome:
-        "Enabled secure internal LLM usage across the organization by providing a transparent governance layer that masks sensitive information without requiring any changes to client applications. The proxy handled thousands of requests daily with sub-50ms median overhead and passed internal security audit requirements.",
-      lessons:
-        "PII detection had significant edge cases — non-standard date formats, compound entities (e.g., 'John at Acme Corp'), and context-dependent identifiers (IP addresses in logs vs. configs). Latency overhead from NER models on the request path required careful tuning; we switched to a tiered approach (regex first, NER second, sampling-based audit trail) to keep p95 under 100ms.",
-      stack: ["Python", "FastAPI", "Regex", "NER", "Security Proxy", "Async Middleware"],
     },
   ],
   skills: [
     {
       group: "Technical Operations",
-      items: ["Tier-3 Support", "Incident Management", "Root Cause Analysis (RCA)", "Production Support", "SLA Management", "Troubleshooting Frameworks"],
+      items: ["Tier-3 Support", "Incident Management", "Root Cause Analysis", "SLA Management"],
     },
     {
       group: "Systems Integration",
-      items: ["REST APIs", "Application Integration", "Software Deployment", "Configuration Management", "Schema Validation", "Docker Environments"],
+      items: ["REST APIs", "Software Deployment", "Schema Validation", "Docker Environments"],
     },
     {
       group: "Data & Troubleshooting",
-      items: ["SQL (PostgreSQL, MySQL, SQL Server)", "Log Analysis (Grep/Awk)", "API Tracing (Postman/Swagger)", "Data Investigation", "Performance Optimization"],
+      items: ["SQL (PostgreSQL, MySQL)", "Log Analysis", "API Tracing", "Performance Optimization"],
     },
     {
       group: "Solutions Engineering",
-      items: ["Technical Discovery", "Solution Scoping", "PoC Delivery", "RFI/RFP Responses", "Technical Consulting", "Integration Schematics"],
+      items: ["Technical Discovery", "Solution Scoping", "Technical Consulting"],
     },
     {
-      group: "Infrastructure & Networking",
-      items: ["LAN/WAN", "Routing & Switching", "Network Troubleshooting", "IT Security", "Cloud Services", "Linux Admin"],
+      group: "Infrastructure & Security",
+      items: ["Network Troubleshooting", "Cloud Services", "Linux Admin", "LAN/WAN"],
     },
     {
       group: "AI Automation",
-      items: ["Agentic Workflows", "RAG Systems", "Local LLM Integration", "Prompt Engineering", "AI Governance"],
+      items: ["Agentic Workflows", "Local LLM Integration", "Prompt Engineering"],
     },
   ],
   languages: ["English (Native or Bilingual)", "Bangla (Native or Bilingual)", "German (Professional Working)", "Hindi (Limited Working)"],
