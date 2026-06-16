@@ -21,7 +21,7 @@ type MobileNavProps = {
 export default function MobileNav({ activeView, onNavigate }: MobileNavProps) {
   return (
     <nav
-      className="fixed bottom-[72px] left-0 right-0 z-40 flex items-center justify-around border-t border-(--border) bg-(--surface)/95 backdrop-blur-3xl px-1 py-1.5 md:hidden"
+      className="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around border-t border-(--border) bg-(--surface)/95 backdrop-blur-3xl px-1 py-2 pb-safe md:hidden"
       aria-label="Mobile navigation"
     >
       {items.map((item) => {

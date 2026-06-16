@@ -20,10 +20,6 @@
   --accent3: #34d399;
   --border: rgba(238, 246, 248, 0.22);
   --grid-opacity: 0.08;
-
-  --font-syne: "Syne", sans-serif;
-  --font-playfair: "Playfair Display", serif;
-  --font-jetbrains: "JetBrains Mono", monospace;
 }
 
 html {
