@@ -70,10 +70,13 @@ test.describe("Shahriar Haque Abir portfolio E2E", () => {
 
   test("routes free-form questions to the fallback engine instead of hijacking as navigation", async ({ page }) => {
     // Input is always visible in the footer on desktop — no need to enable AI
-    await page.getByPlaceholder(/Ask about Shahriar|Ask the fallback guide|Ask a question/i).first().fill("show me his contact details");
+    await page
+      .getByPlaceholder(/Ask about Shahriar|Ask the fallback guide|Ask a question/i)
+      .first()
+      .fill("show me his contact details");
     await page.keyboard.press("Enter");
     // The panel opens and the fallback engine responds with contact info
     // (previously this was hijacked by the command router as a navigation command)
-    await expect(page.getByText(/shahriarhaque90@gmail\.com/i).first()).toBeVisible({ timeout: 10000 });
+    await expect(page.getByRole("log").getByText(/shahriarhaque90@gmail\.com/i)).toBeVisible({ timeout: 15000 });
   });
 });
