@@ -43,7 +43,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
         <div className="relative overflow-hidden xl:overflow-visible">
           <div className="absolute left-3 top-0 bottom-0 w-px bg-(--border) xl:left-0 xl:right-0 xl:top-8 xl:bottom-auto xl:h-px xl:w-full"></div>
           <motion.div
-            className="absolute left-3 top-0 bottom-0 w-px origin-top bg-[linear-gradient(to_bottom,var(--accent),transparent)] xl:hidden"
+            className="absolute left-3 top-0 bottom-0 w-px origin-top bg-[linear-gradient(to_bottom,var(--accent)_20%,transparent)] xl:hidden"
             initial={shouldReduceMotion ? false : { scaleY: 0 }}
             animate={shouldReduceMotion ? {} : { scaleY: 1 }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 4.8, ease: "easeInOut" }}
@@ -55,7 +55,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 4.8, ease: "easeInOut" }}
           />
           <motion.div
-            className="absolute left-0 right-0 top-8 hidden h-px origin-left bg-[linear-gradient(to_right,var(--accent),transparent)] xl:block"
+            className="absolute left-0 right-0 top-8 hidden h-px origin-left bg-[linear-gradient(to_right,var(--accent)_20%,transparent)] xl:block"
             initial={shouldReduceMotion ? false : { scaleX: 0 }}
             animate={shouldReduceMotion ? {} : { scaleX: 1 }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 4.8, ease: "easeInOut" }}

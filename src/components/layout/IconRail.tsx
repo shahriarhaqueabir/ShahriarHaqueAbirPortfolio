@@ -1,7 +1,9 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { BarChart3, Briefcase, Home as HomeIcon, Layers, Mail, User, Zap } from "lucide-react";
 import type { ViewKey } from "@/lib/types";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const sectionColors: Record<ViewKey, string> = {
   hero: "#0EA5E9",
@@ -34,6 +36,7 @@ type IconRailProps = {
 
 export default function IconRail({ activeView, onNavigate, aiReady, aiPaused, aiFallback, aiEnabled }: IconRailProps) {
   const activeColor = sectionColors[activeView] || "var(--accent)";
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <aside className="hidden md:flex h-full w-[68px] min-w-[68px] flex-col items-center gap-3 px-2 py-4 relative z-20 glass-panel border-r border-(--border) rounded-none">
@@ -46,12 +49,14 @@ export default function IconRail({ activeView, onNavigate, aiReady, aiPaused, ai
       >
         H
       </button>
-      <div
+      <motion.div
         className="h-2 w-2 rounded-full transition-colors duration-200"
         style={{
           backgroundColor: aiReady && !aiPaused ? (aiFallback ? activeColor : activeColor) : aiEnabled ? "#F97316" : "#B8C5D8",
           boxShadow: aiReady && !aiPaused && !aiFallback ? `0 0 8px ${activeColor}` : "none",
         }}
+        animate={shouldReduceMotion ? {} : aiReady && !aiPaused && !aiFallback ? { opacity: [0.7, 1, 0.7] } : {}}
+        transition={shouldReduceMotion ? { duration: 0 } : { duration: 4, repeat: Infinity, ease: "easeInOut" }}
         title={aiPaused ? "Guide paused" : aiFallback ? "Guide fallback" : !aiEnabled ? "Guide opt-in" : aiReady ? "Guide ready" : "Guide loading"}
       />
       <div className="my-1.5 h-px w-full bg-(--border)" />

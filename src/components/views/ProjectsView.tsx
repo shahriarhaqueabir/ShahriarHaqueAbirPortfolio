@@ -47,7 +47,12 @@ function DeviceMockup({ project, visual }: { project: Project; visual: { Icon: t
   return (
     <div className="relative group w-full aspect-[16/10] max-w-[640px] mx-auto">
       {/* Glow behind laptop */}
-      <div className="absolute inset-0 rounded-full blur-[80px] opacity-20 transition-opacity group-hover:opacity-30" style={{ backgroundColor: visual.color }} />
+      <motion.div
+        className="absolute inset-0 rounded-full blur-[80px] opacity-20"
+        style={{ backgroundColor: visual.color }}
+        animate={mockupReduceMotion ? {} : { opacity: [0.15, 0.35, 0.15] }}
+        transition={mockupReduceMotion ? { duration: 0 } : { duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      />
 
       {/* Laptop Frame */}
       <div className="relative z-10 w-full h-full bg-[#0a0a0a] rounded-xl border-[6px] border-[#1a1a1a] shadow-2xl overflow-hidden flex flex-col">
