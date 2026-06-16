@@ -17,7 +17,7 @@ export default function TypewriterText({ text }: { text: string }) {
   }, [text]);
 
   return (
-    <span>
+    <span className="whitespace-pre-wrap">
       {visibleText}
       {visibleText.length < text.length && <span className="ml-0.5 inline-block h-4 w-1 translate-y-0.5 animate-pulse bg-(--accent)" />}
     </span>

@@ -31,6 +31,7 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, loca
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const [usedSuggestions, setUsedSuggestions] = useState<string[]>([]);
 
   useEffect(() => {
     if (open) {
@@ -59,6 +60,14 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, loca
     setInput("");
     onSend(text);
   }, [input, onSend]);
+
+  const handleSuggestionClick = useCallback(
+    (suggestion: string) => {
+      setUsedSuggestions((prev) => [...prev, suggestion]);
+      onSend(suggestion);
+    },
+    [onSend],
+  );
 
   return (
     <AnimatePresence>
@@ -150,48 +159,68 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, loca
                           : isPast
                             ? "bg-(--surface-2)/60 text-(--text-muted) border border-(--border)/50 self-start font-mono text-[10px]"
                             : msg.sender === "fallback"
-                              ? "bg-(--surface) text-(--text) border-l-2 self-start font-mono text-[10px]"
+                              ? "bg-[#1a1510] text-(--text) border-l-[3px] self-start font-mono text-[10px]"
                               : msg.isReadyGreen
                                 ? "bg-green-500 text-white border-green-400 self-start font-bold"
-                                : "bg-(--surface) text-(--text) border self-start font-mono text-[10px]"
+                                : "bg-[#0f1a24] text-(--text) border border-(--accent)/30 self-start font-mono text-[10px]"
                     }`}
                     style={{
-                      borderLeftColor: msg.sender === "fallback" && !isPast ? "var(--accent2)" : undefined,
-                      borderColor: msg.sender === "ai" && !isPast && !msg.isReadyGreen ? "var(--accent)" : undefined,
+                      borderLeftColor: msg.sender === "fallback" && !isPast ? "var(--accent2)" : msg.sender === "fallback" && isPast ? "var(--accent2)" : undefined,
+                      borderColor: msg.sender === "ai" && !isPast && !msg.isReadyGreen ? "var(--accent)" : msg.sender === "ai" && isPast ? "var(--accent)/30" : undefined,
                     }}
                   >
-                    <div className={`flex items-start gap-3 ${isPast ? "opacity-60" : ""}`}>
-                      {msg.sender === "ai" && !msg.isTyping && (
-                        <MessageSquare className="w-3 h-3 mt-1 shrink-0" style={{ color: isPast ? "var(--text-muted)" : "var(--accent)", opacity: isPast ? 1 : 0.8 }} />
-                      )}
-                      {msg.sender === "fallback" && <Cpu className="w-3 h-3 mt-1 shrink-0" style={{ color: isPast ? "var(--text-muted)" : "var(--accent2)", opacity: isPast ? 1 : 0.8 }} />}
-                      {msg.sender === "user" && <User className="w-3 h-3 mt-1 text-(--bg) opacity-50 shrink-0" />}
-                      <span>
-                        {msg.isTyping ? (
-                          <span className="animate-pulse flex gap-1 items-center h-4">
-                            <span className="w-1 h-1 bg-(--accent) rounded-full" />
-                            <span className="w-1 h-1 bg-(--accent) rounded-full animation-delay-100" />
-                            <span className="w-1 h-1 bg-(--accent) rounded-full animation-delay-200" />
-                          </span>
-                        ) : msg.sender === "ai" && isLatestAi ? (
-                          <TypewriterText key={msg.id} text={msg.text} />
-                        ) : (
-                          msg.text
-                        )}
-                      </span>
-                    </div>
-                    {msg.sender === "fallback" && !isPast && msg.suggestions && msg.suggestions.length > 0 && (
-                      <div className="flex gap-2 mt-3 flex-wrap">
-                        {msg.suggestions.map((suggestion) => (
-                          <button
-                            key={suggestion}
-                            type="button"
-                            onClick={() => onSend(suggestion)}
-                            className="px-2.5 py-1 rounded-sm border border-(--accent2)/40 text-[9px] font-mono text-(--accent2) hover:bg-(--accent2) hover:text-(--bg) transition-colors"
+                    <div className={`flex flex-col gap-2 ${isPast ? "opacity-60" : ""}`}>
+                      <div className="flex items-center gap-2">
+                        {msg.sender === "ai" && !msg.isTyping && (
+                          <span
+                            className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-sm text-[7px] font-bold uppercase tracking-widest"
+                            style={{ backgroundColor: "rgba(56,189,248,0.15)", color: "var(--accent)" }}
                           >
-                            {suggestion}
-                          </button>
-                        ))}
+                            AI
+                          </span>
+                        )}
+                        {msg.sender === "fallback" && (
+                          <span
+                            className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-sm text-[7px] font-bold uppercase tracking-widest"
+                            style={{ backgroundColor: "rgba(245,158,11,0.15)", color: "var(--accent2)" }}
+                          >
+                            Guide
+                          </span>
+                        )}
+                        {msg.sender === "user" && (
+                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-sm text-[7px] font-bold uppercase tracking-widest text-(--bg) opacity-60">You</span>
+                        )}
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="whitespace-pre-wrap">
+                          {msg.isTyping ? (
+                            <span className="animate-pulse flex gap-1 items-center h-4">
+                              <span className="w-1 h-1 bg-(--accent) rounded-full" />
+                              <span className="w-1 h-1 bg-(--accent) rounded-full animation-delay-100" />
+                              <span className="w-1 h-1 bg-(--accent) rounded-full animation-delay-200" />
+                            </span>
+                          ) : msg.sender === "ai" && isLatestAi ? (
+                            <TypewriterText key={msg.id} text={msg.text} />
+                          ) : (
+                            msg.text
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    {msg.sender === "fallback" && !localAiEnabled && msg.suggestions && msg.suggestions.filter((s) => !usedSuggestions.includes(s)).length > 0 && (
+                      <div className="flex gap-2 mt-3 flex-wrap">
+                        {msg.suggestions
+                          .filter((s) => !usedSuggestions.includes(s))
+                          .map((suggestion) => (
+                            <button
+                              key={suggestion}
+                              type="button"
+                              onClick={() => handleSuggestionClick(suggestion)}
+                              className="px-2.5 py-1 rounded-sm border border-(--accent2)/40 text-[9px] font-mono text-(--accent2) hover:bg-(--accent2) hover:text-(--bg) transition-colors"
+                            >
+                              {suggestion}
+                            </button>
+                          ))}
                       </div>
                     )}
                   </div>
@@ -200,8 +229,8 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, loca
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Mobile input — hidden on desktop where the footer input is used */}
-            <div className="md:hidden shrink-0 border-t border-(--border) px-3 py-2 bg-(--surface)">
+            {/* Input row — inside panel so it's available when footer is hidden */}
+            <div className="shrink-0 border-t border-(--border) px-3 py-2 bg-(--surface)">
               <div className="relative">
                 <input
                   ref={inputRef}

@@ -70,14 +70,14 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
             technical account management, integration consulting, and support engineering to turn complex incidents into clear outcomes and repeatable processes.
           </p>
           <div className="mt-8 grid max-w-2xl grid-cols-1 gap-px border border-(--border) bg-(--border) sm:grid-cols-2">
-            <div className="bg-(--bg) p-5">
+            <div className="bg-(--surface) p-5">
               <div className="mb-2 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-(--accent)">
                 <MapPin className="h-3 w-3" />
                 Base
               </div>
               <div className="font-syne text-lg font-black tracking-tight text-(--text)">{CONFIG.location}</div>
             </div>
-            <div className="bg-(--bg) p-5">
+            <div className="bg-(--surface) p-5">
               <div className="mb-2 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-(--accent2)">
                 <Sparkles className="h-3.5 w-3.5" />
                 Philosophy

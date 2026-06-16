@@ -108,6 +108,7 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
         localAiEnabled={worker.localAiEnabled}
         localAiFallback={worker.localAiFallback}
         localAiPaused={worker.localAiPaused}
+        panelOpen={panelOpen}
         progress={worker.progress}
         showReadyToast={worker.showReadyToast}
         onSend={send}

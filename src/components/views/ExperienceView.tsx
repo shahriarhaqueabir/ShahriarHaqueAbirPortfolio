@@ -142,7 +142,7 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
             initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
             animate={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
             transition={shouldReduceMotion ? { duration: 0 } : { delay: i * 0.1 }}
-            className={`bg-(--bg) p-5 md:p-8 group transition-[background-color,border-color] duration-300 relative overflow-hidden ${
+            className={`bg-(--surface) p-5 md:p-8 group transition-[background-color,border-color] duration-300 relative overflow-hidden ${
               i === 0 ? "border-l-4 border-l-(--accent) hover:bg-(--surface)" : "border-l-4 border-l-transparent hover:border-l-(--accent)/50 hover:bg-(--surface)"
             }`}
           >
