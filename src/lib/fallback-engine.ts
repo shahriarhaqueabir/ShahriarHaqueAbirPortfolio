@@ -375,8 +375,8 @@ function scoreIntent(input: string, pattern: IntentPattern): number {
   const matchedKeywords = pattern.keywords.filter((kw) => lowerInput.includes(kw));
   const keywordScore = matchedKeywords.length / Math.max(pattern.keywords.length, 1);
 
-  // Phrase bonus: if the normalized input contains the intent name itself
-  const phraseBonus = normalized.includes(pattern.name.replace(/_/g, " ")) ? 0.2 : 0;
+  // Phrase bonus: if the intent name contains the normalized input
+  const phraseBonus = pattern.name.replace(/_/g, " ").includes(normalized) ? 0.2 : 0;
 
   // Compound match bonus: if multiple keywords match as a phrase
   const compoundBonus = matchedKeywords.length >= 3 ? 0.15 : matchedKeywords.length >= 2 ? 0.05 : 0;
