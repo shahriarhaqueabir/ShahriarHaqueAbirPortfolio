@@ -37,7 +37,7 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
       </h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-px bg-(--border) border border-(--border)">
-        <section className="bg-(--bg) p-8 md:p-10 flex flex-col justify-between min-h-0 md:min-h-[360px] relative overflow-hidden">
+        <section className="bg-(--surface) p-8 md:p-10 flex flex-col justify-between min-h-0 md:min-h-[360px] relative overflow-hidden">
           <div>
             <div className="font-mono text-[9px] text-(--accent) uppercase tracking-widest mb-4">Conversation Fit</div>
             <h3 className="text-xl font-syne font-black text-(--text) leading-none mb-4 tracking-tight">{CONFIG.name}</h3>
@@ -75,7 +75,7 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
               const content = (
                 <div className="bg-(--surface) hover:bg-(--bg) p-5 md:p-6 transition-colors group flex items-center justify-between gap-4">
                   <div className="flex items-start gap-4 min-w-0">
-                    <div className="w-10 h-10 border border-(--border) bg-(--bg) flex items-center justify-center shrink-0 group-hover:border-(--accent) transition-colors">
+                    <div className="w-10 h-10 border border-(--border) bg-(--surface) flex items-center justify-center shrink-0 group-hover:border-(--accent) transition-colors">
                       <Icon className="w-3.5 h-3.5 text-(--accent)" />
                     </div>
                     <div className="min-w-0">

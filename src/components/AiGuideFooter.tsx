@@ -11,6 +11,7 @@ type AiGuideFooterProps = {
   localAiEnabled: boolean;
   localAiFallback: boolean;
   localAiPaused: boolean;
+  panelOpen: boolean;
   progress: number;
   showReadyToast: boolean;
   onSend: (input: string) => void;
@@ -31,7 +32,7 @@ const FOOTER_TIPS = [
   "Open the panel and enable AI for deeper conversations",
 ];
 
-export default function AiGuideFooter({ messages, isReady, localAiEnabled, localAiFallback, localAiPaused, progress, showReadyToast, onSend, onFocus }: AiGuideFooterProps) {
+export default function AiGuideFooter({ messages, isReady, localAiEnabled, localAiFallback, localAiPaused, panelOpen, progress, showReadyToast, onSend, onFocus }: AiGuideFooterProps) {
   const [tipIndex, setTipIndex] = useState(0);
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -61,7 +62,10 @@ export default function AiGuideFooter({ messages, isReady, localAiEnabled, local
   const showExpandHint = !localAiEnabled;
 
   return (
-    <footer className="hidden md:block fixed bottom-0 left-0 right-0 md:left-[68px] z-50 border-t border-(--border) bg-(--surface)/90 backdrop-blur-3xl">
+    <footer
+      className="hidden md:block fixed bottom-0 left-0 right-0 md:left-[68px] z-50 border-t border-(--border) bg-(--surface)/90 backdrop-blur-3xl"
+      style={panelOpen ? { display: "none" } : undefined}
+    >
       <AnimatePresence>
         {showReadyToast && (
           <motion.div

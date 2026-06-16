@@ -193,7 +193,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
 
       {/* Education / Languages / Certifications */}
       <section className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_1fr] gap-px border border-(--border) bg-(--border)">
-        <article className="bg-(--bg) p-5 min-w-0">
+        <article className="bg-(--surface) p-5 min-w-0">
           <div className="mb-4 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent)">
             <GraduationCap className="h-3.5 w-3.5" />
             Education
@@ -209,7 +209,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
           </div>
         </article>
 
-        <article className="bg-(--bg) p-5 min-w-0">
+        <article className="bg-(--surface) p-5 min-w-0">
           <div className="mb-4 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent)">
             <Languages className="h-3.5 w-3.5" />
             Languages
@@ -223,7 +223,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
           </div>
         </article>
 
-        <article className="bg-(--bg) p-5 min-w-0">
+        <article className="bg-(--surface) p-5 min-w-0">
           <div className="mb-4 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent)">
             <ShieldCheck className="h-3.5 w-3.5" />
             Certifications

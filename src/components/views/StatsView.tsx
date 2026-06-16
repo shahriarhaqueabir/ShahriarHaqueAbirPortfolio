@@ -307,7 +307,7 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
       </section>
 
       <section className="grid grid-cols-1 gap-px border border-(--border) bg-(--border) lg:grid-cols-[0.85fr_1.15fr]">
-        <div className="bg-(--bg) p-6 md:p-10">
+        <div className="bg-(--surface) p-6 md:p-10">
           <div className="font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent)">What I care about in the work</div>
           <h3 className="mt-4 font-syne text-xl font-black leading-none tracking-tight text-(--text)">Reliable systems, clear handoffs, and fewer repeated failures.</h3>
         </div>

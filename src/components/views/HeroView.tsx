@@ -3,14 +3,13 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { ArrowRight, Download, Send, Sparkles } from "lucide-react";
+import { ArrowRight, Download, Sparkles } from "lucide-react";
 import { CONFIG } from "@/lib/data";
 import Image from "next/image";
 import type { ViewKey } from "@/lib/types";
 
 export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey) => void; onAiQuery?: (input: string) => void }) {
   const [currentPhrase, setCurrentPhrase] = useState(0);
-  const [aiInput, setAiInput] = useState("");
   const shouldReduceMotion = useReducedMotion();
 
   const phrases: Array<{ text: string; highlight: string; color: string }> = [
@@ -29,13 +28,6 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
     }, 6000);
     return () => clearInterval(interval);
   }, [phrases.length]);
-
-  const handleAiSubmit = () => {
-    const q = aiInput.trim();
-    if (!q || !onAiQuery) return;
-    setAiInput("");
-    onAiQuery(q);
-  };
 
   return (
     <motion.div
@@ -119,7 +111,7 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
         <div className="w-full max-w-3xl">
           <div className="grid grid-cols-1 gap-px border border-(--border) bg-(--border) sm:grid-cols-3">
             {CONFIG.heroStats.map((stat) => (
-              <div key={stat.label} className="bg-(--bg) p-5 min-w-0">
+              <div key={stat.label} className="bg-(--surface) p-5 min-w-0">
                 <div className="mb-2 font-syne text-xl font-black leading-none text-(--text)">{stat.value}</div>
                 <p className="text-[10px] font-bold uppercase leading-4 tracking-[0.12em] text-(--text-muted) break-words">{stat.label}</p>
               </div>
@@ -157,15 +149,15 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
 
         {/* Location and work auth */}
         <div className="w-full max-w-3xl flex flex-wrap gap-4 items-center">
-          <div className="inline-flex items-center gap-2 border border-(--border) px-3 py-2">
+          <div className="inline-flex items-center gap-2 border border-(--border) bg-(--surface)/60 px-3 py-2">
             <span className="font-syne font-black text-xs text-(--accent)">Based in</span>
             <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-(--text)">Berlin, Germany</span>
           </div>
-          <div className="inline-flex items-center gap-2 border border-(--border) px-3 py-2">
+          <div className="inline-flex items-center gap-2 border border-(--border) bg-(--surface)/60 px-3 py-2">
             <span className="font-syne font-black text-xs text-(--accent2)">Language</span>
             <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-(--text)">German B2 (Professional)</span>
           </div>
-          <div className="inline-flex items-center gap-2 border border-(--border) px-3 py-2">
+          <div className="inline-flex items-center gap-2 border border-(--border) bg-(--surface)/60 px-3 py-2">
             <span className="font-syne font-black text-xs text-(--accent2)">Authorization</span>
             <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-(--text)">Niederlassungserlaubnis</span>
           </div>
@@ -179,26 +171,14 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
             transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.6 }}
             className="w-full max-w-xl"
           >
-            <div className="relative">
-              <input
-                type="text"
-                value={aiInput}
-                onChange={(e) => setAiInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleAiSubmit()}
-                aria-label="Ask me anything about Shahriar"
-                placeholder="Ask me anything about Shahriar..."
-                className="w-full bg-(--surface) border border-(--border) rounded-sm pl-3 pr-10 py-2.5 text-xs font-mono text-(--text) placeholder:text-(--text-muted) focus:outline-none focus:border-(--accent) transition-colors"
-              />
-              <button
-                onClick={handleAiSubmit}
-                disabled={!aiInput.trim()}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-(--text-muted) hover:text-(--accent) disabled:opacity-30 transition-colors p-1"
-                aria-label="Ask AI guide"
-              >
-                <Send className="h-3.5 w-3.5" />
-              </button>
+            <div className="border border-(--accent)/20 bg-(--accent)/5 px-4 py-3 rounded-sm">
+              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-(--text-muted) leading-relaxed">
+                <span className="text-(--accent)">AI</span> Powered by Qwen2.5 &middot; Runs locally in your browser &middot; No data sent
+              </p>
+              <p className="mt-1.5 font-mono text-[8px] uppercase tracking-[0.16em] text-(--text-muted)/60">
+                Open the guide panel below and enable AI for interactive conversations, or ask the fallback guide without enabling AI.
+              </p>
             </div>
-            <p className="mt-1.5 font-mono text-[9px] uppercase tracking-[0.18em] text-(--text-muted)">Powered by Qwen2.5 &middot; Runs locally in your browser &middot; No data sent</p>
           </motion.div>
         )}
       </div>

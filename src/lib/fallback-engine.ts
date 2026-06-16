@@ -4,6 +4,8 @@ import type { ViewKey } from "@/lib/types";
 
 export const LOCAL_MODEL_LABEL = "Qwen 2.5 1B";
 
+const DEFAULT_SUGGESTIONS = ["who is Shahriar", "show me projects", "what are his skills", "compare skills to experience", "navigation steps", "his working style", "why hire him", "show experience"];
+
 type VisitorProfile = {
   name?: string;
   role?: string;
@@ -85,7 +87,7 @@ export function extractRoleName(input: string): string | null {
 
 export function extractTwoEntities(input: string): [string, string] | null {
   const normalized = input.replace(/^compare\s+|^show\s+|^tell\s+/i, "").trim();
-  const parts = normalized.split(/\s+(?:vs|versus|and|or)\s+/i);
+  const parts = normalized.split(/\s+(?:vs|versus|and|or|to)\s+/i);
   if (parts.length >= 2) return [parts[0].trim(), parts[1].trim()];
   return null;
 }
@@ -112,8 +114,8 @@ function getRelevantProjectIndexes(input: string): number[] {
 
 function answerAboutBio(): string {
   const profile = CONFIG.profile.split(".")[0] + ".";
-  const edu = CONFIG.education.map((e) => `  • ${e.degree} — ${e.school} (${e.period})`).join("\n");
-  return `${profile} He is based in ${CONFIG.location} and holds ${CONFIG.workAuth}.\n\nEducation:\n${edu}\n\nPhilosophy: ${CONFIG.philosophy}`;
+  const edu = CONFIG.education.map((e) => `• 🎓 ${e.degree} — ${e.school} (${e.period})`).join("\n");
+  return `${profile}\n\n📍 ${CONFIG.location} · ${CONFIG.workAuth}\n\n🎓 Education:\n${edu}\n\n💭 ${CONFIG.philosophy}`;
 }
 
 function answerHireSynthesis(): string {
@@ -121,91 +123,94 @@ function answerHireSynthesis(): string {
   const sla = CONFIG.heroStats[1].value;
   const regions = CONFIG.heroStats[2].value;
   const skills = CONFIG.skills.map((s) => s.group).join(", ");
-  return `Shahriar brings ${years} years of experience in enterprise software and mission-critical support. He maintains ${sla} SLA compliance across ~40 weekly Tier-3 incidents across ${regions} global regions.\n\nCore capability breadth: ${skills}.\n\nKey qualities: ${CONFIG.qualities.join(", ")}.\n\nWorking style: ${CONFIG.workingStyle}`;
+  return `📊 **Experience:** ${years}+ years · ${sla} SLA · ${regions} regions\n\n🛠️ **Capabilities:** ${skills}\n\n⭐ **Qualities:** ${CONFIG.qualities.slice(0, 3).join(" · ")}\n\n💪 ${CONFIG.workingStyle.split(".")[0]}.`;
 }
 
 function answerStrengthsQualities(): string {
-  return `Working Style: ${CONFIG.workingStyle}\n\nHuman Qualities:\n${CONFIG.qualities.map((q) => `  • ${q}`).join("\n")}\n\nPrinciples:\n${CONFIG.principles.map((p, i) => `  ${i + 1}. ${p}`).join("\n")}`;
+  return `💪 **Working Style:** ${CONFIG.workingStyle.split(".")[0]}.\n\n❤️ **Qualities:**\n${CONFIG.qualities.map((q) => `• ${q}`).join("\n")}\n\n📋 **Principles:**\n${CONFIG.principles.map((p) => `• ${p}`).join("\n")}`;
 }
 
 function answerProjectDetail(project: (typeof CONFIG.projects)[number]): string {
-  return `${project.name}\n\nContext: ${project.context}\n\nImplementation: ${project.implementation}\n\nOutcome: ${project.outcome}\n\nStack: ${project.stack.join(", ")}\n\nLessons Learned: ${project.lessons}`;
+  return `📁 **${project.name}**\n\n📖 **Context:** ${project.context}\n\n⚙️ **Implementation:** ${project.implementation}\n\n✅ **Outcome:** ${project.outcome}\n\n🔧 **Stack:** ${project.stack.join(", ")}\n\n📝 **Lessons:** ${project.lessons}`;
 }
 
 function answerSkillLookup(tech: string, matches: Array<{ term: string; source: string; context: string; group?: string }>): string {
   if (matches.length === 0) {
     const groups = CONFIG.skills.map((s) => s.group).join(", ");
-    return `I couldn't find "${tech}" in Shahriar's current capability set. His known tool areas span: ${groups}. Ask me about a specific tool or technology.`;
+    return `❓ I couldn't find "${tech}" in Shahriar's capability set.\n\n🔧 Known areas: ${groups}`;
   }
-  return `Yes, "${tech}" is in Shahriar's capability set.\n\n${matches.map((m) => `  • ${m.term} (${m.source}): ${m.context.slice(0, 100)}`).join("\n")}`;
+  return `✅ Yes, "${tech}" is in Shahriar's capability set.\n\n${matches.map((m) => `• ${m.term} (${m.source}): ${m.context.slice(0, 80)}`).join("\n")}`;
 }
 
 function answerCompare(a: string, b: string): string {
   const projectA = CONFIG.projects.find((p) => p.name.toLowerCase().includes(a.toLowerCase()));
   const projectB = CONFIG.projects.find((p) => p.name.toLowerCase().includes(b.toLowerCase()));
   if (projectA && projectB) {
-    return `Comparison: ${projectA.name} vs ${projectB.name}\n\n${projectA.name}: ${projectA.outcome.slice(0, 120)}\nStack: ${projectA.stack.join(", ")}\n\n${projectB.name}: ${projectB.outcome.slice(0, 120)}\nStack: ${projectB.stack.join(", ")}`;
+    return `📊 **${projectA.name}** vs **${projectB.name}**\n\n📁 ${projectA.name}: ${projectA.outcome.slice(0, 100)}\n🔧 Stack: ${projectA.stack.join(", ")}\n\n📁 ${projectB.name}: ${projectB.outcome.slice(0, 100)}\n🔧 Stack: ${projectB.stack.join(", ")}`;
   }
   const skillA = CONFIG.skills.find((s) => s.group.toLowerCase().includes(a.toLowerCase()));
   const skillB = CONFIG.skills.find((s) => s.group.toLowerCase().includes(b.toLowerCase()));
   if (skillA && skillB) {
-    return `Comparison: ${skillA.group} vs ${skillB.group}\n\n${skillA.group}: ${skillA.items.join(", ")}\n\n${skillB.group}: ${skillB.items.join(", ")}`;
+    return `📊 **${skillA.group}** vs **${skillB.group}**\n\n🔧 ${skillA.group}: ${skillA.items.join(", ")}\n\n🔧 ${skillB.group}: ${skillB.items.join(", ")}`;
   }
-  return `I can compare projects or skill groups. Try "compare [project A] vs [project B]" or "compare [skill group] and [skill group]".`;
+  return `🔄 I can compare projects or skill groups. Try:\n• "compare [project A] vs [project B]"\n• "compare [skill group] and [skill group]"`;
 }
 
 function answerRoleFit(role: string): string {
   const state = CAREER_STATES.find((s) => role.toLowerCase().includes(s.id.split("-")[0]) || s.label.toLowerCase().includes(role.toLowerCase()));
   if (state) {
-    return `Role-fit synthesis for "${role}":\n\nRelevant career layer: ${state.label} — ${state.summary}\n\n${state.answers.join("\n")}`;
+    return `📋 **Role fit: ${role}**\n\n📌 ${state.label} — ${state.summary}\n\n${state.answers.map((a) => `• ${a}`).join("\n")}`;
   }
   const relevantExp = CONFIG.experience.filter((e) => e.role.toLowerCase().includes(role.toLowerCase()) || e.company.toLowerCase().includes(role.toLowerCase()));
   if (relevantExp.length > 0) {
-    return `Role-fit synthesis for "${role}":\n\n${relevantExp.map((e) => `  • ${e.role} at ${e.company} (${e.period})`).join("\n")}\n\nKey capabilities: ${CONFIG.skills
+    return `📋 **Role fit: ${role}**\n\n💼 **Relevant experience:**\n${relevantExp.map((e) => `• ${e.role} at ${e.company} (${e.period})`).join("\n")}\n\n🔧 **Key capabilities:** ${CONFIG.skills
       .slice(0, 3)
       .map((s) => s.items.slice(0, 3).join(", "))
-      .join("; ")}`;
+      .join(" · ")}`;
   }
-  return `I couldn't find a specific match for "${role}". Shahriar's career spans: ${CAREER_STATES.map((s) => s.label).join(" → ")}. Try asking about "Technical Operations" or "Integration Engineer".`;
+  return `❓ No specific match for "${role}". Shahriar's career: ${CAREER_STATES.map((s) => s.label).join(" → ")}. Try "Technical Operations" or "Integration Engineer".`;
 }
 
 function answerContact(): string {
-  return `Contact Shahriar:\n\n${CONFIG.contact
+  return `${CONFIG.contact
     .filter((c) => c.href)
-    .map((c) => `  • ${c.label}: ${c.value}`)
+    .map((c) => `🔗 **${c.label}:** ${c.value}`)
     .join("\n")}`;
 }
 
 function answerProjectsOverview(): string {
-  return `Shahriar has ${CONFIG.projects.length} featured projects:\n\n${CONFIG.projects.map((p, i) => `  ${i + 1}. ${p.name} — ${p.outcome.slice(0, 100)}`).join("\n")}\n\nAsk for details on any specific project.`;
+  return `🚀 **${CONFIG.projects.length} projects:**\n\n${CONFIG.projects.map((p, i) => `${i + 1}. ${p.name}`).join("\n")}\n\n💡 Ask "tell me about [project name]" for details.`;
 }
 
 function answerExperienceCareer(): string {
-  return `Career timeline (most recent first):\n\n${CONFIG.experience.map((e) => `  • ${e.role} @ ${e.company} (${e.period})\n    → ${e.points[0].slice(0, 120)}`).join("\n")}\n\nTotal: ${CONFIG.heroStats[0].value}+ years in enterprise software & mission-critical support.`;
+  return `💼 **Career path:**\n${CONFIG.experience.map((e) => `• ${e.role} @ ${e.company} (${e.period})`).join("\n")}\n\n📅 ${CONFIG.heroStats[0].value}+ years total`;
 }
 
 function answerRecruiterPath(): string {
-  return `Fast recruiter path through Shahriar's portfolio:\n\n1. Experience — Can he operate in real environments?\n   ${CAREER_STATES.map((s) => s.label).join(" → ")}\n\n2. Projects — What has he built?\n   ${CONFIG.projects.length} projects spanning network ops, SaaS integrations, and AI automation.\n\n3. Skills — What capabilities does he bring?\n   ${CONFIG.skills.length} capability groups from Technical Operations to AI Automation.\n\n4. Stats — What proof points support the story?\n   ${CONFIG.heroStats[0].value}+ years | ${CONFIG.heroStats[1].value} SLA | ${CONFIG.heroStats[2].value} regions\n\n5. Contact — when you're ready to reach out.`;
+  return `🗺️ **Navigate Shahriar's story:**\n\n1️⃣ **Experience:** ${CAREER_STATES.map((s) => s.label).join(" → ")}\n2️⃣ **Projects:** ${CONFIG.projects.length} case studies\n3️⃣ **Skills:** ${CONFIG.skills.length} capability groups\n4️⃣ **Stats:** ${CONFIG.heroStats[0].value}+ yrs · ${CONFIG.heroStats[1].value} SLA · ${CONFIG.heroStats[2].value} regions\n5️⃣ **Contact:** 📬 Reach out\n\n💡 Use "go to [section]" to jump there.`;
 }
 
 function answerSkillsTools(): string {
-  return `Capability Matrix (${CONFIG.skills.length} groups):\n\n${CONFIG.skills.map((s) => `  • ${s.group}: ${s.items.join(", ")}`).join("\n")}\n\nLanguages: ${CONFIG.languages.join(", ")}`;
+  return `🔧 **Skill groups:**\n${CONFIG.skills.map((s) => `• **${s.group}:** ${s.items.slice(0, 4).join(", ")}`).join("\n")}\n\n🗣️ **Languages:** ${CONFIG.languages.slice(0, 3).join(" · ")}`;
 }
 
 function answerEducationCerts(): string {
-  return `Education:\n${CONFIG.education.map((e) => `  • ${e.degree} — ${e.school} (${e.period})`).join("\n")}\n\nCertifications:\n${CONFIG.certifications.map((c) => `  • ${c.name}`).join("\n")}`;
+  return `📜 **Education:**\n${CONFIG.education.map((e) => `• ${e.degree} — ${e.school} (${e.period})`).join("\n")}\n\n🏅 **Certifications:**\n${CONFIG.certifications
+    .slice(0, 4)
+    .map((c) => `• ${c.name}`)
+    .join("\n")}`;
 }
 
 function answerLanguages(): string {
-  return `Languages spoken:\n${CONFIG.languages.map((l) => `  • ${l}`).join("\n")}`;
+  return `🌐 **Languages:**\n${CONFIG.languages.map((l) => `• ${l}`).join("\n")}`;
 }
 
 function answerVisionPrinciples(): string {
-  return `Shahriar's professional philosophy: ${CONFIG.philosophy}\n\nPrinciples that guide the work:\n${CONFIG.principles.map((p, i) => `  ${i + 1}. ${p}`).join("\n")}\n\nWorking style: ${CONFIG.workingStyle}`;
+  return `💭 **Philosophy:** ${CONFIG.philosophy}\n\n📐 **Principles:**\n${CONFIG.principles.map((p) => `• ${p}`).join("\n")}`;
 }
 
 function catchAll(activeView: ViewKey): string {
-  return `I'm Shahriar's portfolio guide. I can answer questions about:\n\n  • Who Shahriar is (biography, background)\n  • His experience and career timeline\n  • Projects and case studies\n  • Skills, tools, and capabilities\n  • Why hire him (synthesis)\n  • His strengths and working style\n  • Specific technologies he knows\n  • Compare two projects or skills\n  • Role-fit summaries\n  • Education and certifications\n  • Languages\n  • Philosophy and principles\n  • Contact details\n\nCurrent view: ${formatViewName(activeView)}. Try something like "who is he", "tell me about his projects", or "skills".`;
+  return `👋 I can help with:\n\n👤 Who Shahriar is\n💼 Experience & career\n🚀 Projects & case studies\n🔧 Skills & tools\n📊 Why hire him\n💪 Working style\n📬 Contact\n\n📍 Currently on: ${formatViewName(activeView)}`;
 }
 
 function formatViewName(view: ViewKey): string {
@@ -265,7 +270,7 @@ const intentPatterns: IntentPattern[] = [
     weight: 3,
     answer: (input: string) => {
       const tech = extractTechName(input);
-      if (tech) {
+      if (tech && !/^(what|how|which|his|all|some|any|the)\b/i.test(tech)) {
         const matches = fuzzyMatchSkillOrTech(tech);
         return answerSkillLookup(tech, matches);
       }
@@ -314,7 +319,7 @@ const intentPatterns: IntentPattern[] = [
   },
   {
     name: "recruiter_path",
-    keywords: ["recruiter", "guide", "tour", "walk", "start", "around", "path", "where", "direction"],
+    keywords: ["navigation", "steps", "recruiter", "guide", "tour", "walk", "start", "around", "path", "where", "direction"],
     exclusive: ["contact", "education", "languages"],
     weight: 2,
     answer: answerRecruiterPath,
@@ -432,7 +437,7 @@ function buildClarifyingQuestion(input: string): { text: string; suggestions: st
 
 export function buildFallbackAnswer(userText: string, activeView: ViewKey): { text: string; suggestions?: string[] } {
   const lowerInput = userText.toLowerCase().trim();
-  if (!lowerInput) return { text: catchAll(activeView) };
+  if (!lowerInput) return { text: catchAll(activeView), suggestions: DEFAULT_SUGGESTIONS };
 
   const scored = intentPatterns
     .map((p) => ({
@@ -447,7 +452,7 @@ export function buildFallbackAnswer(userText: string, activeView: ViewKey): { te
     return buildClarifyingQuestion(userText);
   }
 
-  return { text: scored[0].answer(userText) };
+  return { text: scored[0].answer(userText), suggestions: DEFAULT_SUGGESTIONS };
 }
 
 export function inferVisitorProfile(userText: string, currentProfile: VisitorProfile): VisitorProfile {
