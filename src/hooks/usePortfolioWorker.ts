@@ -98,38 +98,38 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
     visitorProfileRef.current = visitorProfile;
   }, [visitorProfile]);
 
-  const getNextId = () => `msg-${++messageIdCounterRef.current}`;
+  const getNextId = useCallback(() => `msg-${++messageIdCounterRef.current}`, []);
 
-  const pruneMessages = (msgs: Message[]): Message[] => {
+  const pruneMessages = useCallback((msgs: Message[]): Message[] => {
     if (msgs.length <= MAX_UI_MESSAGES) return msgs;
     return msgs.slice(-MAX_UI_MESSAGES);
-  };
+  }, []);
 
-  const createUserMessage = (text: string): Message => ({
+  const createUserMessage = useCallback((text: string): Message => ({
     id: getNextId(),
     text,
     sender: "user",
-  });
+  }), [getNextId]);
 
-  const createFallbackMessage = (text: string, suggestions?: string[]): Message => ({
+  const createFallbackMessage = useCallback((text: string, suggestions?: string[]): Message => ({
     id: getNextId(),
     text,
     sender: "fallback",
     ...(suggestions && suggestions.length > 0 ? { suggestions } : {}),
-  });
+  }), [getNextId]);
 
-  const createAiMessage = (text: string, isTyping = false): Message => ({
+  const createAiMessage = useCallback((text: string, isTyping = false): Message => ({
     id: getNextId(),
     text,
     sender: "ai",
     ...(isTyping ? { isTyping: true as const } : {}),
-  });
+  }), [getNextId]);
 
-  const createSysMessage = (text: string): Message => ({
+  const createSysMessage = useCallback((text: string): Message => ({
     id: getNextId(),
     text,
     sender: "sys",
-  });
+  }), [getNextId]);
 
   const enableLocalAi = useCallback(() => {
     setLocalAiEnabled(true);
@@ -160,7 +160,7 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
 
       return [...withoutOptIn, { id: "1", text: `Initializing Local AI Tour Guide (${LOCAL_MODEL_LABEL})... This may take a moment to cache the model on first use.`, sender: "sys" }];
     });
-  }, []);
+  }, [createSysMessage, pruneMessages]);
 
   useEffect(() => {
     if (localAiFallback || !localAiEnabled) return;
@@ -310,7 +310,7 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
       timeoutsRef.current.forEach((timeout) => clearTimeout(timeout));
       timeoutsRef.current = [];
     };
-  }, [localAiFallback, localAiEnabled]);
+  }, [localAiFallback, localAiEnabled, createAiMessage, createSysMessage, pruneMessages, getNextId]);
 
   const addNavigationMessage = (userText: string, view: ViewKey) => {
     const viewGoal = VIEW_GOALS[view];

@@ -7,7 +7,7 @@ test.describe("Shahriar Haque Abir portfolio E2E", () => {
 
   test("loads the homepage with current portfolio identity", async ({ page }) => {
     await expect(page).toHaveTitle(/Shahriar Haque Abir/);
-    await expect(page.getByRole("heading", { name: /Shahriar Haque Abir Portfolio/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /^Shahriar Haque Abir$/i })).toBeVisible();
     // Match the actual tagline from data.ts
     await expect(page.getByText(/Technical Operations Engineer \| Solutions Engineer/i).first()).toBeVisible();
     await expect(page.getByRole("button", { name: /View Case Studies/i })).toBeVisible();
