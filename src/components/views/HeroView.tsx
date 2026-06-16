@@ -149,17 +149,17 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
 
         {/* Location and work auth */}
         <div className="w-full max-w-3xl flex flex-wrap gap-4 items-center">
-          <div className="inline-flex items-center gap-2 border border-(--border) bg-(--surface)/60 px-3 py-2">
-            <span className="font-syne font-black text-xs text-(--accent)">Based in</span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-(--text)">Berlin, Germany</span>
+          <div className="inline-flex items-center gap-3 border border-(--border) bg-(--surface)/60 px-4 py-3">
+            <span className="font-syne font-black text-sm text-(--accent)">Based in</span>
+            <span className="font-mono text-xs uppercase tracking-[0.22em] text-(--text)">Berlin, Germany</span>
           </div>
-          <div className="inline-flex items-center gap-2 border border-(--border) bg-(--surface)/60 px-3 py-2">
-            <span className="font-syne font-black text-xs text-(--accent2)">Language</span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-(--text)">German B2 (Professional)</span>
+          <div className="inline-flex items-center gap-3 border border-(--border) bg-(--surface)/60 px-4 py-3">
+            <span className="font-syne font-black text-sm text-(--accent2)">Language</span>
+            <span className="font-mono text-xs uppercase tracking-[0.22em] text-(--text)">German B2 (Professional)</span>
           </div>
-          <div className="inline-flex items-center gap-2 border border-(--border) bg-(--surface)/60 px-3 py-2">
-            <span className="font-syne font-black text-xs text-(--accent2)">Authorization</span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-(--text)">Niederlassungserlaubnis</span>
+          <div className="inline-flex items-center gap-3 border border-(--border) bg-(--surface)/60 px-4 py-3">
+            <span className="font-syne font-black text-sm text-(--accent2)">Authorization</span>
+            <span className="font-mono text-xs uppercase tracking-[0.22em] text-(--text)">Niederlassungserlaubnis</span>
           </div>
         </div>
 
@@ -171,11 +171,11 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
             transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.6 }}
             className="w-full max-w-xl"
           >
-            <div className="border border-(--accent)/20 bg-(--accent)/5 px-4 py-3 rounded-sm">
-              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-(--text-muted) leading-relaxed">
+            <div className="border border-(--accent)/20 bg-(--accent)/10 px-6 py-5 rounded-sm">
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-(--text-muted) leading-relaxed">
                 <span className="text-(--accent)">AI</span> Powered by Qwen2.5 &middot; Runs locally in your browser &middot; No data sent
               </p>
-              <p className="mt-1.5 font-mono text-[8px] uppercase tracking-[0.16em] text-(--text-muted)/60">
+              <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.16em] text-(--text-muted)/80">
                 Open the guide panel below and enable AI for interactive conversations, or ask the fallback guide without enabling AI.
               </p>
             </div>
