@@ -3,15 +3,13 @@ import { test, expect } from "@playwright/test";
 test.describe("Shahriar Haque Abir portfolio E2E", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("http://localhost:3000");
-    // Wait for boot screen and enter
-    await page.getByTestId("enter-portfolio").click();
   });
 
   test("loads the homepage with current portfolio identity", async ({ page }) => {
     await expect(page).toHaveTitle(/Shahriar Haque Abir/);
     await expect(page.getByRole("heading", { name: /Shahriar Haque Abir Portfolio/i })).toBeVisible();
     // Match the actual tagline from data.ts
-    await expect(page.getByText(/Technical Operations Engineer | Integration Engineer/i).first()).toBeVisible();
+    await expect(page.getByText(/Technical Operations Engineer \| Solutions Engineer/i).first()).toBeVisible();
     await expect(page.getByRole("button", { name: /View Case Studies/i })).toBeVisible();
     await expect(page.getByRole("link", { name: /Download CV/i })).toHaveAttribute("href", "/shahriar-haque-abir-cv.pdf");
     await expect(page.getByRole("button", { name: /Connect With Me/i })).toBeVisible();
@@ -71,8 +69,8 @@ test.describe("Shahriar Haque Abir portfolio E2E", () => {
   });
 
   test("routes free-form questions to the fallback engine instead of hijacking as navigation", async ({ page }) => {
-    // Input is always visible in the footer — no need to enable AI
-    await page.getByPlaceholder(/Ask a question/i).fill("show me his contact details");
+    // Input is always visible in the footer on desktop — no need to enable AI
+    await page.getByPlaceholder(/Ask about Shahriar|Ask the fallback guide|Ask a question/i).first().fill("show me his contact details");
     await page.keyboard.press("Enter");
     // The panel opens and the fallback engine responds with contact info
     // (previously this was hijacked by the command router as a navigation command)
