@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Syne, JetBrains_Mono } from "next/font/google";
+import { Syne, JetBrains_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { PersonJsonLd } from "@/components/PersonJsonLd";
 import { VercelInsightsWrapper } from "@/components/VercelInsightsWrapper";
 import { CONFIG } from "@/lib/data";
 import { siteDescription, siteTitle, siteUrl } from "@/lib/seo";
 
-const playfair = Playfair_Display({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-playfair" });
 const syne = Syne({ subsets: ["latin"], variable: "--font-syne" });
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -75,7 +75,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${syne.variable} ${jetbrains.variable}`}>
+    <html lang="en" className={`${syne.variable} ${jetbrains.variable} ${inter.variable}`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var a=document.querySelectorAll("[data-protonpass-form]");for(var i=0;i<a.length;i++)a[i].removeAttribute("data-protonpass-form")})()`,
+          }}
+        />
+      </head>
       <body className="antialiased min-h-screen bg-(--bg) text-(--text)">
         <PersonJsonLd />
         <ParticleBackground />

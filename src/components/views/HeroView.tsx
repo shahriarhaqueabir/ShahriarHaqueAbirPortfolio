@@ -44,7 +44,14 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
       exit={shouldReduceMotion ? undefined : { opacity: 0, x: 20 }}
       className="min-h-full pb-24 relative overflow-hidden"
     >
-      <div className="absolute right-0 top-8 hidden h-[72vh] w-px bg-[linear-gradient(to_bottom,transparent,var(--accent),transparent)] opacity-60 xl:block" />
+      <motion.div
+        className="absolute right-0 top-8 hidden h-[72vh] w-px opacity-60 xl:block"
+        style={{
+          background: "linear-gradient(to bottom, transparent, var(--accent), transparent)",
+        }}
+        animate={shouldReduceMotion ? {} : { opacity: [0.4, 0.8, 0.4] }}
+        transition={shouldReduceMotion ? { duration: 0 } : { duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      />
 
       <div className="flex flex-col items-center gap-8 md:gap-12 w-full">
         {/* Role badge + Name */}
@@ -65,10 +72,17 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
 
         {/* Profile photo + rotating competency badge */}
         <div className="w-full max-w-sm mx-auto relative group">
-          <div className="absolute -inset-5 bg-(--accent) opacity-14 rounded-sm blur-2xl group-hover:opacity-28 transition-opacity" />
-          <div className="absolute -inset-10 bg-[#F59E0B] opacity-10 rounded-full blur-3xl" />
-          <div className="relative w-full aspect-[4/5] z-10 border border-(--border) grayscale-[0.25] hover:grayscale-0 transition-[filter,border-color] duration-700 shadow-2xl overflow-hidden rounded-sm glass-panel">
-            <div className="scanline-overlay absolute inset-0 z-20 pointer-events-none" />
+          <motion.div
+            className="absolute -inset-5 bg-(--accent) opacity-14 rounded-sm blur-2xl"
+            animate={shouldReduceMotion ? {} : { opacity: [0.1, 0.2, 0.1] }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute -inset-10 bg-[#F59E0B] opacity-10 rounded-full blur-3xl"
+            animate={shouldReduceMotion ? {} : { scale: [1, 1.06, 1], opacity: [0.08, 0.14, 0.08] }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <div className="relative w-full aspect-[4/5] z-10 border border-(--border) shadow-2xl overflow-hidden rounded-sm">
             <Image src={CONFIG.profileImage} alt={CONFIG.name} fill className="object-cover" priority />
           </div>
 
@@ -95,10 +109,9 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
 
         {/* Quote */}
         <div className="w-full max-w-3xl">
-          <p className="font-playfair text-base italic leading-7 text-(--text) md:text-lg md:leading-8">
+          <p className="font-sans text-base leading-7 text-(--text) md:text-lg md:leading-8">
             I bridge the gap between complex enterprise architectures and critical system processes; turning production issues into clear decisions, repeatable solutions, and long-term operational
-            frameworks
-            <span className="not-italic font-sans font-normal text-sm md:text-base text-(--text-muted) ml-1">for success and growth.</span>
+            frameworks.
           </p>
         </div>
 
@@ -145,16 +158,16 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
         {/* Location and work auth */}
         <div className="w-full max-w-3xl flex flex-wrap gap-4 items-center">
           <div className="inline-flex items-center gap-2 border border-(--border) px-3 py-2">
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-(--accent)">Based in</span>
-            <span className="font-syne font-black text-xs text-(--text)">Berlin, Germany</span>
+            <span className="font-syne font-black text-xs text-(--accent)">Based in</span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-(--text)">Berlin, Germany</span>
           </div>
           <div className="inline-flex items-center gap-2 border border-(--border) px-3 py-2">
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-(--accent2)">Language</span>
-            <span className="font-syne font-black text-xs text-(--text)">German B2 (Professional)</span>
+            <span className="font-syne font-black text-xs text-(--accent2)">Language</span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-(--text)">German B2 (Professional)</span>
           </div>
           <div className="inline-flex items-center gap-2 border border-(--border) px-3 py-2">
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-(--accent2)">Authorization</span>
-            <span className="font-syne font-black text-xs text-(--text)">Niederlassungserlaubnis</span>
+            <span className="font-syne font-black text-xs text-(--accent2)">Authorization</span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-(--text)">Niederlassungserlaubnis</span>
           </div>
         </div>
 

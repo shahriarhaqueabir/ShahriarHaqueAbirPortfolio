@@ -35,14 +35,6 @@ const storyBeats = [
   },
 ];
 
-const principles = [
-  "clarity over complexity",
-  "systems should reduce cognitive load",
-  "small improvements should compound reliability",
-  "support signals should shape product design",
-  "AI automation should preserve transparency",
-];
-
 export default function AboutView({ setView, scrollContainerRef }: { setView: (view: ViewKey) => void; scrollContainerRef?: RefObject<HTMLElement | null> }) {
   const shouldReduceMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -72,7 +64,7 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
             Biography / Point of View
           </div>
           <h2 className="max-w-3xl font-syne text-2xl font-black leading-[0.9] tracking-tight text-(--text) md:text-4xl">It&apos;s good to catch up.</h2>
-          <p className="mt-6 max-w-2xl font-playfair text-lg italic leading-relaxed tracking-tight text-(--text)">
+          <p className="mt-6 max-w-2xl font-sans text-lg leading-relaxed tracking-tight text-(--text)">
             Hi. I&apos;m Shahriar. I was born and raised in Bangladesh, moved halfway across the world to Germany, and I&apos;m currently living in Berlin. I specialize in technical operations,
             solutions engineering, systems integration, and keeping production environments reliable — working across adjacent roles such as implementation engineering, customer success engineering,
             technical account management, integration consulting, and support engineering to turn complex incidents into clear outcomes and repeatable processes.
@@ -124,7 +116,7 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
       <section className="relative py-10 border-y border-(--border)">
         <div className="max-w-3xl border-l-4 border-(--accent) pl-6">
           <div className="mb-3 font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent)">Working Style</div>
-          <p className="font-playfair text-lg italic leading-snug tracking-tight text-(--text) md:text-2xl">
+          <p className="font-sans text-lg leading-snug tracking-tight text-(--text) md:text-2xl">
             I like being the person who can enter a messy technical situation, find the signal, explain the tradeoffs, and turn ambiguity into a clear plan of action.
           </p>
         </div>
@@ -158,28 +150,6 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
                 </div>
               </div>
             </motion.article>
-          ))}
-        </div>
-      </section>
-
-      <section className="grid grid-cols-1 gap-px border border-(--border) bg-(--border) lg:grid-cols-[0.85fr_1.15fr]">
-        <div className="bg-(--bg) p-6 md:p-10">
-          <div className="font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent)">What I care about in the work</div>
-          <h3 className="mt-4 font-syne text-xl font-black leading-none tracking-tight text-(--text)">Reliable systems, clear handoffs, and fewer repeated failures.</h3>
-        </div>
-        <div className="grid grid-cols-1 gap-px bg-(--border) sm:grid-cols-2">
-          {principles.map((principle) => (
-            <motion.div
-              key={principle}
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
-              whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.55 }}
-              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.35 }}
-              className="min-h-32 bg-(--surface) p-5"
-            >
-              <div className="mb-5 font-mono text-[9px] uppercase tracking-[0.24em] text-(--text-muted)">principle</div>
-              <div className="font-syne text-lg font-black uppercase leading-tight tracking-tight text-(--text)">{principle}</div>
-            </motion.div>
           ))}
         </div>
       </section>

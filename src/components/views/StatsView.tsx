@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { ArrowRight } from "lucide-react";
 import type { ViewKey } from "@/lib/types";
 
 const ORBIT_ROTATION_DEGREES = -10;
@@ -20,20 +19,20 @@ const orbitNodes = [
 ];
 
 const metrics = [
-  { value: "10+", label: "Years Enterprise Support Experience", glyph: "code", spark: "M3 16 L8 13 L13 15 L20 7" },
-  { value: "~40", label: "Complex Production Incidents Triaged Weekly", glyph: "lab", spark: "M3 18 L8 12 L12 15 L16 9 L21 5" },
-  { value: "30%", label: "Reduction in Recurring Defects", glyph: "box", spark: "M3 18 L10 14 L16 16 L21 8" },
-  { value: "500+", label: "Network Clients Managed at Earth Tel", glyph: "globe", spark: "M3 18 L8 10 L13 15 L19 11" },
+  { value: "10+", label: "Years Technical Support Experience", glyph: "code", spark: "M3 16 L8 13 L13 15 L20 7" },
+  { value: "40+", label: "Complex Production Incidents Triaged Weekly", glyph: "lab", spark: "M3 18 L8 12 L12 15 L16 9 L21 5" },
+  { value: "30%", label: "Recurring Defects Reduction at tripunkt GmbH", glyph: "box", spark: "M3 18 L10 14 L16 16 L21 8" },
+  { value: "500+", label: "Network Clients Managed at Earth Telecom.", glyph: "globe", spark: "M3 18 L8 10 L13 15 L19 11" },
   { value: "60+", label: "Engineers Mentored at L&T", glyph: "book", spark: "M3 17 L8 16 L12 12 L16 14 L20 6" },
   { value: "3", label: "Global Regions Supported (NAM, APAC, DACH)", glyph: "globe", spark: "M3 18 L8 10 L13 15 L19 11" },
 ];
 
-const futurePaths = ["AI automation and workflow engineering", "cybersecurity-aware systems thinking", "Agentic automation and full stack development"];
-
-const nextPaths: Array<{ view: ViewKey; label: string; question: string }> = [
-  { view: "experience", label: "Experience", question: "Can he operate in real environments?" },
-  { view: "projects", label: "Projects", question: "What has he built?" },
-  { view: "contact", label: "Contact", question: "How do I reach him?" },
+const principles = [
+  "clarity over complexity",
+  "systems should reduce cognitive load",
+  "small improvements should compound reliability",
+  "support signals should shape product design",
+  "AI automation should preserve transparency",
 ];
 
 function getOrbitPoint(angle: number) {
@@ -99,7 +98,6 @@ function MetricGlyph({ type }: { type: string }) {
 export default function StatsView({ setView }: { setView: (view: ViewKey) => void }) {
   const shouldReduceMotion = useReducedMotion();
   const [activeNode, setActiveNode] = useState(orbitNodesWithPoints[4]);
-  const [futureIndex, setFutureIndex] = useState(0);
 
   const particleField = useMemo(
     () =>
@@ -193,13 +191,21 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
             transition={shouldReduceMotion ? { duration: 0 } : { duration: ORBIT_DURATION_SECONDS, repeat: Infinity, ease: "linear" }}
           >
             <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 100 100" aria-hidden="true">
-              <g stroke="rgba(238,246,248,0.2)" strokeWidth="0.16" strokeLinecap="round" strokeDasharray="0.8 1.5">
+              <motion.g
+                key={activeNode.id}
+                stroke="rgba(238,246,248,0.2)"
+                strokeWidth="0.16"
+                strokeLinecap="round"
+                strokeDasharray="0.8 1.5"
+                animate={shouldReduceMotion ? {} : { opacity: [0.6, 1, 0.6] }}
+                transition={shouldReduceMotion ? { duration: 0 } : { duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              >
                 <line x1={orbitNodesWithPoints[5].x} y1={orbitNodesWithPoints[5].y} x2="50" y2="50" />
                 <line x1={orbitNodesWithPoints[5].x} y1={orbitNodesWithPoints[5].y} x2={orbitNodesWithPoints[4].x} y2={orbitNodesWithPoints[4].y} />
                 <line x1={orbitNodesWithPoints[5].x} y1={orbitNodesWithPoints[5].y} x2={orbitNodesWithPoints[3].x} y2={orbitNodesWithPoints[3].y} />
                 <line x1="50" y1="50" x2={orbitNodesWithPoints[1].x} y2={orbitNodesWithPoints[1].y} />
                 <line x1={orbitNodesWithPoints[3].x} y1={orbitNodesWithPoints[3].y} x2={orbitNodesWithPoints[4].x} y2={orbitNodesWithPoints[4].y} />
-              </g>
+              </motion.g>
               <g stroke="rgba(238,246,248,0.2)" strokeWidth="0.18" strokeLinecap="round" strokeDasharray="0.8 1.4">
                 {[
                   [0, 1],
@@ -300,48 +306,25 @@ export default function StatsView({ setView }: { setView: (view: ViewKey) => voi
         </aside>
       </section>
 
-      <section className="relative z-10 mx-auto mt-10 grid max-w-[1280px] grid-cols-1 gap-8 border-t border-(--border) pt-8 lg:grid-cols-[300px_1fr]">
-        <div className="overflow-hidden border border-(--border) bg-[#101826]/86">
-          <div className="p-8">
-            <div className="font-mono text-xs uppercase tracking-[0.28em] text-(--text-muted)">Working Style</div>
-            <div className="mt-7 flex items-end gap-2">
-              <div className="font-syne text-3xl font-black leading-none tracking-tight text-(--text)">Integration</div>
-              <div className="pb-2 text-xs text-(--text-muted)">technical operations engineer</div>
-            </div>
-            <div className="my-7 h-px w-11 bg-(--text)" />
-            <p className="max-w-[220px] text-base leading-relaxed text-(--text-muted)">
-              The technical profile matters, but the work is remembered through steadiness, clarity, follow-through, and care for the customer&apos;s actual situation.
-            </p>
-            <div className="mt-8 font-mono text-[10px] uppercase tracking-[0.2em] text-(--accent)">{futurePaths[futureIndex]}</div>
-          </div>
-          <button
-            type="button"
-            onClick={() => setFutureIndex((current) => (current + 1) % futurePaths.length)}
-            className="flex w-full items-center justify-between bg-(--text) px-8 py-6 font-mono text-[10px] uppercase tracking-[0.22em] text-[#070B12]"
-          >
-            Explore current interests
-            <ArrowRight className="h-4 w-4" />
-          </button>
+      <section className="grid grid-cols-1 gap-px border border-(--border) bg-(--border) lg:grid-cols-[0.85fr_1.15fr]">
+        <div className="bg-(--bg) p-6 md:p-10">
+          <div className="font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent)">What I care about in the work</div>
+          <h3 className="mt-4 font-syne text-xl font-black leading-none tracking-tight text-(--text)">Reliable systems, clear handoffs, and fewer repeated failures.</h3>
         </div>
-
-        <div className="pt-10">
-          <p className="max-w-xl text-base leading-relaxed text-(--text-muted) md:text-lg">Numbers show the scale. The work depends on staying useful, steady, and clear when the problem is live.</p>
-          <div className="mt-8 grid grid-cols-1 gap-3 md:grid-cols-2">
-            {nextPaths.map((path) => (
-              <button
-                key={path.view}
-                type="button"
-                onClick={() => setView(path.view)}
-                className="group flex min-h-28 flex-col justify-between border border-(--border) bg-[#070B12]/70 p-5 text-left transition-colors hover:border-(--accent) hover:bg-[#101826]"
-              >
-                <div className="flex items-center justify-between gap-4">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--accent)">{path.label}</span>
-                  <ArrowRight className="h-4 w-4 text-(--text-muted) transition-transform group-hover:translate-x-1 group-hover:text-(--accent)" />
-                </div>
-                <span className="mt-7 font-syne text-lg font-black leading-tight text-(--text)">{path.question}</span>
-              </button>
-            ))}
-          </div>
+        <div className="grid grid-cols-1 gap-px bg-(--border) sm:grid-cols-2">
+          {principles.map((principle) => (
+            <motion.div
+              key={principle}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+              whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.55 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.35 }}
+              className="min-h-32 bg-(--surface) p-5"
+            >
+              <div className="mb-5 font-mono text-[9px] uppercase tracking-[0.24em] text-(--text-muted)">principle</div>
+              <div className="font-syne text-lg font-black uppercase leading-tight tracking-tight text-(--text)">{principle}</div>
+            </motion.div>
+          ))}
         </div>
       </section>
     </motion.div>
