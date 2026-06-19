@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Syne, JetBrains_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { PersonJsonLd } from "@/components/PersonJsonLd";
@@ -76,14 +77,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${syne.variable} ${jetbrains.variable} ${inter.variable}`}>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var a=document.querySelectorAll("[data-protonpass-form]");for(var i=0;i<a.length;i++)a[i].removeAttribute("data-protonpass-form")})()`,
-          }}
-        />
-      </head>
       <body className="antialiased min-h-screen bg-(--bg) text-(--text)">
+        <Script id="proton-pass-fix" strategy="beforeInteractive">
+          {`(function(){var a=document.querySelectorAll("[data-protonpass-form]");for(var i=0;i<a.length;i++)a[i].removeAttribute("data-protonpass-form")})()`}
+        </Script>
         <PersonJsonLd />
         <ParticleBackground />
         <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">

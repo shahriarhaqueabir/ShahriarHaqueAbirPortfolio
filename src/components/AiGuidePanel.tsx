@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import TypewriterText from "@/components/TypewriterText";
-import { MessageSquare, Send, User, X, Home, Briefcase, Layers, Zap, BarChart3, Mail, User as UserIcon, Cpu, Power } from "lucide-react";
+import { MessageSquare, Send, User, X, Home, Briefcase, Layers, Zap, BarChart3, Mail, User as UserIcon, Power } from "lucide-react";
 import type { Message, ViewKey } from "@/lib/types";
 
 type AiGuidePanelProps = {
@@ -13,6 +13,7 @@ type AiGuidePanelProps = {
   activeView: ViewKey;
   localAiEnabled: boolean;
   enableLocalAi: () => void;
+  localAiFallback: boolean;
   onNavigate: (view: ViewKey) => void;
   onSend: (input: string) => void;
 };
@@ -27,7 +28,7 @@ const navItems: Array<{ name: string; icon: typeof User; view: ViewKey }> = [
   { name: "Contact", icon: Mail, view: "contact" },
 ];
 
-export default function AiGuidePanel({ open, onClose, messages, activeView, localAiEnabled, enableLocalAi, onNavigate, onSend }: AiGuidePanelProps) {
+export default function AiGuidePanel({ open, onClose, messages, activeView, localAiEnabled, localAiFallback, enableLocalAi, onNavigate, onSend }: AiGuidePanelProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -125,7 +126,7 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, loca
             </div>
 
             {/* AI enable prompt when AI is off */}
-            {!localAiEnabled && (
+            {!localAiEnabled && !localAiFallback && (
               <div className="px-4 py-4 border-b border-(--border) shrink-0">
                 <button
                   type="button"
@@ -240,7 +241,7 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, loca
                   onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
                   aria-label="Ask about Shahriar"
                   placeholder="Ask about Shahriar..."
-                  className="w-full bg-(--surface) border border-(--border) rounded-sm py-2 pl-8 pr-9 text-sm font-mono focus:outline-none focus:border-(--accent) transition-all text-(--text) placeholder:text-(--text-muted)"
+                  className="w-full bg-(--surface) border border-(--border) rounded-sm py-2 pl-8 pr-9 text-base md:text-sm font-mono focus:outline-none focus:border-(--accent) transition-all text-(--text) placeholder:text-(--text-muted)"
                 />
                 <MessageSquare className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-(--text-muted)" />
                 <button

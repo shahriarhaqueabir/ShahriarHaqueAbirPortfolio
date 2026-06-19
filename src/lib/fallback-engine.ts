@@ -220,6 +220,13 @@ function formatViewName(view: ViewKey): string {
 
 const intentPatterns: IntentPattern[] = [
   {
+    name: "greeting",
+    keywords: ["hi", "hello", "hey", "how are you", "what's up", "greetings", "good morning", "good afternoon", "what"],
+    exclusive: ["projects", "skills", "experience", "contact", "compare", "who"],
+    weight: 3,
+    answer: () => "Hello! 👋 I'm Shahriar's portfolio guide. I can help you explore his projects, experience, or skills. What would you like to know?",
+  },
+  {
     name: "who_is",
     keywords: ["who", "shahriar", "abir", "about", "biography", "bio", "background", "profile", "tell"],
     exclusive: ["projects", "skills", "experience", "contact", "compare", "vs", "versus"],
@@ -427,7 +434,9 @@ function buildClarifyingQuestion(input: string): { text: string; suggestions: st
   }
 
   const uniqueSuggestions = [...new Set(suggestions)].slice(0, 3);
-  const questionText = isQuestion ? `I'm not sure I understood your question.` : `I'm not sure what you're looking for.`;
+  const questionText = isQuestion 
+    ? `I'm a specialized guide for Shahriar's portfolio. I might not understand everything, but I'm great at answering questions about his work! ` 
+    : `I might have misunderstood. As a specialized portfolio guide, I'm best at answering questions about Shahriar's experience and skills. `;
 
   return {
     text: `${questionText} Are you asking about ${uniqueSuggestions.join(", or ")}?`,
