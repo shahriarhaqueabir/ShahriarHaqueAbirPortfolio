@@ -98,6 +98,7 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
     visitorProfileRef.current = visitorProfile;
   }, [visitorProfile]);
 
+
   const getNextId = useCallback(() => `msg-${++messageIdCounterRef.current}`, []);
 
   const pruneMessages = useCallback((msgs: Message[]): Message[] => {
@@ -130,6 +131,21 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
     text,
     sender: "sys",
   }), [getNextId]);
+
+  useEffect(() => {
+    const fallbackReason = getLocalAiFallbackReason();
+    if (fallbackReason && !localAiFallback) {
+      const timer = setTimeout(() => {
+        setLocalAiFallback(true);
+        setIsReady(true);
+        setProgress(100);
+        setMessages([
+          createSysMessage(`This device does not support local AI chat. Switching to Fallback Chat mode.`)
+        ]);
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [createSysMessage, localAiFallback]);
 
   const enableLocalAi = useCallback(() => {
     setLocalAiEnabled(true);
@@ -345,7 +361,9 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
     const cooperativeIntro = aiIsComing ? "\u{1F4CB} Quick answer from the reference guide: " : "\u{1F4CB} Quick answer: ";
     const cooperativeOutro = aiIsComing
       ? "\n\n\u{1F916} My colleague Qwen is preparing a more detailed response..."
-      : "\n\n\u{1F916} For deeper insights, enable the AI guide in the conversation panel.";
+      : localAiFallback
+        ? ""
+        : "\n\n\u{1F916} For deeper insights, enable the AI guide in the conversation panel.";
 
     const fallbackText = `${cooperativeIntro}${fallbackResult.text}${cooperativeOutro}`;
 

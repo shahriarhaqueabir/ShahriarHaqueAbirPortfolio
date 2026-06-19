@@ -166,7 +166,7 @@ export default function AiGuideFooter({ messages, isReady, localAiEnabled, local
                       : "Ask a question..."
             }
             disabled={localAiPaused}
-            className="w-full bg-(--surface) border border-(--border) rounded-sm py-2 pl-8 pr-9 text-sm font-mono focus:outline-none focus:border-(--accent) transition-all text-(--text) placeholder:text-(--text-muted)"
+            className="w-full bg-(--surface) border border-(--border) rounded-sm py-2 pl-8 pr-9 text-base md:text-sm font-mono focus:outline-none focus:border-(--accent) transition-all text-(--text) placeholder:text-(--text-muted)"
           />
           <MessageSquare className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-(--text-muted)" />
           <button

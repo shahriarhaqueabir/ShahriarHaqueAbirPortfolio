@@ -32,7 +32,7 @@ export default function PortfolioViewRenderer({ activeView, setView, onAiQuery, 
     case "skills":
       return <SkillsView key="skills" setView={setView} />;
     case "stats":
-      return <StatsView key="stats" setView={setView} />;
+      return <StatsView key="stats" />;
     case "contact":
       return <ContactView key="contact" setView={setView} />;
     default:

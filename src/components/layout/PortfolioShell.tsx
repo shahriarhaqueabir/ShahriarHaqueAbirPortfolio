@@ -121,6 +121,7 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
         messages={worker.messages}
         activeView={activeView}
         localAiEnabled={worker.localAiEnabled}
+        localAiFallback={worker.localAiFallback}
         enableLocalAi={worker.enableLocalAi}
         onNavigate={(view) => navigate(view)}
         onSend={send}
