@@ -93,7 +93,7 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
                   href={item.href}
                   download={item.label === "CV" ? "Shahriar_Haque_Abir_CV.pdf" : undefined}
                   target={item.href.startsWith("http") ? "_blank" : undefined}
-                  rel={item.href.startsWith("http") ? "noreferrer" : undefined}
+                  rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
                 >
                   {content}
                 </a>

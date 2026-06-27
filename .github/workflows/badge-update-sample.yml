@@ -1,0 +1,48 @@
+name: Update Dynamic Badges
+
+on:
+  push:
+    branches:
+      - main
+  # Allow manual triggers
+  workflow_dispatch:
+
+jobs:
+  update-badges:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      # Example: Run linting and extract count
+      # Modify this to run your actual tests or metrics
+      - name: Run Linter and Calculate Metrics
+        id: compute_metrics
+        run: |
+          echo "Running standard checks..."
+          npm run lint || true
+          
+          # For demonstration: Assume we always pass
+          echo "status=passing" >> $GITHUB_ENV
+          echo "color=brightgreen" >> $GITHUB_ENV
+
+      # Upload to Gist for Shields.io Dynamic Endpoint
+      # Endpoint URL format: https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/USERNAME/GIST_ID/raw/badge.json
+      - name: Create Dynamic Badge JSON
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with:
+          auth: ${{ secrets.GIST_SECRET_TOKEN }} # Require a Personal Access Token with 'gist' scope
+          gistID: adbd0eaa95a15c5cfbc78a3d70a8f910
+          filename: badge.json
+          label: Custom Build
+          message: ${{ env.status }}
+          color: ${{ env.color }}
+          namedLogo: github

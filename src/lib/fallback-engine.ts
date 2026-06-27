@@ -2,7 +2,7 @@ import { CONFIG } from "@/lib/data";
 import { CAREER_STATES, VIEW_GOALS } from "@/lib/experience-model";
 import type { ViewKey } from "@/lib/types";
 
-export const LOCAL_MODEL_LABEL = "Qwen 2.5 1B";
+export const LOCAL_MODEL_LABEL = "Qwen 2.5 1.5B";
 
 const DEFAULT_SUGGESTIONS = ["who is Shahriar", "show me projects", "what are his skills", "compare skills to experience", "navigation steps", "his working style", "why hire him", "show experience"];
 
@@ -434,8 +434,8 @@ function buildClarifyingQuestion(input: string): { text: string; suggestions: st
   }
 
   const uniqueSuggestions = [...new Set(suggestions)].slice(0, 3);
-  const questionText = isQuestion 
-    ? `I'm a specialized guide for Shahriar's portfolio. I might not understand everything, but I'm great at answering questions about his work! ` 
+  const questionText = isQuestion
+    ? `I'm a specialized guide for Shahriar's portfolio. I might not understand everything, but I'm great at answering questions about his work! `
     : `I might have misunderstood. As a specialized portfolio guide, I'm best at answering questions about Shahriar's experience and skills. `;
 
   return {

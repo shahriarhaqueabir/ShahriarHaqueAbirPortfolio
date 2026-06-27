@@ -15,6 +15,9 @@ node_modules/
 /playwright-report/
 /blob-report/
 /output/
+*.trace.json
+test-write*.txt
+.playwright-mcp/
 
 # misc
 .DS_Store
