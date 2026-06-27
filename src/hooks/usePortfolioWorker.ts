@@ -7,6 +7,9 @@ import type { Message, ViewKey } from "@/lib/types";
 
 const MAX_CHAT_MESSAGES = 10;
 const MAX_UI_MESSAGES = 100;
+const MAX_INPUT_LENGTH = 500;
+const RATE_LIMIT_WINDOW_MS = 10_000;
+const RATE_LIMIT_MAX_MSGS = 10;
 
 type VisitorProfile = {
   name?: string;
@@ -59,6 +62,7 @@ type UsePortfolioWorkerOptions = {
 
 export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWorkerOptions = {}) {
   const [localAiFallback, setLocalAiFallback] = useState(false);
+  const rateLimitTimestampsRef = useRef<number[]>([]);
   const [localAiPaused] = useState(false);
   const [localAiEnabled, setLocalAiEnabled] = useState(false);
   const [messages, setMessages] = useState<Message[]>(() => [
@@ -98,7 +102,6 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
     visitorProfileRef.current = visitorProfile;
   }, [visitorProfile]);
 
-
   const getNextId = useCallback(() => `msg-${++messageIdCounterRef.current}`, []);
 
   const pruneMessages = useCallback((msgs: Message[]): Message[] => {
@@ -106,31 +109,43 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
     return msgs.slice(-MAX_UI_MESSAGES);
   }, []);
 
-  const createUserMessage = useCallback((text: string): Message => ({
-    id: getNextId(),
-    text,
-    sender: "user",
-  }), [getNextId]);
+  const createUserMessage = useCallback(
+    (text: string): Message => ({
+      id: getNextId(),
+      text,
+      sender: "user",
+    }),
+    [getNextId],
+  );
 
-  const createFallbackMessage = useCallback((text: string, suggestions?: string[]): Message => ({
-    id: getNextId(),
-    text,
-    sender: "fallback",
-    ...(suggestions && suggestions.length > 0 ? { suggestions } : {}),
-  }), [getNextId]);
+  const createFallbackMessage = useCallback(
+    (text: string, suggestions?: string[]): Message => ({
+      id: getNextId(),
+      text,
+      sender: "fallback",
+      ...(suggestions && suggestions.length > 0 ? { suggestions } : {}),
+    }),
+    [getNextId],
+  );
 
-  const createAiMessage = useCallback((text: string, isTyping = false): Message => ({
-    id: getNextId(),
-    text,
-    sender: "ai",
-    ...(isTyping ? { isTyping: true as const } : {}),
-  }), [getNextId]);
+  const createAiMessage = useCallback(
+    (text: string, isTyping = false): Message => ({
+      id: getNextId(),
+      text,
+      sender: "ai",
+      ...(isTyping ? { isTyping: true as const } : {}),
+    }),
+    [getNextId],
+  );
 
-  const createSysMessage = useCallback((text: string): Message => ({
-    id: getNextId(),
-    text,
-    sender: "sys",
-  }), [getNextId]);
+  const createSysMessage = useCallback(
+    (text: string): Message => ({
+      id: getNextId(),
+      text,
+      sender: "sys",
+    }),
+    [getNextId],
+  );
 
   useEffect(() => {
     const fallbackReason = getLocalAiFallbackReason();
@@ -139,9 +154,7 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
         setLocalAiFallback(true);
         setIsReady(true);
         setProgress(100);
-        setMessages([
-          createSysMessage(`This device does not support local AI chat. Switching to Fallback Chat mode.`)
-        ]);
+        setMessages([createSysMessage(`This device does not support local AI chat. Switching to Fallback Chat mode.`)]);
       }, 0);
       return () => clearTimeout(timer);
     }
@@ -338,11 +351,80 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
     setMessages((prev) => pruneMessages([...prev, createSysMessage(text)]));
   };
 
+  /** Strip HTML tags and dangerous content from user input */
+  const sanitizeInput = useCallback((input: string): string => {
+    return input
+      .replace(/<[^>]*>/g, "")
+      .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, "")
+      .trim();
+  }, []);
+
+  /** Rate limiter: max N messages per sliding window */
+  const checkRateLimit = useCallback((): boolean => {
+    const now = Date.now();
+    rateLimitTimestampsRef.current = rateLimitTimestampsRef.current.filter((ts) => now - ts < RATE_LIMIT_WINDOW_MS);
+    if (rateLimitTimestampsRef.current.length >= RATE_LIMIT_MAX_MSGS) return false;
+    rateLimitTimestampsRef.current.push(now);
+    return true;
+  }, []);
+
   const sendMessage = (userText: string, activeView: ViewKey, routerMemory?: RouterMemory) => {
-    const text = userText.trim();
+    const text = sanitizeInput(userText);
     if (!text) return;
 
-    const riskyKeywords = ["script", "write code", "python code", "hack", "penetration", "exploit", "bash script", "sql injection", "vulnerability", "pen test"];
+    if (text.length > MAX_INPUT_LENGTH) {
+      setMessages((prev) => pruneMessages([...prev, createUserMessage(userText), createAiMessage(`Your message was too long (max ${MAX_INPUT_LENGTH} characters). Please shorten it and try again.`)]));
+      return;
+    }
+
+    if (!checkRateLimit()) {
+      setMessages((prev) => pruneMessages([...prev, createUserMessage(userText), createSysMessage(`You're sending messages too quickly. Please wait a moment before sending another.`)]));
+      return;
+    }
+
+    const riskyKeywords = [
+      "script",
+      "write code",
+      "python code",
+      "hack",
+      "penetration",
+      "exploit",
+      "bash script",
+      "sql injection",
+      "vulnerability",
+      "pen test",
+      "ignore all instructions",
+      "ignore previous",
+      "system prompt",
+      "jailbreak",
+      "you are now",
+      "new role",
+      "dan ",
+      "ignore everything",
+      "forget all",
+      "override",
+      "reveal prompt",
+      "output the",
+      "malicious",
+      "virus",
+      "trojan",
+      "ransomware",
+      "keylogger",
+      "reverse shell",
+      "bypass",
+      "inject",
+      "xss",
+      "csrf",
+      "write a script",
+      "generate code",
+      "execution",
+      "child p",
+      "weapon",
+      "bomb",
+      "terror",
+      "attack",
+      "ddos",
+    ];
     if (riskyKeywords.some((kw) => text.toLowerCase().includes(kw))) {
       setMessages((prev) =>
         pruneMessages([
@@ -354,7 +436,7 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
       return;
     }
 
-    const fallbackResult = buildFallbackAnswer(userText, activeView);
+    const fallbackResult = buildFallbackAnswer(text, activeView);
 
     // Wrap fallback answer with cooperative language
     const aiIsComing = localAiEnabled && isReady && !localAiFallback;
@@ -367,7 +449,7 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
 
     const fallbackText = `${cooperativeIntro}${fallbackResult.text}${cooperativeOutro}`;
 
-    const nextProfile = inferVisitorProfile(userText, visitorProfileRef.current);
+    const nextProfile = inferVisitorProfile(text, visitorProfileRef.current);
     visitorProfileRef.current = nextProfile;
     setVisitorProfile(nextProfile);
 
@@ -389,11 +471,11 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
         const worker = sharedWorkerRef.current;
         if (worker) {
           worker.postMessage({
-            messages: [{ role: "system", content: buildSystemPrompt(userText, activeView, nextProfile, routerMemory) }, ...chatHistory],
+            messages: [{ role: "system", content: buildSystemPrompt(text, activeView, nextProfile, routerMemory) }, ...chatHistory],
           });
         }
       } else if (localAiEnabled && !isReady && !localAiFallback) {
-        queuedMessageRef.current = { text: userText, activeView, routerMemory };
+        queuedMessageRef.current = { text, activeView, routerMemory };
       }
 
       return updated;
