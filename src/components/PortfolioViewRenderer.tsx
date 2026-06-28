@@ -1,14 +1,15 @@
 "use client";
 
 import { type RefObject } from "react";
-import HeroView from "@/components/views/HeroView";
+import dynamic from "next/dynamic";
 
-import AboutView from "@/components/views/AboutView";
-import ProjectsView from "@/components/views/ProjectsView";
-import ExperienceView from "@/components/views/ExperienceView";
-import SkillsView from "@/components/views/SkillsView";
-import StatsView from "@/components/views/StatsView";
-import ContactView from "@/components/views/ContactView";
+const HeroView = dynamic(() => import("@/components/views/HeroView"));
+const AboutView = dynamic(() => import("@/components/views/AboutView"));
+const ProjectsView = dynamic(() => import("@/components/views/ProjectsView"));
+const ExperienceView = dynamic(() => import("@/components/views/ExperienceView"));
+const SkillsView = dynamic(() => import("@/components/views/SkillsView"));
+const StatsView = dynamic(() => import("@/components/views/StatsView"));
+const ContactView = dynamic(() => import("@/components/views/ContactView"));
 import type { ViewKey } from "@/lib/types";
 
 type PortfolioViewRendererProps = {

@@ -5,10 +5,11 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  turbopack: {},
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
-      "sharp$": false,
+      sharp$: false,
       "onnxruntime-node$": false,
     };
     return config;

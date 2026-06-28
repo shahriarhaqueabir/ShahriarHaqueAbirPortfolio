@@ -129,11 +129,11 @@ export default function StatsView() {
       <section className="relative z-10 mx-auto grid max-w-[1280px] grid-cols-1 gap-10 lg:grid-cols-[0.78fr_1.46fr_0.9fr] lg:items-start">
         <aside className="pt-12 lg:pt-24">
           <div className="mb-7 font-mono text-xs uppercase tracking-[0.34em] text-(--text-muted)">Human Qualities</div>
-          <h2 className="max-w-[290px] font-syne text-3xl font-medium leading-[0.92] tracking-tight text-(--text) md:text-4xl">
+          <h1 className="max-w-[290px] font-syne text-3xl font-medium leading-[0.92] tracking-tight text-(--text) md:text-4xl">
             Life&apos;s sky.
             <br />
             Human signals.
-          </h2>
+          </h1>
           <p className="mt-12 max-w-[280px] font-mono text-xs font-bold leading-8 text-(--text)">Calm when stakes rise. Clear when systems get tangled. Kind enough to keep people with the work.</p>
           <p className="mt-12 max-w-[190px] font-mono text-xs uppercase leading-5 tracking-[0.28em] text-(--text-muted)">Follow the constellation.</p>
         </aside>

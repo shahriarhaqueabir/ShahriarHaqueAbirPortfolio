@@ -1,21 +1,43 @@
 # Project Handover Notes
 
+## Architecture Overview
+
+### Layout & Shell
+- **`PortfolioShell.tsx`** is the root client component. It owns:
+  - `panelOpen` state — toggles the AI panel drawer
+  - `input` / `setInput` — shared text input state for both footer and panel
+  - `voiceInput` / `voiceOutput` — voice hook instances, passed as props
+  - The `send()` function — clears input, routes commands, dispatches messages
+- The footer (`AiGuideFooter`) is a **status bar only** — no input, no mic, no send button. When the panel is open, the footer fades via `opacity: 0` + `pointer-events: none` (NOT `display: none`), keeping it in the DOM.
+- The panel (`AiGuidePanel`) is a **bottom drawer** (`h-[85vh]`) that slides up from below. It contains the only input bar, mic button, and send button.
+
+### Voice System
+- Two hooks lifted to `PortfolioShell`:
+  - `useVoiceInput` — wraps Web Speech API (`SpeechRecognition`). One instance shared by both components.
+  - `useVoiceOutput` — wraps ElevenLabs TTS. One instance, manual activation only.
+- `VoiceButton` uses a discriminated union (`mode: "input" | "speaker"`) to render mic or speaker buttons. Always renders a `<button>` (never `null`) to prevent hydration mismatches.
+
 ## What Worked Well
-1. **Next.js Google Fonts (`next/font/google`)**: Using Next.js's built-in font optimization provided a massive performance boost and eliminated Cumulative Layout Shift (CLS) for fonts like `Syne`, `Playfair Display`, and `JetBrains Mono`.
-2. **Simplified Mobile Navigation**: Moving the `MobileNav` directly to `bottom-0` with `pb-safe` padding creates a native, app-like bottom tab bar experience that is predictable and thumb-friendly.
-3. **Floating AI Bubble for Mobile**: Transitioning the persistent `AiGuideFooter` into a hidden component on mobile (`hidden md:block`) and replacing it with a floating "tap-to-open" bubble resolved viewport crowding while keeping the AI guide easily accessible.
-4. **Content Pruning**: Reducing the `data.ts` payload to highlight only the most impactful roles and top 4-5 projects makes the portfolio punchier and dramatically reduces visual fatigue for the reader.
+
+1. **Next.js Google Fonts**: Using `next/font/google` provides optimized font loading and eliminates CLS from web font swaps.
+2. **Floating AI Bubble for Mobile**: Footer is `hidden md:block`. Mobile gets a floating circular bubble (`MessageCircle` icon) instead.
+3. **Content Pruning**: Keeping `data.ts` focused on the most impactful roles and projects reduces visual fatigue.
+4. **Lifted Voice State**: Sharing one `useVoiceInput` instance between footer and panel prevents independent mic state and ensures transcripts are always in sync.
+5. **Bottom Drawer Panel**: Using a slide-up drawer (instead of a right sidebar) keeps the interaction anchored to the same part of the screen as the footer, making the transition feel natural.
 
 ## What Didn't Work (What to Avoid)
-1. **Hardcoding Font Overrides in `:root`**: 
-   - *The Issue*: Placing `--font-syne: "Syne", sans-serif;` inside the `:root` block in `globals.css` completely overrides the optimized CSS variables injected by `next/font` on the `<html>` tag. 
-   - *The Fix*: Ensure that Tailwind v4 `@theme` maps font utilities (e.g., `--font-sans: var(--font-syne)`) directly to the Next.js injected variables, and **do not** redefine them in `:root`.
-2. **Persistent Full-Width Footers on Mobile**: 
-   - *The Issue*: A persistent AI input footer sitting on top of a persistent mobile navigation bar consumes too much vertical screen real estate, causing a cluttered UX.
-   - *The Fix*: Stick to floating action buttons (FABs) or bubbles for auxiliary features on mobile.
+
+1. **Hardcoding Font Overrides in `:root`**: Placing `--font-syne: "Syne"` in `globals.css` overrides Next.js font optimization variables. Map fonts via Tailwind v4 `@theme` instead.
+2. **persistent Full-Width Footer with Input on Mobile**: Using a floating bubble avoids crowding the viewport on small screens.
+3. **`watchOptions.poll: 1000` in next.config.ts**: Causes infinite Fast Refresh loop on Windows. Do not add it back.
+4. **Two Separate `useVoiceInput()` Instances**: Causes independent mic state — one instance can be listening while the other is off. Always lift voice hooks to the shared parent.
+5. **Right Sidebar Panel**: Users found it disconnected from the footer interaction. A bottom drawer keeps the interaction anchored.
+6. **VoiceButton returning `null` when unsupported**: Causes React hydration mismatch → Fast Refresh loop. Always render the `<button>` (disabled).
 
 ## Future Recommendations
-1. **Particle Backgrounds**: The `tsparticles` implementation is route-aware and performs well. If adding new routes, ensure you map a specific particle config to it inside the `useMemo` block in `ParticleBackground.tsx`.
-2. **Reduced Motion**: The app currently respects the user's OS-level reduced motion preferences via the `useReducedMotion` hook. Ensure any new Framer Motion animations continue to provide fallback (non-animated) states for accessibility.
-3. **AI Local Runner**: The local AI worker (`usePortfolioWorker.ts`) is designed to run locally. Be mindful of token limits and context windows when adding new projects or long descriptions to `data.ts`.
-4. **Maintenance of `data.ts`**: The UI is tightly coupled to the data structure in `src/lib/data.ts`. Any additions to skills, experience, or projects should follow the existing object schemas to prevent runtime rendering errors.
+
+1. **Particle Backgrounds**: The `tsparticles` implementation is route-aware. If adding routes, map particle configs in the `useMemo` block in `ParticleBackground.tsx`.
+2. **Reduced Motion**: The `useReducedMotion` hook respects OS preferences. Any new Framer Motion animations should provide non-animated fallback states.
+3. **WebLLM Context Window**: Adding large entries to `data.ts` increases the system prompt size. Monitor context limits when adding content.
+4. **ElevenLabs Free Tier**: ~10K chars/month. If usage grows, consider Fish Audio (S2.1 Pro free + monthly credits) or Google Chirp 3 HD (1M chars/mo free) as alternatives.
+5. **Brave Browser Compatibility**: SpeechRecognition doesn't work reliably on Brave due to aggressive fingerprinting protections. The 400ms restart delay mitigates some issues but doesn't fully solve it.

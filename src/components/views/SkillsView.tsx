@@ -113,7 +113,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
       <div className="font-mono text-xs text-(--accent) uppercase tracking-[0.2em] mb-4">- Skills</div>
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
         <div>
-          <h2 className="text-2xl md:text-4xl font-syne font-black text-(--text) leading-none tracking-tight">Capability Map</h2>
+          <h1 className="text-2xl md:text-4xl font-syne font-black text-(--text) leading-none tracking-tight">Capability Map</h1>
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-(--text-muted)">
             A practical view of what I can do, where I apply it, and the tools I use to turn product, customer, and engineering context into usable outcomes.
           </p>

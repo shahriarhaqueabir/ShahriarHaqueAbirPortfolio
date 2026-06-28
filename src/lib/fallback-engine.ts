@@ -109,7 +109,7 @@ function getRelevantProjectIndexes(input: string): number[] {
     .filter((item) => item.score > 0)
     .slice(0, 3)
     .map((item) => item.index);
-  return matches.length ? matches : [1, 4, 5];
+  return matches.length ? matches : [0, 1, 2];
 }
 
 function answerAboutBio(): string {
@@ -434,8 +434,8 @@ function buildClarifyingQuestion(input: string): { text: string; suggestions: st
   }
 
   const uniqueSuggestions = [...new Set(suggestions)].slice(0, 3);
-  const questionText = isQuestion 
-    ? `I'm a specialized guide for Shahriar's portfolio. I might not understand everything, but I'm great at answering questions about his work! ` 
+  const questionText = isQuestion
+    ? `I'm a specialized guide for Shahriar's portfolio. I might not understand everything, but I'm great at answering questions about his work! `
     : `I might have misunderstood. As a specialized portfolio guide, I'm best at answering questions about Shahriar's experience and skills. `;
 
   return {

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-syne);
   --font-mono: var(--font-jetbrains);
   --font-syne: var(--font-syne);
 }
@@ -27,12 +27,21 @@ html {
 body {
   background-color: var(--bg);
   color: var(--text);
-  background-image:
-    radial-gradient(circle at 18% 12%, rgba(56, 189, 248, 0.14), transparent 32rem), radial-gradient(circle at 88% 78%, rgba(245, 158, 11, 0.09), transparent 28rem),
-    linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-attachment: fixed;
   font-family: var(--font-sans);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 18% 12%, rgba(56, 189, 248, 0.14), transparent 32rem),
+    radial-gradient(circle at 88% 78%, rgba(245, 158, 11, 0.09), transparent 28rem),
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: -3;
+  pointer-events: none;
 }
 
 body::after {
@@ -478,11 +487,20 @@ body::after {
     line-height: 1.5 !important;
   }
 
+  @keyframes typewriter-reveal {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0 0% 0 0);
+    }
+  }
+
   /* Disable transitions and animations for print performance */
-  *,
-  *::before,
-  *::after {
-    animation-delay: 0s !important;
+    *,
+    *::before,
+    *::after {
+      animation-delay: 0s !important;
     animation-duration: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0s !important;

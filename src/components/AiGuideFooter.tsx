@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Cpu, MessageSquare, Send, CheckCircle2, ChevronUp } from "lucide-react";
+import { Cpu, CheckCircle2, ChevronUp } from "lucide-react";
 import type { Message } from "@/lib/types";
 
 type AiGuideFooterProps = {
@@ -34,8 +34,6 @@ const FOOTER_TIPS = [
 
 export default function AiGuideFooter({ messages, isReady, localAiEnabled, localAiFallback, localAiPaused, panelOpen, progress, showReadyToast, onSend, onFocus }: AiGuideFooterProps) {
   const [tipIndex, setTipIndex] = useState(0);
-  const [input, setInput] = useState("");
-  const inputRef = useRef<HTMLInputElement>(null);
 
   // Rotate through footer tips
   useEffect(() => {
@@ -51,20 +49,12 @@ export default function AiGuideFooter({ messages, isReady, localAiEnabled, local
 
   const lastMessage = [...messages].reverse().find((m) => (m.sender === "ai" || m.sender === "fallback") && !m.isTyping && !m.isReadyGreen);
 
-  const handleSubmit = useCallback(() => {
-    const text = input.trim();
-    if (!text) return;
-    setInput("");
-    onSend(text);
-    onFocus();
-  }, [input, onSend, onFocus]);
-
   const showExpandHint = !localAiEnabled;
 
   return (
     <footer
-      className="hidden md:block fixed bottom-0 left-0 right-0 md:left-[68px] z-50 border-t border-(--border) bg-(--surface)/90 backdrop-blur-3xl"
-      style={panelOpen ? { display: "none" } : undefined}
+      className="hidden md:block fixed bottom-0 left-0 right-0 md:left-[68px] z-50 border-t border-(--border) bg-(--surface)/90 backdrop-blur-3xl transition-opacity duration-300"
+      style={panelOpen ? { opacity: 0, pointerEvents: "none" } : undefined}
     >
       <AnimatePresence>
         {showReadyToast && (
@@ -100,21 +90,23 @@ export default function AiGuideFooter({ messages, isReady, localAiEnabled, local
           <Cpu className={`w-3 h-3 shrink-0 ${isReady && !localAiPaused ? (localAiFallback ? "text-(--accent)" : "text-green-500") : localAiEnabled ? "text-orange-500" : "text-(--text-muted)"}`} />
         </div>
 
-        {/* Status text / last message */}
-        {localAiPaused ? (
-          <p className="text-[11px] font-mono text-(--text-muted) italic">Guide is paused</p>
-        ) : !localAiEnabled ? (
-          <p className="text-[11px] font-mono text-(--text) truncate max-w-full">{lastMessage?.text ?? "Ask about projects, experience, or skills — the fallback guide will respond."}</p>
-        ) : !isReady ? (
-          <p className="text-[11px] font-mono text-(--text-muted)">Loading guide... {Math.round(progress)}%</p>
-        ) : lastMessage ? (
-          <p className="text-[11px] font-mono text-(--text) truncate max-w-full">{lastMessage.text}</p>
-        ) : (
-          <p className="text-[11px] font-mono text-(--text-muted)">Welcome. I can walk you through projects, compare experience, or build a recruiter path.</p>
-        )}
+        {/* Status text / last message — clickable to expand panel */}
+        <button type="button" onClick={onFocus} className="w-full text-left cursor-pointer">
+          {localAiPaused ? (
+            <p className="text-[11px] font-mono text-(--text-muted) italic">Guide is paused</p>
+          ) : !localAiEnabled ? (
+            <p className="text-[11px] font-mono text-(--text) truncate max-w-full">{lastMessage?.text ?? "Ask about projects, experience, or skills — the fallback guide will respond."}</p>
+          ) : !isReady ? (
+            <p className="text-[11px] font-mono text-(--text-muted)">Loading guide... {Math.round(progress)}%</p>
+          ) : lastMessage ? (
+            <p className="text-[11px] font-mono text-(--text) truncate max-w-full">{lastMessage.text}</p>
+          ) : (
+            <p className="text-[11px] font-mono text-(--text-muted)">Welcome. I can walk you through projects, compare experience, or build a recruiter path.</p>
+          )}
 
-        {/* Rotating tip — shown when there are no messages yet */}
-        {!lastMessage && !localAiPaused && <p className="text-[9px] font-mono text-(--accent2) italic truncate">{FOOTER_TIPS[tipIndex]}</p>}
+          {/* Rotating tip — shown when there are no messages yet */}
+          {!lastMessage && !localAiPaused && <p className="text-[9px] font-mono text-(--accent2) italic truncate">{FOOTER_TIPS[tipIndex]}</p>}
+        </button>
 
         {/* Suggestions chips */}
         {showSuggestions && (
@@ -123,11 +115,7 @@ export default function AiGuideFooter({ messages, isReady, localAiEnabled, local
               <button
                 key={s.label}
                 type="button"
-                onClick={() => {
-                  setInput("");
-                  onSend(s.input);
-                  onFocus();
-                }}
+                onClick={() => onSend(s.input)}
                 className="shrink-0 px-3 py-2 rounded-sm border border-(--border) text-[11px] md:text-[9px] font-mono uppercase tracking-wider text-(--text-muted) hover:text-(--accent) hover:border-(--accent) transition-colors bg-(--bg)/50"
               >
                 {s.label}
@@ -136,49 +124,18 @@ export default function AiGuideFooter({ messages, isReady, localAiEnabled, local
           </div>
         )}
 
-        {/* Expand hint when AI is off */}
+        {/* Expand hint when AI is off — click to open panel */}
         {showExpandHint && (
-          <div className="flex items-center gap-2 px-1">
-            <ChevronUp className="w-3 h-3 text-(--accent) animate-bounce" />
-            <span className="text-[8px] font-mono uppercase tracking-widest text-(--text-muted)">Expand the guide panel to enable AI conversations</span>
-          </div>
-        )}
-
-        {/* Input row — always visible */}
-        <div className="relative">
-          <input
-            ref={inputRef}
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-            onFocus={onFocus}
-            aria-label="Ask about Shahriar"
-            placeholder={
-              localAiPaused
-                ? "Guide is paused"
-                : localAiFallback
-                  ? "Ask the fallback guide..."
-                  : isReady
-                    ? "Ask about Shahriar..."
-                    : localAiEnabled
-                      ? `Loading guide... ${Math.round(progress)}%`
-                      : "Ask a question..."
-            }
-            disabled={localAiPaused}
-            className="w-full bg-(--surface) border border-(--border) rounded-sm py-2 pl-8 pr-9 text-base md:text-sm font-mono focus:outline-none focus:border-(--accent) transition-all text-(--text) placeholder:text-(--text-muted)"
-          />
-          <MessageSquare className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-(--text-muted)" />
           <button
             type="button"
-            onClick={handleSubmit}
-            disabled={!input.trim()}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-(--text) hover:text-(--accent) disabled:opacity-30 p-1"
-            aria-label="Send message"
+            onClick={() => onFocus()}
+            className="w-full flex items-center gap-2 px-4 py-3 rounded-sm border-2 border-(--accent)/60 bg-(--accent)/[0.12] hover:bg-(--accent)/[0.25] transition-all cursor-pointer text-left group animate-pulse shadow-[0_0_12px_rgba(var(--accent-rgb),0.15)]"
           >
-            <Send className="w-3.5 h-3.5" />
+            <ChevronUp className="w-4 h-4 text-(--accent) shrink-0 group-hover:translate-y-[-2px] transition-transform" />
+            <span className="text-[10px] font-mono uppercase tracking-widest text-(--accent) font-extrabold flex-1">Enable AI Guide · Click to expand panel</span>
+            <span className="text-[7px] font-mono uppercase tracking-wider text-(--accent)/60 border border-(--accent)/30 px-2 py-0.5 rounded-sm shrink-0">Recommended</span>
           </button>
-        </div>
+        )}
       </div>
     </footer>
   );

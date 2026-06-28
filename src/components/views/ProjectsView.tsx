@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { ArrowRight, BrainCircuit, ChartSpline, Clock, Network, ServerCog, Sparkles, User, Workflow } from "lucide-react";
+import { ArrowRight, BrainCircuit, ChartSpline, Network, ServerCog, Sparkles, User, Workflow } from "lucide-react";
 import TechIcon from "@/components/TechIcon";
 import GuidedNext from "@/components/GuidedNext";
 import { CONFIG } from "@/lib/data";
@@ -11,13 +11,13 @@ import type { ViewKey } from "@/lib/types";
 type Project = (typeof CONFIG.projects)[number];
 
 // Metadata mapping for the "Visual Design" aspects inspired by the screenshot
-const projectMeta: Record<string, { duration: string; client: string; category: string }> = {
-  "Interactive Database Visualizer": { duration: "3 Months", client: "Internal Tooling", category: "Data Systems" },
-  "Customer Onboarding & Validation Portal": { duration: "6 Months", client: "Enterprise Clients", category: "SaaS Operations" },
-  "Log Analysis & Automated Ticketing": { duration: "Ongoing", client: "Tier-3 Support Team", category: "Automation" },
-  "Network Discovery & Topology Mapping": { duration: "1 Year", client: "Earth Telecommunication", category: "Networking" },
-  "CI-Friendly API Test Automation": { duration: "4 Months", client: "QA / Release Ops", category: "Quality Engineering" },
-  "Internal AI Gateway Proxy": { duration: "5 Months", client: "Corporate Governance", category: "AI Security" },
+const projectMeta: Record<string, { client: string; category: string }> = {
+  "Interactive Database Visualizer": { client: "Internal Tooling", category: "Data Systems" },
+  "Customer Onboarding & Validation Portal": { client: "Enterprise Clients", category: "SaaS Operations" },
+  "Log Analysis & Automated Ticketing": { client: "Tier-3 Support Team", category: "Automation" },
+  "Network Discovery & Topology Mapping": { client: "Earth Telecommunication", category: "Networking" },
+  "CI-Friendly API Test Automation": { client: "QA / Release Ops", category: "Quality Engineering" },
+
 };
 
 function getProjectVisual(project: Project) {
@@ -26,17 +26,16 @@ function getProjectVisual(project: Project) {
   if (project.name.includes("Onboarding")) return { Icon: BrainCircuit, color: "var(--accent2)", symbol: "PORTAL" };
   if (project.name.includes("Log Analysis")) return { Icon: ServerCog, color: "var(--accent)", symbol: "LOG" };
   if (project.name.includes("API Test")) return { Icon: ChartSpline, color: "var(--accent3)", symbol: "TEST" };
-  if (project.name.includes("AI Gateway")) return { Icon: Sparkles, color: "var(--accent)", symbol: "SEC" };
+
   return { Icon: Sparkles, color: "var(--accent)", symbol: "SYS" };
 }
 
 function getArchitectureNodes(project: Project): string[] {
-  if (project.name.includes("Database")) return ["SQL Parser", "Relationship Map", "Interactive UI", "Visual Query"];
-  if (project.name.includes("Network Discovery")) return ["IP Range", "nmap Scanner", "JSON Topology", "Interactive Map"];
-  if (project.name.includes("Onboarding")) return ["Data Upload", "Schema Mapper", "Sandbox Runner", "Live Validation"];
-  if (project.name.includes("Log Analysis")) return ["Log Stream", "Regex Filter", "Threshold Sync", "Jira Automation"];
-  if (project.name.includes("API Test")) return ["Collections", "Newman CLI", "CI/CD Pipeline", "Health Report"];
-  if (project.name.includes("AI Gateway")) return ["Request Intercept", "NER Redaction", "Model Relay", "Token Unmask"];
+  if (project.name.includes("Database")) return ["DDL/Connection Parse", "ER Schema Extraction", "ReactFlow Graph Build", "D3 Force Layout Render"];
+  if (project.name.includes("Network Discovery")) return ["Subnet Sweep Config", "ICMP+SNMP Scan", "JSON Relationship Build", "Interactive Topology Render"];
+  if (project.name.includes("Onboarding")) return ["File Upload Handler", "Drag-and-Drop Mapper", "Sandbox Validation Engine", "Error Report Generator"];
+  if (project.name.includes("Log Analysis")) return ["Log Stream Ingestion", "Regex Incident Detection", "Threshold Evaluation", "Jira Ticket Dispatch"];
+  if (project.name.includes("API Test")) return ["Postman Collection", "Newman CLI Runner", "GitHub Actions Trigger", "Pass/Fail Report"];
   return ["Input", "Process", "Logic", "Outcome"];
 }
 
@@ -108,7 +107,7 @@ function DeviceMockup({ project, visual }: { project: Project; visual: { Icon: t
 function FeaturedProject({ project, index }: { project: Project; index: number }) {
   const featureReduceMotion = useReducedMotion();
   const visual = getProjectVisual(project);
-  const meta = projectMeta[project.name] || { duration: "3 Months", client: "Confidential", category: "Technical Project" };
+  const meta = projectMeta[project.name] || { client: "Confidential", category: "Technical Project" };
   const isEven = index % 2 === 0;
 
   return (
@@ -158,13 +157,6 @@ function FeaturedProject({ project, index }: { project: Project; index: number }
 
         <div className="flex flex-wrap gap-4 py-1">
           <div className="flex items-center gap-2">
-            <Clock className="w-3.5 h-3.5 text-(--accent)" />
-            <div>
-              <div className="text-[9px] uppercase font-mono text-(--text-muted) tracking-widest">Duration</div>
-              <div className="text-[11px] font-bold text-(--text)">{meta.duration}</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
             <User className="w-3.5 h-3.5 text-(--accent)" />
             <div>
               <div className="text-[9px] uppercase font-mono text-(--text-muted) tracking-widest">Client / Partner</div>
@@ -203,11 +195,11 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
     >
       <div className="flex items-center justify-between mb-10">
         <div>
-          <h2 className="text-3xl lg:text-4xl font-syne font-black text-(--text) tracking-tighter uppercase mb-3">
+          <h1 className="text-3xl lg:text-4xl font-syne font-black text-(--text) tracking-tighter uppercase mb-3">
             Featured <span className="text-(--accent)">Projects</span>
-          </h2>
+          </h1>
           <p className="max-w-2xl text-xs lg:text-sm leading-relaxed text-(--text-muted) font-mono uppercase tracking-tight">
-            Recent work demonstrating technical operations engineering, systems integration, API automation, and scalable dashboard-driven solutions.
+            Network discovery tooling, database visualization, automated validation portals, log analysis pipelines, and CI-integrated API test automation — built across Earth Telecommunication, tripunkt GmbH, and internal tooling.
           </p>
         </div>
         <div className="flex flex-col items-end gap-4">
