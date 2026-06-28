@@ -1,0 +1,132 @@
+- generic [ref=e1]:
+  - main [ref=e2]:
+    - complementary [ref=e3]:
+      - button "Go to Home" [ref=e4]: H
+      - generic "Guide opt-in" [ref=e5]
+      - navigation "Portfolio navigation" [ref=e7]:
+        - button "Navigate to Home" [ref=e8]:
+          - img [ref=e9]
+        - button "Navigate to About" [ref=e12]:
+          - img [ref=e13]
+        - button "Navigate to Projects" [ref=e16]:
+          - img [ref=e17]
+        - button "Navigate to Experience" [ref=e20]:
+          - img [ref=e21]
+        - button "Navigate to Skills" [ref=e25]:
+          - img [ref=e26]
+        - button "Navigate to Stats" [ref=e28]:
+          - img [ref=e29]
+        - button "Navigate to Contact" [ref=e31]:
+          - img [ref=e32]
+    - generic [ref=e39]:
+      - generic [ref=e40]:
+        - paragraph [ref=e42]: Technical Operations Engineer | Solutions Engineer | QA Automation Engineer
+        - heading "Shahriar Haque Abir" [level=1] [ref=e43]:
+          - generic [ref=e44]: Shahriar
+          - generic [ref=e45]: Haque
+          - text: Abir
+      - generic [ref=e46]:
+        - img "Shahriar Haque Abir" [ref=e50]
+        - generic [ref=e296]:
+          - text: Enterprise
+          - generic [ref=e298]: SaaS
+          - text: Operations
+      - paragraph [ref=e56]: I bridge the gap between complex enterprise architectures and critical system processes; turning production issues into clear decisions, repeatable solutions, and long-term operational frameworks.
+      - generic [ref=e58]:
+        - generic [ref=e59]:
+          - generic [ref=e60]: 10+
+          - paragraph [ref=e61]: Years experience in enterprise software & mission-critical support
+        - generic [ref=e62]:
+          - generic [ref=e63]: 40+
+          - paragraph [ref=e64]: Complex Production Incidents Triaged Weekly
+        - generic [ref=e65]:
+          - generic [ref=e66]: "3"
+          - paragraph [ref=e67]: Expertise across global enterprise deployments (DACH, NAM, APAC)
+      - generic [ref=e69]:
+        - button "View Case Studies" [ref=e70]:
+          - text: View Case Studies
+          - img [ref=e71]
+        - link "Download CV" [ref=e73] [cursor=pointer]:
+          - /url: /shahriar-haque-abir-cv.pdf
+          - img [ref=e74]
+          - text: Download CV
+        - button "Connect With Me" [ref=e77]:
+          - img [ref=e78]
+          - text: Connect With Me
+      - generic [ref=e81]:
+        - generic [ref=e82]:
+          - generic [ref=e83]: Based in
+          - generic [ref=e84]: Berlin, Germany
+        - generic [ref=e85]:
+          - generic [ref=e86]: Language
+          - generic [ref=e87]: German B2 (Professional)
+        - generic [ref=e88]:
+          - generic [ref=e89]: Authorization
+          - generic [ref=e90]: Niederlassungserlaubnis
+      - generic [ref=e92]:
+        - paragraph [ref=e93]: AIPowered by Qwen2.5 · Runs locally in your browser · No data sent
+        - paragraph [ref=e94]: Open the guide panel below and enable AI for interactive conversations, or ask the fallback guide without enabling AI.
+    - button "Close chat panel" [ref=e156]
+    - generic [ref=e157]:
+      - generic [ref=e158]:
+        - generic [ref=e159]: AI Guide · Conversation
+        - button "Close AI guide panel" [ref=e161]:
+          - img [ref=e162]
+      - button "Enable AI Portfolio Guide Ask questions · Get a recruiter path · Explore projects" [ref=e166]:
+        - img [ref=e167]
+        - generic [ref=e169]: Enable AI Portfolio Guide
+        - generic [ref=e170]: Ask questions · Get a recruiter path · Explore projects
+      - log "Chat messages" [ref=e171]:
+        - generic [ref=e175]: Local AI guide is off by default. Enable it when you want portfolio Q&A; Qwen 2.5 1B downloads and caches only when WebGPU is available and after you opt in.
+        - generic [ref=e239]:
+          - generic [ref=e241]: You
+          - generic [ref=e243]: tell me about your projects
+        - generic [ref=e244]:
+          - generic [ref=e245]:
+            - generic [ref=e247]: Guide
+            - generic [ref=e249]: "📋 Quick answer: 📁 **Interactive Database Visualizer** 📖 **Context:** Understanding complex relational schemas in enterprise databases often requires a more intuitive approach than reading DDL files or static ERD diagrams. New integration engineers spent weeks mapping foreign-key chains across dozens of tables before they could contribute meaningful work. A visual, interactive representation of relationships could dramatically shorten that ramp-up time. ⚙️ **Implementation:** Developed a tool that parses SQL DDL or connects to live database instances to extract keys, indexes, and relationships. These are mapped into an interactive node-graph UI built with ReactFlow and D3.js, allowing engineers to pan, zoom, and trace dependency chains. The parser handles PostgreSQL, MySQL, and SQLite dialects with a unified internal model. ✅ **Outcome:** Provided a high-performance visual interface that lets engineers trace foreign key dependencies and explore table linkages in seconds, reducing onboarding time for new integration engineers from weeks to days. The tool is used daily by the integration team for schema discovery and impact analysis. 🔧 **Stack:** React, ReactFlow, D3.js, SQLite, SQL Parser 📝 **Lessons:** Performance degrades significantly with schemas exceeding 200 tables — naive force-directed layouts became unusable without aggressive caching and viewport culling. A hybrid caching strategy (client-side LRU combined with Web Worker offload for layout computation) was critical for maintaining interactivity at scale. 🤖 For deeper insights, enable the AI guide in the conversation panel."
+          - generic [ref=e250]:
+            - button "who is Shahriar" [ref=e251]
+            - button "show me projects" [ref=e252]
+            - button "what are his skills" [ref=e253]
+            - button "compare skills to experience" [ref=e254]
+            - button "navigation steps" [ref=e255]
+            - button "his working style" [ref=e256]
+            - button "why hire him" [ref=e257]
+            - button "show experience" [ref=e258]
+        - generic [ref=e306]:
+          - generic [ref=e308]: You
+          - generic [ref=e310]: what are your skills
+        - generic [ref=e311]:
+          - generic [ref=e312]:
+            - generic [ref=e313]:
+              - generic [ref=e314]: Guide
+              - button "Read aloud" [ref=e315]:
+                - img [ref=e316]
+            - generic [ref=e321]: "📋 Quick answer: 🔧 **Skill groups:** • **Technical Operations:** Tier-3 Support, Incident Management, Root Cause Analysis, SLA Management • **Systems Integration:** REST APIs, Software Deployment, Schema Validation, Docker Environments • **Data & Troubleshooting:** SQL (PostgreSQL, MySQL), Log Analysis, API Tracing, Performance Optimization • **Solutions Engineering:** Technical Discovery, Solution Scoping, Technical Consulting • **Infrastructure & Security:** Network Troubleshooting, Cloud Services, Linux Admin, LAN/WAN • **AI Automation:** Agentic Workflows, Local LLM Integration, Prompt Engineering 🗣️ **Languages:** English (Native or Bilingual) · Bangla (Native or Bilingual) · German (Professional Working) 🤖 For deeper insights, enable the AI guide in the conversation panel."
+          - generic [ref=e322]:
+            - button "who is Shahriar" [ref=e323]
+            - button "show me projects" [ref=e324]
+            - button "what are his skills" [ref=e325]
+            - button "compare skills to experience" [ref=e326]
+            - button "navigation steps" [ref=e327]
+            - button "his working style" [ref=e328]
+            - button "why hire him" [ref=e329]
+            - button "show experience" [ref=e330]
+      - generic [ref=e177]:
+        - textbox "Ask about Shahriar" [active] [ref=e178]:
+          - /placeholder: Ask about Shahriar...
+        - img [ref=e179]
+        - generic [ref=e181]:
+          - button "Voice input" [ref=e182]:
+            - img [ref=e183]
+          - button "Send message" [disabled] [ref=e186]:
+            - img [ref=e187]
+  - button "Open Next.js Dev Tools" [ref=e288] [cursor=pointer]:
+    - generic [ref=e332]:
+      - text: Compiling
+      - generic [ref=e333]:
+        - generic [ref=e334]: .
+        - generic [ref=e335]: .
+        - generic [ref=e336]: .
+  - alert [ref=e138]: Shahriar Haque Abir | Technical Operations Engineer | Solutions Engineer | QA Automation Engineer
