@@ -94,7 +94,7 @@ function CompetencyCard({ number, title, text, accent, index }: { number: string
           </div>
           <div className="h-px flex-1 bg-(--border)" style={{ background: `linear-gradient(to right, ${accent}60, transparent)` }} />
         </div>
-        <h3 className="font-syne text-base font-black leading-tight tracking-tight text-(--text) mb-3 group-hover:text-(--text) transition-colors">{title}</h3>
+        <h3 className="font-syne text-lg font-black leading-tight tracking-tight text-(--text) mb-3 group-hover:text-(--text) transition-colors">{title}</h3>
         <p className="text-sm leading-relaxed text-(--text-muted)">{text}</p>
       </div>
     </motion.article>
@@ -127,7 +127,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
       {/* Primary competencies */}
       <section className="mb-4">
         <div className="mb-5 flex items-center gap-4">
-          <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--accent)">Primary Competencies</div>
+          <div className="font-mono text-[9px] uppercase tracking-[0.28em] text-(--accent)">Primary Competencies</div>
           <div className="h-px flex-1 bg-(--border)" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-(--border) border border-(--border)">
@@ -140,7 +140,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
       {/* Expanding competencies */}
       <section className="mb-16">
         <div className="mb-5 flex items-center gap-4">
-          <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--text-muted)">Expanding</div>
+          <div className="font-mono text-[9px] uppercase tracking-[0.28em] text-(--text-muted)">Expanding</div>
           <div className="h-px flex-1 bg-(--border)" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-(--border) border border-(--border)">
@@ -154,8 +154,8 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
       <section className="mb-16">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8">
           <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--accent)">Tools I Use</div>
-            <h3 className="mt-3 font-syne text-xl font-black tracking-tight text-(--text)">Grouped by working context</h3>
+            <div className="font-mono text-[9px] uppercase tracking-[0.28em] text-(--accent)">Tools I Use</div>
+            <h3 className="mt-3 font-syne text-lg font-black tracking-tight text-(--text)">Grouped by working context</h3>
           </div>
           <p className="max-w-md text-sm leading-relaxed text-(--text-muted)">
             Not an exhaustive inventory — the practical stack behind consulting, support, automation, systems, and implementation work.
@@ -202,7 +202,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
             {CONFIG.education.map((edu) => (
               <div key={edu.degree}>
                 <div className="font-syne text-base font-black leading-tight text-(--text) break-words">{edu.degree}</div>
-                <div className="mt-1.5 text-[11px] leading-relaxed text-(--text-muted) break-words">{edu.school}</div>
+                <div className="mt-1.5 text-xs leading-relaxed text-(--text-muted) break-words">{edu.school}</div>
                 <div className="mt-1.5 font-mono text-[9px] uppercase tracking-widest text-(--accent)">{edu.period}</div>
               </div>
             ))}
@@ -216,9 +216,9 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
           </div>
           <div className="flex flex-wrap gap-1.5">
             {CONFIG.languages.map((item) => (
-              <span key={item} className="px-2.5 py-1.5 bg-(--surface) border border-(--border) text-[11px] font-mono font-bold uppercase tracking-widest text-(--text-muted) break-words">
-                {item}
-              </span>
+              <span key={item} className="px-2.5 py-1.5 bg-(--surface) border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted) break-words">
+                              {item}
+                            </span>
             ))}
           </div>
         </article>
@@ -236,12 +236,12 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-2.5 py-1.5 bg-(--surface) border border-(--border) text-[11px] font-mono font-bold uppercase tracking-widest text-(--text-muted) hover:bg-(--accent)/10 hover:border-(--accent) transition-colors break-words max-w-full"
+                  className="px-2.5 py-1.5 bg-(--surface) border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted) hover:bg-(--accent)/10 hover:border-(--accent) transition-colors break-words max-w-full"
                 >
                   {name}
                 </a>
               ) : (
-                <span key={name} className="px-2.5 py-1.5 bg-(--surface) border border-(--border) text-[11px] font-mono font-bold uppercase tracking-widest text-(--text-muted) break-words max-w-full">
+                <span key={name} className="px-2.5 py-1.5 bg-(--surface) border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted) break-words max-w-full">
                   {name}
                 </span>
               ),

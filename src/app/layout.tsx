@@ -78,6 +78,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${syne.variable} ${jetbrains.variable}`}>
       <body className="antialiased min-h-screen bg-(--bg) text-(--text)">
+        <a href="#main-content" className="fixed -top-40 left-2 z-50 px-4 py-2 bg-(--accent) text-(--bg) text-sm font-mono transition-all focus:top-2 focus:outline-none">
+          Skip to content
+        </a>
         {/* Explicit high-priority preload for the LCP hero image
             Next.js generates a default preload via priority prop on <Image>,
             but it may lack fetchpriority="high". This ensures the browser

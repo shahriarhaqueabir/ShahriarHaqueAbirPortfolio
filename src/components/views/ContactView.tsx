@@ -31,7 +31,7 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
       exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }}
       className="pt-10 pb-24 max-w-5xl"
     >
-      <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">- Contact</div>
+      <div className="font-mono text-[9px] text-(--accent) uppercase tracking-[0.2em] mb-4">- Contact</div>
       <h1 className="text-2xl md:text-4xl font-syne font-black mb-8 text-(--text) leading-[0.9] tracking-tight">
         Let&apos;s <span className="font-sans text-(--text-muted)">talk.</span>
       </h1>
@@ -40,14 +40,14 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
         <section className="bg-(--surface) p-8 md:p-10 flex flex-col justify-between min-h-0 md:min-h-[360px] relative overflow-hidden">
           <div>
             <div className="font-mono text-[9px] text-(--accent) uppercase tracking-widest mb-4">Conversation Fit</div>
-            <h3 className="text-xl font-syne font-black text-(--text) leading-none mb-4 tracking-tight">{CONFIG.name}</h3>
+            <h3 className="text-lg font-syne font-black text-(--text) leading-none mb-4 tracking-tight">{CONFIG.name}</h3>
             <p className="text-sm text-(--text-muted) leading-relaxed max-w-md">
               Best reached for technical operations, systems integration, SaaS support engineering, and AI automation conversations where product, customer, and engineering context need to come
               together.
             </p>
             <div className="mt-6 flex flex-wrap gap-1.5">
               {["Technical Operations", "Systems Integration", "SaaS Support"].map((tagline) => (
-                <span key={tagline} className="border border-(--accent)/30 text-(--accent) bg-(--accent)/5 px-3 py-2 rounded-sm text-[10px] font-bold uppercase tracking-widest">
+                <span key={tagline} className="border border-(--accent)/30 text-(--accent) bg-(--accent)/5 px-3 py-2 rounded-sm text-[9px] font-bold uppercase tracking-widest">
                   {tagline}
                 </span>
               ))}
@@ -103,7 +103,7 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
             })}
           </div>
 
-          <div className="mt-6 font-mono text-[9px] text-(--text-muted) uppercase tracking-widest flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div className="font-mono text-[9px] text-(--text-muted) uppercase tracking-widest flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <span>Direct contact preferred</span>
             <span>Available for relevant technical, consulting, and support-focused conversations</span>
           </div>

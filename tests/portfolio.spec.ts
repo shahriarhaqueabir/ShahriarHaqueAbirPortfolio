@@ -72,10 +72,14 @@ test.describe("Shahriar Haque Abir portfolio E2E", () => {
   });
 
   test("routes free-form questions to the fallback engine instead of hijacking as navigation", async ({ page }) => {
-    // Click the footer area to open the AI panel (input is inside the panel, hidden on load)
-    await page.getByText(/Enable AI Guide/i).click();
+    // Use a more specific locator: find the expand button inside the footer
+    const expandButton = page.locator('button').filter({ hasText: /Enable AI Guide/ }).last();
+    await expandButton.click();
+    // Wait for the panel slide-up animation to complete (spring: damping 28, stiffness 260)
+    // Also covers lazy-loading of the AiGuidePanel module
+    await page.waitForTimeout(1500);
     // The panel is now open — fill the input that appears
-    await page.getByPlaceholder(/Ask about Shahriar/i).fill("show me his contact details");
+    await page.getByPlaceholder(/Ask about Shahriar/i).first().fill("show me his contact details");
     await page.keyboard.press("Enter");
     // The fallback engine responds with contact info (previously hijacked by command router)
     await expect(page.getByText(/shahriarhaque90@gmail\.com/i).first()).toBeVisible({ timeout: 15000 });

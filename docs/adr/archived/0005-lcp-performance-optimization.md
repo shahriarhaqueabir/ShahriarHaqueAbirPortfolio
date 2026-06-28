@@ -1,7 +1,7 @@
 # ADR-0005: LCP Performance Optimization via Dynamic Import and Deferred Hook Loading
 
 **Date**: 2026-06-28
-**Status**: accepted
+**Status**: superseded by ADR-0006
 **Deciders**: Shahriar Haque Abir, Zed Agent
 
 ## Context
@@ -18,7 +18,7 @@ Key constraints:
 
 We applied three changes to reduce LCP render delay:
 
-1. **Dynamic import of `PortfolioShell`**: Created `PortfolioShellLoader` — a thin client wrapper using `next/dynamic` with `ssr: false` — and updated `page.tsx` to render the loader instead of importing `PortfolioShell` directly. This code-splits the entire client app bundle out of the critical hydration path. A minimal CSS-only spinner is shown during loading.
+1. **Dynamic import of `PortfolioShell` (initial approach, later reverted)**: Created `PortfolioShellLoader` — a thin client wrapper using `next/dynamic` with `ssr: false` — and updated `page.tsx` to render the loader instead of importing `PortfolioShell` directly. This was later reverted (see ADR-0006) because `ssr: false` caused a blank page until JS loaded — the shell was hidden behind a React Suspense boundary with `hidden` attribute.
 
 2. **Moved voice hooks into lazy-loaded `AiGuidePanel`**: `useVoiceInput()` and `useVoiceOutput()` were previously called eagerly in `PortfolioShell` (participating in hydration) even though their results only flowed into `AiGuidePanel`, which was already lazy-loaded via `React.lazy()` + `Suspense`. Relocated the hook calls into `AiGuidePanel` and removed them from `PortfolioShell`'s props and imports.
 
@@ -44,15 +44,13 @@ We applied three changes to reduce LCP render delay:
 ## Consequences
 
 ### Positive
-- Removes the entire client-side portfolio shell JS bundle from the critical rendering path
 - Voice hooks (SpeechRecognition init, TTS setup) only load when the AI guide panel is about to mount
 - Explicit `fetchPriority="high"` ensures profile.jpg is prioritized even on congested networks
 - No breaking changes — all routes, APIs, and existing behavior preserved
 
 ### Negative
-- Brief spinner flash on first paint before the client chunk loads (mitigated by minimal CSS-only animation)
-- `ssr: false` on the shell means no server-rendered HTML for the icon rail and hero content — but this content renders immediately client-side and doesn't affect SEO (Next.js App Router still statically generates the shell)
+- The `ssr: false` dynamic import approach was reverted (see ADR-0006) because it created an invisible initial render — the shell content was hidden behind a Suspense boundary and only revealed after JS hydrated
+- The dynamic import was replaced with a direct import of `PortfolioShell` in `page.tsx`, relying on Next.js static generation to produce the initial HTML
 
 ### Risks
-- **Edge case**: If the dynamic import chunk fails to load (network error), the page shows a spinner indefinitely. Mitigation: Next.js dynamic() triggers error boundaries by default; the existing `error.tsx` provides a branded fallback.
-- **Build regression**: The `--webpack` flag must be used; Turbopack may handle the dynamic import differently. Verified: build passes with `--webpack`, all 13 routes generated.
+- None remaining — the final approach (direct import) is the standard Next.js pattern for `"use client"` components rendering static content

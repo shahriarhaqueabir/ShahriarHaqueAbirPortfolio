@@ -36,7 +36,7 @@ export default function MobileNav({ activeView, onNavigate }: MobileNavProps) {
             style={isActive ? { color: "var(--accent)" } : undefined}
           >
             <item.icon className="h-4 w-4" />
-            <span className="text-[7px] font-mono uppercase tracking-wider leading-none">{item.label}</span>
+            <span className="text-[9px] font-mono uppercase tracking-wider leading-none">{item.label}</span>
           </button>
         );
       })}

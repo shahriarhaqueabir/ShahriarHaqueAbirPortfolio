@@ -66,7 +66,7 @@ export default function AiGuideFooter({ messages, isReady, localAiEnabled, local
           >
             <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" />
             <div>
-              <div className="text-[10px] font-bold text-green-800 uppercase tracking-wider">AI guide ready</div>
+              <div className="text-xs font-bold text-green-800 uppercase tracking-wider">AI guide ready</div>
               <div className="text-[9px] text-green-700">Ready to answer portfolio questions.</div>
             </div>
           </motion.div>
@@ -93,15 +93,15 @@ export default function AiGuideFooter({ messages, isReady, localAiEnabled, local
         {/* Status text / last message — clickable to expand panel */}
         <button type="button" onClick={onFocus} className="w-full text-left cursor-pointer">
           {localAiPaused ? (
-            <p className="text-[11px] font-mono text-(--text-muted) italic">Guide is paused</p>
+            <p className="text-xs font-mono text-(--text-muted) italic">Guide is paused</p>
           ) : !localAiEnabled ? (
-            <p className="text-[11px] font-mono text-(--text) truncate max-w-full">{lastMessage?.text ?? "Ask about projects, experience, or skills — the fallback guide will respond."}</p>
+            <p className="text-xs font-mono text-(--text) truncate max-w-full">{lastMessage?.text ?? "Ask about projects, experience, or skills — the fallback guide will respond."}</p>
           ) : !isReady ? (
-            <p className="text-[11px] font-mono text-(--text-muted)">Loading guide... {Math.round(progress)}%</p>
+            <p className="text-xs font-mono text-(--text-muted)">Loading guide... {Math.round(progress)}%</p>
           ) : lastMessage ? (
-            <p className="text-[11px] font-mono text-(--text) truncate max-w-full">{lastMessage.text}</p>
+            <p className="text-xs font-mono text-(--text) truncate max-w-full">{lastMessage.text}</p>
           ) : (
-            <p className="text-[11px] font-mono text-(--text-muted)">Welcome. I can walk you through projects, compare experience, or build a recruiter path.</p>
+            <p className="text-xs font-mono text-(--text-muted)">Welcome. I can walk you through projects, compare experience, or build a recruiter path.</p>
           )}
 
           {/* Rotating tip — shown when there are no messages yet */}
@@ -116,7 +116,7 @@ export default function AiGuideFooter({ messages, isReady, localAiEnabled, local
                 key={s.label}
                 type="button"
                 onClick={() => onSend(s.input)}
-                className="shrink-0 px-3 py-2 rounded-sm border border-(--border) text-[11px] md:text-[9px] font-mono uppercase tracking-wider text-(--text-muted) hover:text-(--accent) hover:border-(--accent) transition-colors bg-(--bg)/50"
+                className="shrink-0 px-3 py-2 rounded-sm border border-(--border) text-[9px] font-mono uppercase tracking-wider text-(--text-muted) hover:text-(--accent) hover:border-(--accent) transition-colors bg-(--bg)/50"
               >
                 {s.label}
               </button>
@@ -132,8 +132,8 @@ export default function AiGuideFooter({ messages, isReady, localAiEnabled, local
             className="w-full flex items-center gap-2 px-4 py-3 rounded-sm border-2 border-(--accent)/60 bg-(--accent)/[0.12] hover:bg-(--accent)/[0.25] transition-all cursor-pointer text-left group animate-pulse shadow-[0_0_12px_rgba(var(--accent-rgb),0.15)]"
           >
             <ChevronUp className="w-4 h-4 text-(--accent) shrink-0 group-hover:translate-y-[-2px] transition-transform" />
-            <span className="text-[10px] font-mono uppercase tracking-widest text-(--accent) font-extrabold flex-1">Enable AI Guide · Click to expand panel</span>
-            <span className="text-[7px] font-mono uppercase tracking-wider text-(--accent)/60 border border-(--accent)/30 px-2 py-0.5 rounded-sm shrink-0">Recommended</span>
+            <span className="text-xs font-mono uppercase tracking-widest text-(--accent) font-extrabold flex-1">Enable AI Guide · Click to expand panel</span>
+            <span className="text-[9px] font-mono uppercase tracking-wider text-(--accent)/60 border border-(--accent)/30 px-2 py-0.5 rounded-sm shrink-0">Recommended</span>
           </button>
         )}
       </div>

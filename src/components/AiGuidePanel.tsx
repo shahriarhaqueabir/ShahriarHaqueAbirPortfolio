@@ -138,20 +138,20 @@ export default function AiGuidePanel({
                     </button>
                   ))}
                 </div>
-                <span className="text-[12px] font-mono uppercase tracking-wider text-(--text-muted) hidden md:inline">{localAiFallback ? "Fallback" : "AI"} Guide</span>
+                <span className="text-xs font-mono uppercase tracking-wider text-(--text-muted) hidden md:inline">{localAiFallback ? "Fallback" : "AI"} Guide</span>
               </div>
               <div className="flex items-center gap-2">
                 {!localAiEnabled && (
                   <motion.button
                     type="button"
                     onClick={enableLocalAi}
-                    className="flex items-center gap-1.5 px-2.5 py-1 border-2 border-(--accent)/60 bg-(--accent)/[0.12] hover:bg-(--accent)/[0.25] rounded-sm text-[12px] font-mono uppercase tracking-wider text-(--accent) transition-all cursor-pointer animate-pulse shadow-[0_0_12px_rgba(var(--accent-rgb),0.15)]"
+                    className="flex items-center gap-1.5 px-2.5 py-1 border-2 border-(--accent)/60 bg-(--accent)/[0.12] hover:bg-(--accent)/[0.25] rounded-sm text-xs font-mono uppercase tracking-wider text-(--accent) transition-all cursor-pointer animate-pulse shadow-[0_0_12px_rgba(var(--accent-rgb),0.15)]"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
                     <Power className="w-3 h-3" />
                     Enable AI
-                    <span className="text-[7px] font-mono uppercase tracking-wider text-(--accent)/60 border border-(--accent)/30 px-1.5 py-0.5 rounded-sm">Recommended</span>
+                    <span className="text-[9px] font-mono uppercase tracking-wider text-(--accent)/60 border border-(--accent)/30 px-1.5 py-0.5 rounded-sm">Recommended</span>
                   </motion.button>
                 )}
                 <button type="button" onClick={onClose} className="p-1.5 rounded-sm text-(--text-muted) hover:text-(--text) hover:bg-(--surface)" aria-label="Close guide">
@@ -191,7 +191,7 @@ export default function AiGuidePanel({
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-0.5">
                           <span
-                            className={`text-[12px] font-mono uppercase tracking-wider ${
+                            className={`text-xs font-mono uppercase tracking-wider ${
                               msg.sender === "ai" ? "text-(--accent)" : msg.sender === "fallback" ? "text-(--accent2)" : "text-(--text-muted)"
                             }`}
                           >
@@ -228,7 +228,7 @@ export default function AiGuidePanel({
                                 key={suggestion}
                                 type="button"
                                 onClick={() => handleSuggestionClick(suggestion)}
-                                className="px-2 py-0.5 rounded-xs border border-(--accent2)/30 text-[12px] font-mono text-(--accent2)/70 hover:text-(--accent2) hover:border-(--accent2)/60 transition-colors leading-tight cursor-pointer"
+                                className="px-2 py-0.5 rounded-xs border border-(--accent2)/30 text-xs font-mono text-(--accent2)/70 hover:text-(--accent2) hover:border-(--accent2)/60 transition-colors leading-tight cursor-pointer"
                               >
                                 {suggestion}
                               </button>
