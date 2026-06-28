@@ -4,6 +4,9 @@ import PortfolioShell from "@/components/layout/PortfolioShell";
 export const metadata: Metadata = {
   title: "About",
   description: "Shahriar Haque Abir's professional journey, philosophy, and background in systems engineering and technical consulting.",
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 export default function AboutPage() {

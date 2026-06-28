@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { ArrowRight, BrainCircuit, ChartSpline, Clock, Network, ServerCog, Sparkles, User, Workflow } from "lucide-react";
+import { ArrowRight, BrainCircuit, ChartSpline, Network, ServerCog, Sparkles, User, Workflow } from "lucide-react";
 import TechIcon from "@/components/TechIcon";
 import GuidedNext from "@/components/GuidedNext";
 import { CONFIG } from "@/lib/data";
@@ -10,14 +10,13 @@ import type { ViewKey } from "@/lib/types";
 
 type Project = (typeof CONFIG.projects)[number];
 
-// Metadata mapping for the "Visual Design" aspects inspired by the screenshot
-const projectMeta: Record<string, { duration: string; client: string; category: string }> = {
-  "Interactive Database Visualizer": { duration: "3 Months", client: "Internal Tooling", category: "Data Systems" },
-  "Customer Onboarding & Validation Portal": { duration: "6 Months", client: "Enterprise Clients", category: "SaaS Operations" },
-  "Log Analysis & Automated Ticketing": { duration: "Ongoing", client: "Tier-3 Support Team", category: "Automation" },
-  "Network Discovery & Topology Mapping": { duration: "1 Year", client: "Earth Telecommunication", category: "Networking" },
-  "CI-Friendly API Test Automation": { duration: "4 Months", client: "QA / Release Ops", category: "Quality Engineering" },
-  "Internal AI Gateway Proxy": { duration: "5 Months", client: "Corporate Governance", category: "AI Security" },
+// Engineering context per project — replaces abstract metadata with concrete details
+const projectContext: Record<string, { domain: string; impact: string }> = {
+  "Interactive Database Visualizer": { domain: "Internal Tooling · Schema Discovery", impact: "Cut integration engineer onboarding from weeks to days" },
+  "Customer Onboarding & Validation Portal": { domain: "Enterprise SaaS · Data Migration", impact: "Reduced average onboarding time by over 60%" },
+  "Log Analysis & Automated Ticketing": { domain: "Production Observability · Incident Response", impact: "Handles over 200 log streams daily with per-pattern adaptive thresholds" },
+  "Network Discovery & Topology Mapping": { domain: "Network Operations · Incident Triage", impact: "Became the de facto reference for NOC incident triage" },
+  "CI-Friendly API Test Automation": { domain: "QA Engineering · CI/CD Pipeline", impact: "Reduced pre-release defect escapes by over 70%" },
 };
 
 function getProjectVisual(project: Project) {
@@ -26,17 +25,16 @@ function getProjectVisual(project: Project) {
   if (project.name.includes("Onboarding")) return { Icon: BrainCircuit, color: "var(--accent2)", symbol: "PORTAL" };
   if (project.name.includes("Log Analysis")) return { Icon: ServerCog, color: "var(--accent)", symbol: "LOG" };
   if (project.name.includes("API Test")) return { Icon: ChartSpline, color: "var(--accent3)", symbol: "TEST" };
-  if (project.name.includes("AI Gateway")) return { Icon: Sparkles, color: "var(--accent)", symbol: "SEC" };
+
   return { Icon: Sparkles, color: "var(--accent)", symbol: "SYS" };
 }
 
 function getArchitectureNodes(project: Project): string[] {
-  if (project.name.includes("Database")) return ["SQL Parser", "Relationship Map", "Interactive UI", "Visual Query"];
-  if (project.name.includes("Network Discovery")) return ["IP Range", "nmap Scanner", "JSON Topology", "Interactive Map"];
-  if (project.name.includes("Onboarding")) return ["Data Upload", "Schema Mapper", "Sandbox Runner", "Live Validation"];
-  if (project.name.includes("Log Analysis")) return ["Log Stream", "Regex Filter", "Threshold Sync", "Jira Automation"];
-  if (project.name.includes("API Test")) return ["Collections", "Newman CLI", "CI/CD Pipeline", "Health Report"];
-  if (project.name.includes("AI Gateway")) return ["Request Intercept", "NER Redaction", "Model Relay", "Token Unmask"];
+  if (project.name.includes("Database")) return ["DDL/Connection Parse", "ER Schema Extraction", "ReactFlow Graph Build", "D3 Force Layout Render"];
+  if (project.name.includes("Network Discovery")) return ["Subnet Sweep Config", "ICMP+SNMP Scan", "JSON Relationship Build", "Interactive Topology Render"];
+  if (project.name.includes("Onboarding")) return ["File Upload Handler", "Drag-and-Drop Mapper", "Sandbox Validation Engine", "Error Report Generator"];
+  if (project.name.includes("Log Analysis")) return ["Log Stream Ingestion", "Regex Incident Detection", "Threshold Evaluation", "Jira Ticket Dispatch"];
+  if (project.name.includes("API Test")) return ["Postman Collection", "Newman CLI Runner", "GitHub Actions Trigger", "Pass/Fail Report"];
   return ["Input", "Process", "Logic", "Outcome"];
 }
 
@@ -61,7 +59,7 @@ function DeviceMockup({ project, visual }: { project: Project; visual: { Icon: t
           <div className="w-2 h-2 rounded-full bg-[#ff5f56]" />
           <div className="w-2 h-2 rounded-full bg-[#ffbd2e]" />
           <div className="w-2 h-2 rounded-full bg-[#27c93f]" />
-          <div className="ml-4 font-mono text-[8px] text-white/30 truncate">{project.name.toLowerCase()}.app</div>
+          <div className="ml-4 font-mono text-[9px] text-white/30 truncate">{project.name.toLowerCase()}.app</div>
         </div>
 
         {/* Screen Content */}
@@ -81,7 +79,7 @@ function DeviceMockup({ project, visual }: { project: Project; visual: { Icon: t
                 className="flex items-center gap-3"
               >
                 <div className="w-8 h-px bg-white/20" />
-                <div className="px-3 py-1.5 border border-white/10 bg-white/5 font-mono text-[10px] uppercase tracking-widest text-white/80" style={{ borderLeft: `2px solid ${visual.color}` }}>
+                <div className="px-3 py-1.5 border border-white/10 bg-white/5 font-mono text-[9px] uppercase tracking-widest text-white/80" style={{ borderLeft: `2px solid ${visual.color}` }}>
                   {node}
                 </div>
               </motion.div>
@@ -108,7 +106,8 @@ function DeviceMockup({ project, visual }: { project: Project; visual: { Icon: t
 function FeaturedProject({ project, index }: { project: Project; index: number }) {
   const featureReduceMotion = useReducedMotion();
   const visual = getProjectVisual(project);
-  const meta = projectMeta[project.name] || { duration: "3 Months", client: "Confidential", category: "Technical Project" };
+  const ctx = projectContext[project.name] || { domain: "Technical Project", impact: "" };
+
   const isEven = index % 2 === 0;
 
   return (
@@ -129,46 +128,35 @@ function FeaturedProject({ project, index }: { project: Project; index: number }
         <div className="space-y-2">
           <div className="flex items-center gap-3">
             <div className="w-6 h-px bg-(--accent)" />
-            <span className="font-mono text-xs uppercase tracking-[0.3em] text-(--accent)">{meta.category}</span>
+            <span className="font-mono text-xs uppercase tracking-[0.3em] text-(--accent)">{ctx.domain}</span>
           </div>
-          <h3 className="font-syne text-xl lg:text-2xl font-black text-(--text) leading-tight tracking-tight">{project.name}</h3>
+          <h3 className="font-syne text-lg lg:text-2xl font-black text-(--text) leading-tight tracking-tight">{project.name}</h3>
         </div>
 
-        <p className="text-(--text-muted) text-sm lg:text-base leading-relaxed max-w-xl">{project.desc}</p>
+        <p className="text-(--text-muted) text-sm leading-relaxed max-w-xl">{project.desc}</p>
 
         {/* Problem / Solution / Result fields */}
         <div className="space-y-2">
           <div className="border-l-2 border-(--border) pl-3">
-            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-(--accent) mb-0.5">Problem</div>
+            <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-(--accent) mb-0.5">Context</div>
             <p className="text-xs text-(--text-muted) leading-relaxed break-words">{project.context}</p>
           </div>
           <div className="border-l-2 border-(--border) pl-3">
-            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-(--accent) mb-0.5">Solution</div>
+            <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-(--accent) mb-0.5">Implementation</div>
             <p className="text-xs text-(--text-muted) leading-relaxed break-words">{project.implementation}</p>
           </div>
           <div className="border-l-2 border-(--border) pl-3">
-            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-(--accent) mb-0.5">Result</div>
+            <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-(--accent) mb-0.5">Outcome</div>
             <p className="text-xs text-(--text-muted) leading-relaxed break-words">{project.outcome}</p>
-          </div>
-          <div className="border-l-2 border-(--border) pl-3">
-            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-(--accent) mb-0.5">Lessons Learned</div>
-            <p className="text-xs text-(--text-muted) leading-relaxed break-words">{project.lessons}</p>
           </div>
         </div>
 
         <div className="flex flex-wrap gap-4 py-1">
           <div className="flex items-center gap-2">
-            <Clock className="w-3.5 h-3.5 text-(--accent)" />
-            <div>
-              <div className="text-[9px] uppercase font-mono text-(--text-muted) tracking-widest">Duration</div>
-              <div className="text-[11px] font-bold text-(--text)">{meta.duration}</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
             <User className="w-3.5 h-3.5 text-(--accent)" />
             <div>
-              <div className="text-[9px] uppercase font-mono text-(--text-muted) tracking-widest">Client / Partner</div>
-              <div className="text-[11px] font-bold text-(--text)">{meta.client}</div>
+              <div className="text-[9px] uppercase font-mono text-(--text-muted) tracking-widest">Impact</div>
+                            <div className="text-xs font-bold text-(--text)">{ctx.impact}</div>
             </div>
           </div>
         </div>
@@ -203,24 +191,24 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
     >
       <div className="flex items-center justify-between mb-10">
         <div>
-          <h2 className="text-3xl lg:text-4xl font-syne font-black text-(--text) tracking-tighter uppercase mb-3">
+          <h1 className="text-2xl lg:text-4xl font-syne font-black text-(--text) tracking-tighter uppercase mb-3">
             Featured <span className="text-(--accent)">Projects</span>
-          </h2>
-          <p className="max-w-2xl text-xs lg:text-sm leading-relaxed text-(--text-muted) font-mono uppercase tracking-tight">
-            Recent work demonstrating technical operations engineering, systems integration, API automation, and scalable dashboard-driven solutions.
+          </h1>
+          <p className="max-w-2xl text-xs leading-relaxed text-(--text-muted) font-mono uppercase tracking-tight">
+            Network discovery tooling, database visualization, automated validation portals, log analysis pipelines, and CI-integrated API test automation — built across Earth Telecommunication, tripunkt GmbH, and internal tooling.
           </p>
         </div>
         <div className="flex flex-col items-end gap-4">
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="flex items-center gap-2 group text-[10px] font-bold uppercase tracking-widest text-(--text-muted) hover:text-(--accent) transition-colors"
+            className="flex items-center gap-2 group text-xs font-bold uppercase tracking-widest text-(--text-muted) hover:text-(--accent) transition-colors"
           >
             <span>Back to Top</span>
             <div className="w-8 h-px bg-(--accent)/30 group-hover:bg-(--accent) group-hover:w-12 transition-[width,background-color]" />
           </button>
           <button
             onClick={() => setView("experience")}
-            className="hidden md:flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest text-(--text-muted) hover:text-(--accent) transition-colors"
+            className="hidden md:flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-(--text-muted) hover:text-(--accent) transition-colors"
           >
             View Career Timeline
             <ArrowRight className="h-4 w-4" />
@@ -237,7 +225,7 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
       <div className="flex justify-center py-12 border-t border-(--border)">
         <button
           onClick={() => setView("experience")}
-          className="flex items-center gap-2 px-6 py-3 border border-(--border) font-mono text-[10px] uppercase tracking-widest text-(--text) hover:bg-(--accent) hover:text-(--bg) hover:border-(--accent) transition-[background-color,border-color,color]"
+          className="flex items-center gap-2 px-6 py-3 border border-(--border) font-mono text-xs uppercase tracking-widest text-(--text) hover:bg-(--accent) hover:text-(--bg) hover:border-(--accent) transition-[background-color,border-color,color]"
         >
           Explore Professional Record
           <ArrowRight className="w-4 h-4" />

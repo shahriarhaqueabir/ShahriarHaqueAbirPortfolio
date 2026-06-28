@@ -1,4 +1,4 @@
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://shahriarhaqueabirportfolio.vercel.app";
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://tripunkt.de";
 
 export const siteTitle = "Shahriar Haque Abir | Technical Operations Engineer | Solutions Engineer | QA Automation Engineer";
 

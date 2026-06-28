@@ -5,6 +5,9 @@ import { siteTitle, siteDescription } from "@/lib/seo";
 export const metadata: Metadata = {
   title: siteTitle,
   description: siteDescription,
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function Home() {

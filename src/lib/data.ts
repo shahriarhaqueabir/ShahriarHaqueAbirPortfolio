@@ -19,9 +19,9 @@ export const CONFIG = {
   ],
   location: "Berlin, Germany",
   workAuth: "Niederlassungserlaubnis (Permanent resident)",
-  profile: `Technical Operations and Solutions Engineer with 10+ years of experience spanning enterprise software, SaaS platforms, systems integration, and mission-critical production environments. Worked across adjacent roles including Implementation Engineer, Customer Success Engineer, Technical Account Manager, Integration Consultant, Technical Consultant, and Support Engineer — bridging product, customer, and engineering contexts daily. Expertise in Tier-3 troubleshooting, incident management, root cause analysis (RCA), API integrations, SQL analysis, and operational reliability.
+  profile: `Technical Solution Consultant and Operations Engineer with 10+ years supporting IT infrastructure, SaaS platforms, systems integration, and production environments at tripunkt GmbH, Larsen & Toubro, and Earth Telecommunication. Covers Tier-3 troubleshooting, incident management, root cause triage, API integrations, database analysis, and QA operations management.
 
-Maintained SLA compliance across ~40 weekly Tier-3 incidents spanning NAM, APAC, and DACH enterprise deployments. Built a structured RCA framework that reduced MTTR by 30% and cut recurring defects — working directly with engineering, product, and infrastructure teams to trace root causes through API, database, and application layers.`,
+Led KYC, technical discovery, proof-of-concept, training, and integration initiatives for SME and enterprise B2B clients across North America, APAC, and DACH regions. Resolves production incidents daily, presents product demonstrations and technical ROI to C-level stakeholders, and breaks down technical processes into operational outcomes.`,
   profileImage: "/profile.jpg",
   contact: [
     { label: "Email", value: "shahriarhaque90@gmail.com", href: "mailto:shahriarhaque90@gmail.com" },
@@ -91,11 +91,11 @@ Maintained SLA compliance across ~40 weekly Tier-3 incidents spanning NAM, APAC,
       name: "Network Discovery & Topology Mapping",
       desc: "Python-based tool for live host scanning and interactive relationship visualization. Built at Earth Telecommunication (2013–2015).",
       context:
-        "Infrastructure environments at Earth Telecommunication lacked centralized documentation, complicating incident resolution and data-path tracing for over 500 SME and enterprise accounts. Network maps were scattered across spreadsheets and engineer memory, making every outage a fire drill. Standardized, automated topology discovery was the only viable path to reliable operations.",
+        "Earth Telecommunication lacked centralized network documentation. Maps were scattered across spreadsheets and engineer memory, complicating incident resolution for over 500 accounts.",
       implementation:
         "Built a Python tool to scan live hosts using ICMP and SNMP sweeps, then aggregated device relationship data into structured JSON. The output rendered as an interactive JS/HTML topology graph enabling real-time component isolation and data-path tracing during incidents. Scanner aggressiveness was tuned per subnet to balance completeness against network load.",
       outcome:
-        "Enabled real-time component isolation and data-path tracing during network incidents, significantly reducing Mean Time to Resolution (MTTR). Engineers could visually isolate faulty segments in seconds rather than tracing cables manually. The tool became the de facto reference for incident triage across the NOC team.",
+        "Enabled real-time component isolation and data-path tracing during network incidents, reducing Mean Time to Resolution (MTTR). Engineers visually isolated faulty segments in seconds rather than tracing cables manually. The tool became the de facto reference for incident triage across the NOC team.",
       lessons:
         "Scanner aggressiveness required careful manual tuning — too aggressive caused false positives and network chatter, too conservative left gaps in partial topologies. Handling partially discovered topologies gracefully, with clear visual indicators for missing segments, proved essential for operator trust.",
       stack: ["Python", "JavaScript", "HTML", "Topology Mapping", "Network Operations"],
@@ -104,11 +104,11 @@ Maintained SLA compliance across ~40 weekly Tier-3 incidents spanning NAM, APAC,
       name: "Interactive Database Visualizer",
       desc: "Local tool for visual mapping and tracing of complex database relationships.",
       context:
-        "Understanding complex relational schemas in enterprise databases often requires a more intuitive approach than reading DDL files or static ERD diagrams. New integration engineers spent weeks mapping foreign-key chains across dozens of tables before they could contribute meaningful work. A visual, interactive representation of relationships could dramatically shorten that ramp-up time.",
+        "New integration engineers spent weeks tracing foreign-key chains across dozens of tables before they could contribute. Static ERDs and DDL files weren't enough — the team needed an interactive way to explore and trace database relationships.",
       implementation:
         "Developed a tool that parses SQL DDL or connects to live database instances to extract keys, indexes, and relationships. These are mapped into an interactive node-graph UI built with ReactFlow and D3.js, allowing engineers to pan, zoom, and trace dependency chains. The parser handles PostgreSQL, MySQL, and SQLite dialects with a unified internal model.",
       outcome:
-        "Provided a high-performance visual interface that lets engineers trace foreign key dependencies and explore table linkages in seconds, reducing onboarding time for new integration engineers from weeks to days. The tool is used daily by the integration team for schema discovery and impact analysis.",
+        "Lets engineers trace foreign key dependencies and explore table linkages in seconds, reducing integration engineer onboarding from weeks to days. The tool is used daily by the integration team for schema discovery and impact analysis.",
       lessons:
         "Performance degrades significantly with schemas exceeding 200 tables — naive force-directed layouts became unusable without aggressive caching and viewport culling. A hybrid caching strategy (client-side LRU combined with Web Worker offload for layout computation) was critical for maintaining interactivity at scale.",
       stack: ["React", "ReactFlow", "D3.js", "SQLite", "SQL Parser"],
@@ -120,21 +120,21 @@ Maintained SLA compliance across ~40 weekly Tier-3 incidents spanning NAM, APAC,
       implementation:
         "Built a Next.js portal for JSON/CSV uploads with an interactive drag-and-drop field-mapping interface. The backend runs a sandboxed validation engine that checks transformations against schema constraints and returns detailed error reports. The portal supports multi-tenant configurations and versioned schema definitions.",
       outcome:
-        "Streamlined the onboarding process for technical integrations by providing immediate feedback on data compatibility. What previously took a week of email exchanges was reduced to a single self-service session, cutting average onboarding time by over 60% and reducing data-related production incidents from misconfigured mappings.",
+        "Cut average onboarding time by over 60% by replacing week-long email exchanges with a single self-service session. Reduced data-related production incidents caused by misconfigured mappings through immediate compatibility feedback.",
       lessons:
-        "Field mapping edge cases — nullable vs. required mismatches, nested object flattening, and character encoding differences — surfaced only when real customer data hit the sandbox. Early validation gaps meant we missed subtle type coercion failures that produced silent data corruption in production, teaching us to test with production-like datasets from day one.",
+        "Field mapping edge cases — nullable vs. required mismatches, nested object flattening, character encoding differences — only surfaced when real customer data hit the sandbox. Early validation gaps caused silent data corruption from subtle type coercion failures. Production-like test datasets from day one eliminated this class of defects.",
       stack: ["Next.js", "TypeScript", "Python", "Node.js", "Schema Validation"],
     },
     {
       name: "Log Analysis & Automated Ticketing",
       desc: "Automated error detection and Jira ticket creation workflow.",
-      context: "Critical error patterns were buried in thousands of log lines per minute. Subtle regressions went unnoticed for hours. An automated detection pipeline could bridge that gap.",
+      context: "Critical error patterns were buried in thousands of log lines per minute. Subtle regressions went unnoticed for hours. Engineering needed real-time detection, not post-mortem discovery.",
       implementation:
         "Developed a Python-based log parsing workflow that monitors error frequency against configurable thresholds using regex pattern matching. When a validated incident exceeds its threshold, the system automatically creates a Jira ticket with contextual stack traces and surrounding log context via the Jira REST API. The pipeline runs on a scheduled cron trigger and supports multi-service log sources.",
       outcome:
         "Reduced response times for recurring production errors from hours to minutes and improved incident tracking reliability with structured Jira artifacts. Alert fatigue was significantly reduced by tuning thresholds per error pattern rather than using one-size-fits-all rules. The system now handles over 200 log streams daily.",
       lessons:
-        "Threshold tuning was the hardest part — set too low and alert fatigue spiked, set too high and genuine issues slipped through. A per-pattern adaptive threshold with exponential backoff and a deduplication window was essential to keep the signal-to-noise ratio manageable. We also learned that not all error spikes warrant a ticket; a grace period for transient failures prevented unnecessary noise.",
+        "Threshold tuning was the hardest part — set too low and alert fatigue spiked, set too high and genuine issues slipped through. A per-pattern adaptive threshold with exponential backoff and a deduplication window kept the signal-to-noise ratio manageable. A grace period for transient failures prevented unnecessary noise.",
       stack: ["Python", "Regex", "Jira API", "Operational Support"],
     },
     {
@@ -145,8 +145,8 @@ Maintained SLA compliance across ~40 weekly Tier-3 incidents spanning NAM, APAC,
       implementation:
         "Developed a testing workflow using Postman collections with pre-request scripts, executed via Newman CLI. The suite is integrated into GitHub Actions to run on every PR and deploy.",
       outcome:
-        "Improved release reliability by catching integration regressions early. The suite reduced pre-release defect escapes by over 70% and gave the QA team confidence to approve deployments faster.",
-      lessons: "Flaky tests eroded team trust. We learned to isolate test data per run, pin service versions, and implement a 'quarantine' mechanism that moved flaky tests out of the critical path.",
+        "Reduced pre-release defect escapes by over 70% and gave the QA team confidence to approve deployments faster.",
+      lessons: "Flaky tests eroded team trust. Fixed by isolating test data per run, pinning service versions, and implementing a quarantine mechanism that moved flaky tests out of the critical path.",
       stack: ["Postman", "Newman", "GitHub Actions", "CI/CD", "API Testing"],
     },
   ],
@@ -178,22 +178,27 @@ Maintained SLA compliance across ~40 weekly Tier-3 incidents spanning NAM, APAC,
   ],
   languages: ["English (Native or Bilingual)", "Bangla (Native or Bilingual)", "German (Professional Working)", "Hindi (Limited Working)"],
   workingStyle:
-    "I like being the person who can enter a messy technical situation, find the signal, explain the tradeoffs, and help the next step become clear — then build the automation that makes it not happen again.",
-  philosophy: "make systems reliable, explainable, and usable.",
-  principles: [
-    "clarity over complexity",
-    "systems should reduce cognitive load",
-    "small improvements should compound reliability",
-    "support signals should shape product design",
-    "AI automation should preserve transparency",
+    "I break down technical processes, translate them into business outcomes, and present ROI to stakeholders. I connect customer support with engineering to optimize operations and deliver scalable solutions across NAM, APAC, and DACH regions.",
+  qualities: [
+    "Breaks down complex technical problems into business impact for C-level stakeholders",
+    "Connects customer-facing support data with product engineering decisions",
+    "Owns the full lifecycle from technical discovery through release validation",
+    "Operates across Tier-3 support, QA operations, and solutions consulting",
+    "Optimizes operational processes across NAM, APAC, and DACH regions",
   ],
-  qualities: ["Calm Under Pressure", "Problem Solver", "Technical Translator", "Solution Driven"],
+  principles: [
+    "Systems should be reliable, traceable, and accountable to business outcomes",
+    "Incidents are opportunities to improve — document root causes and fix the process",
+    "Automation should reduce alert fatigue, not add to it",
+    "Customer-facing teams and engineering should share context, not tickets",
+  ],
+  philosophy: "Make systems reliable, traceable, and accountable to business outcomes.",
   certifications: [
     { name: "Networking Foundations: Networking Basics", href: "https://www.linkedin.com/learning/certificates/networking-foundations-networking-basics" },
-    { name: "cisco scaling networks", href: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/ccna.html" },
+    { name: "CCNA: Scaling Networks (Cisco Networking Academy)", href: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/ccna.html" },
     { name: "Goethe-Zertifikat B1", href: "https://www.goethe.de/en/spr/kup/prf/prf/gb1.html" },
     { name: "Linux System Engineer: Networking and SSH", href: "https://www.linkedin.com/learning/certificates/linux-system-engineer-networking-ssh" },
-    { name: "cisco interconnecting networks", href: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/ccna.html" },
+    { name: "CCNA: Connecting Networks (Cisco Networking Academy)", href: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/ccna.html" },
   ],
   education: [
     { degree: "Master of Science - MSc, Information and Communication Engineering", school: "Technische Hochschule Mittelhessen, Germany", period: "2016 – 2020" },

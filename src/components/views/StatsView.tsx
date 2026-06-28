@@ -129,11 +129,11 @@ export default function StatsView() {
       <section className="relative z-10 mx-auto grid max-w-[1280px] grid-cols-1 gap-10 lg:grid-cols-[0.78fr_1.46fr_0.9fr] lg:items-start">
         <aside className="pt-12 lg:pt-24">
           <div className="mb-7 font-mono text-xs uppercase tracking-[0.34em] text-(--text-muted)">Human Qualities</div>
-          <h2 className="max-w-[290px] font-syne text-3xl font-medium leading-[0.92] tracking-tight text-(--text) md:text-4xl">
+          <h1 className="max-w-[290px] font-syne text-2xl font-medium leading-[0.92] tracking-tight text-(--text) md:text-4xl">
             Life&apos;s sky.
             <br />
             Human signals.
-          </h2>
+          </h1>
           <p className="mt-12 max-w-[280px] font-mono text-xs font-bold leading-8 text-(--text)">Calm when stakes rise. Clear when systems get tangled. Kind enough to keep people with the work.</p>
           <p className="mt-12 max-w-[190px] font-mono text-xs uppercase leading-5 tracking-[0.28em] text-(--text-muted)">Follow the constellation.</p>
         </aside>
@@ -263,7 +263,7 @@ export default function StatsView() {
                       transition={shouldReduceMotion ? { duration: 0 } : { duration: isActive ? 2.2 : 3.2, repeat: Infinity, ease: "easeInOut" }}
                     />
                     <span className="pointer-events-none absolute left-1/2 top-[calc(100%+18px)] hidden sm:block min-w-32 -translate-x-1/2 text-center">
-                      <span className="block font-mono text-[11px] font-bold uppercase tracking-[0.32em] text-(--text)">{node.label}</span>
+                      <span className="block font-mono text-xs font-bold uppercase tracking-[0.32em] text-(--text)">{node.label}</span>
                     </span>
                   </motion.span>
                 </button>
@@ -274,7 +274,7 @@ export default function StatsView() {
 
         {/* Mobile-only: centred active node label — replaces clipping per-star labels */}
         <div className="mt-6 flex flex-col items-center gap-1 sm:hidden">
-          <div className="font-mono text-[11px] uppercase tracking-[0.28em] text-(--text-muted)">tap a star</div>
+          <div className="font-mono text-xs uppercase tracking-[0.28em] text-(--text-muted)">tap a star</div>
           <div className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-(--text)">{activeNode.label}</div>
           <div className="mt-1 h-px w-8 bg-(--accent)" />
         </div>
@@ -294,7 +294,7 @@ export default function StatsView() {
                 </div>
                 <div>
                   <div className="font-syne text-lg font-black leading-none tracking-tight text-(--text)">{metric.value}</div>
-                  <div className="mt-1 text-[11px] leading-tight text-(--text-muted) break-words">{metric.label}</div>
+                  <div className="mt-1 text-xs leading-tight text-(--text-muted) break-words">{metric.label}</div>
                 </div>
                 <svg viewBox="0 0 24 24" className="h-8 w-full text-(--text-muted)" fill="none" stroke="currentColor" strokeWidth="0.8">
                   <path d={metric.spark} />
@@ -309,7 +309,7 @@ export default function StatsView() {
       <section className="grid grid-cols-1 gap-px border border-(--border) bg-(--border) lg:grid-cols-[0.85fr_1.15fr]">
         <div className="bg-(--surface) p-6 md:p-10">
           <div className="font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent)">What I care about in the work</div>
-          <h3 className="mt-4 font-syne text-xl font-black leading-none tracking-tight text-(--text)">Reliable systems, clear handoffs, and fewer repeated failures.</h3>
+          <h3 className="mt-4 font-syne text-lg font-black leading-none tracking-tight text-(--text)">Reliable systems, clear handoffs, and fewer repeated failures.</h3>
         </div>
         <div className="grid grid-cols-1 gap-px bg-(--border) sm:grid-cols-2">
           {principles.map((principle) => (

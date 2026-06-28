@@ -30,8 +30,8 @@ const storyBeats = [
   {
     label: "Now",
     title: "Operational reliability and systems integration.",
-    text: "Leading technical operations, QA, and release validation. The focus is on improving platform performance, optimizing operational processes, and building the automation that prevents recurring incidents.",
-    context: "Present: QA automation, release validation, regression testing, and driving operational excellence at scale.",
+    text: "Leading technical operations, QA, and release validation. The focus is on improving platform performance, streamlining release cycles, and building the automation that prevents recurring incidents.",
+    context: "Present: QA automation, release validation, regression testing, and production incident prevention.",
   },
 ];
 
@@ -63,9 +63,9 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
             <MessageCircle className="h-3 w-3" />
             Biography / Point of View
           </div>
-          <h2 className="max-w-3xl font-syne text-2xl font-black leading-[0.9] tracking-tight text-(--text) md:text-4xl">It&apos;s good to catch up.</h2>
+          <h1 className="max-w-3xl font-syne text-2xl font-black leading-[0.9] tracking-tight text-(--text) md:text-4xl">It&apos;s good to catch up.</h1>
           <p className="mt-6 max-w-2xl font-sans text-lg leading-relaxed tracking-tight text-(--text)">
-            Hi. I&apos;m Shahriar. I was born and raised in Bangladesh, moved halfway across the world to Germany, and I&apos;m currently living in Berlin. I specialize in technical operations,
+                      Hi. I&apos;m Shahriar. I was born and raised in Bangladesh, moved halfway across the world to Germany, and I&apos;m currently living in Berlin. I specialize in technical operations,
             solutions engineering, systems integration, and keeping production environments reliable — working across adjacent roles such as implementation engineering, customer success engineering,
             technical account management, integration consulting, and support engineering to turn complex incidents into clear outcomes and repeatable processes.
           </p>
@@ -116,8 +116,8 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
       <section className="relative py-10 border-y border-(--border)">
         <div className="max-w-3xl border-l-4 border-(--accent) pl-6">
           <div className="mb-3 font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent)">Working Style</div>
-          <p className="font-sans text-lg leading-snug tracking-tight text-(--text) md:text-2xl">
-            I like being the person who can enter a messy technical situation, find the signal, explain the tradeoffs, and turn ambiguity into a clear plan of action.
+          <p className="font-sans text-lg leading-snug tracking-tight text-(--text)">
+            I like being the person who can walk into a messy technical situation, work out what matters, explain the tradeoffs, and lay out a clear plan.
           </p>
         </div>
       </section>
@@ -141,7 +141,7 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
               </div>
               <div className="max-w-3xl">
                 <h3 className="font-syne text-lg font-black leading-tight tracking-tight text-(--text) md:text-2xl">{beat.title}</h3>
-                <p className="mt-4 text-base leading-8 text-(--text-muted)">{beat.text}</p>
+                <p className="mt-4 text-sm leading-8 text-(--text-muted)">{beat.text}</p>
                 <div className="mt-5 border border-(--border) bg-(--surface) p-4">
                   <div className="bg-(--surface)">
                     <div className="mb-2 font-mono text-[9px] uppercase tracking-[0.22em] text-(--accent)">System Context</div>

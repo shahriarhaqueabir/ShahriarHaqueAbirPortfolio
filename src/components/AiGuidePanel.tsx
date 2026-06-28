@@ -3,8 +3,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import TypewriterText from "@/components/TypewriterText";
-import { MessageSquare, Send, User, X, Home, Briefcase, Layers, Zap, BarChart3, Mail, User as UserIcon, Power } from "lucide-react";
+import VoiceButton from "@/components/VoiceButton";
+import { MessageSquare, Send, Cpu, User, X, Home, Briefcase, Layers, Zap, BarChart3, Mail, User as UserIcon, Power } from "lucide-react";
 import type { Message, ViewKey } from "@/lib/types";
+import { useVoiceInput } from "@/hooks/useVoiceInput";
+import { useVoiceOutput } from "@/hooks/useVoiceOutput";
 
 type AiGuidePanelProps = {
   open: boolean;
@@ -16,6 +19,9 @@ type AiGuidePanelProps = {
   localAiFallback: boolean;
   onNavigate: (view: ViewKey) => void;
   onSend: (input: string) => void;
+  // Shared state lifted to PortfolioShell
+  input: string;
+  setInput: (v: string) => void;
 };
 
 const navItems: Array<{ name: string; icon: typeof User; view: ViewKey }> = [
@@ -28,11 +34,45 @@ const navItems: Array<{ name: string; icon: typeof User; view: ViewKey }> = [
   { name: "Contact", icon: Mail, view: "contact" },
 ];
 
-export default function AiGuidePanel({ open, onClose, messages, activeView, localAiEnabled, localAiFallback, enableLocalAi, onNavigate, onSend }: AiGuidePanelProps) {
+export default function AiGuidePanel({
+  open,
+  onClose,
+  messages,
+  activeView,
+  localAiEnabled,
+  localAiFallback,
+  enableLocalAi,
+  onNavigate,
+  onSend,
+  input,
+  setInput,
+}: AiGuidePanelProps) {
+  const voiceInput = useVoiceInput();
+  const voiceOutput = useVoiceOutput();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const [usedSuggestions, setUsedSuggestions] = useState<string[]>([]);
+
+  const onSendRef = useRef(onSend);
+
+  useEffect(() => {
+    onSendRef.current = onSend;
+  }, [onSend]);
+
+  // Populate input with interim transcript while mic is listening
+  useEffect(() => {
+    if (voiceInput.isListening && voiceInput.interimTranscript) {
+      setInput(voiceInput.interimTranscript);
+    }
+  }, [voiceInput.interimTranscript, voiceInput.isListening, setInput]);
+
+  // Populate input with accumulated transcript when voice stops
+  // User clicks Send to transmit — no auto-send
+  useEffect(() => {
+    if (voiceInput.transcript) {
+      setInput(voiceInput.transcript);
+    }
+  }, [voiceInput.transcript, setInput]);
 
   useEffect(() => {
     if (open) {
@@ -60,7 +100,7 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, loca
     if (!text) return;
     setInput("");
     onSend(text);
-  }, [input, onSend]);
+  }, [input, onSend, setInput]);
 
   const handleSuggestionClick = useCallback(
     (suggestion: string) => {
@@ -74,185 +114,159 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, loca
     <AnimatePresence>
       {open && (
         <>
-          <motion.button
-            type="button"
-            aria-label="Close chat panel"
-            className="fixed inset-0 z-40 bg-(--text)/15 backdrop-blur-[1px]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-          />
+          <motion.button initial={{ opacity: 0 }} animate={{ opacity: 0.4 }} exit={{ opacity: 0 }} onClick={onClose} className="fixed inset-0 z-30 bg-black hidden md:block" aria-label="Close guide" />
           <motion.section
-            className="fixed bottom-0 left-0 right-0 md:left-[68px] z-40 bg-(--surface)/95 backdrop-blur-3xl border-t border-(--border) shadow-2xl flex flex-col"
-            style={{ height: "60vh", maxHeight: "600px" }}
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
-            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            transition={{ type: "spring", damping: 28, stiffness: 260 }}
+            className="fixed bottom-0 left-0 right-0 md:left-[68px] z-40 bg-(--bg) border-t border-(--border) flex flex-col shadow-2xl h-[85vh]"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-2 border-b border-(--border) shrink-0">
-              <span className="text-[8px] font-mono uppercase tracking-[0.2em] text-(--accent)">AI Guide · Conversation</span>
-              <div className="flex items-center gap-2">
-                {/* Mobile nav buttons */}
-                <div className="flex gap-1 md:hidden overflow-x-auto">
+            <div className="shrink-0 flex items-center justify-between px-4 py-4 border-b border-(--border)">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
                   {navItems.map((item) => (
                     <button
-                      key={item.name}
+                      key={item.view}
                       type="button"
-                      onClick={() => {
-                        onNavigate(item.view);
-                        onClose();
-                      }}
-                      className={`flex items-center gap-1 px-2 py-1 rounded-sm text-[8px] font-bold uppercase tracking-widest border transition-colors ${
-                        activeView === item.view ? "bg-(--accent) text-white border-(--accent)" : "bg-transparent text-(--text-muted) border-(--border) hover:border-(--text) hover:text-(--text)"
-                      }`}
+                      onClick={() => onNavigate(item.view)}
+                      className={`p-1.5 rounded-sm transition-colors ${activeView === item.view ? "text-(--accent) bg-(--accent)/10" : "text-(--text-muted) hover:text-(--text) hover:bg-(--surface)"}`}
+                      aria-label={item.name}
                     >
-                      <item.icon className="w-2.5 h-2.5" />
-                      <span className="inline">{item.name}</span>
+                      <item.icon className="w-4 h-4" />
                     </button>
                   ))}
                 </div>
-                <button
-                  type="button"
-                  onClick={onClose}
-                  className="p-1.5 rounded-sm text-(--text-muted) hover:text-(--text) hover:bg-(--surface) transition-colors focus:outline-none focus:ring-2 focus:ring-(--accent)"
-                  aria-label="Close AI guide panel"
-                >
-                  <X className="h-4 w-4" />
+                <span className="text-xs font-mono uppercase tracking-wider text-(--text-muted) hidden md:inline">{localAiFallback ? "Fallback" : "AI"} Guide</span>
+              </div>
+              <div className="flex items-center gap-2">
+                {!localAiEnabled && (
+                  <motion.button
+                    type="button"
+                    onClick={enableLocalAi}
+                    className="flex items-center gap-1.5 px-2.5 py-1 border-2 border-(--accent)/60 bg-(--accent)/[0.12] hover:bg-(--accent)/[0.25] rounded-sm text-xs font-mono uppercase tracking-wider text-(--accent) transition-all cursor-pointer animate-pulse shadow-[0_0_12px_rgba(var(--accent-rgb),0.15)]"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Power className="w-3 h-3" />
+                    Enable AI
+                    <span className="text-[9px] font-mono uppercase tracking-wider text-(--accent)/60 border border-(--accent)/30 px-1.5 py-0.5 rounded-sm">Recommended</span>
+                  </motion.button>
+                )}
+                <button type="button" onClick={onClose} className="p-1.5 rounded-sm text-(--text-muted) hover:text-(--text) hover:bg-(--surface)" aria-label="Close guide">
+                  <X className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
-            {/* AI enable prompt when AI is off */}
-            {!localAiEnabled && !localAiFallback && (
-              <div className="px-4 py-4 border-b border-(--border) shrink-0">
-                <button
-                  type="button"
-                  onClick={enableLocalAi}
-                  className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-(--accent) bg-(--surface) text-(--text) transition-all hover:bg-(--accent) hover:text-(--bg) group focus:outline-none focus:ring-2 focus:ring-(--accent)"
-                >
-                  <Power className="h-4 w-4 shrink-0" />
-                  <span className="text-[10px] font-bold uppercase tracking-widest">Enable AI Portfolio Guide</span>
-                  <span className="text-[8px] font-mono text-(--text-muted) group-hover:text-(--bg)/80 transition-colors hidden sm:inline">
-                    Ask questions · Get a recruiter path · Explore projects
-                  </span>
-                </button>
-              </div>
-            )}
-
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-4 py-3 pb-3 flex flex-col gap-3 custom-scrollbar" role="log" aria-live="polite" aria-label="Chat messages">
-              {messages.length === 0 && <p className="text-[10px] font-mono text-(--text-muted) text-center mt-6">Start a conversation...</p>}
-              {messages.map((msg, idx) => {
-                const isLatestAi = msg.sender === "ai" && idx === latestContentIdx;
-                const isPast = idx !== latestContentIdx && (msg.sender === "ai" || msg.sender === "fallback") && !msg.isTyping && !msg.isReadyGreen;
+            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 custom-scrollbar" role="log">
+              {messages
+                .filter((m) => m.sender !== "sys")
+                .map((msg) => {
+                  const isLatestAi = msg.sender === "ai" && !msg.isTyping && latestContentIdx === messages.indexOf(msg);
+                  const isPast = msg.sender === "ai" && latestContentIdx !== null && messages.indexOf(msg) < latestContentIdx && !msg.isTyping;
 
-                return (
-                  <div
-                    key={msg.id}
-                    className={`max-w-[90%] p-3 rounded-sm text-[12px] leading-relaxed shadow-sm ${
-                      msg.sender === "user"
-                        ? "bg-(--text) text-(--bg) self-end font-medium"
-                        : msg.sender === "sys"
-                          ? "bg-transparent text-(--text-muted) border-l-2 border-(--border) self-start font-mono text-[8px] uppercase tracking-widest pl-3 py-1 shadow-none"
-                          : isPast
-                            ? "bg-(--surface-2)/60 text-(--text-muted) border border-(--border)/50 self-start font-mono text-[10px]"
-                            : msg.sender === "fallback"
-                              ? "bg-[#1a1510] text-(--text) border-l-[3px] self-start font-mono text-[10px]"
-                              : msg.isReadyGreen
-                                ? "bg-green-500 text-white border-green-400 self-start font-bold"
-                                : "bg-[#0f1a24] text-(--text) border border-(--accent)/30 self-start font-mono text-[10px]"
-                    }`}
-                    style={{
-                      borderLeftColor: msg.sender === "fallback" && !isPast ? "var(--accent2)" : msg.sender === "fallback" && isPast ? "var(--accent2)" : undefined,
-                      borderColor: msg.sender === "ai" && !isPast && !msg.isReadyGreen ? "var(--accent)" : msg.sender === "ai" && isPast ? "var(--accent)/30" : undefined,
-                    }}
-                  >
-                    <div className={`flex flex-col gap-2 ${isPast ? "opacity-60" : ""}`}>
-                      <div className="flex items-center gap-2">
-                        {msg.sender === "ai" && !msg.isTyping && (
+                  return (
+                    <div
+                      key={msg.id}
+                      className={`flex gap-3 ${
+                        msg.sender === "user"
+                          ? "flex-row-reverse"
+                          : msg.sender === "ai" && isLatestAi
+                            ? "flex-row"
+                            : isPast
+                              ? "flex-row opacity-60"
+                              : msg.sender === "fallback"
+                                ? "flex-row"
+                                : "flex-row"
+                      }`}
+                    >
+                      {(msg.sender === "ai" || msg.sender === "fallback") && (
+                        <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${msg.sender === "ai" ? "bg-(--accent)" : "bg-(--accent2)"}`}>
+                          <Cpu className={`w-3 h-3 ${msg.sender === "ai" ? "text-(--bg)" : "text-(--bg)"}`} />
+                        </div>
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-0.5">
                           <span
-                            className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-sm text-[7px] font-bold uppercase tracking-widest"
-                            style={{ backgroundColor: "rgba(56,189,248,0.15)", color: "var(--accent)" }}
+                            className={`text-xs font-mono uppercase tracking-wider ${
+                              msg.sender === "ai" ? "text-(--accent)" : msg.sender === "fallback" ? "text-(--accent2)" : "text-(--text-muted)"
+                            }`}
                           >
-                            AI
+                            {msg.sender === "ai" ? "Guide" : msg.sender === "fallback" ? "Guide (Fallback)" : "You"}
                           </span>
-                        )}
-                        {msg.sender === "fallback" && (
-                          <span
-                            className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-sm text-[7px] font-bold uppercase tracking-widest"
-                            style={{ backgroundColor: "rgba(245,158,11,0.15)", color: "var(--accent2)" }}
-                          >
-                            Guide
+                          <VoiceButton
+                            mode="speaker"
+                            isSpeaking={voiceOutput.isSpeaking}
+                            isSupported={voiceOutput.isSupported}
+                            onClick={() => (voiceOutput.isSpeaking ? voiceOutput.stopSpeaking() : voiceOutput.speak(msg.text))}
+                          />
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <span className="whitespace-pre-wrap">
+                            {msg.isTyping ? (
+                              <span className="animate-pulse flex gap-1 items-center h-4">
+                                <span className="w-1 h-1 bg-(--accent) rounded-full" />
+                                <span className="w-1 h-1 bg-(--accent) rounded-full animation-delay-100" />
+                                <span className="w-1 h-1 bg-(--accent) rounded-full animation-delay-200" />
+                              </span>
+                            ) : msg.sender === "ai" && isLatestAi ? (
+                              <TypewriterText key={msg.id} text={msg.text} />
+                            ) : (
+                              msg.text
+                            )}
                           </span>
-                        )}
-                        {msg.sender === "user" && (
-                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-sm text-[7px] font-bold uppercase tracking-widest text-(--bg) opacity-60">You</span>
-                        )}
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <span className="whitespace-pre-wrap">
-                          {msg.isTyping ? (
-                            <span className="animate-pulse flex gap-1 items-center h-4">
-                              <span className="w-1 h-1 bg-(--accent) rounded-full" />
-                              <span className="w-1 h-1 bg-(--accent) rounded-full animation-delay-100" />
-                              <span className="w-1 h-1 bg-(--accent) rounded-full animation-delay-200" />
-                            </span>
-                          ) : msg.sender === "ai" && isLatestAi ? (
-                            <TypewriterText key={msg.id} text={msg.text} />
-                          ) : (
-                            msg.text
-                          )}
-                        </span>
+                        </div>
+                      {msg.sender === "fallback" && !localAiEnabled && msg.suggestions && msg.suggestions.filter((s) => !usedSuggestions.includes(s)).length > 0 && (
+                        <div className="flex gap-1 mt-1.5 flex-wrap">
+                          {msg.suggestions
+                            .filter((s) => !usedSuggestions.includes(s))
+                            .map((suggestion) => (
+                              <button
+                                key={suggestion}
+                                type="button"
+                                onClick={() => handleSuggestionClick(suggestion)}
+                                className="px-2 py-0.5 rounded-xs border border-(--accent2)/30 text-xs font-mono text-(--accent2)/70 hover:text-(--accent2) hover:border-(--accent2)/60 transition-colors leading-tight cursor-pointer"
+                              >
+                                {suggestion}
+                              </button>
+                            ))}
+                        </div>
+                      )}
                       </div>
                     </div>
-                    {msg.sender === "fallback" && !localAiEnabled && msg.suggestions && msg.suggestions.filter((s) => !usedSuggestions.includes(s)).length > 0 && (
-                      <div className="flex gap-2 mt-3 flex-wrap">
-                        {msg.suggestions
-                          .filter((s) => !usedSuggestions.includes(s))
-                          .map((suggestion) => (
-                            <button
-                              key={suggestion}
-                              type="button"
-                              onClick={() => handleSuggestionClick(suggestion)}
-                              className="px-2.5 py-1 rounded-sm border border-(--accent2)/40 text-[9px] font-mono text-(--accent2) hover:bg-(--accent2) hover:text-(--bg) transition-colors"
-                            >
-                              {suggestion}
-                            </button>
-                          ))}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                  );
+                })}
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input row — inside panel so it's available when footer is hidden */}
+            {/* Input row — shared with footer via lifted state */}
             <div className="shrink-0 border-t border-(--border) px-3 py-2 bg-(--surface)">
               <div className="relative">
                 <input
                   ref={inputRef}
                   type="text"
-                  value={input}
+                  value={voiceInput.isListening && voiceInput.interimTranscript ? voiceInput.interimTranscript : input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
                   aria-label="Ask about Shahriar"
-                  placeholder="Ask about Shahriar..."
-                  className="w-full bg-(--surface) border border-(--border) rounded-sm py-2 pl-8 pr-9 text-base md:text-sm font-mono focus:outline-none focus:border-(--accent) transition-all text-(--text) placeholder:text-(--text-muted)"
+                  placeholder={voiceInput.isListening ? "Listening... speak now" : "Ask about Shahriar..."}
+                  className="w-full bg-(--surface) border border-(--border) rounded-sm py-2 pl-8 pr-16 text-base md:text-sm font-mono focus:outline-none focus:border-(--accent) transition-all text-(--text) placeholder:text-(--text-muted)"
                 />
                 <MessageSquare className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-(--text-muted)" />
-                <button
-                  type="button"
-                  onClick={handleSubmit}
-                  disabled={!input.trim()}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-(--text) hover:text-(--accent) disabled:opacity-30 p-1"
-                  aria-label="Send message"
-                >
-                  <Send className="w-3.5 h-3.5" />
-                </button>
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                  <VoiceButton
+                    mode="input"
+                    isListening={voiceInput.isListening}
+                    isSupported={voiceInput.isSupported}
+                    onClick={voiceInput.isListening ? voiceInput.stopListening : voiceInput.startListening}
+                  />
+                  <button type="button" onClick={handleSubmit} disabled={!input.trim()} className="text-(--text) hover:text-(--accent) disabled:opacity-30 p-1" aria-label="Send message">
+                    <Send className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
             </div>
           </motion.section>

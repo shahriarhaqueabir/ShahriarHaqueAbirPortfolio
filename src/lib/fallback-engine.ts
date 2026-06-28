@@ -109,7 +109,7 @@ function getRelevantProjectIndexes(input: string): number[] {
     .filter((item) => item.score > 0)
     .slice(0, 3)
     .map((item) => item.index);
-  return matches.length ? matches : [1, 4, 5];
+  return matches.length ? matches : [0, 1, 2];
 }
 
 function answerAboutBio(): string {

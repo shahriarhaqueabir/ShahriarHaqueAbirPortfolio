@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-syne);
   --font-mono: var(--font-jetbrains);
   --font-syne: var(--font-syne);
 }
@@ -27,12 +27,21 @@ html {
 body {
   background-color: var(--bg);
   color: var(--text);
-  background-image:
-    radial-gradient(circle at 18% 12%, rgba(56, 189, 248, 0.14), transparent 32rem), radial-gradient(circle at 88% 78%, rgba(245, 158, 11, 0.09), transparent 28rem),
-    linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-attachment: fixed;
   font-family: var(--font-sans);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 18% 12%, rgba(56, 189, 248, 0.14), transparent 32rem),
+    radial-gradient(circle at 88% 78%, rgba(245, 158, 11, 0.09), transparent 28rem),
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: -3;
+  pointer-events: none;
 }
 
 body::after {
@@ -104,6 +113,76 @@ body::after {
 }
 
 @layer utilities {
+  /*
+   * Unified 7-Level Type Scale
+   * ===========================
+   *
+   * Level       | Token           | Size  | Font         | Weight  | Used For
+   * Micro       | .text-micro     | 9px   | JetBrains    | mono    | Labels, badges, tags, section headers, footnotes
+   * Caption     | .text-caption   | 12px  | JetBrains    | mono    | Secondary info, CTAs, metadata, small buttons
+   * Body        | .text-body      | 14px  | Syne         | normal  | Paragraphs, descriptions, list items
+   * Lead        | .text-lead      | 18px  | Syne         | black   | Intros, metric values, skill titles, H3s
+   * Heading     | .text-heading   | 24→36px| Syne        | black   | Page H1s (responsive)
+   * Hero        | .text-hero      | 36→60px| Syne        | black   | Name / title (responsive)
+   * Display     | .text-display   | 96px  | Syne         | black   | Decorative numbers only
+   *
+   * Rationale: Consolidates ~14 disparate sizes into 7 semantic levels
+   * for visual consistency. Micro range (7/8/9/10px) unified at 9px.
+   */
+  .text-micro {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .text-caption {
+    font-size: 12px;
+  }
+  .text-body {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+  .text-lead {
+    font-size: 18px;
+    font-weight: 900;
+    font-family: var(--font-syne);
+    letter-spacing: -0.02em;
+  }
+  .text-heading {
+    font-size: 24px;
+    font-weight: 900;
+    font-family: var(--font-syne);
+    letter-spacing: -0.03em;
+    line-height: 0.9;
+  }
+  @media (min-width: 768px) {
+    .text-heading {
+      font-size: 36px;
+    }
+  }
+  .text-hero {
+    font-size: 36px;
+    font-weight: 900;
+    font-family: var(--font-syne);
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+  }
+  @media (min-width: 640px) {
+    .text-hero {
+      font-size: 48px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .text-hero {
+      font-size: 60px;
+    }
+  }
+  .text-display {
+    font-size: 96px;
+    font-weight: 900;
+    font-family: var(--font-syne);
+    line-height: 1;
+  }
+
   .glass-panel {
     background-color: rgba(16, 24, 38, 0.4);
     backdrop-filter: blur(12px);
@@ -478,11 +557,20 @@ body::after {
     line-height: 1.5 !important;
   }
 
+  @keyframes typewriter-reveal {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0 0% 0 0);
+    }
+  }
+
   /* Disable transitions and animations for print performance */
-  *,
-  *::before,
-  *::after {
-    animation-delay: 0s !important;
+    *,
+    *::before,
+    *::after {
+      animation-delay: 0s !important;
     animation-duration: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0s !important;

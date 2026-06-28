@@ -21,6 +21,9 @@ test-write*.txt
 
 # misc
 .DS_Store
+
+# playwright mcp artifacts
+.playwright-mcp/
 *.pem
 *.pdf
 !public/shahriar-haque-abir-cv.pdf
