@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import PortfolioShellLoader from "./PortfolioShellLoader";
+import PortfolioShell from "@/components/layout/PortfolioShell";
 import { siteTitle, siteDescription } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return <PortfolioShellLoader />;
+  return <PortfolioShell />;
 }

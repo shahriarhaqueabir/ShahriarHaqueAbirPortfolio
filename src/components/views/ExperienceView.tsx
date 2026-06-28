@@ -27,14 +27,14 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
       exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }}
       className="pt-10 pb-24 max-w-5xl"
     >
-      <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">- Career Trajectory</div>
+      <div className="font-mono text-[9px] text-(--accent) uppercase tracking-[0.2em] mb-4">- Career Trajectory</div>
       <h1 className="text-2xl font-syne font-black mb-8 tracking-tight text-(--text)">Experience</h1>
 
       <div className="bg-(--surface) border border-(--border) p-4 md:p-6 mb-14 relative overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-1 bg-(--accent)"></div>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
           <h3 className="font-syne font-bold text-xs text-(--text-muted) uppercase tracking-widest">Professional Influence Map</h3>
-          <div className="hidden sm:flex gap-2 font-mono text-[10px] uppercase tracking-widest text-(--text-muted)">
+          <div className="hidden sm:flex gap-2 font-mono text-[9px] uppercase tracking-widest text-(--text-muted)">
             <span className="border border-(--border) px-2 py-1">2009</span>
             <span className="border border-(--border) px-2 py-1">now</span>
           </div>
@@ -159,12 +159,12 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
                 <CompanyLogo name={e.company} className="w-14 h-14 shrink-0 hidden sm:flex" />
                 <div className="flex-1">
                   {i === 0 && (
-                    <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-(--accent) mb-3 flex items-center gap-2">
+                    <div className="font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent) mb-3 flex items-center gap-2">
                       <span className="signal-dot text-(--accent)" />
                       Most Recent Role
                     </div>
                   )}
-                  <div className="text-(--accent) font-mono text-[10px] tracking-[0.2em] uppercase mb-2">{e.company}</div>
+                  <div className="text-(--accent) font-mono text-[9px] tracking-[0.2em] uppercase mb-2">{e.company}</div>
                   <h3
                     className={`text-lg font-black font-syne mb-4 tracking-tight transition-colors duration-200 ${
                       i === 0 ? "text-(--text) group-hover:text-(--accent)" : "text-(--text) group-hover:text-(--accent)"

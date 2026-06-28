@@ -90,8 +90,12 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
 
   return (
     <div suppressHydrationWarning className="flex h-screen w-full relative z-10 font-sans text-(--text)">
+      {/* suppressHydrationWarning: Framer Motion's AnimatePresence + motion.div
+          layout may produce minor SSR/client DOM differences on initial mount.
+          This is a single-page app shell — content is client-rendered after hydration. */}
       <nav aria-label="Main navigation">
-        <IconRail
+        <ErrorBoundary>
+          <IconRail
         activeView={activeView}
         onNavigate={(view) => navigate(view)}
         aiReady={worker.isReady}
@@ -99,7 +103,8 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
         aiFallback={worker.localAiFallback}
         aiEnabled={worker.localAiEnabled}
       />
-      </nav>
+      </ErrorBoundary>
+    </nav>
 
       <section ref={contentScrollRef} data-testid="content-scroll" className="flex-1 h-full overflow-y-auto overflow-x-hidden px-5 py-6 md:py-16 pb-[180px] md:pb-[300px] relative custom-scrollbar">
         <div className="content-stage w-full max-w-5xl mx-auto">
@@ -111,9 +116,11 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
         </div>
       </section>
 
-      <Suspense fallback={null}>
-        <MobileNav activeView={activeView} onNavigate={(view) => navigate(view)} />
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={null}>
+          <MobileNav activeView={activeView} onNavigate={(view) => navigate(view)} />
+        </Suspense>
+      </ErrorBoundary>
 
       <ErrorBoundary>
         <Suspense fallback={null}>
@@ -155,7 +162,7 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
         >
           <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-(--bg)/15">
             <MessageCircle className="h-4.5 w-4.5" />
-            <span className="absolute -right-1 -top-1 flex h-3.5 w-3.5 items-center justify-center rounded-full border border-(--accent) bg-green-400 text-[7px] font-black tracking-tighter text-black shadow-sm">
+            <span className="absolute -right-1 -top-1 flex h-3.5 w-3.5 items-center justify-center rounded-full border border-(--accent) bg-green-400 text-[9px] font-black leading-none tracking-tighter text-black shadow-sm">
               AI
             </span>
           </span>

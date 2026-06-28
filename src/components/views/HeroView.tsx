@@ -52,7 +52,7 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
             <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-(--accent)">{CONFIG.tagline}</p>
           </div>
 
-          <h1 className="font-syne text-[1.8rem] font-black leading-[1.08] tracking-tight text-(--text) xl:text-[3.4rem] 2xl:text-[4rem] text-balance">
+          <h1 className="font-syne text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.08] tracking-tight text-(--text) text-balance">
             {CONFIG.name.split(" ").map((word, i) => (
               <span key={i} className={word === CONFIG.nameHL ? "text-(--accent)" : ""}>
                 {word}
@@ -89,7 +89,7 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
                 initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
                 animate={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
                 exit={shouldReduceMotion ? undefined : { opacity: 0, y: -10 }}
-                className="font-syne font-black text-sm uppercase leading-tight md:text-lg"
+                className="font-syne font-black text-lg uppercase leading-tight"
               >
                 {phrases[currentPhrase].text.split(" ").map((word, i) => (
                   <span key={i}>{word.includes(phrases[currentPhrase].highlight) ? <span style={{ color: phrases[currentPhrase].color }}>{word} </span> : word + " "}</span>
@@ -99,11 +99,19 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
           </div>
         </div>
 
-        {/* Quote */}
-        <div className="w-full max-w-3xl">
-          <p className="font-sans text-base leading-7 text-(--text) md:text-lg md:leading-8">
-            I work between enterprise architectures and the team keeping them running. Taking production issues and turning them into documented decisions, repeatable processes, and practical
-            operational frameworks.
+        {/* Professional summary */}
+        <div className="w-full max-w-3xl space-y-4">
+          <p className="font-sans text-sm leading-7 text-(--text)">
+            Technical Solution Consultant and Operations Engineer with 10+ years of experience supporting IT infrastructure, SaaS platforms, systems integration, and highly technical production
+            environments. Expertise in Tier-3 troubleshooting, incident management, root cause triage, API integrations, database analysis and quality assurance operations management.
+          </p>
+          <p className="font-sans text-sm leading-7 text-(--text)">
+            Led complex KYC, technical discovery, PoC, training, integrations, for SME and enterprise level B2B clients across North America, APAC, and DACH regions. Fluent in resolving
+            high-impact technical issues as well as presenting high-stakes product demonstrations, improving performance, and driving operational excellence at scale.
+          </p>
+          <p className="font-sans text-sm leading-7 text-(--text-muted)">
+            My work revolves around breaking down technical processes and outcomes and presenting the ROI to investors and stakeholders. Bridging the gap between customer support and software
+            development and taking full responsibility of optimizing operational processes, and delivering scalable technical solutions.
           </p>
         </div>
 
@@ -112,8 +120,8 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
           <div className="grid grid-cols-1 gap-px border border-(--border) bg-(--border) sm:grid-cols-3">
             {CONFIG.heroStats.map((stat) => (
               <div key={stat.label} className="bg-(--surface) p-5 min-w-0">
-                <div className="mb-2 font-syne text-xl font-black leading-none text-(--text)">{stat.value}</div>
-                <p className="text-[10px] font-bold uppercase leading-4 tracking-[0.12em] text-(--text-muted) break-words">{stat.label}</p>
+                <div className="mb-2 font-syne text-lg font-black leading-none text-(--text)">{stat.value}</div>
+                <p className="text-[9px] font-bold uppercase leading-4 tracking-[0.12em] text-(--text-muted) break-words">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -124,7 +132,7 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
           <div className="flex flex-col gap-3 md:flex-row md:gap-4">
             <button
               onClick={() => setView("projects")}
-              className="shine-surface inline-flex items-center justify-center gap-2 border border-(--accent) px-6 text-(--accent) rounded-sm text-[10px] font-bold uppercase tracking-widest transition-[background-color,color,box-shadow,transform] hover:bg-(--accent) hover:text-(--bg) active:scale-95 min-h-[44px] md:border-0 md:bg-(--accent) md:text-(--bg) md:px-8 md:py-4 md:min-h-0 md:text-xs md:hover:bg-(--text) md:shadow-[0_18px_58px_rgba(var(--accent-rgb),0.44)]"
+              className="shine-surface inline-flex items-center justify-center gap-2 border border-(--accent) px-6 text-(--accent) rounded-sm text-xs font-bold uppercase tracking-widest transition-[background-color,color,box-shadow,transform] hover:bg-(--accent) hover:text-(--bg) active:scale-95 min-h-[44px] md:border-0 md:bg-(--accent) md:text-(--bg) md:px-8 md:py-4 md:min-h-0 md:text-xs md:hover:bg-(--text) md:shadow-[0_18px_58px_rgba(var(--accent-rgb),0.44)]"
             >
               View Case Studies
               <ArrowRight className="h-4 w-4" />
@@ -132,14 +140,14 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
             <a
               href="/shahriar-haque-abir-cv.pdf"
               download
-              className="inline-flex items-center justify-center gap-2 bg-(--accent) px-6 text-(--bg) rounded-sm text-[10px] font-bold uppercase tracking-widest shadow-[0_18px_58px_rgba(var(--accent-rgb),0.44)] transition-[background-color,color,box-shadow,transform] hover:bg-(--text) active:scale-95 min-h-[44px] md:border md:border-(--accent) md:bg-transparent md:text-(--accent) md:px-8 md:py-4 md:min-h-0 md:text-xs md:shadow-none md:hover:bg-(--accent) md:hover:text-(--bg) md:hover:shadow-[0_0_34px_rgba(var(--accent-rgb),0.24)]"
+              className="inline-flex items-center justify-center gap-2 bg-(--accent) px-6 text-(--bg) rounded-sm text-xs font-bold uppercase tracking-widest shadow-[0_18px_58px_rgba(var(--accent-rgb),0.44)] transition-[background-color,color,box-shadow,transform] hover:bg-(--text) active:scale-95 min-h-[44px] md:border md:border-(--accent) md:bg-transparent md:text-(--accent) md:px-8 md:py-4 md:min-h-0 md:text-xs md:shadow-none md:hover:bg-(--accent) md:hover:text-(--bg) md:hover:shadow-[0_0_34px_rgba(var(--accent-rgb),0.24)]"
             >
               <Download className="h-4 w-4" />
               Download CV
             </a>
             <button
               onClick={() => setView("contact")}
-              className="inline-flex items-center justify-center gap-2 border border-(--border) text-(--text) px-6 rounded-sm text-[10px] font-bold uppercase tracking-widest hover:border-(--accent) hover:text-(--accent) active:scale-95 transition-[border-color,color,box-shadow,transform] hover:shadow-[0_0_34px_rgba(var(--accent-rgb),0.24)] min-h-[44px] md:px-8 md:py-4 md:min-h-0 md:text-xs"
+              className="inline-flex items-center justify-center gap-2 border border-(--border) text-(--text) px-6 rounded-sm text-xs font-bold uppercase tracking-widest hover:border-(--accent) hover:text-(--accent) active:scale-95 transition-[border-color,color,box-shadow,transform] hover:shadow-[0_0_34px_rgba(var(--accent-rgb),0.24)] min-h-[44px] md:px-8 md:py-4 md:min-h-0 md:text-xs"
             >
               <Sparkles className="h-4 w-4" />
               Connect With Me
@@ -150,15 +158,15 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
         {/* Location and work auth */}
         <div className="w-full max-w-3xl flex flex-wrap gap-4 items-center">
           <div className="inline-flex items-center gap-3 border border-(--border) bg-(--surface)/60 px-4 py-3">
-            <span className="font-syne font-black text-sm text-(--accent)">Based in</span>
+            <span className="font-syne font-black text-xs text-(--accent)">Based in</span>
             <span className="font-mono text-xs uppercase tracking-[0.22em] text-(--text)">Berlin, Germany</span>
           </div>
           <div className="inline-flex items-center gap-3 border border-(--border) bg-(--surface)/60 px-4 py-3">
-            <span className="font-syne font-black text-sm text-(--accent2)">Language</span>
+            <span className="font-syne font-black text-xs text-(--accent2)">Language</span>
             <span className="font-mono text-xs uppercase tracking-[0.22em] text-(--text)">German B2 (Professional)</span>
           </div>
           <div className="inline-flex items-center gap-3 border border-(--border) bg-(--surface)/60 px-4 py-3">
-            <span className="font-syne font-black text-sm text-(--accent2)">Authorization</span>
+            <span className="font-syne font-black text-xs text-(--accent2)">Authorization</span>
             <span className="font-mono text-xs uppercase tracking-[0.22em] text-(--text)">Niederlassungserlaubnis</span>
           </div>
         </div>
@@ -172,10 +180,10 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
             className="w-full max-w-xl"
           >
             <div className="border border-(--accent)/20 bg-(--accent)/10 px-6 py-5 rounded-sm">
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-(--text-muted) leading-relaxed">
+              <p className="font-mono text-xs uppercase tracking-[0.18em] text-(--text-muted) leading-relaxed">
                 <span className="text-(--accent)">AI</span> Powered by Qwen2.5-Coder &middot; Runs locally in your browser &middot; No data sent
               </p>
-              <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.16em] text-(--text-muted)/80">
+              <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.16em] text-(--text-muted)/80">
                 Open the guide panel below and enable AI for interactive conversations, or ask the fallback guide without enabling AI.
               </p>
             </div>
