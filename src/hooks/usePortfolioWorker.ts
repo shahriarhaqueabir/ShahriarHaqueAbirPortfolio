@@ -178,36 +178,38 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
     });
   }, [createSysMessage, pruneMessages]);
 
+  // ── Schedule the welcome message cascade after model loads ──
+  const scheduleOnboardingSequence = useCallback(() => {
+    if (onboardingQueuedRef.current) return;
+    onboardingQueuedRef.current = true;
+    const welcomeText = "Welcome to Shahriar's Portfolio.";
+    const assistantText = "I am the local AI tour guide. Ask me to compare skills to experience, explain project evidence, build a recruiter path, or synthesize Shahriar's fit for a role.";
+    const objectiveText = "What would make this visit useful: hiring signal, technical depth, AI projects, support experience, or a quick guided tour?";
+
+    const qt = (cb: () => void, delay: number) => {
+      const timeout = setTimeout(cb, delay);
+      timeoutsRef.current.push(timeout);
+    };
+
+    qt(() => {
+      setMessages((prev) => pruneMessages([...prev, { id: getNextId(), text: welcomeText, sender: "ai", isReadyGreen: true }]));
+      qt(() => {
+        setMessages((prev) => pruneMessages([...prev, createAiMessage(assistantText)]));
+        qt(() => {
+          setMessages((prev) => pruneMessages([...prev, createAiMessage(objectiveText)]));
+        }, getTypewriterDelay(assistantText));
+      }, getTypewriterDelay(welcomeText));
+    }, 1000);
+  }, [pruneMessages, getNextId, createAiMessage]);
+
+  // ── Worker lifecycle effect ──
   useEffect(() => {
     if (localAiFallback || !localAiEnabled) return;
 
     const worker = new Worker(new URL("../lib/worker.ts", import.meta.url), { type: "module" });
     sharedWorkerRef.current = worker;
 
-    const queueTimeout = (callback: () => void, delay: number) => {
-      const timeout = setTimeout(callback, delay);
-      timeoutsRef.current.push(timeout);
-    };
-
-    const queueOnboarding = () => {
-      if (onboardingQueuedRef.current) return;
-      onboardingQueuedRef.current = true;
-      const welcomeText = "Welcome to Shahriar's Portfolio.";
-      const assistantText = "I am the local AI tour guide. Ask me to compare skills to experience, explain project evidence, build a recruiter path, or synthesize Shahriar's fit for a role.";
-      const objectiveText = "What would make this visit useful: hiring signal, technical depth, AI projects, support experience, or a quick guided tour?";
-
-      queueTimeout(() => {
-        setMessages((prev) => pruneMessages([...prev, { id: getNextId(), text: welcomeText, sender: "ai", isReadyGreen: true }]));
-        queueTimeout(() => {
-          setMessages((prev) => pruneMessages([...prev, createAiMessage(assistantText)]));
-          queueTimeout(() => {
-            setMessages((prev) => pruneMessages([...prev, createAiMessage(objectiveText)]));
-          }, getTypewriterDelay(assistantText));
-        }, getTypewriterDelay(welcomeText));
-      }, 1000);
-    };
-
-    const onMessageReceived = (event: MessageEvent) => {
+    const handleWorkerMessage = (event: MessageEvent) => {
       switch (event.data.status) {
         case "progress": {
           const nextProgress = event.data.data?.progress || 0;
@@ -233,9 +235,12 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
             setProgress(100);
             setIsReady(true);
             setShowReadyToast(true);
-            queueTimeout(() => setShowReadyToast(false), 5000);
+
+            const hideToastTimer = setTimeout(() => setShowReadyToast(false), 5000);
+            timeoutsRef.current.push(hideToastTimer);
+
             setMessages((prev) => prev.filter((message) => message.id !== "1"));
-            queueOnboarding();
+            scheduleOnboardingSequence();
 
             if (queuedMessageRef.current) {
               const { text, activeView, routerMemory } = queuedMessageRef.current;
@@ -308,10 +313,10 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
       }
     };
 
-    worker.addEventListener("message", onMessageReceived);
+    worker.addEventListener("message", handleWorkerMessage);
 
     if (initialLoadDoneRef.current) {
-      queueOnboarding();
+      scheduleOnboardingSequence();
     } else if (!initialLoadRequestedRef.current) {
       initialLoadRequestedRef.current = true;
       worker.postMessage({
@@ -321,12 +326,12 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
     }
 
     return () => {
-      worker.removeEventListener("message", onMessageReceived);
+      worker.removeEventListener("message", handleWorkerMessage);
       worker.terminate();
       timeoutsRef.current.forEach((timeout) => clearTimeout(timeout));
       timeoutsRef.current = [];
     };
-  }, [localAiFallback, localAiEnabled, createAiMessage, createSysMessage, pruneMessages, getNextId]);
+  }, [localAiFallback, localAiEnabled, createAiMessage, createSysMessage, pruneMessages, getNextId, scheduleOnboardingSequence]);
 
   const addNavigationMessage = (userText: string, view: ViewKey) => {
     const viewGoal = VIEW_GOALS[view];

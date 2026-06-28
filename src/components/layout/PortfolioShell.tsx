@@ -1,19 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { AnimatePresence } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 import PortfolioViewRenderer from "@/components/PortfolioViewRenderer";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import IconRail from "@/components/layout/IconRail";
-import AiGuideFooter from "@/components/AiGuideFooter";
-import AiGuidePanel from "@/components/AiGuidePanel";
-import MobileNav from "@/components/layout/MobileNav";
+
+// Lazy-load below-fold components — keeps them out of the critical hydration path
+const AiGuideFooter = lazy(() => import("@/components/AiGuideFooter"));
+const AiGuidePanel = lazy(() => import("@/components/AiGuidePanel"));
+const MobileNav = lazy(() => import("@/components/layout/MobileNav"));
 import { useCommandRouter } from "@/hooks/useCommandRouter";
 import { usePortfolioWorker } from "@/hooks/usePortfolioWorker";
 import type { ViewKey } from "@/lib/types";
 
 export default function PortfolioShell({ initialView = "hero" }: { initialView?: ViewKey }) {
   const [panelOpen, setPanelOpen] = useState(false);
+  const [input, setInput] = useState("");
   const contentScrollRef = useRef<HTMLElement>(null);
   const { activeView, conversationState, setActiveView, handleCommand } = useCommandRouter(initialView);
   const worker = usePortfolioWorker({
@@ -21,6 +25,8 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
       navigate(view);
     },
   });
+
+
 
   const viewToPath = (v: ViewKey) => (v === "hero" ? "/" : `/${v}`);
 
@@ -34,6 +40,7 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
   };
 
   const send = (input: string) => {
+    setInput("");
     const result = handleCommand(input);
     if (result.navigated && result.view) {
       worker.addNavigationMessage(input, result.view);
@@ -82,8 +89,9 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
   }, [activeView]);
 
   return (
-    <main suppressHydrationWarning className="flex h-screen w-full relative z-10 font-sans text-(--text)">
-      <IconRail
+    <div suppressHydrationWarning className="flex h-screen w-full relative z-10 font-sans text-(--text)">
+      <nav aria-label="Main navigation">
+        <IconRail
         activeView={activeView}
         onNavigate={(view) => navigate(view)}
         aiReady={worker.isReady}
@@ -91,41 +99,52 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
         aiFallback={worker.localAiFallback}
         aiEnabled={worker.localAiEnabled}
       />
+      </nav>
 
       <section ref={contentScrollRef} data-testid="content-scroll" className="flex-1 h-full overflow-y-auto overflow-x-hidden px-5 py-6 md:py-16 pb-[180px] md:pb-[300px] relative custom-scrollbar">
         <div className="content-stage w-full max-w-5xl mx-auto">
-          <AnimatePresence mode="wait">
-            <PortfolioViewRenderer activeView={activeView} setView={setActiveView} onAiQuery={handleHeroAiQuery} scrollContainerRef={contentScrollRef} />
-          </AnimatePresence>
+          <ErrorBoundary>
+            <AnimatePresence mode="wait">
+              <PortfolioViewRenderer activeView={activeView} setView={setActiveView} onAiQuery={handleHeroAiQuery} scrollContainerRef={contentScrollRef} />
+            </AnimatePresence>
+          </ErrorBoundary>
         </div>
       </section>
 
-      <MobileNav activeView={activeView} onNavigate={(view) => navigate(view)} />
+      <Suspense fallback={null}>
+        <MobileNav activeView={activeView} onNavigate={(view) => navigate(view)} />
+      </Suspense>
 
-      <AiGuideFooter
-        messages={worker.messages}
-        isReady={worker.isReady}
-        localAiEnabled={worker.localAiEnabled}
-        localAiFallback={worker.localAiFallback}
-        localAiPaused={worker.localAiPaused}
-        panelOpen={panelOpen}
-        progress={worker.progress}
-        showReadyToast={worker.showReadyToast}
-        onSend={send}
-        onFocus={() => setPanelOpen(true)}
-      />
+      <ErrorBoundary>
+        <Suspense fallback={null}>
+          <AiGuideFooter
+            messages={worker.messages}
+            isReady={worker.isReady}
+            localAiEnabled={worker.localAiEnabled}
+            localAiFallback={worker.localAiFallback}
+            localAiPaused={worker.localAiPaused}
+            panelOpen={panelOpen}
+            progress={worker.progress}
+            showReadyToast={worker.showReadyToast}
+            onSend={send}
+            onFocus={() => setPanelOpen(true)}
+          />
 
-      <AiGuidePanel
-        open={panelOpen}
-        onClose={() => setPanelOpen(false)}
-        messages={worker.messages}
-        activeView={activeView}
-        localAiEnabled={worker.localAiEnabled}
-        localAiFallback={worker.localAiFallback}
-        enableLocalAi={worker.enableLocalAi}
-        onNavigate={(view) => navigate(view)}
-        onSend={send}
-      />
+          <AiGuidePanel
+            input={input}
+            setInput={setInput}
+            open={panelOpen}
+            onClose={() => setPanelOpen(false)}
+            messages={worker.messages}
+            activeView={activeView}
+            localAiEnabled={worker.localAiEnabled}
+            localAiFallback={worker.localAiFallback}
+            enableLocalAi={worker.enableLocalAi}
+            onNavigate={(view) => navigate(view)}
+            onSend={send}
+          />
+        </Suspense>
+      </ErrorBoundary>
 
       {!panelOpen && (
         <button
@@ -142,6 +161,6 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
           </span>
         </button>
       )}
-    </main>
+    </div>
   );
 }

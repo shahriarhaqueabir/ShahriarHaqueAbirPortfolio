@@ -32,9 +32,9 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
       className="pt-10 pb-24 max-w-5xl"
     >
       <div className="font-mono text-[10px] text-(--accent) uppercase tracking-[0.2em] mb-4">- Contact</div>
-      <h2 className="text-2xl md:text-4xl font-syne font-black mb-8 text-(--text) leading-[0.9] tracking-tight">
+      <h1 className="text-2xl md:text-4xl font-syne font-black mb-8 text-(--text) leading-[0.9] tracking-tight">
         Let&apos;s <span className="font-sans text-(--text-muted)">talk.</span>
-      </h2>
+      </h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-px bg-(--border) border border-(--border)">
         <section className="bg-(--surface) p-8 md:p-10 flex flex-col justify-between min-h-0 md:min-h-[360px] relative overflow-hidden">

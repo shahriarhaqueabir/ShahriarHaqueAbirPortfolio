@@ -16,7 +16,7 @@ export const ParticleBackground = () => {
   const options: ISourceOptions = useMemo(() => {
     // 1. Home Theme (Network / Constellation)
     const networkOptions: ISourceOptions = {
-      fpsLimit: 120,
+      fpsLimit: 60,
       fullScreen: { enable: false },
       interactivity: {
         events: {
@@ -58,7 +58,7 @@ export const ParticleBackground = () => {
 
     // 2. Projects Theme (Data Stream / Circuit)
     const streamOptions: ISourceOptions = {
-      fpsLimit: 120,
+      fpsLimit: 60,
       fullScreen: { enable: false },
       particles: {
         color: { value: "#38BDF8" },
@@ -115,7 +115,7 @@ export const ParticleBackground = () => {
 
     // 4. Contact Theme (Interactive Repulse)
     const contactOptions: ISourceOptions = {
-      fpsLimit: 120,
+      fpsLimit: 60,
       fullScreen: { enable: false },
       interactivity: {
         events: {
