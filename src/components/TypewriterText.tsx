@@ -1,25 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function TypewriterText({ text }: { text: string }) {
-  const [visibleText, setVisibleText] = useState("");
+  const [isAnimating, setIsAnimating] = useState(true);
 
-  useEffect(() => {
-    if (!text) return;
-    let index = 0;
-    const interval = window.setInterval(() => {
-      index += 1;
-      setVisibleText(text.slice(0, index));
-      if (index >= text.length) window.clearInterval(interval);
-    }, 16);
-    return () => window.clearInterval(interval);
-  }, [text]);
+  if (!text) return null;
 
   return (
-    <span className="whitespace-pre-wrap">
-      {visibleText}
-      {visibleText.length < text.length && <span className="ml-0.5 inline-block h-4 w-1 translate-y-0.5 animate-pulse bg-(--accent)" />}
+    <span className="relative whitespace-pre-wrap">
+      <span
+        className="inline-block"
+        style={{
+          clipPath: `inset(0 100% 0 0)`,
+          animation: `typewriter-reveal ${text.length * 16}ms steps(${text.length}, end) forwards`,
+        }}
+        onAnimationEnd={() => setIsAnimating(false)}
+      >
+        {text}
+      </span>
+      {isAnimating && (
+        <span className="ml-0.5 inline-block h-4 w-1 translate-y-0.5 animate-pulse bg-(--accent)" />
+      )}
     </span>
   );
 }

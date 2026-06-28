@@ -4,6 +4,9 @@ import PortfolioShell from "@/components/layout/PortfolioShell";
 export const metadata: Metadata = {
   title: "Stats",
   description: "Visual metrics and professional proof points of Shahriar Haque Abir's career impact and working style.",
+  alternates: {
+    canonical: "/stats",
+  },
 };
 
 export default function StatsPage() {

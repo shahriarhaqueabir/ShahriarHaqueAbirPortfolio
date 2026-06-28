@@ -4,6 +4,9 @@ import PortfolioShell from "@/components/layout/PortfolioShell";
 export const metadata: Metadata = {
   title: "Experience",
   description: "Chronological professional record of Shahriar Haque Abir: Technical Operations, SaaS Consulting, and Network Engineering.",
+  alternates: {
+    canonical: "/experience",
+  },
 };
 
 export default function ExperiencePage() {

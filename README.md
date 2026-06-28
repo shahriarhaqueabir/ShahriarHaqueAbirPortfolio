@@ -1,168 +1,343 @@
-# 🦅 Shahriar Haque Abir — Interactive Portfolio & AI Guide
+# Shahriar Haque Abir — Interactive Portfolio & AI Guide
 
-<!-- badges: start -->
-<!-- Status Badges -->
-[![Vercel Deploy](https://img.shields.io/badge/Deploy-Vercel-000?style=flat&logo=vercel&logoColor=fff)](https://vercel.com)
-[![Custom Build](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/shahriarhaqueabir/adbd0eaa95a15c5cfbc78a3d70a8f910/raw/badge.json)](https://github.com/shahriarhaqueabir/shahriarhaqueabir-portfolio/actions)
-[![Playwright Tests](https://img.shields.io/badge/Tests-Passing-45BA4B?style=flat&logo=playwright&logoColor=fff)](https://playwright.dev)
-[![Known Vulnerabilities](https://snyk.io/package/npm/next/badge.svg)](https://snyk.io/package/npm/next)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Stack: Next.js 16](https://img.shields.io/badge/Next.js-16.2-000?logo=next.js&logoColor=fff)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=fff)](https://www.typescriptlang.org)
+[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=fff)](https://tailwindcss.com)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-EA4C89?logo=framer&logoColor=fff)](https://motion.dev)
+[![WebLLM](https://img.shields.io/badge/WebLLM-0.2.83-4F46E5?logo=llama&logoColor=fff)](https://github.com/mlc-ai/web-llm)
+[![ElevenLabs](https://img.shields.io/badge/TTS-ElevenLabs-000?logo=elevenlabs&logoColor=fff)](https://elevenlabs.io)
+[![Playwright](https://img.shields.io/badge/Tests-Playwright-45BA4B?logo=playwright&logoColor=fff)](https://playwright.dev)
+[![Vercel](https://img.shields.io/badge/Deploy-Vercel-000?logo=vercel&logoColor=fff)](https://vercel.com)
 
-<!-- Stack Badges -->
-[![Next.js 16.2.6](https://img.shields.io/badge/Next.js-16.2.6-000?style=for-the-badge&logo=next.js&logoColor=fff)](https://nextjs.org)
-[![React 19](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=000)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript&logoColor=fff)](https://www.typescriptlang.org)
-[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=fff)](https://tailwindcss.com)
-[![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-EA4C89?style=for-the-badge&logo=framer&logoColor=fff)](https://motion.dev)
-[![WebLLM](https://img.shields.io/badge/WebLLM-0.2-4F46E5?style=for-the-badge&logo=llama&logoColor=fff)](https://github.com/mlc-ai/web-llm)
-[![Qwen2.5 1.5B](https://img.shields.io/badge/AI-Qwen2.5_1.5B-0288D1?style=for-the-badge&logo=alpacadev&logoColor=fff)](https://github.com/QwenLM/Qwen2.5)
-<!-- badges: end -->
-
-<div align="center">
-  <!-- TODO: Replace with a high-quality screenshot or GIF of the portfolio in action -->
-  <img src="https://via.placeholder.com/800x400.png?text=Shahriar+Haque+Abir+Portfolio+Screenshot" alt="Shahriar Haque Abir Portfolio Screenshot" width="800"/>
-</div>
-
-> A futuristic, multi-view portfolio experience featuring a browser-native AI guide and an advanced NLP fallback engine that answers questions about Shahriar's work — no API keys, no server, no data leaving your machine.
+> Multi-view portfolio with a browser-native AI guide and voice interaction. Ask questions about Shahriar's work, navigate with voice commands, and hear responses read aloud. No server-side AI costs — everything runs locally in the browser via WebLLM (WebGPU).
 
 ---
 
-## ✨ Highlights
+## Highlights
 
-- **🧠 Local AI Guide (WebGPU)** — Runs Qwen2.5 1.5B via WebLLM entirely in the browser. Ask questions about projects, experience, or skills. Zero server costs, zero API keys.
-- **🛡️ Advanced NLP Fallback Engine** — Even before or without the WebLLM loading, an advanced intent-matching engine (`fallback-engine.ts`) uses fuzzy search, entity extraction, and contextual conversation memory to provide robust answers and view-routing.
-- **🕹️ Multi-View SPA Architecture** — Seven interconnected portfolio views (Hero, About, Projects, Experience, Skills, Stats, Contact) constructed as a hybrid SPA utilizing `window.history.pushState` over Next.js App Router static endpoints.
-- **🎨 Futuristic HUD Aesthetic** — Deep-space palette (`#030509`), glassmorphism panels, interactive `tsparticles` background, `lenis` smooth scrolling, and `Chart.js` data visualizations.
-- **🔍 Recruiter-First Design** — Recruiter Snapshot, Capability Stack, and a conversation-fit tag system surface the most relevant details immediately.
-
----
-
-## 📸 What's Inside
-
-| View | Purpose |
-|------|---------|
-| **Hero** | Identity, headline rotator, hero stats, recruiter snapshot, capability stack, AI guide entry |
-| **About** | Personal & professional narrative with adjacent-role context woven into the bio |
-| **Projects** | Case studies (Interactive Database Visualizer, Customer Onboarding Portal, etc.) |
-| **Experience** | Chronological timeline + career influence map with 14+ years of enterprise SaaS history |
-| **Skills** | Capability map across Technical Operations, Systems Integration, Data & Troubleshooting, Solutions Engineering, Infrastructure & Networking |
-| **Stats** | Proof metrics utilizing `Chart.js`, working-style orbit constellation, and exploration prompts |
-| **Contact** | Direct contact channels, conversation-fit classification, work authorization |
+- **🧠 Local AI Guide** — Runs Qwen2.5-Coder 1.5B via WebLLM in the browser. Zero server costs, zero API keys. Falls back to a 17-intent rule engine when WebGPU is unavailable.
+- **🎤 Voice Interaction** — Speech-to-text via the Web Speech API. Text-to-speech via ElevenLabs.
+- **🕹️ Multi-View Architecture** — Seven interconnected portfolio views (Hero, About, Projects, Experience, Skills, Stats, Contact) with command routing and orbital navigation.
+- **🎨 Dark Terminal Theme** — Deep-space palette (`#030509`), glass panels, animated orbit constellation, grid textures.
+- **📋 Recruiter Snapshot** — At-a-glance stats, capability stack, and work authorization surface the most relevant details immediately.
+- **⚡ Static Generation** — All routes pre-rendered. WebLLM loads lazily on user opt-in.
 
 ---
 
-## 🧠 The AI Ecosystem
+## AI Guide
 
-The portfolio features a dual-layer AI strategy to maximize accessibility and performance:
+Opens as a bottom drawer panel that slides up when you click the footer or send a message.
 
-### 1. WebLLM Guide (The Heavy Lifter)
-- **Model:** [Qwen2.5 1.5B (q4f16_1)](https://github.com/QwenLM/Qwen2.5) via [WebLLM](https://github.com/mlc-ai/web-llm)
-- **No backend:** Executes client-side through WebGPU/WebGL
-- **Privacy First:** Opt-in required. No data leaves the browser.
+### Two Modes
 
-### 2. The NLP Fallback Engine (The Safety Net)
-For unsupported browsers or while the model caches, the `fallback-engine.ts` handles queries instantly:
-- **Intent Scoring:** Evaluates user queries against 15+ complex interaction patterns (e.g., comparing skills, seeking role fits).
-- **Entity Extraction:** Dynamically identifies projects and technologies in user queries for targeted responses.
-- **Conversation State:** Remembers the visitor profile (e.g., recruiter vs engineer) and active views to tailor responses appropriately.
+| Mode | How it works | When |
+|------|-------------|------|
+| **Fallback** (default) | 17-intent pattern-matching engine. Responds with hardcoded answers about projects, skills, experience. | Always available. No download, no GPU needed. |
+| **Local LLM** | Qwen2.5-Coder 1.5B running in-browser via WebGPU. Offers richer, context-aware conversation. | User clicks "Enable AI" → downloads ~300MB model → ready. |
+
+### Architecture
+
+```
+User input (text or voice)
+        │
+        ▼
+useCommandRouter ──► Is it a navigation command?
+        │                    │
+        │ Yes                │ No
+        ▼                    ▼
+  Navigate view        usePortfolioWorker
+                               │
+                        ┌──────┴──────┐
+                        │              │
+                   localAiEnabled?   fallback-engine.ts
+                        │          (pattern match, 0–5ms)
+                        ▼
+              Web Worker (worker.ts)
+              Qwen2.5 1.5B via WebLLM
+              ~300MB download, WebGPU
+```
 
 ---
 
-## 🏗️ Architecture
+## Voice System
 
-```text
+Bidirectional voice layer implemented entirely client-side.
+
+### Speech-to-Text (Mic Button)
+
+| File | Role |
+|------|------|
+| `src/hooks/useVoiceInput.ts` | Wraps the Web Speech API (`SpeechRecognition` / `webkitSpeechRecognition`) |
+| `src/types/speech-recognition.d.ts` | TypeScript declarations for the non-standard speech API |
+| `src/components/VoiceButton.tsx` | Renders the mic button (always a `<button>` to prevent hydration mismatch) |
+
+**How it works:**
+1. Click the mic button → `startListening()` creates a `SpeechRecognition` instance with `continuous: true` and `interimResults: true`
+2. Speak → interim transcript populates the input field in real time
+3. Click mic again → `stopListening()` freezes the final transcript in the input
+4. Click Send → text is sent to the AI guide
+
+**Browser quirks handled:**
+- Brave aggressively fires `onend` after short pauses → a 400ms `setTimeout` restart delay prevents rate-limiting
+- A maximum of 8 restart attempts prevents infinite loops
+- `isManualStopRef` distinguishes user stops from browser-enforced stops
+- Hydration safety: the browser API check runs in `useEffect`, not during render
+
+**Known issue:** Does not work on Brave. Works on Chrome and Chromium-based browsers. The Web Speech API has inconsistent implementation across browsers.
+
+### Text-to-Speech (Speaker Button)
+
+| File | Role |
+|------|------|
+| `src/hooks/useVoiceOutput.ts` | Manages audio playback with in-memory caching |
+| `src/app/api/tts/route.ts` | Next.js API route that proxies to ElevenLabs |
+| `src/components/VoiceButton.tsx` | Renders the speaker button on AI messages |
+
+**How it works:**
+1. Click the speaker icon on any AI message → `speak(text)` fires a POST to `/api/tts`
+2. The API route proxies to `https://api.elevenlabs.io/v1/text-to-speech/{voice_id}`
+3. Audio is returned as `audio/mpeg` and played via `new Audio(url)`
+4. Responses are cached in memory (keyed by first 200 characters of text)
+
+**Configuration:**
+- **Default voice:** Laura - Enthusiast, Quirky Attitude (`FGY2WhTYpPnrIDTdsKH5`)
+- **Model:** `eleven_multilingual_v2`
+- **Text cap:** 500 characters per request (protects free-tier quota)
+- **Free tier:** ~10,000 credits/month (~10K characters of TTS)
+- **API key:** Set `ELEVENLABS_API` in `.env`. Managed via Vercel environment variables in production.
+- **Available free-tier voices:** Premade voices including Roger, Sarah, Laura, Charlie, George, Callum, River, and others (ElevenLabs offers 20+ premade voices on the free tier)
+
+**Important:** The API key must never be committed. It is read from `process.env.ELEVENLABS_API` at request time.
+
+### VoiceButton Component
+
+A single component that renders two different button types via a discriminated union:
+
+```typescript
+type VoiceButtonProps =
+  | { mode: "input";  isListening: boolean; isSupported: boolean; onClick: () => void }
+  | { mode: "speaker"; isSpeaking: boolean; isSupported: boolean; onClick: () => void }
+```
+
+- `mode="input"` → Mic icon (🎤). Red when listening, muted when unsupported.
+- `mode="speaker"` → Speaker icon. Highlighted when speaking, muted when unsupported.
+- Always renders a `<button>` element — never returns `null` — preventing React hydration mismatches.
+
+---
+
+## Portfolio Views
+
+| View | Route | Purpose |
+|------|-------|---------|
+| **Hero** | `/` | Identity, headline rotator, stats, recruiter snapshot, capability stack |
+| **About** | `/about` | Personal narrative with adjacent-role context |
+| **Projects** | `/projects` | Case studies with detailed breakdowns |
+| **Experience** | `/experience` | Chronological timeline + career influence map |
+| **Skills** | `/skills` | Capability map across 5 domains |
+| **Stats** | `/stats` | Key metrics, working-style orbit constellation |
+| **Contact** | `/contact` | Contact channels, work authorization |
+
+---
+
+## Architecture
+
+```
 src/
-├── app/                  # Next.js App Router pages (7 static routes wrapping PortfolioShell)
-│   ├── about/
-│   ├── contact/
-│   ├── experience/
-│   ├── projects/
-│   ├── skills/
-│   └── stats/
+├── app/                         # Next.js App Router
+│   ├── layout.tsx               # Root layout: fonts, particles, metadata
+│   ├── page.tsx                 # Home → PortfolioShell
+│   ├── globals.css              # Design tokens, glass-panel, print styles
+│   ├── robots.ts / sitemap.ts   # SEO
+│   ├── api/
+│   │   └── tts/route.ts         # ElevenLabs TTS proxy
+│   ├── about/                   # Static route
+│   ├── contact/                 # Static route
+│   ├── experience/              # Static route
+│   ├── projects/                # Static route
+│   ├── skills/                  # Static route
+│   └── stats/                   # Static route
 ├── components/
-│   ├── views/            # One component per view (HeroView, ProjectsView, etc.)
-│   ├── layout/           # IconRail sidebar, PortfolioShell wrapper
-│   ├── AiGuidePanel.tsx  # Full-screen chat panel
-│   └── AiGuideFooter.tsx # Footer chat bar
-├── hooks/                # useCommandRouter, usePortfolioWorker, useReducedMotion
-├── lib/                  # data.ts, seo.ts, fallback-engine.ts, worker.ts
-└── tests/                # Playwright E2E suite
+│   ├── layout/
+│   │   ├── PortfolioShell.tsx   # Shell: owns panel state, input state, voice hooks, send logic
+│   │   ├── IconRail.tsx         # Desktop left-side navigation
+│   │   └── MobileNav.tsx        # Mobile bottom tab bar
+│   ├── views/                   # 7 view components (HeroView, AboutView, etc.)
+│   ├── AiGuideFooter.tsx        # Bottom status bar (no input — status only)
+│   ├── AiGuidePanel.tsx         # Bottom drawer: messages + input + mic + send + speaker buttons
+│   ├── VoiceButton.tsx          # Mic (input) and speaker (output) button
+│   ├── TypewriterText.tsx       # Animated text reveal for AI responses
+│   ├── PortfolioViewRenderer.tsx # View routing with AnimatePresence
+│   ├── ParticleBackground.tsx   # Route-aware particle system (tsparticles)
+│   ├── LenisProvider.tsx        # Smooth-scroll Lenis integration
+│   ├── PersonJsonLd.tsx         # JSON-LD structured data
+│   ├── CompanyLogo.tsx          # SVG company logo renderer
+│   ├── GuidedNext.tsx           # Post-navigation CTA chip
+│   ├── TechIcon.tsx             # Simple Icons SVG renderer
+│   └── VercelInsightsWrapper.tsx # Analytics + Speed Insights
+├── hooks/
+│   ├── useCommandRouter.ts      # Text → navigation/command detection
+│   ├── usePortfolioWorker.ts    # Orchestrates fallback + LLM worker + message state
+│   ├── useVoiceInput.ts         # Web Speech API wrapper (STT)
+│   ├── useVoiceOutput.ts        # ElevenLabs TTS wrapper (TTS)
+│   └── useReducedMotion.ts      # OS-level reduced motion detection
+├── lib/
+│   ├── data.ts                  # All content: bio, projects, skills, experience, stats
+│   ├── types.ts                 # Message, ViewKey
+│   ├── seo.ts                   # Site title, description, URL
+│   ├── experience-model.ts      # View goals, career states
+│   ├── fallback-engine.ts       # 17-intent pattern-matching fallback
+│   └── worker.ts                # Web Worker: WebLLM engine singleton
+├── types/
+│   └── speech-recognition.d.ts  # Web Speech API type declarations
 ```
 
 ### Key Patterns
 
-- **PortfolioShell & Command Router** — A hybrid navigation hook (`useCommandRouter`) that intercepts route changes and maps text commands to view navigation via `window.history.pushState`, allowing seamless Framer Motion transitions without full re-renders.
-- **Web Worker Offloading** — The LLM operations run inside a dedicated web worker (`worker.ts`) hooked up via `usePortfolioWorker.ts` so the main thread never blocks.
+- **Command Router** — `useCommandRouter` maps text input to either a navigation action or a question. Detects phrases like "show projects" or "go to about" and routes accordingly.
+- **Lifted State** — `PortfolioShell` owns `input`, `setInput`, `voiceInput`, and `voiceOutput` and passes them down as props to both footer and panel. This ensures a single source of truth for the text input and voice state.
+- **Centralized Send** — The `send()` function in `PortfolioShell` clears the input, handles command routing, and dispatches messages to the worker. Both footer suggestion chips and panel input use this function.
+- **Portfolio Worker** — `usePortfolioWorker` manages WebLLM lifecycle, model download progress, message dispatch, and the fallback/LLM dual-response system.
+- **Type-Safe Views** — `ViewKey` is a strict union type (`"hero" | "about" | "projects" | ...`) ensuring compile-time safety across routing and navigation.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |-------|------------|
-| Framework | [Next.js 16.2](https://nextjs.org) (App Router, Static Generation) |
-| Core UI | [React 19](https://react.dev) |
-| Language | [TypeScript 5.8](https://www.typescriptlang.org) |
-| Styling | [Tailwind CSS 4](https://tailwindcss.com) |
-| Animation & Scroll | [Framer Motion 12](https://motion.dev), [Lenis](https://lenis.studiofreight.com/) |
-| AI Runtime | [WebLLM 0.2](https://github.com/mlc-ai/web-llm) |
-| Model | [Qwen2.5 1.5B (q4f16_1)](https://github.com/QwenLM/Qwen2.5) |
-| Visualizations | [Chart.js](https://www.chartjs.org/), [tsParticles](https://particles.js.org/) |
-| E2E Tests | [Playwright](https://playwright.dev) |
+| Framework | Next.js 16.2.6 (App Router, Static Generation) |
+| Language | TypeScript 5.8 |
+| Styling | Tailwind CSS 4 |
+| Animation | Framer Motion 12 |
+| AI Runtime | WebLLM 0.2.83 (MLC) |
+| AI Model | Qwen2.5-Coder 1.5B (q4f16_1) |
+| Speech-to-Text | Web Speech API (`SpeechRecognition`) |
+| Text-to-Speech | ElevenLabs API (via `POST /api/tts` proxy) |
+| Particles | tsParticles (slim) + React wrapper |
+| Fonts | Syne, JetBrains Mono |
+| Smooth Scroll | Lenis |
+| E2E Tests | Playwright |
+| Deployment | Vercel |
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20+
+- npm
+
+### Setup
 
 ```bash
-git clone https://github.com/shahriarhaqueabir/shahriarhaqueabir-portfolio.git
-cd shahriarhaqueabir-portfolio
+git clone <repo-url>
+cd ShahriarHaqueAbirPortfolio
 npm install
+```
+
+### Environment
+
+Create `.env` in the project root (never commit this file):
+
+```env
+ELEVENLABS_API=sk_...your-elevenlabs-api-key...
+```
+
+The API key is optional. Without it, voice output (TTS) will fail silently. Voice input (STT) works without any API key.
+
+### Development
+
+```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). The boot screen appears first — click **Enter Portfolio** to proceed.
+Opens [http://localhost:3000](http://localhost:3000).
 
-> **Note:** The `--webpack` build flag is utilized by default (`next dev --webpack`) to ensure maximum compatibility with the custom worker configurations.
+> **Important:** The `--webpack` build flag is used because `next.config.ts` contains webpack aliases (`sharp$`, `onnxruntime-node$` → `false`) that are incompatible with Turbopack. The config has `turbopack: {}` for compatibility, but the actual build always uses `--webpack`.
 
----
+### Build
 
-## ✅ Quality Checks
+```bash
+npm run build       # TypeScript check + production build
+```
+
+### Test
+
+```bash
+npx playwright test                  # Headless E2E
+npx playwright test --headed         # Visible browser
+npm run test:headed                  # Same
+```
+
+### Quality
 
 ```bash
 npm run lint        # ESLint
-npm run format:check # Prettier
-npm run build       # TypeScript check + production build
-npm run test        # Playwright E2E tests
+npm run format      # Prettier
 ```
 
 ---
 
-## 📦 Deployment
+## Deployment
 
 Optimized for **Vercel**:
 
-- Framework preset: `Next.js`
+- Framework preset: Next.js
 - Build command: `npm run build`
-- Output directory: `.next`
+- Install command: `npm install`
+- `vercel.json` is configured with `"buildCommand": "npm run build"` and `"installCommand": "npm install"`
+
+**Environment variables to set in Vercel:**
+
+| Key | Value |
+|-----|-------|
+| `ELEVENLABS_API` | `sk_...` (your ElevenLabs API key) |
 
 ---
 
-## 📝 Content Management
+## Content Management
 
-All visitor-facing content is centralized to make updates trivial:
+All visitor-facing content is centralized:
 
 | File | Purpose |
 |------|---------|
-| `src/lib/data.ts` | Tagline, stats, profile text, contact info, project data |
-| `src/lib/seo.ts` | Site title, meta description for Open Graph / Twitter |
+| `src/lib/data.ts` | Tagline, stats, profile text, contact info, project data, skill groupings |
+| `src/lib/seo.ts` | Site title, meta description, canonical URL |
+| `src/lib/experience-model.ts` | View goals, career trajectory states |
 | `src/components/PersonJsonLd.tsx` | JSON-LD structured data (knowsAbout, jobTitle, etc.) |
+| `src/components/views/*.tsx` | Per-view composition and layout |
+| `public/shahriar-haque-abir-cv.pdf` | Downloadable CV |
+| `public/profile.jpg` | Profile photo (used in Open Graph and hero) |
 
 ---
 
-## 📄 License
+## Configuration Files
 
-MIT — see [LICENSE](LICENSE).
+| File | Purpose |
+|------|---------|
+| `next.config.ts` | Webpack aliases, dev origins, unoptimized images |
+| `tsconfig.json` | Path aliases (`@/*` → `./src/*`), strict mode |
+| `src/app/globals.css` | Tailwind CSS v4 config via `@theme` directives (CSS-first config, no separate PostCSS file needed) |
+| `eslint.config.mjs` | ESLint flat config with Next.js core-web-vitals + TypeScript rules |
+| `.prettierrc` | Prettier config (double quotes, trailing commas, 200 print width) |
+| `playwright.config.ts` | Playwright with dev server auto-start |
+| `vercel.json` | Vercel build and install commands |
+
+---
+
+## Design Decisions & Trade-offs
+
+| Decision | Rationale |
+|----------|-----------|
+| No Turbopack | Webpack aliases (`sharp$`, `onnxruntime-node$`) needed for WebLLM compatibility |
+| Footer has no input bar | Only one input bar (in the panel) avoids dual-interface confusion |
+| Manual TTS only | Auto-play would be disruptive. User clicks speaker to hear responses. |
+| 500-char TTS cap | Protects the ~10K char/month ElevenLabs free tier from accidental overuse |
+| In-memory audio cache | Avoids re-fetching the same text from ElevenLabs within a session |
+| 400ms SpeechRecognition restart | Prevents rate-limiting on Brave which fires `onend` after short pauses |
+| `display: none` → `opacity: 0` for footer | Keeps footer in DOM during panel open, preventing hydration issues |
+| WebLLM in Web Worker | Keeps model inference off the main thread, preserving UI responsiveness |
 
 ---
 
@@ -175,14 +350,25 @@ This repository adheres to the [Showcasing Standard](docs/SHOWCASING_STANDARD.md
 
 ---
 
-## 🙅 No Contributions — But Feel Free to Learn
+## Known Issues
 
-This is a **personal portfolio** and is **not open for contributions, issues, or feature requests**. It exists as a public reference:
-
-- **Learn from it** — Fork it, study the architecture, adapt patterns for your own projects.
-- **Keep your distance** — Please do not submit PRs, open issues, or suggest changes. This repo is a snapshot of one person's work, not a community project.
-- **Build your own** — If you find something useful here, great! Go build something even better.
+| Issue | Workaround |
+|-------|------------|
+| Speech-to-text doesn't work on Brave | Use Chrome, Edge, or another Chromium browser |
+| ElevenLabs free tier is limited (~10K chars/mo) | Responses are capped at 500 chars. Consider Fish Audio or Google Chirp 3 for more generous free tiers. |
+| Fast Refresh infinite loop on Windows | Ensure `watchOptions.poll` is NOT set in `next.config.ts`. Never add it back. |
+| Vercel Insights `ERR_INTERNET_DISCONNECTED` in dev | Harmless. Only appears in local development when offline. |
+| "preloaded but not used" profile.jpg warning | Harmless. Next.js preloads the Open Graph image. |
+| WebLLM model download (~300MB) | Only happens if the user explicitly enables AI. The fallback engine works instantly. |
 
 ---
 
-*Built by [Shahriar Haque Abir](https://github.com/shahriarhaqueabir).*
+## License
+
+MIT — see LICENSE.
+
+---
+
+## No Contributions — Personal Portfolio
+
+This is a **personal portfolio** and is **not open for contributions, issues, or feature requests**. Feel free to fork it, study the architecture, and adapt patterns for your own projects.

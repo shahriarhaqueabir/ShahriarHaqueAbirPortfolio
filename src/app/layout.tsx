@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Syne, JetBrains_Mono, Inter } from "next/font/google";
+import { Syne, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { PersonJsonLd } from "@/components/PersonJsonLd";
 import { VercelInsightsWrapper } from "@/components/VercelInsightsWrapper";
@@ -9,7 +9,6 @@ import { siteDescription, siteTitle, siteUrl } from "@/lib/seo";
 
 const syne = Syne({ subsets: ["latin"], variable: "--font-syne" });
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -21,9 +20,7 @@ export const metadata: Metadata = {
   authors: [{ name: CONFIG.name, url: siteUrl }],
   creator: CONFIG.name,
   publisher: CONFIG.name,
-  alternates: {
-    canonical: "/",
-  },
+  // Note: canonical is set per-page in each route's metadata export
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -68,7 +65,10 @@ export const metadata: Metadata = {
   },
 };
 
-import { ParticleBackground } from "@/components/ParticleBackground";
+import dynamic from "next/dynamic";
+import { PostLcpRender } from "@/components/PostLcpRender";
+
+const ParticleBackground = dynamic(() => import("@/components/ParticleBackground").then((mod) => ({ default: mod.ParticleBackground })));
 
 export default function RootLayout({
   children,
@@ -76,18 +76,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${syne.variable} ${jetbrains.variable} ${inter.variable}`}>
+    <html lang="en" className={`${syne.variable} ${jetbrains.variable}`}>
       <body className="antialiased min-h-screen bg-(--bg) text-(--text)">
+        <a href="#main-content" className="fixed -top-40 left-2 z-50 px-4 py-2 bg-(--accent) text-(--bg) text-sm font-mono transition-all focus:top-2 focus:outline-none">
+          Skip to content
+        </a>
+        {/* Explicit high-priority preload for the LCP hero image
+            Next.js generates a default preload via priority prop on <Image>,
+            but it may lack fetchpriority="high". This ensures the browser
+            prioritizes profile.jpg over other resources. */}
+        <link rel="preload" href="/profile.jpg" as="image" fetchPriority="high" />
         <Script id="proton-pass-fix" strategy="beforeInteractive">
           {`(function(){var a=document.querySelectorAll("[data-protonpass-form]");for(var i=0;i<a.length;i++)a[i].removeAttribute("data-protonpass-form")})()`}
         </Script>
         <PersonJsonLd />
-        <ParticleBackground />
+        <PostLcpRender>
+          <ParticleBackground />
+        </PostLcpRender>
         <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
           <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(56,189,248,0.08),transparent_34%,rgba(245,158,11,0.07)_72%,transparent)]" />
           <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(238,246,248,0.35),transparent)]" />
         </div>
-        {children}
+        <main id="main-content">{children}</main>
         <VercelInsightsWrapper />
       </body>
     </html>
