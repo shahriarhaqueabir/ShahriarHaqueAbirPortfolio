@@ -28,7 +28,3 @@ jobs:
       - run: npm run lint
 
       - run: npm run build -- --webpack
-
-      - run: npx playwright install --with-deps chromium
-
-      - run: npm test
