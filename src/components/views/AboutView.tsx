@@ -105,14 +105,7 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
                   <Coffee className="h-4 w-4" />
                 </div>
               </div>
-              <p className="text-sm leading-7 text-(--text-muted)">{CONFIG.profile}</p>
-              <div className="mt-6 flex flex-wrap gap-1.5">
-                {CONFIG.taglines.map((tagline) => (
-                  <span key={tagline} className="border border-(--accent)/30 bg-(--accent)/10 px-3 py-2 font-mono text-[9px] font-bold uppercase tracking-widest text-(--accent)">
-                    {tagline}
-                  </span>
-                ))}
-              </div>
+              <p className="text-sm leading-7 text-(--text-muted)">{CONFIG.coffeeChat}</p>
             </div>
           </div>
         </motion.aside>

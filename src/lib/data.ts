@@ -19,6 +19,7 @@ export const CONFIG = {
   ],
   location: "Berlin, Germany",
   workAuth: "Niederlassungserlaubnis (Permanent resident)",
+  coffeeChat: "When I'm not chasing root causes or planning delivery timelines, I'm usually reading about network security research, experimenting with homelab setups, or exploring Berlin's food scene. I'm genuinely curious about how things work — which is probably why I ended up in infrastructure and operations in the first place. Ask me about the best Thai spot in Kreuzberg or what I'm learning in cybersecurity this week.",
   profile: `I've spent the last 10+ years in the space between engineering and operations — managing software delivery, running incident response, supporting B2B SaaS platforms, and working toward cybersecurity operations. The through-line has been turning technical complexity into predictable outcomes, whether that's coordinating a cross-functional implementation across 3 regions at tripunkt, building onboarding infrastructure for 60+ engineers at Larsen & Toubro, or running network operations for 500+ enterprise accounts at Earth Telecommunication.
 
 Leads technical discovery, proof-of-concept, and integration initiatives for enterprise B2B clients across North America, APAC, and DACH regions. Manages production incident response and root cause analysis, presents technical outcomes to C-level stakeholders, and applies AI-assisted workflows to accelerate troubleshooting and documentation.
