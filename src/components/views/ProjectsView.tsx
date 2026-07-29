@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { ArrowRight, BrainCircuit, ChartSpline, Network, ServerCog, Sparkles, User, Workflow } from "lucide-react";
+import { ArrowRight, BrainCircuit, ChartSpline, Monitor, Network, ServerCog, Sparkles, User } from "lucide-react";
 import TechIcon from "@/components/TechIcon";
 import GuidedNext from "@/components/GuidedNext";
 import { CONFIG } from "@/lib/data";
@@ -12,33 +12,33 @@ type Project = (typeof CONFIG.projects)[number];
 
 // Engineering context per project — replaces abstract metadata with concrete details
 const projectContext: Record<string, { domain: string; impact: string }> = {
-  "Interactive Database Visualizer": { domain: "Internal Tooling · Schema Discovery", impact: "Cut integration engineer onboarding from weeks to days" },
-  "Customer Onboarding & Validation Portal": { domain: "Enterprise SaaS · Data Migration", impact: "Reduced average onboarding time by over 60%" },
-  "Log Analysis & Automated Ticketing": { domain: "Production Observability · Incident Response", impact: "Handles over 200 log streams daily with per-pattern adaptive thresholds" },
   "Network Discovery & Topology Mapping": { domain: "Network Operations · Incident Triage", impact: "Became the de facto reference for NOC incident triage" },
-  "CI-Friendly API Test Automation": { domain: "QA Engineering · CI/CD Pipeline", impact: "Reduced pre-release defect escapes by over 70%" },
+  "Log Analysis & Automated Ticketing": { domain: "Production Observability · Incident Response", impact: "Handles over 200 log streams daily with per-pattern adaptive thresholds" },
+  "UniversalOps": { domain: "Desktop Operations · Local-First Engineering", impact: "Fully offline ops platform with zero telemetry and local AI" },
+  "AI-Assisted German Law": { domain: "Legal Tech · Semantic Search", impact: "302 tests, 103K+ vector points, 9-language AI guidance" },
+  "ShahriarHaqueAbirPortfolio": { domain: "Frontend · AI Integration", impact: "Local AI chat in-browser with 13/13 static routes" },
 };
 
 function getProjectVisual(project: Project) {
-  if (project.name.includes("Database")) return { Icon: Workflow, color: "var(--accent3)", symbol: "DB" };
   if (project.name.includes("Network Discovery")) return { Icon: Network, color: "var(--accent)", symbol: "NET" };
-  if (project.name.includes("Onboarding")) return { Icon: BrainCircuit, color: "var(--accent2)", symbol: "PORTAL" };
   if (project.name.includes("Log Analysis")) return { Icon: ServerCog, color: "var(--accent)", symbol: "LOG" };
-  if (project.name.includes("API Test")) return { Icon: ChartSpline, color: "var(--accent3)", symbol: "TEST" };
+  if (project.name.includes("UniversalOps")) return { Icon: Monitor, color: "var(--accent3)", symbol: "OPS" };
+  if (project.name.includes("German Law")) return { Icon: BrainCircuit, color: "var(--accent2)", symbol: "LAW" };
+  if (project.name.includes("Portfolio")) return { Icon: Sparkles, color: "var(--accent)", symbol: "DEV" };
 
   return { Icon: Sparkles, color: "var(--accent)", symbol: "SYS" };
 }
 
 function getArchitectureNodes(project: Project): string[] {
-  if (project.name.includes("Database")) return ["DDL/Connection Parse", "ER Schema Extraction", "ReactFlow Graph Build", "D3 Force Layout Render"];
   if (project.name.includes("Network Discovery")) return ["Subnet Sweep Config", "ICMP+SNMP Scan", "JSON Relationship Build", "Interactive Topology Render"];
-  if (project.name.includes("Onboarding")) return ["File Upload Handler", "Drag-and-Drop Mapper", "Sandbox Validation Engine", "Error Report Generator"];
   if (project.name.includes("Log Analysis")) return ["Log Stream Ingestion", "Regex Incident Detection", "Threshold Evaluation", "Jira Ticket Dispatch"];
-  if (project.name.includes("API Test")) return ["Postman Collection", "Newman CLI Runner", "GitHub Actions Trigger", "Pass/Fail Report"];
+  if (project.name.includes("UniversalOps")) return ["Go Backend Metrics", "Wails Native Bindings", "React UI Layer", "Ollama Local AI"];
+  if (project.name.includes("German Law")) return ["Hybrid Search Query", "Qdrant Vector Retrieval", "AI Guidance Engine", "RDG-Compliant Output"];
+  if (project.name.includes("Portfolio")) return ["Next.js Route Render", "Framer Motion Layout", "WebLLM Worker Init", "Fallback Intent Match"];
   return ["Input", "Process", "Logic", "Outcome"];
 }
 
-function DeviceMockup({ project, visual }: { project: Project; visual: { Icon: typeof Workflow; color: string; symbol: string } }) {
+function DeviceMockup({ project, visual }: { project: Project; visual: { Icon: typeof Monitor; color: string; symbol: string } }) {
   const mockupReduceMotion = useReducedMotion();
   const nodes = getArchitectureNodes(project);
 
@@ -195,7 +195,7 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
             Featured <span className="text-(--accent)">Projects</span>
           </h1>
           <p className="max-w-2xl text-xs leading-relaxed text-(--text-muted) font-mono uppercase tracking-tight">
-            Network discovery tooling, database visualization, automated validation portals, log analysis pipelines, and CI-integrated API test automation — built across Earth Telecommunication, tripunkt GmbH, and internal tooling.
+            Network discovery tooling, log analysis pipelines, a local-first desktop ops platform, an AI-assisted German law research app, and this portfolio — built across Earth Telecommunication, tripunkt GmbH, and personal projects.
           </p>
         </div>
         <div className="flex flex-col items-end gap-4">

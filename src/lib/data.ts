@@ -104,31 +104,6 @@ Currently building toward cybersecurity operations — combining infrastructure 
       stack: ["Python", "JavaScript", "HTML", "Topology Mapping", "Network Operations"],
     },
     {
-      name: "Interactive Database Visualizer",
-      desc: "Local tool for visual mapping and tracing of complex database relationships.",
-      context:
-        "New integration engineers spent weeks tracing foreign-key chains across dozens of tables before they could contribute. Static ERDs and DDL files weren't enough — the team needed an interactive way to explore and trace database relationships.",
-      implementation:
-        "Developed a tool that parses SQL DDL or connects to live database instances to extract keys, indexes, and relationships. These are mapped into an interactive node-graph UI built with ReactFlow and D3.js, allowing engineers to pan, zoom, and trace dependency chains. The parser handles PostgreSQL, MySQL, and SQLite dialects with a unified internal model.",
-      outcome:
-        "Lets engineers trace foreign key dependencies and explore table linkages in seconds, reducing integration engineer onboarding from weeks to days. The tool is used daily by the integration team for schema discovery and impact analysis.",
-      lessons:
-        "Performance degrades significantly with schemas exceeding 200 tables — naive force-directed layouts became unusable without aggressive caching and viewport culling. A hybrid caching strategy (client-side LRU combined with Web Worker offload for layout computation) was critical for maintaining interactivity at scale.",
-      stack: ["React", "ReactFlow", "D3.js", "SQLite", "SQL Parser"],
-    },
-    {
-      name: "Customer Onboarding & Validation Portal",
-      desc: "Interactive portal for client data mapping and schema validation.",
-      context: "Field mapping was manual, error-prone, and took weeks of back-and-forth per client. A portal with guided validation and immediate feedback could eliminate that friction.",
-      implementation:
-        "Built a Next.js portal for JSON/CSV uploads with an interactive drag-and-drop field-mapping interface. The backend runs a sandboxed validation engine that checks transformations against schema constraints and returns detailed error reports. The portal supports multi-tenant configurations and versioned schema definitions.",
-      outcome:
-        "Cut average onboarding time by over 60% by replacing week-long email exchanges with a single self-service session. Reduced data-related production incidents caused by misconfigured mappings through immediate compatibility feedback.",
-      lessons:
-        "Field mapping edge cases — nullable vs. required mismatches, nested object flattening, character encoding differences — only surfaced when real customer data hit the sandbox. Early validation gaps caused silent data corruption from subtle type coercion failures. Production-like test datasets from day one eliminated this class of defects.",
-      stack: ["Next.js", "TypeScript", "Python", "Node.js", "Schema Validation"],
-    },
-    {
       name: "Log Analysis & Automated Ticketing",
       desc: "Automated error detection and Jira ticket creation workflow.",
       context: "Critical error patterns were buried in thousands of log lines per minute. Subtle regressions went unnoticed for hours. Engineering needed real-time detection, not post-mortem discovery.",
@@ -141,16 +116,46 @@ Currently building toward cybersecurity operations — combining infrastructure 
       stack: ["Python", "Regex", "Jira API", "Operational Support"],
     },
     {
-      name: "CI-Friendly API Test Automation",
-      desc: "Automated API validation workflow for CI/CD pipelines.",
+      name: "UniversalOps",
+      desc: "Native local-first desktop operations platform for system monitoring, network diagnostics, and security auditing. Built with Go, Wails v2, and React 19.",
       context:
-        "Ensuring authentication, schema integrity, and edge cases are validated across every deployment cycle is critical for release reliability. A CI-integrated automated test suite was needed to catch regressions.",
+        "Existing monitoring tools required cloud backends, sent telemetry out, or couldn't run offline. Needed a unified operations toolkit that worked entirely on a local machine.",
       implementation:
-        "Developed a testing workflow using Postman collections with pre-request scripts, executed via Newman CLI. The suite is integrated into GitHub Actions to run on every PR and deploy.",
+        "Built with Go and Wails v2 for native OS integration, React 19 frontend with Tailwind CSS, and SQLite for local persistence. Integrates Ollama for on-device AI-assisted diagnostics. Features real-time system monitoring, network scanning, container management, and security auditing in a single desktop app.",
       outcome:
-        "Reduced pre-release defect escapes by over 70% and gave the QA team confidence to approve deployments faster.",
-      lessons: "Flaky tests eroded team trust. Fixed by isolating test data per run, pinning service versions, and implementing a quarantine mechanism that moved flaky tests out of the critical path.",
-      stack: ["Postman", "Newman", "GitHub Actions", "CI/CD", "API Testing"],
+        "Fully offline operations platform with zero telemetry — system monitoring, network scanning, container management, and security auditing running locally. Local AI via Ollama provides diagnostic assistance without sending data to any third party.",
+      lessons:
+        "Local AI adds real value for on-device diagnostics but needs careful prompt design to stay useful without cloud-grade model quality. Wails v2's native bindings made OS-level metrics straightforward to surface in the React UI.",
+      stack: ["Go", "Wails", "React", "TypeScript", "SQLite", "Ollama"],
+      href: "https://github.com/shahriarhaqueabir/UniversalOps",
+    },
+    {
+      name: "AI-Assisted German Law",
+      desc: "Search, browse, and receive AI-guided analysis of 6,000+ German federal laws with multilingual support and 4 chat modes.",
+      context:
+        "German legal text is dense and scattered. Navigating it without expensive legal counsel is nearly impossible for non-lawyers and non-native speakers.",
+      implementation:
+        "Built with Next.js 16, Supabase (Postgres + RLS), and Qdrant Cloud for vector search. Features hybrid BM25 + dense retrieval across 103K+ vector points, 9-language i18n, AI guidance engine with 4 chat modes (Basic/Browser/Cloud/Local), bookmark system, remediation playbooks, and document templates.",
+      outcome:
+        "302 tests passing, 103K+ indexed law sections in Qdrant, hybrid search with 3-stage fallback chain, AES-256-GCM encrypted API key storage, and full RDG-compliant disclaimers. Deployed on Vercel with 9-language UX.",
+      lessons:
+        "Legal AI needs strict boundary management — the RDG-compliant disclaimer and scope limits were as critical as retrieval accuracy. Hybrid search (BM25 + Dense) dramatically outperformed pure vector search for German legal text.",
+      stack: ["Next.js", "TypeScript", "Supabase", "Qdrant", "PostgreSQL", "Python"],
+      href: "https://github.com/shahriarhaqueabir/AI-Assisted-German-Law",
+    },
+    {
+      name: "ShahriarHaqueAbirPortfolio",
+      desc: "Personal portfolio site with in-browser AI, parallax animations, and a SPA-in-MPA architecture on Next.js 16.",
+      context:
+        "Wanted a portfolio that demonstrates both frontend craftsmanship and practical AI integration — not just a static resume site.",
+      implementation:
+        "Built with Next.js 16 (App Router, webpack) and React 19. Features Framer Motion parallax/timeline animations, WebLLM-powered Qwen2.5 1.5B in a web worker for fully local AI chat, a fallback intent engine with 17 patterns, voice I/O, tsParticles backgrounds, and Tailwind CSS v4.",
+      outcome:
+        "13/13 static routes, SPA-like navigation with MPA reliability, local AI running entirely in the browser via WebGPU, and sub-4s production builds.",
+      lessons:
+        "WebLLM is powerful but the 1.5B model download is heavy — a pattern-matching fallback engine was essential for first-visit experience before the model loads. Voice input/output added unexpected engagement.",
+      stack: ["Next.js", "React", "TypeScript", "Framer Motion", "WebLLM", "Tailwind CSS"],
+      href: "https://github.com/shahriarhaqueabir/ShahriarHaqueAbirPortfolio",
     },
   ],
   skills: [
