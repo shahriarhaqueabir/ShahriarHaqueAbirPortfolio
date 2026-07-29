@@ -125,13 +125,6 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
           </div>
         </div>
 
-        <div className="mt-8 border-l-2 border-(--accent) pl-5 max-w-2xl">
-          <p className="text-sm text-(--text-muted) leading-relaxed font-sans">
-            The timeline shows the influences that shaped the profile: electrical and electronics engineering foundations, network operations at Earth Telecommunication, technical training
-            coordination at L&T, MSc research in optical fiber engineering, enterprise SaaS delivery and incident management at tripunkt, and current focus on cybersecurity operations, technical
-            project delivery, and production security.
-          </p>
-        </div>
       </div>
 
       <div className="relative space-y-px bg-(--border) border border-(--border) pl-0 md:pl-14">
