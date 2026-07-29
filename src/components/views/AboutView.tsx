@@ -10,28 +10,34 @@ import type { ViewKey } from "@/lib/types";
 
 const storyBeats = [
   {
-    label: "Foundation",
-    title: "Built from engineering fundamentals.",
-    text: "The foundation starts with Electrical and Electronic Engineering and IT network operations. That mix shaped how I think about systems: signals, constraints, infrastructure, reliability, and the practical details that decide whether something works.",
-    context: "Engineering grounding: electrical/electronic systems, information and communication engineering, network operations (LAN/WAN), and root-cause thinking.",
+    label: "Network Operations (2013–2015)",
+    title: "Started in network engineering and field operations.",
+    text: "Began at Earth Telecommunication managing network infrastructure and incident resolution for SME and enterprise accounts. Built a Python-based network discovery tool, coordinated field services, and learned SLA-driven operations from the ground up.",
+    context: "Network operations, field support, Python tooling, SLA management.",
   },
   {
-    label: "Delivery",
-    title: "Project management and technical coordination.",
-    text: "At Larsen & Toubro, the work added project management, technical training coordination, and stakeholder follow-through. It made the technical foundation operational: not just understanding systems, but coordinating people and delivery around them.",
-    context: "L&T influence: technical enablement, onboarding infrastructure, curriculum engineering, and operational discipline.",
+    label: "Technical Training & Coordination (2015–2016)",
+    title: "Shifted from hands-on to enabling others.",
+    text: "At Larsen & Toubro, designed onboarding infrastructure and led technical training for 60+ incoming engineers per quarter. Coordinated with Japanese, Indian, and Bangladeshi stakeholders — learning that delivery depends on communication as much as technical skill.",
+    context: "Technical enablement, curriculum design, cross-cultural stakeholder coordination.",
   },
   {
-    label: "Support",
-    title: "Enterprise SaaS operations and Tier-3 support.",
-    text: "In Germany, the work expanded into B2B SaaS solution consulting and Tier-3 technical support. Resolving high-impact production incidents, troubleshooting API integrations, and translating requirements into scalable technical solutions.",
-    context: "SaaS operations: Tier-3 troubleshooting, API/database integration, SLA management, and engineering/product coordination.",
+    label: "SaaS Solutions & Technical Project Delivery (2020–2024)",
+    title: "Enterprise implementation and incident management in Germany.",
+    text: "At tripunkt, managed technical delivery for enterprise B2B clients across NAM, APAC, and DACH — from discovery through production adoption. Owned Tier-3 incident response, SQL-based diagnostics, API integrations, and cross-functional coordination. The work was part consulting, part project management, part operations.",
+    context: "Customer-facing implementation, incident response, SQL/API diagnostics, cross-region coordination.",
   },
   {
-    label: "Now",
-    title: "Operational reliability and systems integration.",
-    text: "Leading technical operations, QA, and release validation. The focus is on improving platform performance, streamlining release cycles, and building the automation that prevents recurring incidents.",
-    context: "Present: QA automation, release validation, regression testing, and production incident prevention.",
+    label: "QA Engineer & Release Validation (2024–2026)",
+    title: "Owning release quality and validation processes.",
+    text: "Managed pre-release QA lifecycle, defect tracking, API validation, and release documentation. Reduced customer-reported post-release defects through structured test processes and engineering coordination.",
+    context: "Release lifecycle, QA process, Jira-based defect management, API validation.",
+  },
+  {
+    label: "Current Focus (2026)",
+    title: "Cybersecurity operations, SaaS solution engineering & enterprise account management.",
+    text: "I decided to come back to my roots and continue building on my IT network engineering foundations. Most recently I obtained the CompTIA Security+ certification and am looking for roles in cybersecurity, SaaS solution engineering, and enterprise account management.",
+    context: "Cybersecurity operations, solution engineering, enterprise account management.",
   },
 ];
 
@@ -66,8 +72,8 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
           <h1 className="max-w-3xl font-syne text-2xl font-black leading-[0.9] tracking-tight text-(--text) md:text-4xl">It&apos;s good to catch up.</h1>
           <p className="mt-6 max-w-2xl font-sans text-lg leading-relaxed tracking-tight text-(--text)">
                       Hi. I&apos;m Shahriar. I was born and raised in Bangladesh, moved halfway across the world to Germany, and I&apos;m currently living in Berlin. I specialize in technical operations,
-            solutions engineering, systems integration, and keeping production environments reliable — working across adjacent roles such as implementation engineering, customer success engineering,
-            technical account management, integration consulting, and support engineering to turn complex incidents into clear outcomes and repeatable processes.
+            technical project management, systems integration, and cybersecurity operations — working across adjacent roles such as implementation engineering, customer success engineering,
+            technical account management, and project delivery to turn complexity into clear outcomes and repeatable processes.
           </p>
           <div className="mt-8 grid max-w-2xl grid-cols-1 gap-px border border-(--border) bg-(--border) sm:grid-cols-2">
             <div className="bg-(--surface) p-5">

@@ -1,6 +1,6 @@
 import type { ViewKey } from "@/lib/types";
 
-export type CareerStateId = "infrastructure-grounding" | "systems-consulting" | "ai-automation";
+export type CareerStateId = "infrastructure-grounding" | "systems-consulting" | "cyber-automation";
 export type SystemLayer = "physical" | "logic" | "experience" | "proof";
 
 export type CareerState = {
@@ -40,12 +40,12 @@ export const CAREER_STATES: CareerState[] = [
     nextViews: ["experience", "about", "contact"],
   },
   {
-    id: "ai-automation",
-    label: "AI Automation & Workflow Engineering",
-    summary: "Modern system design with RAG, local LLMs, AI automation pipelines, workflow engineering, and agentic developer tooling.",
-    primarySkills: ["FastAPI", "Qdrant", "Docker Compose", "n8n", "RAG", "local LLMs"],
-    systemExposure: "Adaptive systems where retrieval, AI automation, and orchestration reduce operational friction.",
-    answers: ["What has he built recently?", "Can he build AI-enabled systems with practical constraints?"],
+    id: "cyber-automation",
+    label: "Cybersecurity Operations & AI Automation",
+    summary: "Building toward cybersecurity operations with network security foundations, security certifications (CompTIA Security+, ITIL 4), and production incident response experience. Parallel work in AI automation, RAG systems, and workflow orchestration.",
+    primarySkills: ["network security", "Linux administration", "security operations", "RAG", "local LLMs", "AI automation", "incident response"],
+    systemExposure: "Security-oriented and adaptive systems where detection, response, and automation reduce operational risk and friction.",
+    answers: ["What is his current direction?", "Can he operate in a security context?", "What has he built recently?", "Does he understand security operations?"],
     nextViews: ["projects", "skills", "contact"],
   },
 ];

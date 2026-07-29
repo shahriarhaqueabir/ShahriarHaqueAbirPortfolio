@@ -13,13 +13,13 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
   const shouldReduceMotion = useReducedMotion();
 
   const phrases: Array<{ text: string; highlight: string; color: string }> = [
-    { text: "Tier-3 Technical Support", highlight: "Support", color: "#38BDF8" },
-    { text: "Systems & API Integration", highlight: "Integration", color: "#F59E0B" },
-    { text: "Incident & SLA Management", highlight: "Incident", color: "#A78BFA" },
-    { text: "Root Cause Analysis", highlight: "Analysis", color: "#10B981" },
-    { text: "Technical Operations Engineer", highlight: "Operations", color: "#F472B6" },
-    { text: "SQL & Log Stream Auditing", highlight: "Log", color: "#5EEAD4" },
-    { text: "Enterprise SaaS Operations", highlight: "SaaS", color: "#6366F1" },
+    { text: "Technical Project & Delivery Management", highlight: "Delivery", color: "#38BDF8" },
+    { text: "Enterprise SaaS Implementation", highlight: "Implementation", color: "#F59E0B" },
+    { text: "Cybersecurity Operations", highlight: "Cybersecurity", color: "#34D399" },
+    { text: "Incident Response & Root Cause Analysis", highlight: "Incident", color: "#A78BFA" },
+    { text: "Cross-functional Team Coordination", highlight: "Coordination", color: "#F472B6" },
+    { text: "SQL & Production Diagnostics", highlight: "Diagnostics", color: "#5EEAD4" },
+    { text: "AI-Assisted Workflows", highlight: "AI", color: "#6366F1" },
   ];
 
   useEffect(() => {
@@ -60,6 +60,16 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
               </span>
             ))}
           </h1>
+
+          {/* Open to roles */}
+          <div className="mt-5 flex flex-wrap items-center gap-2">
+            <span className="font-mono text-[9px] text-(--accent2) uppercase tracking-[0.2em] border border-(--accent2)/30 px-2 py-1 rounded-sm">Open to</span>
+            {CONFIG.openTo.slice(0, 3).map((role) => (
+              <span key={role} className="font-mono text-[9px] text-(--text-muted) uppercase tracking-[0.2em] border border-(--border) px-2 py-1 rounded-sm">
+                {role}
+              </span>
+            ))}
+          </div>
         </div>
 
         {/* Profile photo + rotating competency badge */}
@@ -102,16 +112,10 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
         {/* Professional summary */}
         <div className="w-full max-w-3xl space-y-4">
           <p className="font-sans text-sm leading-7 text-(--text)">
-            Technical Solution Consultant and Operations Engineer with 10+ years of experience supporting IT infrastructure, SaaS platforms, systems integration, and highly technical production
-            environments. Expertise in Tier-3 troubleshooting, incident management, root cause triage, API integrations, database analysis and quality assurance operations management.
-          </p>
-          <p className="font-sans text-sm leading-7 text-(--text)">
-            Led complex KYC, technical discovery, PoC, training, integrations, for SME and enterprise level B2B clients across North America, APAC, and DACH regions. Fluent in resolving
-            high-impact technical issues as well as presenting high-stakes product demonstrations, improving performance, and driving operational excellence at scale.
+            I've spent the last 10+ years in the space between engineering and operations — running technical delivery, managing incident response, and supporting enterprise B2B SaaS platforms across international markets. I lead technical discovery, proof-of-concept, and integration for enterprise clients across North America, APAC, and DACH, coordinating cross-functional teams to turn requirements into outcomes.
           </p>
           <p className="font-sans text-sm leading-7 text-(--text-muted)">
-            My work revolves around breaking down technical processes and outcomes and presenting the ROI to investors and stakeholders. Bridging the gap between customer support and software
-            development and taking full responsibility of optimizing operational processes, and delivering scalable technical solutions.
+            I'm currently building toward cybersecurity operations — combining infrastructure foundations and security certifications (CompTIA Security+, ITIL 4) with production operations experience. I apply AI-assisted workflows to accelerate investigation, documentation, and operational decisions.
           </p>
         </div>
 

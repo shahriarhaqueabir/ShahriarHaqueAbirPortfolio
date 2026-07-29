@@ -5,7 +5,6 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  turbopack: {},
   // Minimal CSP — allows local AI (WebGPU blob workers, inline styles for Framer Motion)
   async headers() {
     return [

@@ -4,7 +4,7 @@ import type { ViewKey } from "@/lib/types";
 
 export const LOCAL_MODEL_LABEL = "Qwen 2.5 1.5B";
 
-const DEFAULT_SUGGESTIONS = ["who is Shahriar", "show me projects", "what are his skills", "compare skills to experience", "navigation steps", "his working style", "why hire him", "show experience"];
+const DEFAULT_SUGGESTIONS = ["who is Shahriar", "show me projects", "his project delivery experience", "cybersecurity operations background", "navigation steps", "why hire him", "certifications", "show experience"];
 
 type VisitorProfile = {
   name?: string;
@@ -196,7 +196,7 @@ function answerSkillsTools(): string {
 
 function answerEducationCerts(): string {
   return `📜 **Education:**\n${CONFIG.education.map((e) => `• ${e.degree} — ${e.school} (${e.period})`).join("\n")}\n\n🏅 **Certifications:**\n${CONFIG.certifications
-    .slice(0, 4)
+    .slice(0, 8)
     .map((c) => `• ${c.name}`)
     .join("\n")}`;
 }
@@ -498,9 +498,10 @@ export function inferVisitorProfile(userText: string, currentProfile: VisitorPro
 
   const interests = new Set(nextProfile.interests || []);
   if (lowerInput.includes("ai") || lowerInput.includes("rag") || lowerInput.includes("llm")) interests.add("AI systems");
-  if (lowerInput.includes("support") || lowerInput.includes("customer")) interests.add("Customer engineering");
+  if (lowerInput.includes("support") || lowerInput.includes("customer") || lowerInput.includes("delivery")) interests.add("Customer delivery");
   if (lowerInput.includes("automation") || lowerInput.includes("workflow")) interests.add("AI automation");
   if (lowerInput.includes("stack") || lowerInput.includes("architecture")) interests.add("Technical architecture");
+  if (lowerInput.includes("security") || lowerInput.includes("cyber") || lowerInput.includes("secops")) interests.add("Cybersecurity");
   if (interests.size > 0) nextProfile.interests = Array.from(interests);
 
   return nextProfile;

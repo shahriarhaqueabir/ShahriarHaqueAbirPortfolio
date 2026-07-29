@@ -1,16 +1,16 @@
 export const CONFIG = {
   name: "Shahriar Haque Abir",
   nameHL: "Shahriar",
-  tagline: "Technical Operations Engineer | Solutions Engineer | QA Automation Engineer",
-  taglineContext: "Enterprise Software · SaaS Platforms · Tier-3 Troubleshooting · API Integrations",
+  tagline: "Technical Project & Implementation Specialist | Solutions Engineer | Cybersecurity",
+  taglineContext: "Enterprise SaaS · Project Delivery · Security Operations · AI Automation",
   taglines: [
-    "Tier-3 Troubleshooting & RCA",
-    "Enterprise SaaS Operations",
+    "Technical Project Management & Delivery",
+    "Enterprise SaaS Operations & Incident Management",
     "API & Systems Integration",
-    "Incident & SLA Management",
-    "SQL & Log Stream Analysis",
-    "Technical Solution Consulting",
-    "QA & Release Validation",
+    "Cybersecurity Operations",
+    "SQL & Production Diagnostics",
+    "AI Automation & Workflow Engineering",
+    "Cross-functional Team Coordination",
   ],
   heroStats: [
     { label: "Years experience in enterprise software & mission-critical support", value: "10+" },
@@ -19,9 +19,11 @@ export const CONFIG = {
   ],
   location: "Berlin, Germany",
   workAuth: "Niederlassungserlaubnis (Permanent resident)",
-  profile: `Technical Solution Consultant and Operations Engineer with 10+ years supporting IT infrastructure, SaaS platforms, systems integration, and production environments at tripunkt GmbH, Larsen & Toubro, and Earth Telecommunication. Covers Tier-3 troubleshooting, incident management, root cause triage, API integrations, database analysis, and QA operations management.
+  profile: `I've spent the last 10+ years in the space between engineering and operations — managing software delivery, running incident response, supporting B2B SaaS platforms, and working toward cybersecurity operations. The through-line has been turning technical complexity into predictable outcomes, whether that's coordinating a cross-functional implementation across 3 regions at tripunkt, building onboarding infrastructure for 60+ engineers at Larsen & Toubro, or running network operations for 500+ enterprise accounts at Earth Telecommunication.
 
-Led KYC, technical discovery, proof-of-concept, training, and integration initiatives for SME and enterprise B2B clients across North America, APAC, and DACH regions. Resolves production incidents daily, presents product demonstrations and technical ROI to C-level stakeholders, and breaks down technical processes into operational outcomes.`,
+Leads technical discovery, proof-of-concept, and integration initiatives for enterprise B2B clients across North America, APAC, and DACH regions. Manages production incident response and root cause analysis, presents technical outcomes to C-level stakeholders, and applies AI-assisted workflows to accelerate troubleshooting and documentation.
+
+Currently building toward cybersecurity operations — combining infrastructure foundations, security certifications (CompTIA Security+, ITIL 4), and systems-thinking engineering to protect and reliably operate production environments.`,
   profileImage: "/profile.jpg",
   contact: [
     { label: "Email", value: "shahriarhaque90@gmail.com", href: "mailto:shahriarhaque90@gmail.com" },
@@ -37,9 +39,9 @@ Led KYC, technical discovery, proof-of-concept, training, and integration initia
       role: "QA and Release Validation",
       period: "2024 – 2026",
       points: [
-        "Led a team of 4 through the complete pre-release manual QA lifecycle across 3 annual releases, managing a suite of ~100 test cases covering frontend behaviour, database schema integrity, REST API contracts, and third-party connector integrations within Docker testing environments.",
-        "Owned defect management end-to-end in JIRA, writing structured reproduction steps, coordinating hotfix verification with engineering, and retesting until closure — reducing customer-reported post-release bugs by 30% within the first year.",
-        "Executed API validation using Postman and database inspection using DBeaver; authored and maintained release notes, test documentation, and QA specifications in Confluence with full release sign-off accountability.",
+        "Led pre-release QA delivery lifecycle across 3 annual releases — managing a suite of ~100 test cases covering frontend behaviour, database schema integrity, REST API contracts, and third-party connector integrations within Docker environments.",
+        "Owned defect management end-to-end in JIRA with cross-functional engineering coordination, writing structured reproduction steps, verifying hotfixes, and tracking through release sign-off — reducing customer-reported post-release defects by 30%.",
+        "Executed API validation using Postman and database inspection via DBeaver; authored release notes, QA specifications, and maintained release documentation in Confluence.",
       ],
     },
     {
@@ -47,13 +49,13 @@ Led KYC, technical discovery, proof-of-concept, training, and integration initia
       role: "Software Solution Consultant",
       period: "2020 – 2024",
       points: [
-        "Resolved approximately 40 Tier-3 incidents weekly across global enterprise customer support operations, troubleshooting API integrations, application services, and database layers in SaaS production environments spanning NAM, APAC, and DACH regions.",
-        "Engineered GTM strategies and SDR workflows with a cross-functional team of 5 for the international market, leading the full international customer lifecycle from onboarding to expansion.",
-        "Standardised global sales, support and troubleshooting frameworks and escalation procedures to support enterprise onboarding across NAM, APAC, and DACH regions.",
-        "Designed and implemented technical onboarding frameworks and escalation procedures for enterprise customers across NAM, APAC, and DACH regions.",
-        "Investigated complex production issues using SQL queries across PostgreSQL and MySQL databases, tracing data flow through integrated platform layers.",
-        "Provided API integration support and schema validation for enterprise customer deployments, ensuring seamless data interchange between CRM/ERP systems and the tripunkt platform.",
-        "Owned technical account management and product support for premier enterprise accounts across 3 regions, serving as the primary bridge between client engineering teams and internal product development.",
+        "Managed Tier-3 technical escalation and incident response for enterprise SaaS deployments across NAM, APAC, and DACH regions — coordinating with product engineering, customer success, and regional teams to drive issues to resolution.",
+        "Led cross-functional go-to-market strategy with a team of 5 for international expansion, managing the full customer lifecycle from onboarding through production adoption.",
+        "Designed and implemented standardized onboarding frameworks, escalation procedures, and support workflows for enterprise customers across 3 regions — reducing ramp time for new accounts.",
+        "Investigated complex production issues using SQL (PostgreSQL, MySQL), API tracing via Postman, and application log analysis to isolate root causes across integrated platform layers.",
+        "Delivered API integration and schema validation for enterprise CRM/ERP deployments, ensuring seamless data interchange between customer systems and the tripunkt platform.",
+        "Owned technical account management for premier enterprise accounts, serving as primary bridge between client engineering teams and internal product development.",
+        "Identified recurring product reliability patterns and recommended features — including multi-view racks interface and network discovery capabilities — that improved customer operational visibility.",
       ],
     },
     {
@@ -152,53 +154,68 @@ Led KYC, technical discovery, proof-of-concept, training, and integration initia
   ],
   skills: [
     {
-      group: "Technical Operations",
-      items: ["Tier-3 Support", "Incident Management", "Root Cause Analysis", "SLA Management"],
+      group: "Project & Delivery Management",
+      items: ["Cross-functional Coordination", "Delivery Lifecycle", "Technical Scoping", "Release Management"],
+    },
+    {
+      group: "Incident & Operations Management",
+      items: ["Tier-3 Support", "Incident Response", "Root Cause Analysis", "SLA Management"],
     },
     {
       group: "Systems Integration",
       items: ["REST APIs", "Software Deployment", "Schema Validation", "Docker Environments"],
     },
     {
-      group: "Data & Troubleshooting",
-      items: ["SQL (PostgreSQL, MySQL)", "Log Analysis", "API Tracing", "Performance Optimization"],
-    },
-    {
-      group: "Solutions Engineering",
-      items: ["Technical Discovery", "Solution Scoping", "Technical Consulting"],
+      group: "Data & Diagnostics",
+      items: ["SQL (PostgreSQL, MySQL)", "Log Analysis", "API Tracing", "Production Diagnostics"],
     },
     {
       group: "Infrastructure & Security",
-      items: ["Network Troubleshooting", "Cloud Services", "Linux Admin", "LAN/WAN"],
+      items: ["Network Security", "Security Operations", "Linux Administration", "Security Compliance"],
     },
     {
       group: "AI Automation",
-      items: ["Agentic Workflows", "Local LLM Integration", "Prompt Engineering"],
+      items: ["AI-assisted Workflows", "Prompt Engineering", "Documentation Automation", "Local LLMs"],
+    },
+    {
+      group: "Security Tools (Associate Level)",
+      items: ["SIEM Concepts (Splunk, ELK — fundamentals)", "EDR Concepts (CrowdStrike, Defender — awareness level)", "Jira & ServiceNow Ticketing", "Vulnerability Scanning Concepts (Nessus, OpenVAS)", "CompTIA Security+ (2026)"],
     },
   ],
-  languages: ["English (Native or Bilingual)", "Bangla (Native or Bilingual)", "German (Professional Working)", "Hindi (Limited Working)"],
+  languages: ["English (Native or Bilingual)", "Bangla (Native or Bilingual)", "German (Professional Working B2)", "Hindi (Limited Working)"],
   workingStyle:
-    "I break down technical processes, translate them into business outcomes, and present ROI to stakeholders. I connect customer support with engineering to optimize operations and deliver scalable solutions across NAM, APAC, and DACH regions.",
+    "I manage technical delivery end-to-end — from scoping and cross-functional coordination through implementation and operational handoff. I connect customer-facing signals with engineering execution to deliver outcomes that are reliable, traceable, and accountable.",
   qualities: [
-    "Breaks down complex technical problems into business impact for C-level stakeholders",
-    "Connects customer-facing support data with product engineering decisions",
+    "Manages technical delivery across cross-functional teams and international markets",
+    "Breaks down complex requirements into execution-ready plans with measurable outcomes",
     "Owns the full lifecycle from technical discovery through release validation",
-    "Operates across Tier-3 support, QA operations, and solutions consulting",
-    "Optimizes operational processes across NAM, APAC, and DACH regions",
+    "Combines project management discipline with deep systems engineering",
+    "Uses AI-assisted workflows for faster investigation, documentation, and operational decisions",
+    "Building cybersecurity expertise from network operations and security certification foundations",
   ],
   principles: [
-    "Systems should be reliable, traceable, and accountable to business outcomes",
+    "Delivery should be predictable, traceable, and accountable to business outcomes",
     "Incidents are opportunities to improve — document root causes and fix the process",
-    "Automation should reduce alert fatigue, not add to it",
+    "Security is a systems property, not a checkbox — build it into operations",
     "Customer-facing teams and engineering should share context, not tickets",
   ],
   philosophy: "Make systems reliable, traceable, and accountable to business outcomes.",
+  openTo: [
+    "SOC Analyst / Cybersecurity Operations",
+    "Technical Project / Delivery Manager (Enterprise SaaS)",
+    "Solutions Engineer / Implementation Engineer",
+    "Incident Response / Security Operations Engineer",
+    "Infrastructure & Security Engineer (Linux/Network focus)",
+  ],
   certifications: [
-    { name: "Networking Foundations: Networking Basics", href: "https://www.linkedin.com/learning/certificates/networking-foundations-networking-basics" },
-    { name: "CCNA: Scaling Networks (Cisco Networking Academy)", href: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/ccna.html" },
-    { name: "Goethe-Zertifikat B1", href: "https://www.goethe.de/en/spr/kup/prf/prf/gb1.html" },
-    { name: "Linux System Engineer: Networking and SSH", href: "https://www.linkedin.com/learning/certificates/linux-system-engineer-networking-ssh" },
-    { name: "CCNA: Connecting Networks (Cisco Networking Academy)", href: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/ccna.html" },
+    { name: "Goethe-Zertifikat B2 (2025)", href: "https://www.goethe.de/en/spr/kup/prf/prf/gb2.html" },
+    { name: "CCNA: Connecting Networks — Cisco Networking Academy (2014)", href: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/ccna.html" },
+    { name: "CCNA: Scaling Networks — Cisco Networking Academy (2014)", href: "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/ccna.html" },
+    { name: "CompTIA Security+ (2026)", href: "https://www.comptia.org/certifications/security" },
+    { name: "ITIL® 4 Foundation (2024)", href: "https://www.axelos.com/certifications/itil-service-management/itil-4-foundation" },
+    { name: "Linux Foundation Certified System Administrator (2024)", href: "https://training.linuxfoundation.org/certification/" },
+    { name: "Linux System Engineer: Networking and SSH (2024)", href: "https://www.linkedin.com/learning/certificates/linux-system-engineer-networking-ssh" },
+    { name: "Networking Foundations: Networking Basics (2024)", href: "https://www.linkedin.com/learning/certificates/networking-foundations-networking-basics" },
   ],
   education: [
     { degree: "Master of Science - MSc, Information and Communication Engineering", school: "Technische Hochschule Mittelhessen, Germany", period: "2016 – 2020" },

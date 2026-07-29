@@ -65,6 +65,17 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
               </div>
             </div>
           </div>
+
+          <div className="mt-6 border-t border-(--border) pt-6">
+            <div className="font-mono text-[9px] text-(--accent2) uppercase tracking-widest mb-3">Open to Roles</div>
+            <div className="flex flex-wrap gap-1.5">
+              {CONFIG.openTo.slice(0, 4).map((role) => (
+                <span key={role} className="border border-(--accent2)/20 text-(--text-muted) bg-(--accent2)/5 px-2.5 py-1.5 rounded-sm text-[9px] font-bold uppercase tracking-widest">
+                  {role}
+                </span>
+              ))}
+            </div>
+          </div>
         </section>
 
         <section className="bg-(--surface) p-5 md:p-6 relative overflow-hidden">

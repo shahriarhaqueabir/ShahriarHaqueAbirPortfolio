@@ -11,20 +11,20 @@ import type { ViewKey } from "@/lib/types";
 const primaryCompetencies = [
   {
     number: "01",
-    title: "Technical Operations",
-    text: "Tier-3 Support, incident management, root cause analysis (RCA), production support, and SLA management across global enterprise accounts.",
+    title: "Project & Delivery Management",
+    text: "Cross-functional technical delivery, release management, stakeholder coordination, and end-to-end project lifecycle across international enterprise accounts.",
     accent: "#38BDF8",
   },
   {
     number: "02",
-    title: "Systems Integration",
-    text: "REST APIs, application integration, software deployment, configuration management, and schema validation in Docker and on-prem environments.",
+    title: "Incident & Operations Management",
+    text: "Tier-3 incident response, root cause analysis, SLA management, and production support across global enterprise SaaS environments.",
     accent: "#34D399",
   },
   {
     number: "03",
-    title: "Data & Troubleshooting",
-    text: "SQL databases, log analysis (grep/awk), API tracing (Postman/Swagger), and cross-database validation for production defect isolation.",
+    title: "Systems Integration & Data",
+    text: "REST APIs, application integration, SQL diagnostics, log analysis, and cross-database validation for production systems.",
     accent: "#A78BFA",
   },
 ];
@@ -32,40 +32,40 @@ const primaryCompetencies = [
 const expandingCompetencies = [
   {
     number: "04",
-    title: "Solutions Engineering",
-    text: "Technical discovery, solution scoping, PoC delivery, RFI/RFP responses, and authoring technical integration schematics.",
+    title: "Cybersecurity Operations",
+    text: "Network security, security operations, compliance frameworks (CompTIA Security+, ITIL 4), and security infrastructure foundations.",
     accent: "#F472B6",
   },
   {
     number: "05",
     title: "Infrastructure & Networking",
-    text: "LAN/WAN architecture, routing & switching, network troubleshooting, and standardized hardware configuration frameworks.",
+    text: "LAN/WAN architecture, routing & switching, network troubleshooting, Linux administration, and configuration management.",
     accent: "#F59E0B",
   },
   {
     number: "06",
     title: "AI Automation",
-    text: "Agentic workflow orchestration, RAG systems, and AI-enabled support tooling to optimize operational processes and reliability.",
+    text: "AI-assisted workflows, prompt engineering, documentation automation, and local LLM integration for operational efficiency.",
     accent: "#22D3EE",
   },
 ];
 
 const toolGroups = [
   {
-    title: "Technical Operations",
-    items: ["Postman", "Swagger", "CLI (Grep/Awk)", "Docker", "Jira", "Confluence", "SLA Management"],
+    title: "Project & Delivery Management",
+    items: ["Jira", "Confluence", "Release Management", "Cross-functional Coordination", "Technical Scoping"],
   },
   {
     title: "Data & Integration",
-    items: ["PostgreSQL", "MySQL", "SQL Server", "REST APIs", "JSON/XML", "Schema Validation", "API Tracing"],
+    items: ["PostgreSQL", "MySQL", "REST APIs", "JSON/XML", "Schema Validation", "API Tracing", "Postman"],
   },
   {
     title: "AI & Automation",
-    items: ["Python", "n8n", "Ollama", "LangChain", "RAG", "Qdrant", "Git", "CI/CD"],
+    items: ["Python", "Ollama", "RAG", "Qdrant", "n8n", "Prompt Engineering", "Git", "CI/CD"],
   },
   {
-    title: "Systems & Networking",
-    items: ["Linux", "LAN/WAN", "Cisco", "Routing/Switching", "Network Discovery", "nmap", "Security Foundations"],
+    title: "Infrastructure & Security",
+    items: ["Linux", "LAN/WAN", "Cisco", "Network Discovery", "nmap", "Security Foundations", "IT Security"],
   },
 ];
 

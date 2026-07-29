@@ -13,9 +13,9 @@ const lifeMilestones = [
   { label: "2015", detail: "Technical training coordination at L&T", marker: "L&T" },
   { label: "2016", detail: "MSc Information & Communication Engineering", marker: "MSc" },
   { label: "2019", detail: "Optical fiber research & hardware engineering", marker: "THESIS" },
-  { label: "2020", detail: "Software Solution Consulting & Tier-3 Support", marker: "SAAS" },
-  { label: "2024", detail: "QA and Release Validation engineering", marker: "QA/REL" },
-  { label: "2026", detail: "Technical Operations & Integration Engineering", marker: "CURRENT" },
+  { label: "2020", detail: "Enterprise SaaS delivery & technical project consulting", marker: "SAAS" },
+  { label: "2024", detail: "QA, Release Validation & technical delivery management", marker: "QA/REL" },
+  { label: "2026", detail: "Cybersecurity operations & technical project delivery", marker: "CURRENT" },
 ];
 
 export default function ExperienceView({ setView }: { setView: (view: ViewKey) => void }) {
@@ -128,8 +128,8 @@ export default function ExperienceView({ setView }: { setView: (view: ViewKey) =
         <div className="mt-8 border-l-2 border-(--accent) pl-5 max-w-2xl">
           <p className="text-sm text-(--text-muted) leading-relaxed font-sans">
             The timeline shows the influences that shaped the profile: electrical and electronics engineering foundations, network operations at Earth Telecommunication, technical training
-            coordination at L&T, MSc research in optical fiber engineering, SaaS solution consulting and Tier-3 production support at tripunkt, and current focus on QA, release validation, and
-            technical operations engineering.
+            coordination at L&T, MSc research in optical fiber engineering, enterprise SaaS delivery and incident management at tripunkt, and current focus on cybersecurity operations, technical
+            project delivery, and production security.
           </p>
         </div>
       </div>

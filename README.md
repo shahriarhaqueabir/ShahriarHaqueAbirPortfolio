@@ -31,13 +31,13 @@ Opens as a bottom drawer panel that slides up when you click the footer or send 
 ### Two Modes
 
 | Mode | How it works | When |
-|------|-------------|------|
+| ------ | ------------- | ------ |
 | **Fallback** (default) | 17-intent pattern-matching engine. Responds with hardcoded answers about projects, skills, experience. | Always available. No download, no GPU needed. |
 | **Local LLM** | Qwen2.5-Coder 1.5B running in-browser via WebGPU. Offers richer, context-aware conversation. | User clicks "Enable AI" → downloads ~300MB model → ready. |
 
-### Architecture
+### AI Architecture Flow
 
-```
+```text
 User input (text or voice)
         │
         ▼
@@ -66,18 +66,20 @@ Bidirectional voice layer implemented entirely client-side.
 ### Speech-to-Text (Mic Button)
 
 | File | Role |
-|------|------|
+| ------ | ------ |
 | `src/hooks/useVoiceInput.ts` | Wraps the Web Speech API (`SpeechRecognition` / `webkitSpeechRecognition`) |
 | `src/types/speech-recognition.d.ts` | TypeScript declarations for the non-standard speech API |
 | `src/components/VoiceButton.tsx` | Renders the mic button (always a `<button>` to prevent hydration mismatch) |
 
 **How it works:**
+
 1. Click the mic button → `startListening()` creates a `SpeechRecognition` instance with `continuous: true` and `interimResults: true`
 2. Speak → interim transcript populates the input field in real time
 3. Click mic again → `stopListening()` freezes the final transcript in the input
 4. Click Send → text is sent to the AI guide
 
 **Browser quirks handled:**
+
 - Brave aggressively fires `onend` after short pauses → a 400ms `setTimeout` restart delay prevents rate-limiting
 - A maximum of 8 restart attempts prevents infinite loops
 - `isManualStopRef` distinguishes user stops from browser-enforced stops
@@ -88,18 +90,20 @@ Bidirectional voice layer implemented entirely client-side.
 ### Text-to-Speech (Speaker Button)
 
 | File | Role |
-|------|------|
+| ------ | ------ |
 | `src/hooks/useVoiceOutput.ts` | Manages audio playback with in-memory caching |
 | `src/app/api/tts/route.ts` | Next.js API route that proxies to ElevenLabs |
 | `src/components/VoiceButton.tsx` | Renders the speaker button on AI messages |
 
 **How it works:**
+
 1. Click the speaker icon on any AI message → `speak(text)` fires a POST to `/api/tts`
 2. The API route proxies to `https://api.elevenlabs.io/v1/text-to-speech/{voice_id}`
 3. Audio is returned as `audio/mpeg` and played via `new Audio(url)`
 4. Responses are cached in memory (keyed by first 200 characters of text)
 
 **Configuration:**
+
 - **Default voice:** Laura - Enthusiast, Quirky Attitude (`FGY2WhTYpPnrIDTdsKH5`)
 - **Model:** `eleven_multilingual_v2`
 - **Text cap:** 500 characters per request (protects free-tier quota)
@@ -128,7 +132,7 @@ type VoiceButtonProps =
 ## Portfolio Views
 
 | View | Route | Purpose |
-|------|-------|---------|
+| ------ | ------- | --------- |
 | **Hero** | `/` | Identity, headline rotator, stats, recruiter snapshot, capability stack |
 | **About** | `/about` | Personal narrative with adjacent-role context |
 | **Projects** | `/projects` | Case studies with detailed breakdowns |
@@ -141,7 +145,7 @@ type VoiceButtonProps =
 
 ## Architecture
 
-```
+```text
 src/
 ├── app/                         # Next.js App Router
 │   ├── layout.tsx               # Root layout: fonts, particles, metadata
@@ -204,7 +208,7 @@ src/
 ## Tech Stack
 
 | Layer | Technology |
-|-------|------------|
+| ------- | ------------ |
 | Framework | Next.js 16.2.6 (App Router, Static Generation) |
 | Language | TypeScript 5.8 |
 | Styling | Tailwind CSS 4 |
@@ -254,7 +258,7 @@ npm run dev
 
 Opens [http://localhost:3000](http://localhost:3000).
 
-> **Important:** The `--webpack` build flag is used because `next.config.ts` contains webpack aliases (`sharp$`, `onnxruntime-node$` → `false`) that are incompatible with Turbopack. The config has `turbopack: {}` for compatibility, but the actual build always uses `--webpack`.
+> **Important:** The `--webpack` build flag is used because `next.config.ts` contains webpack aliases (`sharp$`, `onnxruntime-node$` → `false`) that are incompatible with Turbopack. The build always uses `--webpack`.
 
 ### Build
 
@@ -291,7 +295,7 @@ Optimized for **Vercel**:
 **Environment variables to set in Vercel:**
 
 | Key | Value |
-|-----|-------|
+| ----- | ------- |
 | `ELEVENLABS_API` | `sk_...` (your ElevenLabs API key) |
 
 ---
@@ -301,7 +305,7 @@ Optimized for **Vercel**:
 All visitor-facing content is centralized:
 
 | File | Purpose |
-|------|---------|
+| ------ | --------- |
 | `src/lib/data.ts` | Tagline, stats, profile text, contact info, project data, skill groupings |
 | `src/lib/seo.ts` | Site title, meta description, canonical URL |
 | `src/lib/experience-model.ts` | View goals, career trajectory states |
@@ -315,7 +319,7 @@ All visitor-facing content is centralized:
 ## Configuration Files
 
 | File | Purpose |
-|------|---------|
+| ------ | --------- |
 | `next.config.ts` | Webpack aliases, dev origins, unoptimized images |
 | `tsconfig.json` | Path aliases (`@/*` → `./src/*`), strict mode |
 | `src/app/globals.css` | Tailwind CSS v4 config via `@theme` directives (CSS-first config, no separate PostCSS file needed) |
@@ -329,7 +333,7 @@ All visitor-facing content is centralized:
 ## Design Decisions & Trade-offs
 
 | Decision | Rationale |
-|----------|-----------|
+| ---------- | ----------- |
 | No Turbopack | Webpack aliases (`sharp$`, `onnxruntime-node$`) needed for WebLLM compatibility |
 | Footer has no input bar | Only one input bar (in the panel) avoids dual-interface confusion |
 | Manual TTS only | Auto-play would be disruptive. User clicks speaker to hear responses. |
@@ -344,6 +348,7 @@ All visitor-facing content is centralized:
 ## ⚙️ Repository Setup Standards
 
 This repository adheres to the [Showcasing Standard](docs/SHOWCASING_STANDARD.md). If you're adapting this, remember to configure the following in the GitHub UI:
+
 - **Topics/Tags**: `nextjs`, `portfolio`, `ai-guide`, `webllm`, `qwen`, `react-19`
 - **Social Preview**: Set a high-quality image in Settings > General.
 - **About Section**: Keep the description concise and include the live URL.
@@ -353,7 +358,7 @@ This repository adheres to the [Showcasing Standard](docs/SHOWCASING_STANDARD.md
 ## Known Issues
 
 | Issue | Workaround |
-|-------|------------|
+| ------- | ------------ |
 | Speech-to-text doesn't work on Brave | Use Chrome, Edge, or another Chromium browser |
 | ElevenLabs free tier is limited (~10K chars/mo) | Responses are capped at 500 chars. Consider Fish Audio or Google Chirp 3 for more generous free tiers. |
 | Fast Refresh infinite loop on Windows | Ensure `watchOptions.poll` is NOT set in `next.config.ts`. Never add it back. |
