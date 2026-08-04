@@ -36,15 +36,27 @@ self.addEventListener("message", async (event: MessageEvent<{ messages: ChatComp
       return;
     }
 
-    const output = await engine.chat.completions.create({
+    // Stream tokens to the UI as they're generated so the first words appear
+    // within ~1s instead of waiting for the full response.
+    const stream = await engine.chat.completions.create({
       messages,
       temperature: 0.35,
-      max_tokens: 420,
+      max_tokens: 256,
+      stream: true,
     });
+
+    let text = "";
+    for await (const chunk of stream) {
+      const delta = chunk.choices[0]?.delta?.content ?? "";
+      if (delta) {
+        text += delta;
+        self.postMessage({ status: "stream", text, model: MODEL_ID });
+      }
+    }
 
     self.postMessage({
       status: "complete",
-      text: output.choices[0]?.message?.content ?? "",
+      text,
       model: MODEL_ID,
     });
   } catch (err: unknown) {

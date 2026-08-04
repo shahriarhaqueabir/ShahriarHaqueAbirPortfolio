@@ -84,15 +84,6 @@ body::after {
   }
 }
 
-@keyframes typewriter-reveal {
-  from {
-    clip-path: inset(0 100% 0 0);
-  }
-  to {
-    clip-path: inset(0 0% 0 0);
-  }
-}
-
 @keyframes float {
   0% {
     transform: translate(0, 0) scale(1);

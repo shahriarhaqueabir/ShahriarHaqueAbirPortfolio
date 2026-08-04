@@ -50,6 +50,15 @@ function getTypewriterDelay(text: string) {
   return Math.min(text.length * 16 + 700, 5000);
 }
 
+/** Hide INSTRUCTION-style control lines from the live streaming view; they're parsed out on completion. */
+function stripControlLines(text: string) {
+  return text
+    .split("\n")
+    .filter((line) => !line.trim().startsWith("INITIATING_"))
+    .join("\n")
+    .trim();
+}
+
 function formatViewName(view: ViewKey) {
   if (view === "hero") return "Home";
   return view.charAt(0).toUpperCase() + view.slice(1);
@@ -82,6 +91,8 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
   const initialLoadRequestedRef = useRef(false);
   const onboardingQueuedRef = useRef(false);
   const initialLoadProgressRef = useRef(0);
+  const streamingMessageIdRef = useRef<string | null>(null);
+  const streamedRawTextRef = useRef("");
   const messageIdCounterRef = useRef(0);
   const localAiFallbackReasonRef = useRef(getLocalAiFallbackReason());
   const queuedMessageRef = useRef<{ text: string; activeView: ViewKey; routerMemory?: RouterMemory } | null>(null);
@@ -240,6 +251,22 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
           }
           break;
         }
+        case "stream": {
+          const rawText = typeof event.data.text === "string" ? event.data.text : "";
+          streamedRawTextRef.current = rawText;
+          const visibleText = stripControlLines(rawText);
+
+          setMessages((prev) => {
+            const currentId = streamingMessageIdRef.current;
+            if (currentId) {
+              return prev.map((m) => (m.id === currentId ? { ...m, text: visibleText } : m));
+            }
+            const newMsg = createAiMessage(visibleText);
+            streamingMessageIdRef.current = newMsg.id;
+            return pruneMessages([...prev, { ...newMsg, isStreaming: true, wasStreamed: true }]);
+          });
+          break;
+        }
         case "ready":
         case "complete": {
           if (!initialLoadDoneRef.current) {
@@ -275,50 +302,58 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
 
           if (event.data.status === "ready") break;
 
-          setMessages((prev) => {
-            const cleanText = typeof event.data.text === "string" ? event.data.text.trim() : "";
-            let updatedText: string;
-            let navigateTo: ViewKey | null = null;
+          const rawText = streamedRawTextRef.current || (typeof event.data.text === "string" ? event.data.text : "");
+          streamedRawTextRef.current = "";
+          const cleanText = rawText.trim();
+          let updatedText: string;
+          let navigateTo: ViewKey | null = null;
 
-            if (cleanText.includes("INITIATING_NAVIGATION:")) {
-              const parts = cleanText.split("INITIATING_NAVIGATION:");
-              const responseText = parts[0].trim();
-              const rawView = parts[1].trim().toLowerCase();
-              const viewToNavigate = rawView.split(/[\s\n]+/)[0] as ViewKey;
+          if (cleanText.includes("INITIATING_NAVIGATION:")) {
+            const parts = cleanText.split("INITIATING_NAVIGATION:");
+            const responseText = parts[0].trim();
+            const rawView = parts[1].trim().toLowerCase();
+            const viewToNavigate = rawView.split(/[\s\n]+/)[0] as ViewKey;
 
-              const VALID_VIEWS: ViewKey[] = ["hero", "about", "projects", "experience", "skills", "stats", "contact"];
+            const VALID_VIEWS: ViewKey[] = ["hero", "about", "projects", "experience", "skills", "stats", "contact"];
 
-              if (VALID_VIEWS.includes(viewToNavigate)) {
-                updatedText = responseText || cleanText.replace(/INITIATING_NAVIGATION:\s*\S+\s*/i, "").trim();
-                navigateTo = viewToNavigate;
-              } else {
-                updatedText = cleanText;
-              }
-            } else if (cleanText.includes("INITIATING_SYNTHESIS")) {
-              const context = cleanText.replace("INITIATING_SYNTHESIS", "");
-              if (onSynthesisRef.current) onSynthesisRef.current(context);
-              updatedText = context;
+            if (VALID_VIEWS.includes(viewToNavigate)) {
+              updatedText = responseText || cleanText.replace(/INITIATING_NAVIGATION:\s*\S+\s*/i, "").trim();
+              navigateTo = viewToNavigate;
             } else {
               updatedText = cleanText;
             }
+          } else if (cleanText.includes("INITIATING_SYNTHESIS")) {
+            const context = cleanText.replace("INITIATING_SYNTHESIS", "");
+            if (onSynthesisRef.current) onSynthesisRef.current(context);
+            updatedText = context;
+          } else {
+            updatedText = cleanText;
+          }
 
-            const newMsgs = [...prev, createAiMessage(updatedText)];
+          const currentStreamId = streamingMessageIdRef.current;
+          streamingMessageIdRef.current = null;
 
-            if (navigateTo && onNavigateRef.current) {
-              onNavigateRef.current(navigateTo);
+          setMessages((prev) => {
+            if (currentStreamId) {
+              return prev.map((m) => (m.id === currentStreamId ? { ...m, text: updatedText, isStreaming: false } : m));
             }
-
-            return newMsgs;
+            return [...prev, createAiMessage(updatedText)];
           });
+
+          if (navigateTo && onNavigateRef.current) {
+            onNavigateRef.current(navigateTo);
+          }
           break;
         }
         case "error":
+          streamingMessageIdRef.current = null;
+          streamedRawTextRef.current = "";
           setLocalAiFallback(true);
           setIsReady(true);
           setProgress(100);
           setMessages((prev) =>
             pruneMessages([
-              ...prev.filter((message) => message.id !== "1"),
+              ...prev.filter((message) => message.id !== "1").map((m) => (m.isStreaming ? { ...m, isStreaming: false } : m)),
               createSysMessage(`WebGPU model mode could not start (${event.data.error}). Using the lightweight portfolio fallback instead.`),
             ]),
           );
@@ -460,31 +495,31 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
 
     const fallbackMsg = createFallbackMessage(fallbackText, fallbackResult.suggestions);
 
-    setMessages((prev) => {
-      const updated = pruneMessages([...prev, createUserMessage(userText), fallbackMsg]);
+    // IMPORTANT: no side effects inside the state updater — React Strict Mode
+    // (on by default in the App Router) double-invokes updaters in dev, which
+    // used to post the question to the worker twice and produce duplicate answers.
+    const updated = pruneMessages([...messages, createUserMessage(userText), fallbackMsg]);
+    setMessages(updated);
 
+    if (aiIsComing) {
       // Add cooperative context to AI system prompt
-      if (aiIsComing) {
-        const chatHistory: ChatMessage[] = updated
-          .filter((m) => m.sender === "user" || (m.sender === "ai" && !m.isTyping))
-          .slice(-MAX_CHAT_MESSAGES)
-          .map((m) => ({
-            role: m.sender === "user" ? "user" : "assistant",
-            content: m.text,
-          }));
+      const chatHistory: ChatMessage[] = updated
+        .filter((m) => m.sender === "user" || (m.sender === "ai" && !m.isTyping))
+        .slice(-MAX_CHAT_MESSAGES)
+        .map((m) => ({
+          role: m.sender === "user" ? "user" : "assistant",
+          content: m.text,
+        }));
 
-        const worker = sharedWorkerRef.current;
-        if (worker) {
-          worker.postMessage({
-            messages: [{ role: "system", content: buildSystemPrompt(text, activeView, nextProfile, routerMemory) }, ...chatHistory],
-          });
-        }
-      } else if (localAiEnabled && !isReady && !localAiFallback) {
-        queuedMessageRef.current = { text, activeView, routerMemory };
+      const worker = sharedWorkerRef.current;
+      if (worker) {
+        worker.postMessage({
+          messages: [{ role: "system", content: buildSystemPrompt(text, activeView, nextProfile, routerMemory) }, ...chatHistory],
+        });
       }
-
-      return updated;
-    });
+    } else if (localAiEnabled && !isReady && !localAiFallback) {
+      queuedMessageRef.current = { text, activeView, routerMemory };
+    }
   };
 
   return {

@@ -3,6 +3,8 @@ export type Message = {
   text: string;
   sender: "sys" | "user" | "ai" | "fallback";
   isTyping?: boolean;
+  isStreaming?: boolean;
+  wasStreamed?: boolean;
   isReadyGreen?: boolean;
   suggestions?: string[];
 };

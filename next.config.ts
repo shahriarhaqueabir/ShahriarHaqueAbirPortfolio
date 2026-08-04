@@ -22,9 +22,11 @@ const nextConfig: NextConfig = {
               "img-src 'self' data: blob:",
               "font-src 'self' data:",
               // Vercel analytics sends data; elevenlabs.io NOT needed — TTS proxied server-side
-              // Local AI (WebLLM): model config + weights from Hugging Face (LFS files redirect to
-              // cdn-lfs.huggingface.co); WASM model lib fetched from GitHub raw (binary-mlc-llm-libs)
-              "connect-src 'self' https://va.vercel-scripts.com https://huggingface.co https://cdn-lfs.huggingface.co https://raw.githubusercontent.com",
+              // Local AI (WebLLM): model config + weights from Hugging Face. Weight shards 302-redirect
+              // to HF's Xet CAS CDN (us.aws.cdn.hf.co / eu.aws.cdn.hf.co / *.gcp.cdn.hf.co), and legacy
+              // LFS files to cdn-lfs.huggingface.co — covered via *.hf.co + *.huggingface.co wildcards.
+              // WASM model lib fetched from GitHub raw (binary-mlc-llm-libs).
+              "connect-src 'self' https://va.vercel-scripts.com https://huggingface.co https://*.huggingface.co https://*.hf.co https://raw.githubusercontent.com",
               "worker-src 'self' blob:",
               "media-src 'self' blob:",
               "frame-ancestors 'none'",

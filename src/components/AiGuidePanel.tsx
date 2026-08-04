@@ -206,13 +206,18 @@ export default function AiGuidePanel({
                         </div>
                         <div className="flex items-start gap-3">
                           <span className="whitespace-pre-wrap">
-                            {msg.isTyping ? (
+                            {msg.isStreaming ? (
+                              <span>
+                                {msg.text}
+                                <span aria-hidden="true" className="ml-0.5 inline-block h-4 w-1 translate-y-0.5 animate-pulse bg-(--accent)" />
+                              </span>
+                            ) : msg.isTyping ? (
                               <span className="animate-pulse flex gap-1 items-center h-4">
                                 <span className="w-1 h-1 bg-(--accent) rounded-full" />
                                 <span className="w-1 h-1 bg-(--accent) rounded-full animation-delay-100" />
                                 <span className="w-1 h-1 bg-(--accent) rounded-full animation-delay-200" />
                               </span>
-                            ) : msg.sender === "ai" && isLatestAi ? (
+                            ) : msg.sender === "ai" && isLatestAi && !msg.wasStreamed ? (
                               <TypewriterText key={msg.id} text={msg.text} />
                             ) : (
                               msg.text
