@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { Coffee, MapPin, MessageCircle, Sparkles } from "lucide-react";
 import GuidedNext from "@/components/GuidedNext";
+import SectionLabel from "@/components/SectionLabel";
 import { CONFIG } from "@/lib/data";
 import type { ViewKey } from "@/lib/types";
 
@@ -71,9 +72,9 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
           </div>
           <h1 className="max-w-3xl font-syne text-2xl font-black leading-[0.9] tracking-tight text-(--text) md:text-4xl">It&apos;s good to catch up.</h1>
           <p className="mt-6 max-w-2xl font-sans text-lg leading-relaxed tracking-tight text-(--text)">
-                      Hi. I&apos;m Shahriar. I was born and raised in Bangladesh, moved halfway across the world to Germany, and I&apos;m currently living in Berlin. I specialize in technical operations,
-            technical project management, systems integration, and cybersecurity operations — working across adjacent roles such as implementation engineering, customer success engineering,
-            technical account management, and project delivery to turn complexity into clear outcomes and repeatable processes.
+            Hi. I&apos;m Shahriar. I was born and raised in Bangladesh, moved halfway across the world to Germany, and I&apos;m currently living in Berlin. I specialize in technical operations,
+            technical project management, systems integration, and cybersecurity operations — working across adjacent roles such as implementation engineering, customer success engineering, technical
+            account management, and project delivery to turn complexity into clear outcomes and repeatable processes.
           </p>
           <div className="mt-8 grid max-w-2xl grid-cols-1 gap-px border border-(--border) bg-(--border) sm:grid-cols-2">
             <div className="bg-(--surface) p-5">
@@ -114,7 +115,7 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
       {/* Working style quote — complements the Hero version without repeating the automation clause */}
       <section className="relative py-10 border-y border-(--border)">
         <div className="max-w-3xl border-l-4 border-(--accent) pl-6">
-          <div className="mb-3 font-mono text-[9px] uppercase tracking-[0.24em] text-(--accent)">Working Style</div>
+          <SectionLabel className="mb-3">Working Style</SectionLabel>
           <p className="font-sans text-lg leading-snug tracking-tight text-(--text)">
             I like being the person who can walk into a messy technical situation, work out what matters, explain the tradeoffs, and lay out a clear plan.
           </p>
@@ -143,7 +144,7 @@ export default function AboutView({ setView, scrollContainerRef }: { setView: (v
                 <p className="mt-4 text-sm leading-8 text-(--text-muted)">{beat.text}</p>
                 <div className="mt-5 border border-(--border) bg-(--surface) p-4">
                   <div className="bg-(--surface)">
-                    <div className="mb-2 font-mono text-[9px] uppercase tracking-[0.22em] text-(--accent)">System Context</div>
+                    <SectionLabel className="mb-2">System Context</SectionLabel>
                     <p className="text-sm leading-relaxed text-(--text-muted)">{beat.context}</p>
                   </div>
                 </div>

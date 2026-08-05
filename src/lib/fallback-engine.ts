@@ -4,7 +4,16 @@ import type { ViewKey } from "@/lib/types";
 
 export const LOCAL_MODEL_LABEL = "Qwen 2.5 1.5B";
 
-const DEFAULT_SUGGESTIONS = ["who is Shahriar", "show me projects", "his project delivery experience", "cybersecurity operations background", "navigation steps", "why hire him", "certifications", "show experience"];
+const DEFAULT_SUGGESTIONS = [
+  "who is Shahriar",
+  "show me projects",
+  "his project delivery experience",
+  "cybersecurity operations background",
+  "navigation steps",
+  "why hire him",
+  "certifications",
+  "show experience",
+];
 
 type VisitorProfile = {
   name?: string;
@@ -180,6 +189,15 @@ function answerContact(): string {
 
 function answerProjectsOverview(): string {
   return `🚀 **${CONFIG.projects.length} projects:**\n\n${CONFIG.projects.map((p, i) => `${i + 1}. ${p.name}`).join("\n")}\n\n💡 Ask "tell me about [project name]" for details.`;
+}
+
+function answerAiProjectsOverview(): string {
+  const aiProjects = CONFIG.projects.filter((project) => {
+    const context = [project.name, project.desc, project.context, project.implementation, project.outcome, project.stack.join(" ")].join(" ").toLowerCase();
+    return /\b(ai|llm|rag|ollama|qdrant|automation|webllm|qwen)\b/.test(context);
+  });
+
+  return `🤖 **AI-related projects:**\n\n${aiProjects.map((project, index) => `${index + 1}. ${project.name} — ${project.outcome}`).join("\n")}\n\n💡 Ask "tell me about [project name]" for details.`;
 }
 
 function answerExperienceCareer(): string {
@@ -447,6 +465,10 @@ function buildClarifyingQuestion(input: string): { text: string; suggestions: st
 export function buildFallbackAnswer(userText: string, activeView: ViewKey): { text: string; suggestions?: string[] } {
   const lowerInput = userText.toLowerCase().trim();
   if (!lowerInput) return { text: catchAll(activeView), suggestions: DEFAULT_SUGGESTIONS };
+
+  if (/\bprojects?\b/.test(lowerInput) && /\b(ai|llm|rag|automation)\b/.test(lowerInput)) {
+    return { text: answerAiProjectsOverview(), suggestions: DEFAULT_SUGGESTIONS };
+  }
 
   const scored = intentPatterns
     .map((p) => ({

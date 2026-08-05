@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
-
 const ORBIT_ROTATION_DEGREES = -10;
 const ORBIT_RADIUS = 41;
 const ORBIT_DURATION_SECONDS = 108;
@@ -15,7 +14,7 @@ const orbitNodes = [
   { id: "cross", label: "Cross Functional", angle: 30, color: "#F472B6" },
   { id: "solution", label: "Solution Driven", angle: 90, color: "#34D399" },
   { id: "problem", label: "Problem Solver", angle: 150, color: "#38BDF8" },
-  { id: "detail", label: "Detail Oriented", angle: 210, color: "#EF4444" },
+  { id: "detail", label: "Detail Oriented", angle: 210, color: "var(--accent2)" },
 ];
 
 const metrics = [

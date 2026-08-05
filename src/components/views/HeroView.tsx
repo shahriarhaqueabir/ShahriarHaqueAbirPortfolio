@@ -52,11 +52,11 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
             <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-(--accent)">{CONFIG.tagline}</p>
           </div>
 
-          <h1 className="font-syne text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.08] tracking-tight text-(--text) text-balance">
+          <h1 className="font-syne text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.08] tracking-tight text-(--text) text-balance break-words">
             {CONFIG.name.split(" ").map((word, i) => (
               <span key={i} className={word === CONFIG.nameHL ? "text-(--accent)" : ""}>
                 {word}
-                {i < CONFIG.name.split(" ").length - 1 ? "\u00A0" : ""}
+                {i < CONFIG.name.split(" ").length - 1 ? " " : ""}
               </span>
             ))}
           </h1>
@@ -84,8 +84,10 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
             animate={shouldReduceMotion ? {} : { scale: [1, 1.06, 1], opacity: [0.08, 0.14, 0.08] }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 8, repeat: Infinity, ease: "easeInOut" }}
           />
-          <div className="relative w-full aspect-[4/5] z-10 border border-(--border) shadow-2xl overflow-hidden rounded-sm">
-            <Image src={CONFIG.profileImage} alt={CONFIG.name} fill className="object-cover" priority fetchPriority="high" />
+          <div className="hud-container relative w-full aspect-[4/5] z-10 p-2 shadow-2xl">
+            <div className="relative h-full w-full overflow-hidden rounded-sm border border-(--border)">
+              <Image src={CONFIG.profileImage} alt={CONFIG.name} fill className="object-cover" priority fetchPriority="high" />
+            </div>
           </div>
 
           {/* Rotating competency badge */}
@@ -112,10 +114,13 @@ export default function HeroView({ setView, onAiQuery }: { setView: (v: ViewKey)
         {/* Professional summary */}
         <div className="w-full max-w-3xl space-y-4">
           <p className="font-sans text-sm leading-7 text-(--text)">
-            I've spent the last 10+ years in the space between engineering and operations — running technical delivery, managing incident response, and supporting enterprise B2B SaaS platforms across international markets. I lead technical discovery, proof-of-concept, and integration for enterprise clients across North America, APAC, and DACH, coordinating cross-functional teams to turn requirements into outcomes.
+            I&apos;ve spent the last 10+ years in the space between engineering and operations — running technical delivery, managing incident response, and supporting enterprise B2B SaaS platforms
+            across international markets. I lead technical discovery, proof-of-concept, and integration for enterprise clients across North America, APAC, and DACH, coordinating cross-functional teams
+            to turn requirements into outcomes.
           </p>
           <p className="font-sans text-sm leading-7 text-(--text-muted)">
-            I'm currently building toward cybersecurity operations — combining infrastructure foundations and security certifications (CompTIA Security+, ITIL 4) with production operations experience. I apply AI-assisted workflows to accelerate investigation, documentation, and operational decisions.
+            I&apos;m currently building toward cybersecurity operations — combining infrastructure foundations and security certifications (CompTIA Security+, ITIL 4) with production operations
+            experience. I apply AI-assisted workflows to accelerate investigation, documentation, and operational decisions.
           </p>
         </div>
 

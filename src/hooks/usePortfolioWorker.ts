@@ -256,15 +256,16 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
           streamedRawTextRef.current = rawText;
           const visibleText = stripControlLines(rawText);
 
-          setMessages((prev) => {
-            const currentId = streamingMessageIdRef.current;
-            if (currentId) {
-              return prev.map((m) => (m.id === currentId ? { ...m, text: visibleText } : m));
-            }
+          const currentId = streamingMessageIdRef.current;
+          if (currentId) {
+            setMessages((prev) => prev.map((m) => (m.id === currentId ? { ...m, text: visibleText } : m)));
+          } else {
             const newMsg = createAiMessage(visibleText);
+            // Set this before scheduling React state so an immediately-following
+            // complete event updates the same message instead of appending one.
             streamingMessageIdRef.current = newMsg.id;
-            return pruneMessages([...prev, { ...newMsg, isStreaming: true, wasStreamed: true }]);
-          });
+            setMessages((prev) => pruneMessages([...prev, { ...newMsg, isStreaming: true, wasStreamed: true }]));
+          }
           break;
         }
         case "ready":

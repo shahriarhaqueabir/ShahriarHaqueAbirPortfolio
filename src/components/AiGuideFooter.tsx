@@ -53,7 +53,7 @@ export default function AiGuideFooter({ messages, isReady, localAiEnabled, local
 
   return (
     <footer
-      className="hidden md:block fixed bottom-0 left-0 right-0 md:left-[68px] z-50 border-t border-(--border) bg-(--surface)/90 backdrop-blur-3xl transition-opacity duration-300"
+      className="hidden md:block fixed bottom-0 left-0 right-0 md:left-17 z-50 border-t border-(--border) bg-(--surface)/90 backdrop-blur-3xl transition-opacity duration-300"
       style={panelOpen ? { opacity: 0, pointerEvents: "none" } : undefined}
     >
       <AnimatePresence>
@@ -129,7 +129,7 @@ export default function AiGuideFooter({ messages, isReady, localAiEnabled, local
           <button
             type="button"
             onClick={() => onFocus()}
-            className="w-full flex items-center gap-2 px-4 py-3 rounded-sm border-2 border-(--accent)/60 bg-(--accent)/[0.12] hover:bg-(--accent)/[0.25] transition-all cursor-pointer text-left group animate-pulse shadow-[0_0_12px_rgba(var(--accent-rgb),0.15)]"
+            className="w-full flex items-center gap-2 px-4 py-3 rounded-sm border-2 border-(--accent)/60 bg-(--accent)/12 hover:bg-(--accent)/25 transition-all cursor-pointer text-left group shadow-[0_0_12px_rgba(var(--accent-rgb),0.15)]"
           >
             <ChevronUp className="w-4 h-4 text-(--accent) shrink-0 group-hover:translate-y-[-2px] transition-transform" />
             <span className="text-xs font-mono uppercase tracking-widest text-(--accent) font-extrabold flex-1">Enable AI Guide · Click to expand panel</span>

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { ArrowRight, BrainCircuit, ChartSpline, Monitor, Network, ServerCog, Sparkles, User } from "lucide-react";
+import { ArrowRight, BrainCircuit, Monitor, Network, ServerCog, Sparkles, User } from "lucide-react";
 import TechIcon from "@/components/TechIcon";
 import GuidedNext from "@/components/GuidedNext";
 import { CONFIG } from "@/lib/data";
@@ -14,9 +14,9 @@ type Project = (typeof CONFIG.projects)[number];
 const projectContext: Record<string, { domain: string; impact: string }> = {
   "Network Discovery & Topology Mapping": { domain: "Network Operations · Incident Triage", impact: "Became the de facto reference for NOC incident triage" },
   "Log Analysis & Automated Ticketing": { domain: "Production Observability · Incident Response", impact: "Handles over 200 log streams daily with per-pattern adaptive thresholds" },
-  "UniversalOps": { domain: "Desktop Operations · Local-First Engineering", impact: "Fully offline ops platform with zero telemetry and local AI" },
+  UniversalOps: { domain: "Desktop Operations · Local-First Engineering", impact: "Fully offline ops platform with zero telemetry and local AI" },
   "AI-Assisted German Law": { domain: "Legal Tech · Semantic Search", impact: "302 tests, 103K+ vector points, 9-language AI guidance" },
-  "ShahriarHaqueAbirPortfolio": { domain: "Frontend · AI Integration", impact: "Local AI chat in-browser with 13/13 static routes" },
+  ShahriarHaqueAbirPortfolio: { domain: "Frontend · AI Integration", impact: "Local AI chat in-browser with 13/13 static routes" },
 };
 
 function getProjectVisual(project: Project) {
@@ -86,7 +86,7 @@ function DeviceMockup({ project, visual }: { project: Project; visual: { Icon: t
             ))}
 
             {/* Abstract HUD element */}
-            <div className="absolute right-4 bottom-4 w-24 h-24 opacity-20 border border-white/20 rounded-full flex items-center justify-center animate-spin-slow">
+            <div className="absolute right-4 bottom-4 w-24 h-24 opacity-20 border border-white/20 rounded-full flex items-center justify-center">
               <visual.Icon className="w-8 h-8 text-white" />
             </div>
           </div>
@@ -156,7 +156,7 @@ function FeaturedProject({ project, index }: { project: Project; index: number }
             <User className="w-3.5 h-3.5 text-(--accent)" />
             <div>
               <div className="text-[9px] uppercase font-mono text-(--text-muted) tracking-widest">Impact</div>
-                            <div className="text-xs font-bold text-(--text)">{ctx.impact}</div>
+              <div className="text-xs font-bold text-(--text)">{ctx.impact}</div>
             </div>
           </div>
         </div>
@@ -195,7 +195,8 @@ export default function ProjectsView({ setView }: { setView: (view: ViewKey) => 
             Featured <span className="text-(--accent)">Projects</span>
           </h1>
           <p className="max-w-2xl text-xs leading-relaxed text-(--text-muted) font-mono uppercase tracking-tight">
-            Network discovery tooling, log analysis pipelines, a local-first desktop ops platform, an AI-assisted German law research app, and this portfolio — built across Earth Telecommunication, tripunkt GmbH, and personal projects.
+            Network discovery tooling, log analysis pipelines, a local-first desktop ops platform, an AI-assisted German law research app, and this portfolio — built across Earth Telecommunication,
+            tripunkt GmbH, and personal projects.
           </p>
         </div>
         <div className="flex flex-col items-end gap-4">

@@ -12,6 +12,10 @@ const PAUSE_AFTER_PUNCTUATION_MS = 140;
 const SENTENCE_END = /[.!?…]["')]*$/;
 
 export default function TypewriterText({ text }: { text: string }) {
+  return <TypewriterRenderer key={text} text={text} />;
+}
+
+function TypewriterRenderer({ text }: { text: string }) {
   const prefersReducedMotion = useReducedMotion();
 
   // Split on whitespace, keeping separators so newlines/spacing are preserved.
@@ -25,18 +29,11 @@ export default function TypewriterText({ text }: { text: string }) {
 
   const totalWords = words.length;
 
-  const [visibleCount, setVisibleCount] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(prefersReducedMotion || totalWords === 0 ? totalWords : 0);
+  const [isAnimating, setIsAnimating] = useState(!prefersReducedMotion && totalWords > 0);
 
   useEffect(() => {
-    if (prefersReducedMotion || totalWords === 0) {
-      setVisibleCount(totalWords);
-      setIsAnimating(false);
-      return;
-    }
-
-    setVisibleCount(0);
-    setIsAnimating(true);
+    if (prefersReducedMotion || totalWords === 0) return;
 
     let cancelled = false;
     let timeout = 0;
@@ -73,16 +70,14 @@ export default function TypewriterText({ text }: { text: string }) {
   return (
     <span className="relative whitespace-pre-wrap wrap-break-word">
       {tokens.map((token, i) => {
-        const visible = tokenVisibility[i] < 0 || tokenVisibility[i] < visibleCount;
+        const visible = prefersReducedMotion || tokenVisibility[i] < 0 || tokenVisibility[i] < visibleCount;
         return (
           <span key={i} style={{ opacity: visible ? 1 : 0 }}>
             {token}
           </span>
         );
       })}
-      {isAnimating && (
-        <span aria-hidden="true" className="ml-0.5 inline-block h-4 w-1 translate-y-0.5 animate-pulse bg-(--accent)" />
-      )}
+      {!prefersReducedMotion && isAnimating && <span aria-hidden="true" className="ml-0.5 inline-block h-4 w-1 translate-y-0.5 animate-pulse bg-(--accent)" />}
     </span>
   );
 }

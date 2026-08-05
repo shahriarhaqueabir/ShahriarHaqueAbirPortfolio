@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { Download, ExternalLink, Link, Mail, MapPin, ShieldCheck } from "lucide-react";
 import GuidedNext from "@/components/GuidedNext";
+import SectionLabel from "@/components/SectionLabel";
 import { CONFIG } from "@/lib/data";
 import type { ViewKey } from "@/lib/types";
 
@@ -31,7 +32,7 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
       exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }}
       className="pt-10 pb-24 max-w-5xl"
     >
-      <div className="font-mono text-[9px] text-(--accent) uppercase tracking-[0.2em] mb-4">- Contact</div>
+      <SectionLabel className="mb-4">- Contact</SectionLabel>
       <h1 className="text-2xl md:text-4xl font-syne font-black mb-8 text-(--text) leading-[0.9] tracking-tight">
         Let&apos;s <span className="font-sans text-(--text-muted)">talk.</span>
       </h1>
@@ -39,8 +40,8 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-px bg-(--border) border border-(--border)">
         <section className="bg-(--surface) p-8 md:p-10 flex flex-col justify-between min-h-0 md:min-h-[360px] relative overflow-hidden">
           <div>
-            <div className="font-mono text-[9px] text-(--accent) uppercase tracking-widest mb-4">Conversation Fit</div>
-            <h3 className="text-lg font-syne font-black text-(--text) leading-none mb-4 tracking-tight">{CONFIG.name}</h3>
+            <SectionLabel className="mb-4">Conversation Fit</SectionLabel>
+            <h2 className="text-lg font-syne font-black text-(--text) leading-none mb-4 tracking-tight">{CONFIG.name}</h2>
             <p className="text-sm text-(--text-muted) leading-relaxed max-w-md">
               Best reached for technical operations, systems integration, SaaS support engineering, and AI automation conversations where product, customer, and engineering context need to come
               together.
@@ -60,14 +61,14 @@ export default function ContactView({ setView }: { setView: (view: ViewKey) => v
                 <ShieldCheck className="w-3.5 h-3.5 text-(--accent)" />
               </div>
               <div>
-                <div className="font-mono text-[9px] text-(--accent) uppercase tracking-widest mb-1">Work Authorization</div>
+                <SectionLabel className="mb-1">Work Authorization</SectionLabel>
                 <div className="text-xs font-bold text-(--text)">{CONFIG.workAuth}</div>
               </div>
             </div>
           </div>
 
           <div className="mt-6 border-t border-(--border) pt-6">
-            <div className="font-mono text-[9px] text-(--accent2) uppercase tracking-widest mb-3">Open to Roles</div>
+            <div className="text-micro font-mono text-(--accent2) uppercase tracking-widest mb-3">Open to Roles</div>
             <div className="flex flex-wrap gap-1.5">
               {CONFIG.openTo.slice(0, 4).map((role) => (
                 <span key={role} className="border border-(--accent2)/20 text-(--text-muted) bg-(--accent2)/5 px-2.5 py-1.5 rounded-sm text-[9px] font-bold uppercase tracking-widest">

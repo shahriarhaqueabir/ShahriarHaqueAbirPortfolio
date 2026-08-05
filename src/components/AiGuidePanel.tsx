@@ -34,19 +34,7 @@ const navItems: Array<{ name: string; icon: typeof User; view: ViewKey }> = [
   { name: "Contact", icon: Mail, view: "contact" },
 ];
 
-export default function AiGuidePanel({
-  open,
-  onClose,
-  messages,
-  activeView,
-  localAiEnabled,
-  localAiFallback,
-  enableLocalAi,
-  onNavigate,
-  onSend,
-  input,
-  setInput,
-}: AiGuidePanelProps) {
+export default function AiGuidePanel({ open, onClose, messages, activeView, localAiEnabled, localAiFallback, enableLocalAi, onNavigate, onSend, input, setInput }: AiGuidePanelProps) {
   const voiceInput = useVoiceInput();
   const voiceOutput = useVoiceOutput();
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -120,7 +108,7 @@ export default function AiGuidePanel({
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "spring", damping: 28, stiffness: 260 }}
-            className="fixed bottom-0 left-0 right-0 md:left-[68px] z-40 bg-(--bg) border-t border-(--border) flex flex-col shadow-2xl h-[85vh]"
+            className="fixed bottom-0 left-0 right-0 md:left-17 z-40 bg-(--bg) border-t border-(--border) flex flex-col shadow-2xl h-[85vh]"
           >
             {/* Header */}
             <div className="shrink-0 flex items-center justify-between px-4 py-4 border-b border-(--border)">
@@ -145,7 +133,7 @@ export default function AiGuidePanel({
                   <motion.button
                     type="button"
                     onClick={enableLocalAi}
-                    className="flex items-center gap-1.5 px-2.5 py-1 border-2 border-(--accent)/60 bg-(--accent)/[0.12] hover:bg-(--accent)/[0.25] rounded-sm text-xs font-mono uppercase tracking-wider text-(--accent) transition-all cursor-pointer animate-pulse shadow-[0_0_12px_rgba(var(--accent-rgb),0.15)]"
+                    className="flex items-center gap-1.5 px-2.5 py-1 border-2 border-(--accent)/60 bg-(--accent)/12 hover:bg-(--accent)/25 rounded-sm text-xs font-mono uppercase tracking-wider text-(--accent) transition-all cursor-pointer shadow-[0_0_12px_rgba(var(--accent-rgb),0.15)]"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -191,9 +179,7 @@ export default function AiGuidePanel({
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-0.5">
                           <span
-                            className={`text-xs font-mono uppercase tracking-wider ${
-                              msg.sender === "ai" ? "text-(--accent)" : msg.sender === "fallback" ? "text-(--accent2)" : "text-(--text-muted)"
-                            }`}
+                            className={`text-xs font-mono uppercase tracking-wider ${msg.sender === "ai" ? "text-(--accent)" : msg.sender === "fallback" ? "text-(--accent2)" : "text-(--text-muted)"}`}
                           >
                             {msg.sender === "ai" ? "Guide" : msg.sender === "fallback" ? "Guide (Fallback)" : "You"}
                           </span>
@@ -224,22 +210,22 @@ export default function AiGuidePanel({
                             )}
                           </span>
                         </div>
-                      {msg.sender === "fallback" && !localAiEnabled && msg.suggestions && msg.suggestions.filter((s) => !usedSuggestions.includes(s)).length > 0 && (
-                        <div className="flex gap-1 mt-1.5 flex-wrap">
-                          {msg.suggestions
-                            .filter((s) => !usedSuggestions.includes(s))
-                            .map((suggestion) => (
-                              <button
-                                key={suggestion}
-                                type="button"
-                                onClick={() => handleSuggestionClick(suggestion)}
-                                className="px-2 py-0.5 rounded-xs border border-(--accent2)/30 text-xs font-mono text-(--accent2)/70 hover:text-(--accent2) hover:border-(--accent2)/60 transition-colors leading-tight cursor-pointer"
-                              >
-                                {suggestion}
-                              </button>
-                            ))}
-                        </div>
-                      )}
+                        {msg.sender === "fallback" && !localAiEnabled && msg.suggestions && msg.suggestions.filter((s) => !usedSuggestions.includes(s)).length > 0 && (
+                          <div className="flex gap-1 mt-1.5 flex-wrap">
+                            {msg.suggestions
+                              .filter((s) => !usedSuggestions.includes(s))
+                              .map((suggestion) => (
+                                <button
+                                  key={suggestion}
+                                  type="button"
+                                  onClick={() => handleSuggestionClick(suggestion)}
+                                  className="px-2 py-0.5 rounded-xs border border-(--accent2)/30 text-xs font-mono text-(--accent2)/70 hover:text-(--accent2) hover:border-(--accent2)/60 transition-colors leading-tight cursor-pointer"
+                                >
+                                  {suggestion}
+                                </button>
+                              ))}
+                          </div>
+                        )}
                       </div>
                     </div>
                   );

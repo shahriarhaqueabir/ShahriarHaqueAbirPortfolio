@@ -84,28 +84,6 @@ body::after {
   }
 }
 
-@keyframes float {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-  100% {
-    transform: translate(100px, 50px) scale(1.2);
-  }
-}
-
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-spin-slow {
-  animation: spin-slow 12s linear infinite;
-}
-
 .will-change-transform {
   will-change: transform;
 }
@@ -218,75 +196,6 @@ body::after {
     z-index: -1;
   }
 
-  .blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(120px);
-    opacity: 0.15;
-    animation: float 20s infinite alternate;
-  }
-
-  .stellar-node {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .stellar-node::before,
-  .stellar-node::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.72), transparent);
-    filter: blur(0.5px);
-  }
-
-  .stellar-node::before {
-    width: 2.3rem;
-    height: 1px;
-  }
-
-  .stellar-node::after {
-    width: 1px;
-    height: 2.3rem;
-  }
-
-  .stellar-core {
-    position: relative;
-    width: 0.28rem;
-    height: 0.28rem;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.95);
-    background: radial-gradient(circle at 35% 28%, #ffffff, #ffffff 42%, rgba(var(--accent-rgb), 0.78));
-    box-shadow:
-      0 0 22px rgba(255, 255, 255, 1),
-      0 0 62px rgba(238, 246, 248, 0.96),
-      0 0 118px rgba(var(--accent-rgb), 0.56);
-  }
-
-  .stellar-node-blue::before,
-  .stellar-node-blue::after {
-    background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb), 0.9), transparent);
-  }
-
-  .stellar-core-blue {
-    position: relative;
-    width: 0.34rem;
-    height: 0.34rem;
-    border-radius: 999px;
-    border: 1px solid rgba(186, 230, 253, 1);
-    background: radial-gradient(circle at 35% 28%, #ffffff, #7dd3fc 38%, rgba(var(--accent-rgb), 1) 100%);
-    filter: brightness(1.7);
-    box-shadow:
-      0 0 10px rgba(255, 255, 255, 0.75),
-      0 0 26px rgba(var(--accent-rgb), 0.82),
-      0 0 54px rgba(var(--accent-rgb), 0.42);
-  }
-
   .signal-dot {
     display: inline-block;
     width: 0.34rem;
@@ -319,12 +228,6 @@ body::after {
 
   .shine-surface:hover::after {
     left: 118%;
-  }
-
-  .symbol-tile {
-    box-shadow:
-      inset 0 0 0 1px rgba(238, 246, 248, 0.08),
-      0 0 34px rgba(var(--accent-rgb), 0.18);
   }
 }
 
@@ -385,17 +288,12 @@ body::after {
   .absolute.-inset-10,
   .blur-2xl,
   .blur-3xl,
-  .blob,
   [class*="blur"],
   div.fixed.inset-0.pointer-events-none,
   .absolute.right-0.top-8.hidden.h-\[72vh\],
   .absolute.left-3.top-0,
   .absolute.left-0.right-0.top-8,
   .signal-dot,
-  .stellar-node,
-  .stellar-core,
-  .stellar-core-blue,
-  .stellar-node-blue,
   .absolute.-left-9.top-10,
   .absolute.z-20.hidden.w-fit,
   .absolute.bottom-4.right-4 {

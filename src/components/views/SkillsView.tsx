@@ -5,6 +5,7 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { GraduationCap, Languages, ShieldCheck, Wrench } from "lucide-react";
 import TechIcon from "@/components/TechIcon";
 import GuidedNext from "@/components/GuidedNext";
+import SectionLabel from "@/components/SectionLabel";
 import { CONFIG } from "@/lib/data";
 import type { ViewKey } from "@/lib/types";
 
@@ -110,7 +111,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
       exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }}
       className="pt-10 pb-24 max-w-5xl"
     >
-      <div className="font-mono text-xs text-(--accent) uppercase tracking-[0.2em] mb-4">- Skills</div>
+      <SectionLabel className="mb-4">- Skills</SectionLabel>
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
         <div>
           <h1 className="text-2xl md:text-4xl font-syne font-black text-(--text) leading-none tracking-tight">Capability Map</h1>
@@ -127,7 +128,7 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
       {/* Primary competencies */}
       <section className="mb-4">
         <div className="mb-5 flex items-center gap-4">
-          <div className="font-mono text-[9px] uppercase tracking-[0.28em] text-(--accent)">Primary Competencies</div>
+          <SectionLabel>Primary Competencies</SectionLabel>
           <div className="h-px flex-1 bg-(--border)" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-(--border) border border-(--border)">
@@ -154,8 +155,8 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
       <section className="mb-16">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8">
           <div>
-            <div className="font-mono text-[9px] uppercase tracking-[0.28em] text-(--accent)">Tools I Use</div>
-            <h3 className="mt-3 font-syne text-lg font-black tracking-tight text-(--text)">Grouped by working context</h3>
+            <SectionLabel>Tools I Use</SectionLabel>
+            <h2 className="mt-3 font-syne text-lg font-black tracking-tight text-(--text)">Grouped by working context</h2>
           </div>
           <p className="max-w-md text-sm leading-relaxed text-(--text-muted)">
             Not an exhaustive inventory — the practical stack behind consulting, support, automation, systems, and implementation work.
@@ -217,8 +218,8 @@ export default function SkillsView({ setView }: { setView: (view: ViewKey) => vo
           <div className="flex flex-wrap gap-1.5">
             {CONFIG.languages.map((item) => (
               <span key={item} className="px-2.5 py-1.5 bg-(--surface) border border-(--border) text-xs font-mono font-bold uppercase tracking-widest text-(--text-muted) break-words">
-                              {item}
-                            </span>
+                {item}
+              </span>
             ))}
           </div>
         </article>
