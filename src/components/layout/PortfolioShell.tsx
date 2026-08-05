@@ -15,6 +15,10 @@ import { useCommandRouter } from "@/hooks/useCommandRouter";
 import { usePortfolioWorker } from "@/hooks/usePortfolioWorker";
 import type { ViewKey } from "@/lib/types";
 
+type NavigationOptions = {
+  keepPanelOpen?: boolean;
+};
+
 export default function PortfolioShell({ initialView = "hero" }: { initialView?: ViewKey }) {
   const [panelOpen, setPanelOpen] = useState(false);
   const [input, setInput] = useState("");
@@ -22,17 +26,15 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
   const { activeView, conversationState, setActiveView, handleCommand } = useCommandRouter(initialView);
   const worker = usePortfolioWorker({
     onNavigate: (view: ViewKey) => {
-      navigate(view);
+      navigate(view, undefined, { keepPanelOpen: true });
     },
   });
 
-
-
   const viewToPath = (v: ViewKey) => (v === "hero" ? "/" : `/${v}`);
 
-  const navigate = (view: ViewKey, name?: string) => {
+  const navigate = (view: ViewKey, name?: string, options?: NavigationOptions) => {
     setActiveView(view);
-    setPanelOpen(false);
+    if (!options?.keepPanelOpen) setPanelOpen(false);
     worker.addSystemMessage(`Opened ${name || view}`);
     if (typeof window !== "undefined") {
       window.history.pushState({ view }, "", viewToPath(view));
@@ -96,15 +98,15 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
       <nav aria-label="Main navigation">
         <ErrorBoundary>
           <IconRail
-        activeView={activeView}
-        onNavigate={(view) => navigate(view)}
-        aiReady={worker.isReady}
-        aiPaused={worker.localAiPaused}
-        aiFallback={worker.localAiFallback}
-        aiEnabled={worker.localAiEnabled}
-      />
-      </ErrorBoundary>
-    </nav>
+            activeView={activeView}
+            onNavigate={(view) => navigate(view)}
+            aiReady={worker.isReady}
+            aiPaused={worker.localAiPaused}
+            aiFallback={worker.localAiFallback}
+            aiEnabled={worker.localAiEnabled}
+          />
+        </ErrorBoundary>
+      </nav>
 
       <section ref={contentScrollRef} data-testid="content-scroll" className="flex-1 h-full overflow-y-auto overflow-x-hidden px-5 py-6 md:py-16 pb-[180px] md:pb-[300px] relative custom-scrollbar">
         <div className="content-stage w-full max-w-5xl mx-auto">
@@ -145,6 +147,8 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
             messages={worker.messages}
             activeView={activeView}
             localAiEnabled={worker.localAiEnabled}
+            isReady={worker.isReady}
+            progress={worker.progress}
             localAiFallback={worker.localAiFallback}
             enableLocalAi={worker.enableLocalAi}
             onNavigate={(view) => navigate(view)}
@@ -158,7 +162,7 @@ export default function PortfolioShell({ initialView = "hero" }: { initialView?:
           type="button"
           onClick={() => setPanelOpen(true)}
           className="fixed bottom-20 right-5 z-30 flex h-14 w-14 items-center justify-center rounded-full border border-(--accent)/45 bg-(--accent) text-(--bg) shadow-[0_18px_48px_rgba(var(--accent-rgb),0.36)] transition-transform active:scale-95 md:hidden"
-          aria-label="Open AI guide"
+          aria-label="Open Qwen AI guide"
         >
           <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-(--bg)/15">
             <MessageCircle className="h-4.5 w-4.5" />

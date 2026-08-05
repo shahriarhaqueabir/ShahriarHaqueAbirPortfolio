@@ -242,7 +242,7 @@ const intentPatterns: IntentPattern[] = [
     keywords: ["hi", "hello", "hey", "how are you", "what's up", "greetings", "good morning", "good afternoon", "what"],
     exclusive: ["projects", "skills", "experience", "contact", "compare", "who"],
     weight: 3,
-    answer: () => "Hello! 👋 I'm Shahriar's portfolio guide. I can help you explore his projects, experience, or skills. What would you like to know?",
+    answer: () => "Hello! 👋 I'm the portfolio fallback guide. I can help you explore Shahriar's projects, experience, or skills. What would you like to know?",
   },
   {
     name: "who_is",
@@ -486,6 +486,20 @@ export function buildFallbackAnswer(userText: string, activeView: ViewKey): { te
   return { text: scored[0].answer(userText), suggestions: DEFAULT_SUGGESTIONS };
 }
 
+/** Infer a clear destination for fallback questions without hijacking ambiguous conversation. */
+export function inferFallbackView(userText: string, currentView: ViewKey): ViewKey | null {
+  const input = userText.toLowerCase();
+  const matches = (keywords: string[]) => keywords.some((keyword) => input.includes(keyword));
+
+  if (matches(["project", "case stud", "portfolio", "work sample", "built", "implemented", "ai project", "llm", "rag", "ollama", "qwen"])) return currentView === "projects" ? null : "projects";
+  if (matches(["experience", "career", "history", "resume", "cv", "role", "employment", "timeline"])) return currentView === "experience" ? null : "experience";
+  if (matches(["skill", "tool", "capabilit", "competenc", "technology", "tech stack"])) return currentView === "skills" ? null : "skills";
+  if (matches(["contact", "email", "linkedin", "github", "reach", "connect", "hire"])) return currentView === "contact" ? null : "contact";
+  if (matches(["stat", "metric", "number", "impact", "proof point"])) return currentView === "stats" ? null : "stats";
+  if (matches(["who is", "about", "bio", "background", "story", "philosophy", "approach"])) return currentView === "about" ? null : "about";
+  return null;
+}
+
 export function inferVisitorProfile(userText: string, currentProfile: VisitorProfile): VisitorProfile {
   const lowerInput = userText.toLowerCase();
   const nextProfile: VisitorProfile = { ...currentProfile };
@@ -623,15 +637,16 @@ ${CONFIG.contact.map((c) => `- ${c.label}: ${c.value}`).join("\n")}`;
 }
 
 export function buildSystemPrompt(userText: string, activeView: ViewKey, visitorProfile: VisitorProfile, routerMemory?: RouterMemory): string {
-  return `You are Shahriar's strictly constrained local AI tour guide and portfolio knowledge source. You run fully inside the visitor's browser.
+  return `You are Qwen, Shahriar Haque Abir's strictly constrained local AI portfolio assistant and tour guide. You run fully inside the visitor's browser.
 
 CORE RULES - MANDATORY:
-1. You are NOT a general-purpose AI. You are a portfolio assistant.
-2. Use ONLY the provided LOCAL TOOL CONTEXT as your source of truth.
-3. NEVER generate code, scripts, technical snippets, or tutorials (e.g., Python, Bash, SQL).
-4. NEVER provide technical advice, security advice, or instructions outside of this portfolio's facts.
-5. Refer to Shahriar in the third person ("he", "Shahriar", "his").
-6. If a user asks for anything outside of Shahriar's professional profile (e.g., code, general knowledge, jokes, unrelated advice), you MUST politely decline.
+1. Your name is Qwen. Shahriar Haque Abir is the person whose portfolio you are explaining; never present yourself as Shahriar.
+2. You are NOT a general-purpose AI. You are a portfolio assistant.
+3. Use ONLY the provided LOCAL TOOL CONTEXT as your source of truth.
+4. NEVER generate code, scripts, technical snippets, or tutorials (e.g., Python, Bash, SQL).
+5. NEVER provide technical advice, security advice, or instructions outside of this portfolio's facts.
+6. Refer to Shahriar in the third person ("he", "Shahriar", "his").
+7. If a user asks for anything outside of Shahriar's professional profile (e.g., code, general knowledge, jokes, unrelated advice), you MUST politely decline.
 
 COOPERATION WITH THE REFERENCE GUIDE:
 A quick-reference system called "the reference guide" may have already provided a brief answer before you. Your role is to acknowledge that and provide a deeper, more contextual response. Start your answer by thanking the reference guide briefly, then expand.
@@ -639,8 +654,8 @@ Example: "Thanks for the quick overview! Let me expand on that..."
 Do NOT waste tokens re-explaining that you are an AI or that the reference guide exists — just acknowledge briefly and dive into the substance.
 
 NAVIGATION CAPABILITY:
-You can self-navigate around the website. If the user asks to see a section, or if you assess that moving to a specific page would be helpful to answer their query, you must include a specific command at the end of your response.
-Supported views: hero, about, projects, experience, skills, stack, vision, stats, contact.
+You can self-navigate around the website. If the user asks to see a section, or if another page would make your answer clearer, navigate there automatically. Use navigation for direct requests such as "show me his projects" and for helpful context such as opening Projects to explain AI project evidence or Skills to explain a technology.
+Supported views: hero, about, projects, experience, skills, stats, contact.
 
 To navigate, append the command on its own line at the very end of your response:
 INITIATING_NAVIGATION: [view_name]

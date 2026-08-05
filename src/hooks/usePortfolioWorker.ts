@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { VIEW_GOALS } from "@/lib/experience-model";
-import { buildFallbackAnswer, buildSystemPrompt, inferVisitorProfile, LOCAL_MODEL_LABEL } from "@/lib/fallback-engine";
+import { buildFallbackAnswer, buildSystemPrompt, inferFallbackView, inferVisitorProfile, LOCAL_MODEL_LABEL } from "@/lib/fallback-engine";
 import type { Message, ViewKey } from "@/lib/types";
 
 const MAX_CHAT_MESSAGES = 10;
@@ -77,7 +77,7 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
   const [messages, setMessages] = useState<Message[]>(() => [
     {
       id: "ai-opt-in",
-      text: `Local AI guide is off by default. Enable it when you want portfolio Q&A; ${LOCAL_MODEL_LABEL} downloads and caches only when WebGPU is available and after you opt in.`,
+      text: `Qwen is off by default. Enable it when you want deeper portfolio Q&A; ${LOCAL_MODEL_LABEL} downloads and caches only when WebGPU is available and after you opt in.`,
       sender: "sys",
     },
   ]);
@@ -198,7 +198,7 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
       if (initialLoadDoneRef.current) return withoutOptIn;
       if (withoutOptIn.some((message) => message.id === "1")) return withoutOptIn;
 
-      return [...withoutOptIn, { id: "1", text: `Initializing Local AI Tour Guide (${LOCAL_MODEL_LABEL})... This may take a moment to cache the model on first use.`, sender: "sys" }];
+      return [...withoutOptIn, { id: "1", text: `Initializing Qwen (${LOCAL_MODEL_LABEL})... This may take a moment to cache the model on first use.`, sender: "sys" }];
     });
   }, [createSysMessage, pruneMessages]);
 
@@ -207,7 +207,8 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
     if (onboardingQueuedRef.current) return;
     onboardingQueuedRef.current = true;
     const welcomeText = "Welcome to Shahriar's Portfolio.";
-    const assistantText = "I am the local AI tour guide. Ask me to compare skills to experience, explain project evidence, build a recruiter path, or synthesize Shahriar's fit for a role.";
+    const assistantText =
+      "I am Qwen, the local AI portfolio assistant. Ask me to compare skills to experience, explain project evidence, build a recruiter path, or synthesize Shahriar's fit for a role.";
     const objectiveText = "What would make this visit useful: hiring signal, technical depth, AI projects, support experience, or a quick guided tour?";
 
     const qt = (cb: () => void, delay: number) => {
@@ -483,10 +484,10 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
     const aiIsComing = localAiEnabled && isReady && !localAiFallback;
     const cooperativeIntro = aiIsComing ? "\u{1F4CB} Quick answer from the reference guide: " : "\u{1F4CB} Quick answer: ";
     const cooperativeOutro = aiIsComing
-      ? "\n\n\u{1F916} My colleague Qwen is preparing a more detailed response..."
+      ? "\n\n\u{1F916} Qwen is preparing a more detailed response..."
       : localAiFallback
         ? ""
-        : "\n\n\u{1F916} For deeper insights, enable the AI guide in the conversation panel.";
+        : "\n\n\u{1F916} For deeper insights, enable Qwen in the conversation panel.";
 
     const fallbackText = `${cooperativeIntro}${fallbackResult.text}${cooperativeOutro}`;
 
@@ -520,6 +521,11 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
       }
     } else if (localAiEnabled && !isReady && !localAiFallback) {
       queuedMessageRef.current = { text, activeView, routerMemory };
+    }
+
+    const fallbackView = !aiIsComing && (!localAiEnabled || localAiFallback) ? inferFallbackView(text, activeView) : null;
+    if (fallbackView && onNavigateRef.current) {
+      onNavigateRef.current(fallbackView);
     }
   };
 

@@ -29,7 +29,7 @@ const FOOTER_TIPS = [
   'Try "show me his projects" or "what are his skills"',
   'Ask "compare skills to experience" for a capability overview',
   'Say "guide me around" for a recruiter-focused tour',
-  "Open the panel and enable AI for deeper conversations",
+  "Open the panel and enable Qwen for deeper conversations",
 ];
 
 export default function AiGuideFooter({ messages, isReady, localAiEnabled, localAiFallback, localAiPaused, panelOpen, progress, showReadyToast, onSend, onFocus }: AiGuideFooterProps) {
@@ -66,7 +66,7 @@ export default function AiGuideFooter({ messages, isReady, localAiEnabled, local
           >
             <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" />
             <div>
-              <div className="text-xs font-bold text-green-800 uppercase tracking-wider">AI guide ready</div>
+              <div className="text-xs font-bold text-green-800 uppercase tracking-wider">Qwen ready</div>
               <div className="text-[9px] text-green-700">Ready to answer portfolio questions.</div>
             </div>
           </motion.div>
@@ -85,7 +85,7 @@ export default function AiGuideFooter({ messages, isReady, localAiEnabled, local
             <span className="text-[9px] font-mono text-(--text-muted) uppercase tracking-wider shrink-0">
               [{localAiPaused ? "Paused" : localAiFallback ? "Fallback" : !localAiEnabled ? "Fallback" : isReady ? "AI Ready" : "Loading"}]
             </span>
-            <span className="text-[9px] font-mono text-(--text-muted) uppercase tracking-wider hidden sm:inline">Shahriar&apos;s Guide</span>
+            <span className="text-[9px] font-mono text-(--text-muted) uppercase tracking-wider hidden sm:inline">{localAiEnabled && !localAiFallback ? "QWEN'S GUIDE" : "PORTFOLIO FALLBACK"}</span>
           </div>
           <Cpu className={`w-3 h-3 shrink-0 ${isReady && !localAiPaused ? (localAiFallback ? "text-(--accent)" : "text-green-500") : localAiEnabled ? "text-orange-500" : "text-(--text-muted)"}`} />
         </div>
@@ -132,7 +132,7 @@ export default function AiGuideFooter({ messages, isReady, localAiEnabled, local
             className="w-full flex items-center gap-2 px-4 py-3 rounded-sm border-2 border-(--accent)/60 bg-(--accent)/12 hover:bg-(--accent)/25 transition-all cursor-pointer text-left group shadow-[0_0_12px_rgba(var(--accent-rgb),0.15)]"
           >
             <ChevronUp className="w-4 h-4 text-(--accent) shrink-0 group-hover:translate-y-[-2px] transition-transform" />
-            <span className="text-xs font-mono uppercase tracking-widest text-(--accent) font-extrabold flex-1">Enable AI Guide · Click to expand panel</span>
+            <span className="text-xs font-mono uppercase tracking-widest text-(--accent) font-extrabold flex-1">Enable Qwen · Click to expand panel</span>
             <span className="text-[9px] font-mono uppercase tracking-wider text-(--accent)/60 border border-(--accent)/30 px-2 py-0.5 rounded-sm shrink-0">Recommended</span>
           </button>
         )}

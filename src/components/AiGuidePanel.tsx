@@ -15,6 +15,8 @@ type AiGuidePanelProps = {
   messages: Message[];
   activeView: ViewKey;
   localAiEnabled: boolean;
+  isReady: boolean;
+  progress: number;
   enableLocalAi: () => void;
   localAiFallback: boolean;
   onNavigate: (view: ViewKey) => void;
@@ -34,12 +36,28 @@ const navItems: Array<{ name: string; icon: typeof User; view: ViewKey }> = [
   { name: "Contact", icon: Mail, view: "contact" },
 ];
 
-export default function AiGuidePanel({ open, onClose, messages, activeView, localAiEnabled, localAiFallback, enableLocalAi, onNavigate, onSend, input, setInput }: AiGuidePanelProps) {
+export default function AiGuidePanel({
+  open,
+  onClose,
+  messages,
+  activeView,
+  localAiEnabled,
+  isReady,
+  progress,
+  localAiFallback,
+  enableLocalAi,
+  onNavigate,
+  onSend,
+  input,
+  setInput,
+}: AiGuidePanelProps) {
   const voiceInput = useVoiceInput();
   const voiceOutput = useVoiceOutput();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [usedSuggestions, setUsedSuggestions] = useState<string[]>([]);
+  const isLocalAiLoading = localAiEnabled && !localAiFallback && !isReady;
+  const downloadProgress = Math.max(0, Math.min(100, Math.round(progress)));
 
   const onSendRef = useRef(onSend);
 
@@ -126,7 +144,7 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, loca
                     </button>
                   ))}
                 </div>
-                <span className="text-xs font-mono uppercase tracking-wider text-(--text-muted) hidden md:inline">{localAiFallback ? "Fallback" : "AI"} Guide</span>
+                <span className="text-xs font-mono uppercase tracking-wider text-(--text-muted) hidden md:inline">{localAiFallback ? "FALLBACK GUIDE" : "QWEN GUIDE"}</span>
               </div>
               <div className="flex items-center gap-2">
                 {!localAiEnabled && (
@@ -138,7 +156,7 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, loca
                     whileTap={{ scale: 0.98 }}
                   >
                     <Power className="w-3 h-3" />
-                    Enable AI
+                    Enable Qwen
                     <span className="text-[9px] font-mono uppercase tracking-wider text-(--accent)/60 border border-(--accent)/30 px-1.5 py-0.5 rounded-sm">Recommended</span>
                   </motion.button>
                 )}
@@ -147,6 +165,34 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, loca
                 </button>
               </div>
             </div>
+
+            {isLocalAiLoading && (
+              <div className="shrink-0 border-b border-(--border) bg-(--surface)/80 px-4 py-3" aria-live="polite">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="text-xs font-mono uppercase tracking-wider text-(--accent)">Downloading Qwen model</span>
+                  <span className="text-xs font-mono tabular-nums text-(--text-muted)">{downloadProgress}%</span>
+                </div>
+                <div
+                  role="progressbar"
+                  aria-label="Downloading Qwen model"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={downloadProgress}
+                  className="mt-2 h-1.5 overflow-hidden rounded-full bg-(--border)"
+                >
+                  <div className="h-full rounded-full bg-(--accent) transition-[width] duration-300" style={{ width: `${downloadProgress}%` }} />
+                </div>
+                <p className="mt-2 text-[10px] leading-relaxed text-(--text-muted)">
+                  First visit downloads the model and caches it in this browser. Quick fallback answers remain available while it loads.
+                </p>
+              </div>
+            )}
+
+            {localAiFallback && (
+              <div className="shrink-0 border-b border-(--border) bg-(--surface)/80 px-4 py-3 text-[10px] leading-relaxed text-(--text-muted)" role="status">
+                Local AI is unavailable on this device, so the guide is using instant fallback answers. No model download is required.
+              </div>
+            )}
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 custom-scrollbar" role="log">
@@ -181,7 +227,7 @@ export default function AiGuidePanel({ open, onClose, messages, activeView, loca
                           <span
                             className={`text-xs font-mono uppercase tracking-wider ${msg.sender === "ai" ? "text-(--accent)" : msg.sender === "fallback" ? "text-(--accent2)" : "text-(--text-muted)"}`}
                           >
-                            {msg.sender === "ai" ? "Guide" : msg.sender === "fallback" ? "Guide (Fallback)" : "You"}
+                            {msg.sender === "ai" ? "QWEN" : msg.sender === "fallback" ? "FALLBACK GUIDE" : "You"}
                           </span>
                           <VoiceButton
                             mode="speaker"
