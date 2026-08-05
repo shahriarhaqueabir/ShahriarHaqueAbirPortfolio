@@ -1,9 +1,14 @@
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://shahriarhaqueabir.vercel.app";
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://shahriarhaqueabirportfolio.vercel.app";
 
-export const siteTitle = "Shahriar Haque Abir | Technical Operations Engineer | Solutions Engineer | QA Automation Engineer";
+export const siteName = "Shahriar Haque Abir Portfolio";
+
+export const siteTitle =
+  "Shahriar Haque Abir | Technical Operations Engineer | Integration Engineer | Application Support Engineer";
 
 export const siteDescription =
-  "Berlin-based Technical Project and Implementation Specialist with 10+ years in enterprise SaaS delivery, technical operations, systems integration, and cybersecurity operations. Experienced across project delivery, incident management, implementation engineering, and security operations.";
+  "Berlin-based technical operations and integration specialist with 10+ years in enterprise SaaS delivery, application support, incident management, systems integration, and cybersecurity operations.";
+
+export const socialPreviewImage = "/og-image.png";
 
 export const linkedInUrl = "https://www.linkedin.com/in/shahriarhaqueabir";
 

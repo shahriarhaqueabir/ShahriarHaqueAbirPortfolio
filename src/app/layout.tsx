@@ -5,7 +5,7 @@ import "./globals.css";
 import { PersonJsonLd } from "@/components/PersonJsonLd";
 import { VercelInsightsWrapper } from "@/components/VercelInsightsWrapper";
 import { CONFIG } from "@/lib/data";
-import { siteDescription, siteTitle, siteUrl } from "@/lib/seo";
+import { siteDescription, siteName, siteTitle, siteUrl, socialPreviewImage } from "@/lib/seo";
 
 const syne = Syne({ subsets: ["latin"], variable: "--font-syne" });
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: siteTitle,
-    template: "%s | Shahriar Haque Abir",
+    template: "%s",
   },
   description: siteDescription,
   authors: [{ name: CONFIG.name, url: siteUrl }],
@@ -25,21 +25,15 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteUrl,
-    siteName: "Shahriar Haque Abir Portfolio",
+    siteName,
     title: siteTitle,
     description: siteDescription,
     images: [
       {
-        url: "/profile.jpg",
+        url: socialPreviewImage,
         width: 1200,
         height: 630,
-        alt: "Shahriar Haque Abir, Technical Operations Engineer",
-      },
-      {
-        url: "/profile.jpg",
-        width: 800,
-        height: 600,
-        alt: "Shahriar Haque Abir, Technical Operations Engineer",
+        alt: "Shahriar Haque Abir portfolio preview",
       },
     ],
   },
@@ -47,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteTitle,
     description: siteDescription,
-    images: ["/profile.jpg"],
+    images: [socialPreviewImage],
   },
   robots: {
     index: true,
