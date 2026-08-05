@@ -1,5 +1,7 @@
 # Shahriar Haque Abir — Interactive Portfolio & AI Guide
 
+**[Live Demo](https://shahriarhaqueabirportfolio.vercel.app)** | **[LinkedIn](https://www.linkedin.com/in/shahriarhaqueabir)** | **[GitHub](https://github.com/shahriarhaqueabir)**
+
 [![Stack: Next.js 16](https://img.shields.io/badge/Next.js-16.2-000?logo=next.js&logoColor=fff)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=fff)](https://www.typescriptlang.org)
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=fff)](https://tailwindcss.com)
@@ -8,19 +10,20 @@
 [![ElevenLabs](https://img.shields.io/badge/TTS-ElevenLabs-000?logo=elevenlabs&logoColor=fff)](https://elevenlabs.io)
 [![Playwright](https://img.shields.io/badge/Tests-Playwright-45BA4B?logo=playwright&logoColor=fff)](https://playwright.dev)
 [![Vercel](https://img.shields.io/badge/Deploy-Vercel-000?logo=vercel&logoColor=fff)](https://vercel.com)
+![CI](https://github.com/shahriarhaqueabir/ShahriarHaqueAbirPortfolio/actions/workflows/ci.yml/badge.svg)
 
-> Multi-view portfolio with a browser-native AI guide and voice interaction. Ask questions about Shahriar's work, navigate with voice commands, and hear responses read aloud. No server-side AI costs — everything runs locally in the browser via WebLLM (WebGPU).
+> **Berlin-based Technical Operations & Integration Specialist.** Multi-view interactive portfolio featuring a browser-native AI guide (Qwen2.5) and voice interaction. Built with Next.js 16, React 19, and Tailwind CSS v4. Runs entirely locally via WebLLM/WebGPU — zero server costs.
 
 ---
 
-## Highlights
+## 🚀 Key Features
 
-- **🧠 Local AI Guide** — Runs Qwen2.5-Coder 1.5B via WebLLM in the browser. Zero server costs, zero API keys. Falls back to a 17-intent rule engine when WebGPU is unavailable.
-- **🎤 Voice Interaction** — Speech-to-text via the Web Speech API. Text-to-speech via ElevenLabs.
-- **🕹️ Multi-View Architecture** — Seven interconnected portfolio views (Hero, About, Projects, Experience, Skills, Stats, Contact) with command routing and orbital navigation.
-- **🎨 Dark Terminal Theme** — Deep-space palette (`#030509`), glass panels, animated orbit constellation, grid textures.
-- **📋 Recruiter Snapshot** — At-a-glance stats, capability stack, and work authorization surface the most relevant details immediately.
-- **⚡ Static Generation** — All routes pre-rendered. WebLLM loads lazily on user opt-in.
+- **🧠 Browser-Native AI Guide** — Runs **Qwen2.5-Coder 1.5B** via **WebLLM** locally in the browser. Zero server costs, zero API keys. Falls back to a 17-intent pattern-matching engine when WebGPU is unavailable.
+- **🎤 Voice Interaction (STT/TTS)** — Speech-to-text via the **Web Speech API** and high-quality Text-to-speech via **ElevenLabs**.
+- **🕹️ Multi-View Portfolio Architecture** — Seven interconnected views (Hero, About, Projects, Experience, Skills, Stats, Contact) with command-based routing and orbital navigation.
+- **🎨 Dark Terminal Aesthetic** — Professional "data void" theme with holographic glass panels, animated orbit constellations, and grid textures.
+- **⚡ Performance First** — Static Site Generation (SSG), lazy-loaded AI models, and optimized asset delivery via Vercel.
+- **📋 Recruiter-Centric UX** — At-a-glance technical stats, capability stacks, and work authorization details surface high-impact info immediately.
 
 ---
 

@@ -57,6 +57,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
+  manifest: "/manifest.webmanifest",
 };
 
 import dynamic from "next/dynamic";

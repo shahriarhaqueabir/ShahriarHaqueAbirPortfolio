@@ -1,0 +1,21 @@
+{
+  "name": "Shahriar Haque Abir Portfolio",
+  "short_name": "SH Abir",
+  "description": "Interactive Portfolio & AI Guide of Shahriar Haque Abir",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#030509",
+  "theme_color": "#030509",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

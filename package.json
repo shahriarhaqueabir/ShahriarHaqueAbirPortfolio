@@ -1,6 +1,42 @@
 {
   "name": "shahriar-haque-abir-portfolio",
   "version": "0.1.0",
+  "description": "Interactive Portfolio & AI Guide of Shahriar Haque Abir. Featuring a browser-native local LLM guide (WebLLM), voice interaction (ElevenLabs), and multi-view orbital navigation.",
+  "keywords": [
+    "nextjs",
+    "portfolio",
+    "ai-guide",
+    "webllm",
+    "qwen",
+    "react-19",
+    "tailwindcss-v4",
+    "framer-motion",
+    "elevenlabs",
+    "voice-interaction",
+    "technical-operations",
+    "integration-engineer",
+    "berlin",
+    "application-support",
+    "incident-management",
+    "cybersecurity",
+    "solutions-engineer",
+    "technical-project-manager",
+    "web-speech-api",
+    "react-19-portfolio"
+  ],
+  "homepage": "https://shahriarhaqueabirportfolio.vercel.app",
+  "author": {
+    "name": "Shahriar Haque Abir",
+    "url": "https://github.com/shahriarhaqueabir"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shahriarhaqueabir/ShahriarHaqueAbirPortfolio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shahriarhaqueabir/ShahriarHaqueAbirPortfolio/issues"
+  },
+  "license": "MIT",
   "private": true,
   "scripts": {
     "vercel-install": "npm install --legacy-peer-deps",
