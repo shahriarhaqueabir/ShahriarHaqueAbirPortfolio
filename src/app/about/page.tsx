@@ -22,13 +22,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "About Shahriar Haque Abir | Technical Operations, Integration & Support",
-    description:
-      "Learn about Shahriar Haque Abir's background in technical operations, integration engineering, application support, and cybersecurity-focused delivery.",
-    images: [socialPreviewImage],
-  },
   alternates: {
     canonical: "/about",
   },

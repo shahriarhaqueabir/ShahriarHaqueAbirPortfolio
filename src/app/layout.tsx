@@ -37,12 +37,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: siteTitle,
-    description: siteDescription,
-    images: [socialPreviewImage],
-  },
   robots: {
     index: true,
     follow: true,

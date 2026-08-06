@@ -22,13 +22,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Contact Shahriar Haque Abir | Technical Operations & Consulting",
-    description:
-      "Contact Shahriar Haque Abir about technical operations, implementation support, integration work, consulting, or cybersecurity-focused opportunities.",
-    images: [socialPreviewImage],
-  },
   alternates: {
     canonical: "/contact",
   },

@@ -22,13 +22,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Skills | Shahriar Haque Abir | Support, Integration & Security",
-    description:
-      "Explore Shahriar Haque Abir's technical skills across support operations, systems integration, SQL, APIs, automation, networking, and security.",
-    images: [socialPreviewImage],
-  },
   alternates: {
     canonical: "/skills",
   },

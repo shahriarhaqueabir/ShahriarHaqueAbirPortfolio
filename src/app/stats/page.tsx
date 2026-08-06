@@ -22,13 +22,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Stats | Shahriar Haque Abir | Portfolio Proof Points",
-    description:
-      "See Shahriar Haque Abir's key portfolio stats, delivery metrics, and working-style proof points in one quick scan.",
-    images: [socialPreviewImage],
-  },
   alternates: {
     canonical: "/stats",
   },

@@ -22,13 +22,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Projects by Shahriar Haque Abir | Technical Operations & Automation",
-    description:
-      "Explore Shahriar Haque Abir's technical projects, including operations tooling, automation systems, onboarding workflows, and diagnostic platforms.",
-    images: [socialPreviewImage],
-  },
   alternates: {
     canonical: "/projects",
   },

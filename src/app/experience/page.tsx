@@ -22,13 +22,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Experience | Shahriar Haque Abir | SaaS, Support & Engineering",
-    description:
-      "Review Shahriar Haque Abir's professional experience across technical operations, SaaS consulting, network engineering, and support delivery.",
-    images: [socialPreviewImage],
-  },
   alternates: {
     canonical: "/experience",
   },
