@@ -1,10 +1,8 @@
 name: Update Dynamic Badges
 
 on:
-  push:
-    branches:
-      - main
-  # Allow manual triggers
+  # Manual trigger ONLY. This workflow uses a Personal Access Token
+  # (GIST_SECRET_TOKEN) — it must never run automatically on every push.
   workflow_dispatch:
 
 jobs:
