@@ -1,13 +1,13 @@
 import { test, expect } from "@playwright/test";
 
 const ROUTES = [
-  { path: "/", title: /^Shahriar Haque Abir/ },
-  { path: "/about", title: /About \| Shahriar Haque Abir/ },
-  { path: "/projects", title: /Projects \| Shahriar Haque Abir/ },
-  { path: "/experience", title: /Experience \| Shahriar Haque Abir/ },
-  { path: "/skills", title: /Skills \| Shahriar Haque Abir/ },
-  { path: "/stats", title: /Stats \| Shahriar Haque Abir/ },
-  { path: "/contact", title: /Contact \| Shahriar Haque Abir/ },
+  { path: "/", title: /Shahriar Haque Abir \| Technical Operations Engineer/ },
+  { path: "/about", title: /About Shahriar Haque Abir \| Technical Operations, Integration & Support/ },
+  { path: "/projects", title: /Projects by Shahriar Haque Abir \| Technical Operations & Automation/ },
+  { path: "/experience", title: /Experience \| Shahriar Haque Abir \| SaaS, Support & Engineering/ },
+  { path: "/skills", title: /Skills \| Shahriar Haque Abir \| Support, Integration & Security/ },
+  { path: "/stats", title: /Stats \| Shahriar Haque Abir \| Portfolio Proof Points/ },
+  { path: "/contact", title: /Contact Shahriar Haque Abir \| Technical Operations & Consulting/ },
 ] as const;
 
 test.describe("Portfolio — page load smoke tests", () => {
