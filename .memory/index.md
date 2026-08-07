@@ -2,7 +2,7 @@
 
 ## Active Sprint
 
-**Sprint 1: Site Hardening + Polish** (2026-07-29)
+**Locked Down** (2026-08-07) - All Hardening tasks complete.
 
 ## Codebase Identity
 
