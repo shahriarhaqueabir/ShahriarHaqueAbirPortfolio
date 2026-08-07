@@ -39,7 +39,8 @@
 ## Active Topics
 
 - [Sprint 1 Plan](/plans/2026-07-29-sprint-1-hardening.md)
+- [ADR 0001: Dual-Engine AI Architecture](/docs/adr/0001-dual-engine-ai-architecture.md)
 
 ## Sprint History
 
-- Sprint 1: Initial getset — site hardening, polish, and baseline setup
+- Sprint 1: Initial getset — site hardening, polish, and baseline setup. Rate limiting and ADR documentation established.

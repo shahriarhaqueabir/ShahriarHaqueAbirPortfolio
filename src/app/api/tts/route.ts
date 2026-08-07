@@ -5,8 +5,41 @@ const ELEVENLABS_BASE = "https://api.elevenlabs.io/v1";
 // Voice ID for "Rachel" — the default ElevenLabs voice
 const DEFAULT_VOICE_ID = "FGY2WhTYpPnrIDTdsKH5";
 
+// Simple in-memory rate limiting for serverless instances
+// Note: This resets on cold starts but provides a basic shield against rapid spam
+const RATE_LIMIT_MAP = new Map<string, { count: number; reset: number }>();
+const LIMIT = 15; // requests
+const WINDOW = 60 * 1000; // 1 minute
+
 export async function POST(request: NextRequest) {
   try {
+    const ip = request.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
+    const now = Date.now();
+
+    // 1. Rate Limit Check
+    const rateData = RATE_LIMIT_MAP.get(ip) || { count: 0, reset: now + WINDOW };
+
+    if (now > rateData.reset) {
+      rateData.count = 0;
+      rateData.reset = now + WINDOW;
+    }
+
+    if (rateData.count >= LIMIT) {
+      return NextResponse.json({ error: "Rate limit exceeded. Please wait a minute.", fallback: true }, { status: 429 });
+    }
+
+    rateData.count++;
+    RATE_LIMIT_MAP.set(ip, rateData);
+
+    // 2. CSRF/Origin Check
+    const origin = request.headers.get("origin");
+    const host = request.headers.get("host");
+    const isAllowedOrigin = !origin || origin.includes(host || "localhost");
+
+    if (!isAllowedOrigin) {
+      return NextResponse.json({ error: "Forbidden: Cross-origin requests not allowed" }, { status: 403 });
+    }
+
     const { text, voice_id = DEFAULT_VOICE_ID } = await request.json();
 
     if (!text || typeof text !== "string" || text.trim().length === 0) {

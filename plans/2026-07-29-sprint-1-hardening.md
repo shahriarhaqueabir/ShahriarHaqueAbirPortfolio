@@ -14,7 +14,8 @@
 | T-05 | **Add Prettier config file** | ✅ DONE | **Medium** | ✅ `.prettierrc` already existed with proper config (semi, double quotes, trailing commas) |
 | T-06 | **Review & fix SEO metadata gaps** | ✅ DONE | **Medium** | ✅ Per-page metadata was complete (title, description, canonical); siteUrl fix resolved core gap |
 | T-07 | **Audit error/fallback pages for CSS variable use** | ✅ DONE | **Low** | ✅ All 3 pages (`error.tsx`, `not-found.tsx`, `global-error.tsx`) use CSS vars (--bg, --text, --accent) |
-| T-08 | **Establish `.memory/` documentation workflow** | 🔶 PARTIAL | **Low** | ✅ `.memory/` created with index + topics/architecture.md; ADRs in `docs/adr/` still TODO |
+| T-08 | **Establish `.memory/` documentation workflow** | ✅ DONE | **Low** | ✅ `.memory/` created; first ADR created in `docs/adr/0001-dual-engine-ai-architecture.md` |
+| T-09 | **Harden TTS route (Rate Limit + CSRF)** | ✅ DONE | **High** | ✅ Implemented in-memory rate limiting and origin checks in `api/tts/route.ts` |
 
 ## Dependency Graph
 
@@ -26,9 +27,10 @@ T-04 (bundler) ──► (no blockers)
 T-05 (prettier) ──► (no blockers)
 T-07 (error pages) ──► (no blockers)
 T-08 (memory docs) ──► (no blockers)
+T-09 (TTS hardening) ──► (no blockers)
 ```
 
-Priority order: T-01 → T-02 → T-03 → T-04 → T-05 → T-06 → T-07 → T-08
+Priority order: T-01 → T-02 → T-09 → T-03 → T-04 → T-05 → T-06 → T-07 → T-08
 
 ## Definition of Done (Sprint Level)
 
