@@ -238,6 +238,14 @@ function formatViewName(view: ViewKey): string {
 
 const intentPatterns: IntentPattern[] = [
   {
+    name: "resume_cv",
+    keywords: ["resume", "cv", "download", "pdf", "/shahriar-haque-abir-cv.pdf"],
+    exclusive: [],
+    weight: 4,
+    answer: () =>
+      `You can download Shahriar's CV here: [Download CV (PDF)](/shahriar-haque-abir-cv.pdf). It covers his 10+ years of experience in enterprise SaaS, technical operations, and systems integration in detail.`,
+  },
+  {
     name: "greeting",
     keywords: ["hi", "hello", "hey", "how are you", "what's up", "greetings", "good morning", "good afternoon", "what"],
     exclusive: ["projects", "skills", "experience", "contact", "compare", "who"],

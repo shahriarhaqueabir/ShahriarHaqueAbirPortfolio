@@ -97,8 +97,9 @@ The page should connect Bangladesh, Germany, engineering foundations, L&T coordi
 
 Projects should read as selected work and case studies. The lead showcase projects are:
 
-- Interactive Database Architect & Visualizer.
-- Customer Onboarding & Validation Portal.
+- AI-Assisted German Law (Next.js, Qdrant, AI guidance).
+- UniversalOps (Go, Wails v2, Local AI).
+- Network Discovery & Topology Mapping (Python, JS visualization).
 
 Other work supports the broader technical operations and integration profile.
 
