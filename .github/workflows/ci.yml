@@ -12,9 +12,8 @@ permissions:
 jobs:
   ci:
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
+    timeout-minutes: 10
+    
     steps:
       - uses: actions/checkout@v4
 
@@ -23,8 +22,30 @@ jobs:
           node-version: 22
           cache: "npm"
 
-      - run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-      - run: npm run lint
+      - name: Check formatting
+        run: npx prettier --check "src/**/*.{ts,tsx}"
 
-      - run: npm run build -- --webpack
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run E2E Tests
+        run: npm run test
+        env:
+          # Mock the API key for CI tests so the TTS route doesn't crash
+          ELEVENLABS_API: "sk_ci_mock_key"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
