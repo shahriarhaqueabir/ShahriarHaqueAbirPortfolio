@@ -4,15 +4,13 @@ import { siteName, siteUrl, socialPreviewImage } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Contact Shahriar Haque Abir | Technical Operations & Consulting",
-  description:
-    "Contact Shahriar Haque Abir about technical operations, implementation support, integration work, consulting, or cybersecurity-focused opportunities.",
+  description: "Contact Shahriar Haque Abir about technical operations, implementation support, integration work, consulting, or cybersecurity-focused opportunities.",
   openGraph: {
     type: "website",
     url: `${siteUrl}/contact`,
     siteName,
     title: "Contact Shahriar Haque Abir | Technical Operations & Consulting",
-    description:
-      "Contact Shahriar Haque Abir about technical operations, implementation support, integration work, consulting, or cybersecurity-focused opportunities.",
+    description: "Contact Shahriar Haque Abir about technical operations, implementation support, integration work, consulting, or cybersecurity-focused opportunities.",
     images: [
       {
         url: socialPreviewImage,

@@ -7,7 +7,8 @@ export function PersonJsonLd() {
     "@type": "Person",
     "@id": `${siteUrl}/#person`,
     name: CONFIG.name,
-    description: "Berlin-based Technical Project and Implementation Specialist with 10+ years in enterprise SaaS delivery, technical operations, systems integration, and cybersecurity operations. Works across project delivery, incident management, implementation engineering, and security operations.",
+    description:
+      "Berlin-based Technical Project and Implementation Specialist with 10+ years in enterprise SaaS delivery, technical operations, systems integration, and cybersecurity operations. Works across project delivery, incident management, implementation engineering, and security operations.",
     jobTitle: "Technical Project & Implementation Specialist | Solutions Engineer | Cybersecurity",
     url: siteUrl,
     image: `${siteUrl}/profile.jpg`,
@@ -48,7 +49,16 @@ export function PersonJsonLd() {
       "ITIL 4",
     ],
     alumniOf: ["Technische Hochschule Mittelhessen", "North South University"],
-    award: ["Goethe-Zertifikat B2", "CCNA: Connecting Networks (Cisco Networking Academy)", "CCNA: Scaling Networks (Cisco Networking Academy)", "CompTIA Security+", "ITIL® 4 Foundation", "Linux Foundation Certified System Administrator", "Linux System Engineer: Networking and SSH", "Networking Foundations: Networking Basics"],
+    award: [
+      "Goethe-Zertifikat B2",
+      "CCNA: Connecting Networks (Cisco Networking Academy)",
+      "CCNA: Scaling Networks (Cisco Networking Academy)",
+      "CompTIA Security+",
+      "ITIL® 4 Foundation",
+      "Linux Foundation Certified System Administrator",
+      "Linux System Engineer: Networking and SSH",
+      "Networking Foundations: Networking Basics",
+    ],
     areaServed: ["APAC", "EMEA", "NAM"],
     nationality: "Bangladeshi",
     homeLocation: {

@@ -42,7 +42,8 @@ export const CAREER_STATES: CareerState[] = [
   {
     id: "cyber-automation",
     label: "Cybersecurity Operations & AI Automation",
-    summary: "Building toward cybersecurity operations with network security foundations, security certifications (CompTIA Security+, ITIL 4), and production incident response experience. Parallel work in AI automation, RAG systems, and workflow orchestration.",
+    summary:
+      "Building toward cybersecurity operations with network security foundations, security certifications (CompTIA Security+, ITIL 4), and production incident response experience. Parallel work in AI automation, RAG systems, and workflow orchestration.",
     primarySkills: ["network security", "Linux administration", "security operations", "RAG", "local LLMs", "AI automation", "incident response"],
     systemExposure: "Security-oriented and adaptive systems where detection, response, and automation reduce operational risk and friction.",
     answers: ["What is his current direction?", "Can he operate in a security context?", "What has he built recently?", "Does he understand security operations?"],

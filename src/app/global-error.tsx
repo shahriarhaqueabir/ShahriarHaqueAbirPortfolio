@@ -5,12 +5,7 @@ import { Syne, JetBrains_Mono } from "next/font/google";
 const syne = Syne({ subsets: ["latin"], variable: "--font-syne" });
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
 
-export default function GlobalError(
-  props: {
-    error: Error & { digest?: string };
-    reset: () => void;
-  },
-) {
+export default function GlobalError(props: { error: Error & { digest?: string }; reset: () => void }) {
   return (
     <html className={`${syne.variable} ${jetbrains.variable}`}>
       <body className="bg-(--bg) text-(--text) flex items-center justify-center min-h-screen p-8">

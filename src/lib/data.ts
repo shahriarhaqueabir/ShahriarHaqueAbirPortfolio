@@ -19,7 +19,8 @@ export const CONFIG = {
   ],
   location: "Berlin, Germany",
   workAuth: "Niederlassungserlaubnis (Permanent resident)",
-  coffeeChat: "When I'm not chasing root causes or planning delivery timelines, I'm usually reading about network security research, experimenting with homelab setups, or exploring Berlin's food scene. I'm genuinely curious about how things work — which is probably why I ended up in infrastructure and operations in the first place. Ask me about the best Thai spot in Kreuzberg or what I'm learning in cybersecurity this week.",
+  coffeeChat:
+    "When I'm not chasing root causes or planning delivery timelines, I'm usually reading about network security research, experimenting with homelab setups, or exploring Berlin's food scene. I'm genuinely curious about how things work — which is probably why I ended up in infrastructure and operations in the first place. Ask me about the best Thai spot in Kreuzberg or what I'm learning in cybersecurity this week.",
   profile: `I've spent the last 10+ years in the space between engineering and operations — managing software delivery, running incident response, supporting B2B SaaS platforms, and working toward cybersecurity operations. The through-line has been turning technical complexity into predictable outcomes, whether that's coordinating a cross-functional implementation across 3 regions at tripunkt, building onboarding infrastructure for 60+ engineers at Larsen & Toubro, or running network operations for 500+ enterprise accounts at Earth Telecommunication.
 
 Leads technical discovery, proof-of-concept, and integration initiatives for enterprise B2B clients across North America, APAC, and DACH regions. Manages production incident response and root cause analysis, presents technical outcomes to C-level stakeholders, and applies AI-assisted workflows to accelerate troubleshooting and documentation.
@@ -93,8 +94,7 @@ Currently building toward cybersecurity operations — combining infrastructure 
     {
       name: "Network Discovery & Topology Mapping",
       desc: "Python-based tool for live host scanning and interactive relationship visualization. Built at Earth Telecommunication (2013–2015).",
-      context:
-        "Earth Telecommunication lacked centralized network documentation. Maps were scattered across spreadsheets and engineer memory, complicating incident resolution for over 500 accounts.",
+      context: "Earth Telecommunication lacked centralized network documentation. Maps were scattered across spreadsheets and engineer memory, complicating incident resolution for over 500 accounts.",
       implementation:
         "Built a Python tool to scan live hosts using ICMP and SNMP sweeps, then aggregated device relationship data into structured JSON. The output rendered as an interactive JS/HTML topology graph enabling real-time component isolation and data-path tracing during incidents. Scanner aggressiveness was tuned per subnet to balance completeness against network load.",
       outcome:
@@ -106,7 +106,8 @@ Currently building toward cybersecurity operations — combining infrastructure 
     {
       name: "Log Analysis & Automated Ticketing",
       desc: "Automated error detection and Jira ticket creation workflow.",
-      context: "Critical error patterns were buried in thousands of log lines per minute. Subtle regressions went unnoticed for hours. Engineering needed real-time detection, not post-mortem discovery.",
+      context:
+        "Critical error patterns were buried in thousands of log lines per minute. Subtle regressions went unnoticed for hours. Engineering needed real-time detection, not post-mortem discovery.",
       implementation:
         "Developed a Python-based log parsing workflow that monitors error frequency against configurable thresholds using regex pattern matching. When a validated incident exceeds its threshold, the system automatically creates a Jira ticket with contextual stack traces and surrounding log context via the Jira REST API. The pipeline runs on a scheduled cron trigger and supports multi-service log sources.",
       outcome:
@@ -118,8 +119,7 @@ Currently building toward cybersecurity operations — combining infrastructure 
     {
       name: "UniversalOps",
       desc: "Native local-first desktop operations platform for system monitoring, network diagnostics, and security auditing. Built with Go, Wails v2, and React 19.",
-      context:
-        "Existing monitoring tools required cloud backends, sent telemetry out, or couldn't run offline. Needed a unified operations toolkit that worked entirely on a local machine.",
+      context: "Existing monitoring tools required cloud backends, sent telemetry out, or couldn't run offline. Needed a unified operations toolkit that worked entirely on a local machine.",
       implementation:
         "Built with Go and Wails v2 for native OS integration, React 19 frontend with Tailwind CSS, and SQLite for local persistence. Integrates Ollama for on-device AI-assisted diagnostics. Features real-time system monitoring, network scanning, container management, and security auditing in a single desktop app.",
       outcome:
@@ -132,8 +132,7 @@ Currently building toward cybersecurity operations — combining infrastructure 
     {
       name: "AI-Assisted German Law",
       desc: "Search, browse, and receive AI-guided analysis of 6,000+ German federal laws with multilingual support and 4 chat modes.",
-      context:
-        "German legal text is dense and scattered. Navigating it without expensive legal counsel is nearly impossible for non-lawyers and non-native speakers.",
+      context: "German legal text is dense and scattered. Navigating it without expensive legal counsel is nearly impossible for non-lawyers and non-native speakers.",
       implementation:
         "Built with Next.js 16, Supabase (Postgres + RLS), and Qdrant Cloud for vector search. Features hybrid BM25 + dense retrieval across 103K+ vector points, 9-language i18n, AI guidance engine with 4 chat modes (Basic/Browser/Cloud/Local), bookmark system, remediation playbooks, and document templates.",
       outcome:
@@ -146,12 +145,10 @@ Currently building toward cybersecurity operations — combining infrastructure 
     {
       name: "ShahriarHaqueAbirPortfolio",
       desc: "Personal portfolio site with in-browser AI, parallax animations, and a SPA-in-MPA architecture on Next.js 16.",
-      context:
-        "Wanted a portfolio that demonstrates both frontend craftsmanship and practical AI integration — not just a static resume site.",
+      context: "Wanted a portfolio that demonstrates both frontend craftsmanship and practical AI integration — not just a static resume site.",
       implementation:
         "Built with Next.js 16 (App Router, webpack) and React 19. Features Framer Motion parallax/timeline animations, WebLLM-powered Qwen2.5 1.5B in a web worker for fully local AI chat, a fallback intent engine with 17 patterns, voice I/O, tsParticles backgrounds, and Tailwind CSS v4.",
-      outcome:
-        "13/13 static routes, SPA-like navigation with MPA reliability, local AI running entirely in the browser via WebGPU, and sub-4s production builds.",
+      outcome: "13/13 static routes, SPA-like navigation with MPA reliability, local AI running entirely in the browser via WebGPU, and sub-4s production builds.",
       lessons:
         "WebLLM is powerful but the 1.5B model download is heavy — a pattern-matching fallback engine was essential for first-visit experience before the model loads. Voice input/output added unexpected engagement.",
       stack: ["Next.js", "React", "TypeScript", "Framer Motion", "WebLLM", "Tailwind CSS"],
@@ -185,7 +182,13 @@ Currently building toward cybersecurity operations — combining infrastructure 
     },
     {
       group: "Security Tools (Associate Level)",
-      items: ["SIEM Concepts (Splunk, ELK — fundamentals)", "EDR Concepts (CrowdStrike, Defender — awareness level)", "Jira & ServiceNow Ticketing", "Vulnerability Scanning Concepts (Nessus, OpenVAS)", "CompTIA Security+ (2026)"],
+      items: [
+        "SIEM Concepts (Splunk, ELK — fundamentals)",
+        "EDR Concepts (CrowdStrike, Defender — awareness level)",
+        "Jira & ServiceNow Ticketing",
+        "Vulnerability Scanning Concepts (Nessus, OpenVAS)",
+        "CompTIA Security+ (2026)",
+      ],
     },
   ],
   languages: ["English (Native or Bilingual)", "Bangla (Native or Bilingual)", "German (Professional Working B2)", "Hindi (Limited Working)"],

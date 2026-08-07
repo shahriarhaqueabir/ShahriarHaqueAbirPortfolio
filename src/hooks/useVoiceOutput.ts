@@ -32,8 +32,6 @@ export function useVoiceOutput(): VoiceOutputState {
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const cacheRef = useRef<Map<string, ArrayBuffer>>(new Map());
 
-
-
   const stopSpeaking = useCallback(() => {
     // Stop ElevenLabs audio playback
     if (audioRef.current) {
@@ -108,48 +106,42 @@ export function useVoiceOutput(): VoiceOutputState {
     [stopSpeaking],
   );
 
-  const speakViaSpeechSynthesis = useCallback(
-    (text: string): Promise<void> => {
-      return new Promise((resolve) => {
-        if (typeof speechSynthesis === "undefined") {
-          resolve();
-          return;
-        }
+  const speakViaSpeechSynthesis = useCallback((text: string): Promise<void> => {
+    return new Promise((resolve) => {
+      if (typeof speechSynthesis === "undefined") {
+        resolve();
+        return;
+      }
 
-        // Cancel any ongoing speech
-        speechSynthesis.cancel();
+      // Cancel any ongoing speech
+      speechSynthesis.cancel();
 
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.rate = 1.0;
-        utterance.pitch = 1.0;
-        utterance.volume = 1;
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 1.0;
+      utterance.pitch = 1.0;
+      utterance.volume = 1;
 
-        // Try to pick a decent English voice
-        const voices = speechSynthesis.getVoices();
-        const preferredVoice =
-          voices.find((v) => v.lang.startsWith("en") && v.name.includes("Google")) ||
-          voices.find((v) => v.lang.startsWith("en")) ||
-          null;
-        if (preferredVoice) utterance.voice = preferredVoice;
+      // Try to pick a decent English voice
+      const voices = speechSynthesis.getVoices();
+      const preferredVoice = voices.find((v) => v.lang.startsWith("en") && v.name.includes("Google")) || voices.find((v) => v.lang.startsWith("en")) || null;
+      if (preferredVoice) utterance.voice = preferredVoice;
 
-        utterance.onstart = () => setIsSpeaking(true);
-        utterance.onend = () => {
-          setIsSpeaking(false);
-          utteranceRef.current = null;
-          resolve();
-        };
-        utterance.onerror = () => {
-          setIsSpeaking(false);
-          utteranceRef.current = null;
-          resolve();
-        };
+      utterance.onstart = () => setIsSpeaking(true);
+      utterance.onend = () => {
+        setIsSpeaking(false);
+        utteranceRef.current = null;
+        resolve();
+      };
+      utterance.onerror = () => {
+        setIsSpeaking(false);
+        utteranceRef.current = null;
+        resolve();
+      };
 
-        utteranceRef.current = utterance;
-        speechSynthesis.speak(utterance);
-      });
-    },
-    [],
-  );
+      utteranceRef.current = utterance;
+      speechSynthesis.speak(utterance);
+    });
+  }, []);
 
   const speak = useCallback(
     async (rawText: string) => {

@@ -4,15 +4,13 @@ import { siteName, siteUrl, socialPreviewImage } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Experience | Shahriar Haque Abir | SaaS, Support & Engineering",
-  description:
-    "Review Shahriar Haque Abir's professional experience across technical operations, SaaS consulting, network engineering, and support delivery.",
+  description: "Review Shahriar Haque Abir's professional experience across technical operations, SaaS consulting, network engineering, and support delivery.",
   openGraph: {
     type: "website",
     url: `${siteUrl}/experience`,
     siteName,
     title: "Experience | Shahriar Haque Abir | SaaS, Support & Engineering",
-    description:
-      "Review Shahriar Haque Abir's professional experience across technical operations, SaaS consulting, network engineering, and support delivery.",
+    description: "Review Shahriar Haque Abir's professional experience across technical operations, SaaS consulting, network engineering, and support delivery.",
     images: [
       {
         url: socialPreviewImage,

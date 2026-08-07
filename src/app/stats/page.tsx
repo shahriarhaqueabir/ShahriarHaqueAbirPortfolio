@@ -4,15 +4,13 @@ import { siteName, siteUrl, socialPreviewImage } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Stats | Shahriar Haque Abir | Portfolio Proof Points",
-  description:
-    "See Shahriar Haque Abir's key portfolio stats, delivery metrics, and working-style proof points in one quick scan.",
+  description: "See Shahriar Haque Abir's key portfolio stats, delivery metrics, and working-style proof points in one quick scan.",
   openGraph: {
     type: "website",
     url: `${siteUrl}/stats`,
     siteName,
     title: "Stats | Shahriar Haque Abir | Portfolio Proof Points",
-    description:
-      "See Shahriar Haque Abir's key portfolio stats, delivery metrics, and working-style proof points in one quick scan.",
+    description: "See Shahriar Haque Abir's key portfolio stats, delivery metrics, and working-style proof points in one quick scan.",
     images: [
       {
         url: socialPreviewImage,

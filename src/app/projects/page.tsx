@@ -4,15 +4,13 @@ import { siteName, siteUrl, socialPreviewImage } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Projects by Shahriar Haque Abir | Technical Operations & Automation",
-  description:
-    "Explore Shahriar Haque Abir's technical projects, including operations tooling, automation systems, onboarding workflows, and diagnostic platforms.",
+  description: "Explore Shahriar Haque Abir's technical projects, including operations tooling, automation systems, onboarding workflows, and diagnostic platforms.",
   openGraph: {
     type: "website",
     url: `${siteUrl}/projects`,
     siteName,
     title: "Projects by Shahriar Haque Abir | Technical Operations & Automation",
-    description:
-      "Explore Shahriar Haque Abir's technical projects, including operations tooling, automation systems, onboarding workflows, and diagnostic platforms.",
+    description: "Explore Shahriar Haque Abir's technical projects, including operations tooling, automation systems, onboarding workflows, and diagnostic platforms.",
     images: [
       {
         url: socialPreviewImage,
