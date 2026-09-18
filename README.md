@@ -1,24 +1,24 @@
-# Shahriar Haque Abir — Interactive Portfolio & AI Guide
-
-**[Live Demo](https://shahriarhaqueabirportfolio.vercel.app)** | **[LinkedIn](https://www.linkedin.com/in/shahriarhaqueabir)** | **[GitHub](https://github.com/shahriarhaqueabir)**
-
-[![Stack: Next.js 16](https://img.shields.io/badge/Next.js-16.2-000?logo=next.js&logoColor=fff)](https://nextjs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=fff)](https://www.typescriptlang.org)
-[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=fff)](https://tailwindcss.com)
-[![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-EA4C89?logo=framer&logoColor=fff)](https://motion.dev)
-[![WebLLM](https://img.shields.io/badge/WebLLM-0.2.83-4F46E5?logo=llama&logoColor=fff)](https://github.com/mlc-ai/web-llm)
-[![ElevenLabs](https://img.shields.io/badge/TTS-ElevenLabs-000?logo=elevenlabs&logoColor=fff)](https://elevenlabs.io)
-[![Playwright](https://img.shields.io/badge/Tests-Playwright-45BA4B?logo=playwright&logoColor=fff)](https://playwright.dev)
-[![Vercel](https://img.shields.io/badge/Deploy-Vercel-000?logo=vercel&logoColor=fff)](https://vercel.com)
-![CI](https://github.com/shahriarhaqueabir/ShahriarHaqueAbirPortfolio/actions/workflows/ci.yml/badge.svg)
-
-> **Berlin-based Technical Operations & Integration Specialist.** Multi-view interactive portfolio featuring a browser-native AI guide (Qwen2.5) and voice interaction. Built with Next.js 16, React 19, and Tailwind CSS v4. Runs entirely locally via WebLLM/WebGPU — zero server costs.
+# Shahriar Haque Abir — AI-Augmented Web Portfolio
+2: 
+3: **[Live Demo](https://shahriarhaqueabirportfolio.vercel.app)** | **[LinkedIn](https://www.linkedin.com/in/shahriarhaqueabir)** | **[GitHub](https://github.com/shahriarhaqueabir)**
+4: 
+5: [![Stack: Next.js 16.2.12](https://img.shields.io/badge/Next.js-16.2.12-000?logo=next.js&logoColor=fff)](https://nextjs.org)
+6: [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=fff)](https://www.typescriptlang.org)
+7: [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=fff)](https://tailwindcss.com)
+8: [![Motion](https://img.shields.io/badge/Motion-12-EA4C89?logo=framer&logoColor=fff)](https://motion.dev)
+9: [![WebLLM](https://img.shields.io/badge/WebLLM-0.2.83-4F46E5?logo=llama&logoColor=fff)](https://github.com/mlc-ai/web-llm)
+10: [![ElevenLabs](https://img.shields.io/badge/TTS-ElevenLabs-000?logo=elevenlabs&logoColor=fff)](https://elevenlabs.io)
+11: [![Playwright](https://img.shields.io/badge/Tests-Playwright-45BA4B?logo=playwright&logoColor=fff)](https://playwright.dev)
+12: [![Vercel](https://img.shields.io/badge/Deploy-Vercel-000?logo=vercel&logoColor=fff)](https://vercel.com)
+13: ![CI](https://github.com/shahriarhaqueabir/ShahriarHaqueAbirPortfolio/actions/workflows/ci.yml/badge.svg)
+14: 
+15: > **Berlin-based Technical Operations & Integration Specialist.** Multi-view interactive portfolio featuring a browser-native AI guide (Qwen2.5-Instruct) and voice interaction. Built with Next.js 16.2.12, React 19, and Tailwind CSS v4. Runs client-side via WebLLM/WebGPU.
 
 ---
 
 ## 🚀 Key Features
 
-- **🧠 Browser-Native AI Guide** — Runs **Qwen2.5-Coder 1.5B** via **WebLLM** locally in the browser. Zero server costs, zero API keys. Falls back to a 17-intent pattern-matching engine when WebGPU is unavailable.
+- **🧠 Browser-Native AI Guide** — Runs **Qwen2.5-Instruct 1.5B** via **WebLLM** locally in the browser. Runs client-side without relying on external model-serving APIs. Falls back to a 17-intent pattern-matching engine when WebGPU is unavailable.
 - **🎤 Voice Interaction (STT/TTS)** — Speech-to-text via the **Web Speech API** and high-quality Text-to-speech via **ElevenLabs**.
 - **🕹️ Multi-View Portfolio Architecture** — Seven interconnected views (Hero, About, Projects, Experience, Skills, Stats, Contact) with command-based routing and orbital navigation.
 - **🎨 Dark Terminal Aesthetic** — Professional "data void" theme with holographic glass panels, animated orbit constellations, and grid textures.
@@ -36,7 +36,7 @@ Opens as a bottom drawer panel that slides up when you click the footer or send 
 | Mode | How it works | When |
 | ------ | ------------- | ------ |
 | **Fallback** (default) | 17-intent pattern-matching engine. Responds with hardcoded answers about projects, skills, experience. | Always available. No download, no GPU needed. |
-| **Local LLM** | Qwen2.5-Coder 1.5B running in-browser via WebGPU. Offers richer, context-aware conversation. | User clicks "Enable AI" → downloads ~300MB model → ready. |
+| **Local LLM** | Qwen2.5-Instruct 1.5B running in-browser via WebGPU. Offers richer, context-aware conversation. | User clicks "Enable AI" → downloads ~950MB model → ready. |
 
 ### AI Architecture Flow
 
@@ -56,8 +56,8 @@ useCommandRouter ──► Is it a navigation command?
                         │          (pattern match, 0–5ms)
                         ▼
               Web Worker (worker.ts)
-              Qwen2.5 1.5B via WebLLM
-              ~300MB download, WebGPU
+              Qwen2.5-Instruct 1.5B via WebLLM
+              ~950MB download, WebGPU
 ```
 
 ---
@@ -212,12 +212,12 @@ src/
 
 | Layer | Technology |
 | ------- | ------------ |
-| Framework | Next.js 16.2.6 (App Router, Static Generation) |
+| Framework | Next.js 16.2.12 (App Router, Static Generation) |
 | Language | TypeScript 5.8 |
 | Styling | Tailwind CSS 4 |
-| Animation | Framer Motion 12 |
+| Animation | Motion 12 |
 | AI Runtime | WebLLM 0.2.83 (MLC) |
-| AI Model | Qwen2.5-Coder 1.5B (q4f16_1) |
+| AI Model | Qwen2.5-Instruct 1.5B (q4f16_1) |
 | Speech-to-Text | Web Speech API (`SpeechRecognition`) |
 | Text-to-Speech | ElevenLabs API (via `POST /api/tts` proxy) |
 | Particles | tsParticles (slim) + React wrapper |
@@ -367,7 +367,7 @@ This repository adheres to the [Showcasing Standard](docs/SHOWCASING_STANDARD.md
 | Fast Refresh infinite loop on Windows | Ensure `watchOptions.poll` is NOT set in `next.config.ts`. Never add it back. |
 | Vercel Insights `ERR_INTERNET_DISCONNECTED` in dev | Harmless. Only appears in local development when offline. |
 | "preloaded but not used" profile.jpg warning | Harmless. Next.js preloads the Open Graph image. |
-| WebLLM model download (~300MB) | Only happens if the user explicitly enables AI. The fallback engine works instantly. |
+| WebLLM model download (~950MB) | Only happens if the user explicitly enables AI. The fallback engine works instantly. |
 
 ---
 

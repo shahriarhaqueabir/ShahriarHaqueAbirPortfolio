@@ -1,7 +1,7 @@
 {
   "name": "shahriar-haque-abir-portfolio",
   "version": "0.1.0",
-  "description": "Interactive Portfolio & AI Guide of Shahriar Haque Abir. Featuring a browser-native local LLM guide (WebLLM), voice interaction (ElevenLabs), and multi-view orbital navigation.",
+  "description": "AI-Augmented Web Portfolio of Shahriar Haque Abir. Featuring a browser-native local LLM guide (WebLLM), voice interaction (ElevenLabs), and multi-view orbital navigation.",
   "keywords": [
     "nextjs",
     "portfolio",
