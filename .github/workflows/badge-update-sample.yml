@@ -5,6 +5,9 @@ on:
   # (GIST_SECRET_TOKEN) — it must never run automatically on every push.
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   update-badges:
     runs-on: ubuntu-latest
