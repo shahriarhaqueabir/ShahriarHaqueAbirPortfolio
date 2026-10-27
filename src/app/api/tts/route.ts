@@ -46,6 +46,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Text is required" }, { status: 400 });
     }
 
+    // Validate voice_id to prevent URL path manipulation in upstream request.
+    // ElevenLabs voice IDs are expected to be short alphanumeric identifiers.
+    const safeVoiceId =
+      typeof voice_id === "string" && /^[A-Za-z0-9]{1,64}$/.test(voice_id)
+        ? voice_id
+        : DEFAULT_VOICE_ID;
+
     // Cap text to protect free-tier quota (~500 chars per request)
     const truncated = text.slice(0, 500);
 
@@ -70,7 +77,7 @@ export async function POST(request: NextRequest) {
       headers["xi-api-key"] = apiKey;
     }
 
-    const response = await fetch(`${ELEVENLABS_BASE}/text-to-speech/${voice_id}`, {
+    const response = await fetch(`${ELEVENLABS_BASE}/text-to-speech/${safeVoiceId}`, {
       method: "POST",
       headers,
       body: JSON.stringify({
