@@ -393,10 +393,14 @@ export function usePortfolioWorker({ onSynthesis, onNavigate }: UsePortfolioWork
     setMessages((prev) => pruneMessages([...prev, createSysMessage(text)]));
   };
 
-  /** Strip HTML tags and dangerous content from user input */
+  /** Escape HTML-significant characters and strip dangerous control characters from user input */
   const sanitizeInput = useCallback((input: string): string => {
     return input
-      .replace(/<[^>]*>/g, "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;")
       .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, "")
       .trim();
   }, []);
